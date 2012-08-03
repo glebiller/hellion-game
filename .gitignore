@@ -10,3 +10,15 @@
 *.lai
 *.la
 *.a
+
+# Java
+Target
+
+# IntelliJ
+*.iml
+.idea
+
+# Visual Studio
+ipch
+*.sdf
+*.opensdf
