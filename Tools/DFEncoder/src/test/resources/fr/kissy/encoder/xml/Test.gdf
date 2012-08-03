@@ -1,0 +1,110 @@
+<GlobalDefinition>
+    <Properties>
+        <Property Name="Framework::DebugWindow" Value="False"/>
+        <Property Name="Scheduler::Benchmarking" Value="True"/>
+        <!-- TaskManager values of "TBB" (default), "TP", and "None" accepted -->
+        <Property Name="TaskManager" Value="TBB"/>
+        <Property Name="TaskManager::Threads" Value="0"/>
+        <Property Name="TaskManagerTBB::TPEventsForTasks" Value="False"/>
+        <Property Name="TaskManagerTBB::TPEventsForJobs" Value="False"/>
+        <Property Name="TaskManagerTBB::TPEventsForSynchronize" Value="False"/>
+        <!-- Init StopAFterNFrames with a frame count to run until. 0=NoStop -->
+        <Property Name="StopAfterNFrames" Value="0"/>
+        <!--Caps the smoke update to nnnFPS.  Use 30 for best looking smoke.  Too fast makes the smoke too smooth.-->
+        <Property Name="ProceduralFire::Parallel" Value="True"/>
+        <Property Name="ProceduralFire::SubTasks" Value="60"/>
+        <Property Name="Physics::Parallel" Value="True"/>
+        <Property Name="AI::Parallel" Value="True"/>
+        <Property Name="AI::SubTasks" Value="4"/>
+        <!-- Scene units are in meters -->
+        <Property Name="Units" Value="0.01"/>
+        <!-- HOT!!! keys : actions defined in SystemInput/Scene.cpp -->
+        <Property Name="Graphics::Parallel" Value="True"/>
+        <Property Name="Graphics::PolygonMode" Value="0" />
+        <Property Name="Graphics::ShowNormals" Value="False" />
+        <Property Name="Graphics::ShowTangents" Value="False" />
+        <Property Name="Graphics::ShowBoundingBox" Value="False" />
+        <Property Name="Graphics::ShowCaptions" Value="False" />
+    </Properties>
+
+    <Systems>
+        <System Type="Geometry" Lib="SystemGeometry" />
+        <System Type="Graphic" Lib="SystemGraphic">
+            <Properties>
+                <Property Name="ResourceLocation" Path="../media/graphics" Type="FileSystem" Group="farm_scene" Recursive="1"/>
+                <Property Name="WindowName" Value1="Smoke Demo"/>
+                <Property Name="Resolution" Value1="1024" Value2="768"/>
+                <Property Name="ShadowTextureCount" Value1="1"/>
+                <Property Name="ShadowTextureSize" Value1="1024"/>
+                <Property Name="FullScreen" Value1="1"/>
+                <Property Name="VerticalSync" Value1="0"/>
+
+                <!-- Full Screen Anti-Aliasing
+                   Example Type's:
+                      D3DMULTISAMPLE_NONE            =  0,
+                      D3DMULTISAMPLE_NONMASKABLE     =  1,
+                      D3DMULTISAMPLE_2_SAMPLES       =  2,
+                      D3DMULTISAMPLE_4_SAMPLES       =  4,
+                      D3DMULTISAMPLE_16_SAMPLES      = 16,
+                   Quality levels are driver specific. 0 selects default quality level. -->
+                <Property Name="FSAntiAliasing" Value1="4" Value2="0"/>
+            </Properties>
+        </System>
+        <System Type="Audio" Lib="SystemAudio">
+            <Properties>
+                <Property Name="ResourceLocation" Value1="../media/sounds/" Value2="FileSystem" Value3="General"/>
+                <Property Name="MusicVol" Value1="1.0"/>
+                <Property Name="FXVol" Value1="1.0"/>
+            <!--
+            Speaker Mode Values:
+                0 - No speakers
+                1 - Mono
+                2 - Stereo (Default)
+                3 - Surround
+                4 - 5.1
+                5 - 7.1
+            -->
+            <!--Property Name="SpeakerMode" Value1="2"/-->
+            </Properties>
+        </System>
+        <System Type="Input" Lib="SystemInput">
+            <Properties>
+                <Property Name="MoveForward" Key="W" Ctrl="0"/>
+                <Property Name="MoveBack" Key="S" Ctrl="0"/>
+                <Property Name="MoveLeft" Key="A" Ctrl="0"/>
+                <Property Name="MoveRight" Key="D" Ctrl="0"/>
+                <Property Name="MoveUp" Key="R" Ctrl="0"/>
+                <Property Name="MoveDown" Key="F" Ctrl="0"/>
+                <Property Name="ResetView" Key="C" Ctrl="0"/>
+                <Property Name="Pause" Key="PAUSE" Ctrl="0"/>
+                <Property Name="Quit" Key="ESCAPE" Ctrl="0"/>
+                <Property Name="PolygonMode" Key="P" Ctrl="1"/>
+                <Property Name="UseFireHose" Key="SPACE" Ctrl="0" />
+                <Property Name="ShowNormals" Key="N" Ctrl="1"/>
+                <Property Name="ShowTangents" Key="T" Ctrl="1"/>
+                <Property Name="ShowBoundingBox" Key="B" Ctrl="1"/>
+                <Property Name="ShowCaptions" Key="O" Ctrl="1"/>
+                <Property Name="SetThreadCountTo1" Key="1" Ctrl="1"/>
+                <Property Name="SetThreadCountTo2" Key="2" Ctrl="1"/>
+                <Property Name="SetThreadCountTo4" Key="4" Ctrl="1"/>
+                <Property Name="SetThreadCountToMax" Key="X" Ctrl="1"/>
+                <Property Name="ToggleOverlay1" Key="F1" Ctrl="0" />
+                <Property Name="ToggleOverlay2" Key="F2" Ctrl="0" />
+                <Property Name="ToggleOverlay3" Key="F3" Ctrl="0" />
+                <Property Name="ToggleOverlay4" Key="F4" Ctrl="0" />
+                <Property Name="ToggleOverlay5" Key="F5" Ctrl="0" />
+            </Properties>
+        </System>
+        <System Type="PhysicsCollision" Lib="SystemPhysicsCollisionHavok"/>
+        <System Type="ProceduralFire" Lib="SystemProceduralFire"/>
+        <System Type="ProceduralTrees" Lib="SystemProceduralTrees"/>
+        <System Type="AI" Lib="SystemAI"/>
+        <System Type="Explosion" Lib="SystemExplosion"/>
+        <System Type="Water" Lib="SystemWater"/>
+    </Systems>
+
+    <Scenes Startup="Demo">
+        <Scene Name="Demo" CDF="Test"/>
+    </Scenes>
+
+</GlobalDefinition>

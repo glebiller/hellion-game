@@ -1,0 +1,38 @@
+<!--Writen by Hugh Smith summer and fall 2007
+ Part of Smoke Framework implementation for procedural Tree & Fire system.
+
+ Copyright © 2008 Intel Corporation
+ All Rights Reserved
+
+ The sample source code contained or described herein and all documents
+ related to the sample source code ("Material") are owned by Intel Corporation
+ or its suppliers or licensors. Title to the Material remains with Intel Corporation
+ or its suppliers and licensors. The Material may contain trade secrets and
+ proprietary and confidential information of Intel Corporation and its suppliers
+ and licensors, and is protected by worldwide copyright and trade secret laws and
+ treaty provisions. The sample source code is provided AS IS, with no warranties
+ of any kind, express or implied. Except as expressly permitted by the Software
+ license, neither Intel Corporation nor its suppliers assumes any responsibility
+ or liability for any errors or inaccuracies that may appear herein.-->
+<Object Name="FireBall">
+    <Properties SystemType="ProceduralFire" ObjectType="SphereFire">
+        <Property Name="Technique" TechniqueName="FireBall"/>
+        <Property Name="Emitter" EType="Line"/>
+        <Property Name="FPImpulse" Value1="1.0" Value2="1.0" Value3="1.0"/>
+        <Property Name="FPShift" Value1="0.0" Value2="0.0" Value3="0.0"/>
+        <Property Name="FPDensity" Value1="300"/>
+        <Property Name="FPTimePerParticle" Value1="0.0025"/>
+        <Property Name="FPMaxLifeTime" Value1="6.0"/>
+        <Property Name="FPMinLifeTime" Value1="2.0"/>
+        <Property Name="FPMinSize" Value1="20.0"/>
+        <Property Name="FPMaxSize" Value1="30.0"/>
+        <Property Name="HPImpulse" Value1="70.0" Value2="200.0" Value3="70.0"/>
+        <Property Name="HPShift" Value1="0.0" Value2="12.0" Value3="0.0"/>
+        <Property Name="HPDensity" Value1="300"/>
+        <Property Name="HPMinLifeTime" Value1="1.0"/>
+        <Property Name="HPMaxLifeTime" Value1="10.0"/>
+        <Property Name="HPTimePerParticle" Value1="0.002f"/>
+        <Property Name="ShowHP" Value1="0"/>
+        <Property Name="OnFire" Value1="1"/>
+    </Properties>
+</Object>

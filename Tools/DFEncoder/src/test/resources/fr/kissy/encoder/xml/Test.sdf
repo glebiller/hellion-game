@@ -1,0 +1,2479 @@
+<Scene Name="Demo">
+
+  <Properties SystemType="Geometry">
+  </Properties>
+
+  <Properties SystemType="Graphics">
+    <Property Name="AmbientLight" R="0.3" G="0.3" B="0.3"></Property>
+    <!-- 
+         Shadow Value1's:
+         SHADOWTYPE_NONE             = 0
+         SHADOWTYPE_TEXTURE_ADDITIVE = 33 
+     -->
+    <Property Name="Shadows" Value1="0" Value2="0"></Property>
+    <Property Name="ShadowColor" R="0.67451" G="0.564706" B="0.403922"></Property>
+    <Property Name="UseStaticGeom" Value1="0"/>
+    <Property Name="UseInstancedGeom" Value1="1"/>
+    <Property Name="FogColor" R="0.0" G="0.5" B="0.0"></Property>
+	<!--
+	   This is where we initialize the paged geometry system.  There are three sections that need to be in the .cdf in order (The .cdf
+	   is loaded serially).  The first part is here, in the Graphics System.  It loads general information such as the height map, draw
+	   distance and size of terrain.  These parameters will apply to all layers added to the system.  The second portion is in the camera
+	   object, the third are the actual layer objects. The offset parameters adjust terrain calculations if the center of the terrain mesh
+	   is not located at 0,0,0 in world coordinates.
+	-->
+	<!--
+    <Property Name="PagedGeometry"  Heightmap="hp_terrain_heightmap_16bit_4096.png" ResourceGroup="farm_scene" Pagesize="500.0" Drawdistance="10000.0"></Property>
+    <Property Name="PagedGeometryTerrain" Width="81072.1" Length="81686.7" Height="10254.9"></Property>
+	<Property Name="PagedGeometryTerrainOffset" Width="0.0" Length="0.0" Height="-4879.6"></Property>
+	-->
+    <!--
+      Mode - FOG_NONE   = 0
+             FOG_EXP    = 1
+             FOG_EXP2   = 2
+             FOG_LINEAR = 3
+             
+      "Density" only applies to FOG_EXP and FOG_EXP2
+      "Start" and "Stop" only apply to FOG_LINEAR
+    -->
+    <Property Name="Fog" Mode="0" Density="0.0001" Start="20000.0" Stop="35000.0"></Property>
+    <Property Name="Font" FontPath="..//media//fonts" FontName="bluebold.ttf"/>
+  </Properties>
+
+  <Properties SystemType="Audio">
+    <!-- Priority starts at 0 with highest -->
+    <!-- Volume ranges from 0.0 (off) to 1.0 -->
+  </Properties>
+
+  <Properties SystemType="Input">
+  </Properties>
+
+  <Properties SystemType="PhysicsCollision">
+    <Property Name="Gravity" Value1="0.0" Value2="-980.0" Value3="0.0"/>
+    <Property Name="SceneFile" Path="../media/physics/Demo_terrain.hkx" Type="Loose"/>
+    <Property Name="SceneFile" Path="../media/physics/Demo_farterrain.hkx" Type="Loose"/>
+    <!--for BreakOffParts Value1 is break impulse-->
+    <Property Name="SceneFile" Path="../media/physics/Demo_farmhouse.hkx" Type="BreakOffParts" Value1="25000.0"/>    
+  </Properties>
+
+  <Properties SystemType="ProceduralTrees">
+  </Properties>
+
+  <Properties SystemType="ProceduralFire">
+  </Properties>
+
+  <Properties SystemType="AI">
+  </Properties>
+
+  <Properties SystemType="Explosion">
+  </Properties>
+
+  <Properties SystemType="Water">
+  </Properties>
+
+  <Objects>
+    <Object Name="MainCamera">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3534.3621" Value2="0.0" Value3="-391.63849"></Property>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Camera">
+        <!-- The next line locks the camera to use the LookAt position instead of listening to the Input system -->
+        <!--<Property Name="LockCamera" Value1="1"/>-->
+        <!-- Make the camera look at the house --> 
+        <!--<Property Name="LookAt" Value1="-1000" Value2="300" Value3="-2875"/>-->
+        <Property Name="FOVy" Value1="0.523598"></Property>
+        <Property Name="ClipDistances" Value1="5.0" Value2="120000.0"></Property>
+        <!--
+		   The next line (pagedgeometry) is required to associate the camera with the paged geometry module.  This
+		   is the second of three parts.
+		-->
+        <!--<Property Name="PagedGeometry"></Property>-->
+      </Properties>
+      <Properties SystemType="Input">
+        <Property Name="Orientation" Value1="-0.89" Value2="0.2" Value3="0.0"/>
+      </Properties>
+      <!--Comment out this line to disable the CamBot!-->
+      <Properties SystemType="AI" ObjectType ="CamBot"></Properties>
+      <Properties SystemType="Audio">
+        <Property Name="Listener" Value1="1"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0.0" Value2="1000.0" Value3="4000.0"/>
+        <Property Name="SoundFile" Value1="M_loop_05_long.wav" Value2="Looping"/>
+        <Property Name="Priority" Value1="0"/>
+        <Property Name="Volume" Value1="0.03"/>
+      </Properties>
+    </Object>
+
+	<!--
+	   This is the third of three parts needed for the paged geometry.  Here, we are loading two grass layers into the system.
+	   Some of the parameters are mandatory, others are not. Material is mandatory and tells the system which Ogre material to
+	   use.  MapBounds is only mandatory if you are going to be using a density or colormap. It must come before you define those.
+	   The Density field of the Density property is mandatory, the DensityMap field is not.  Please see the Paged Geometry
+	   documentation for details on the other parameters.
+	-->
+	<!--
+    <Object Name="GrassMaterial">
+        <Properties SystemType="Graphics" ObjectType="PagedGeometryLayer">
+            <Property Name="Material" Value1="GrassMaterial"/>
+            <Property Name="MapBounds" Value1="-40536.05" Value2="-40843.35" Value3="40536.05" Value4="40843.35"/>
+            <Property Name="MinSize" Width="200.0" Height="25.0"/>
+            <Property Name="MaxSize" Width="300.0" Height="100.0"/>
+            <Property Name="Animation" Enabled="0" Swaydistribution="0.01" Swaylength="8.0" Swayspeed="0.5"/>
+            <Property Name="Density" Density=".0007" DensityMap="hp_terrain_density_grass.jpg"/>
+            <Property Name="Color" Colormap="hp_terrain_lm.jpg"/>
+            <Property Name="Render" Technique="0" Fade="0"/>
+        </Properties>
+    </Object>
+
+    <Object Name="GrassMaterial2">
+        <Properties SystemType="Graphics" ObjectType="PagedGeometryLayer">
+            <Property Name="Material" Value1="GrassMaterial"/>
+            <Property Name="MapBounds" Value1="-40536.05" Value2="-40843.35" Value3="40536.05" Value4="40843.35"/>
+            <Property Name="MinSize" Width="50.0" Height="25.0"/>
+            <Property Name="MaxSize" Width="90.0" Height="100.0"/>
+            <Property Name="Animation" Enabled="1" Swaydistribution="0.01" Swaylength="8.0" Swayspeed="1.0"/>
+            <Property Name="Density" Density=".0005" DensityMap="hp_terrain_density_grass.jpg"/>
+            <Property Name="Color" Colormap="hp_terrain_lm.jpg"/>
+        </Properties>
+    </Object>
+	-->
+
+    <!-- Performance Windows -->
+      <Object Name="StatWindow">
+        <Properties SystemType="Graphics" ObjectType="StatWindow">
+          <Property Name="Color" Value1="0" Value2="0" Value3="0" Value4="50"/>
+          <Property Name="Position" Value1="0.01" Value2="0.23"/>
+          <Property Name="Size" Value1="0.12" Value2="0.33"/>
+        </Properties>
+        <Properties SystemType="Input" ObjectType="Overlay">
+          <Property Name="FKey" Value1="1" />
+        </Properties>
+      </Object>
+
+      <Object Name="CPUChart">
+        <Properties SystemType="Graphics" ObjectType="CPUChart">
+          <Property Name="Color" Value1="0" Value2="0" Value3="0" Value4="50"/>
+          <Property Name="Position" Value1="0.01" Value2="0.01"/>
+          <Property Name="Size" Value1="0.3" Value2="0.2"/>
+        </Properties>
+        <Properties SystemType="Input" ObjectType="Overlay">
+          <Property Name="FKey" Value1="2" />
+        </Properties>
+      </Object>
+
+      <Object Name="WorkloadWindow">
+        <Properties SystemType="Graphics" ObjectType="WorkloadWindow">
+          <Property Name="Color" Value1="0" Value2="0" Value3="0" Value4="50"/>
+          <Property Name="Position" Value1="0.76" Value2="0.01"/>
+          <Property Name="Size" Value1="0.22" Value2="0.39"/>
+        </Properties>
+        <Properties SystemType="Input" ObjectType="Overlay">
+          <Property Name="FKey" Value1="3" />
+        </Properties>
+      </Object>
+
+    <!-- Lights -->
+      <Object Name="Sun">
+        <Properties SystemType="Graphics" ObjectType="Light">
+          <Property Name="Type" Value1="Point"></Property>
+          <Property Name="Position" Value1="-10359.527" Value2="25641.795" Value3="60803.297"></Property>
+          <Property Name="Diffuse" R="0.862745" G="0.768628" B="0.607843"></Property>
+          <Property Name="Specular" R="0.862745" G="0.768628" B="0.607843"></Property>
+        </Properties>
+      </Object>
+
+    <!-- Sky -->
+      <Object Name="sky">
+        <Properties SystemType="Geometry">
+          <Property Name="Position" Value1="0" Value2="2000" Value3="-0"/>
+          <Property Name="Orientation" Value1="0" Value2="0" Value3="0" Value4="-1"/>
+          <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+        </Properties>
+        <Properties SystemType="Graphics" ObjectType="Mesh">
+          <Property Name="Mesh" Value1="sky.mesh"/>
+          <Property Name="CastShadows" Value1="0"/>
+        </Properties>
+      </Object>
+
+	<!-- Craters -->
+	  <Object Name="crater_00">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="1438.054" Value2="-374.37006" Value3="7057.3545"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="crater_00.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="crater_01">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="2762.209" Value2="-116.53304" Value3="-1913.9415"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="crater_01.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+	  <Object Name="crater_02">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="-6468.1689" Value2="-321.19614" Value3="4827.5063"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="crater_02.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="crater_03">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3998.5652" Value2="-300.52301" Value3="5773.8003"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="crater_03.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <!-- Meteor -->
+
+	  <Object Name="meteor00">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="1429.2266" Value2="-396.38281" Value3="7040.1406"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="meteor00.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="meteor01">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="2825.832" Value2="-127.26563" Value3="-1925.9766"/>
+			  <Property Name="Orientation" Value1="0.49434429" Value2="0.43536872" Value3="-0.44018927" Value4="-0.61017317"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="meteor01.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="meteor02">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="-6486.1406" Value2="-328.78125" Value3="4924.752"/>
+			  <Property Name="Orientation" Value1="0.63970059" Value2="0.3350772" Value3="-0.47232333" Value4="-0.50538802"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="meteor02.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="meteor03">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3989.5039" Value2="-299.65625" Value3="5755.5586"/>
+			  <Property Name="Orientation" Value1="0.7002995" Value2="0.45823506" Value3="0.164638" Value4="-0.5220111"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="meteor03.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+	  <!-- Meteor Smoke -->
+
+	  <Object Name="meteor_smoke00">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+			  <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+			  <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="ParticleSystem">
+			  <Property Name="PSystemScripts" Value1="meteor_smoke00" Value2="sd_meteor_smoke00"></Property>
+		  </Properties>
+	  </Object>
+
+	  <Object Name="meteor_smoke01">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+			  <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+			  <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="ParticleSystem">
+			  <Property Name="PSystemScripts" Value1="meteor_smoke01" Value2="sd_meteor_smoke01"></Property>
+		  </Properties>
+	  </Object>
+
+	  <Object Name="meteor_smoke02">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+			  <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+			  <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="ParticleSystem">
+			  <Property Name="PSystemScripts" Value1="meteor_smoke02" Value2="sd_meteor_smoke02"></Property>
+		  </Properties>
+	  </Object>
+
+	  <Object Name="meteor_smoke03">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+			  <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+			  <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="ParticleSystem">
+			  <Property Name="PSystemScripts" Value1="meteor_smoke03" Value2="sd_meteor_smoke03"></Property>
+		  </Properties>
+	  </Object>
+    <!-- Terrain -->
+        <Object Name="terrain_near">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="terrain_near.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="terrain_far">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="terrain_far.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+	  <!-- Rocking Chair -->
+	  <Object Name="rocking_chair">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="-1246.3704" Value2="40.178314" Value3="-2374.3086"/>
+			  <Property Name="Orientation" Value1="0.054853346" Value2="-0.12551819" Value3="-0.0069507831" Value4="-0.99054933"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="rocking_chair.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+    <!-- Barn -->
+	  <Object Name="barn_foundation">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-140.5685" Value3="1796.6943"/>
+			  <Property Name="Orientation" Value1="-0.49999994" Value2="0.50000006" Value3="-0.5" Value4="-0.49999991"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_foundation.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_trim">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_trim.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+	  
+        <Object Name="barn_panes">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="barn_panes.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        
+
+	  <Object Name="barn_plank_vert">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_plank_vert.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_door">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_door.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_planks_horiz">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_planks_horiz.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_window_frames">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_window_frames.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_rafters">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_rafters.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="barn_roof">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_roof.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+	  <Object Name="fuel_tank">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="2624.5061" Value2="-77.30217" Value3="2440.6506"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="fuel_tank.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+
+
+	  <Object Name="barn_beams">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="3625.7734" Value2="-128.06848" Value3="1546.6943"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="barn_beams.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+    <!-- Windmill -->
+    <Object Name="windmill_well">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3502.2607" Value2="-31.938717" Value3="-4012.1733"></Property>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"></Property>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"></Property>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="windmill_well.mesh"></Property>
+        <Property Name="CastShadows" Value1="1"></Property>
+      </Properties>
+    </Object>
+
+    <Object Name="windmill_wood">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3502.2607" Value2="-31.938717" Value3="-4012.1733"></Property>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"></Property>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"></Property>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="windmill_wood.mesh"></Property>
+        <Property Name="CastShadows" Value1="1"></Property>
+      </Properties>
+    </Object>
+
+    <Object Name="windmill">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3502.2607" Value2="-31.938717" Value3="-4012.1733"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="MeshAnimated">
+        <Property Name="Mesh" Value1="windmill.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+        <Property Name="Skeleton" Value1="windmill_mesh.skeleton"/>
+        <Property Name="Animation" Value1="windmill_animation" Value2="Idle"/>
+      </Properties>
+    </Object>
+
+    <Object Name="windmill_collision_00">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3500" Value2="0" Value3="-4000"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="0" Value2="0" Value3="0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="windmill_collision_00.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Box">
+        <Property Name="Static" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <!-- Powerlines -->
+        <Object Name="power_line">
+          <Properties SystemType="Geometry">
+            <Property Name="Position" Value1="37118.336" Value2="-765.11011" Value3="19724.113"/>
+            <Property Name="Orientation" Value1="-0.21263117" Value2="0.67437965" Value3="-0.67437971" Value4="-0.21263117"/>
+            <Property Name="Scale" Value1="0.65000004" Value2="0.65000004" Value3="0.64999998"/>
+          </Properties>
+          <Properties SystemType="Graphics" ObjectType="Mesh">
+            <Property Name="Mesh" Value1="power_line.mesh"/>
+            <Property Name="CastShadows" Value1="1"/>
+          </Properties>
+        </Object>
+    
+    <!-- Backdrop trees -->
+      <Object Name="backdrop_trees">
+        <Properties SystemType="Geometry">
+          <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+          <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+          <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+        </Properties>
+        <Properties SystemType="Graphics" ObjectType="Mesh">
+          <Property Name="Mesh" Value1="backdrop_trees.mesh"/>
+          <Property Name="CastShadows" Value1="1"/>
+        </Properties>
+      </Object>
+
+	  <Object Name="trees_distant">
+		  <Properties SystemType="Geometry">
+			  <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+			  <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+			  <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+		  </Properties>
+		  <Properties SystemType="Graphics" ObjectType="Mesh">
+			  <Property Name="Mesh" Value1="trees_distant.mesh"/>
+			  <Property Name="CastShadows" Value1="1"/>
+		  </Properties>
+	  </Object>
+
+    <!-- Corral -->
+        <Object Name="corral07">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral07.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral01">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral01.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral02">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral02.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral03">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral03.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral04">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral04.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral05">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral05.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral06">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral06.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+        <Object Name="corral08">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="corral08.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+    
+        <Object Name="corral_collision_00">
+          <Properties SystemType="Geometry">
+            <Property Name="Position" Value1="200" Value2="-400" Value3="4100"/>
+            <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+            <Property Name="Scale" Value1="0" Value2="0" Value3="0"/>
+          </Properties>
+          <Properties SystemType="Graphics" ObjectType="Mesh">
+            <Property Name="Mesh" Value1="corral_collision_00.mesh"/>
+            <Property Name="CastShadows" Value1="1"/>
+          </Properties>
+          <Properties SystemType="PhysicsCollision" ObjectType="Box">
+            <Property Name="Static" Value1="1"/>
+          </Properties>
+        </Object>
+        <Object Name="corral_collision_03">
+          <Properties SystemType="Geometry">
+            <Property Name="Position" Value1="-2100" Value2="-400" Value3="6650"/>
+            <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+            <Property Name="Scale" Value1="0" Value2="0" Value3="0"/>
+          </Properties>
+          <Properties SystemType="Graphics" ObjectType="Mesh">
+            <Property Name="Mesh" Value1="corral_collision_03.mesh"/>
+            <Property Name="CastShadows" Value1="1"/>
+          </Properties>
+          <Properties SystemType="PhysicsCollision" ObjectType="Box">
+            <Property Name="Static" Value1="1"/>
+          </Properties>
+        </Object>
+        <Object Name="corral_collision_02">
+          <Properties SystemType="Geometry">
+            <Property Name="Position" Value1="200" Value2="-400" Value3="9200"/>
+            <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+            <Property Name="Scale" Value1="0" Value2="0" Value3="0"/>
+          </Properties>
+          <Properties SystemType="Graphics" ObjectType="Mesh">
+            <Property Name="Mesh" Value1="corral_collision_02.mesh"/>
+            <Property Name="CastShadows" Value1="1"/>
+          </Properties>
+          <Properties SystemType="PhysicsCollision" ObjectType="Box">
+            <Property Name="Static" Value1="1"/>
+          </Properties>
+        </Object>
+        <Object Name="corral_collision_01">
+          <Properties SystemType="Geometry">
+            <Property Name="Position" Value1="2500" Value2="-400" Value3="6650"/>
+            <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+            <Property Name="Scale" Value1="0" Value2="0" Value3="0"/>
+          </Properties>
+          <Properties SystemType="Graphics" ObjectType="Mesh">
+            <Property Name="Mesh" Value1="corral_collision_01.mesh"/>
+            <Property Name="CastShadows" Value1="1"/>
+          </Properties>
+          <Properties SystemType="PhysicsCollision" ObjectType="Box">
+            <Property Name="Static" Value1="1"/>
+          </Properties>
+        </Object>
+ 
+        <Object Name="sky01">
+            <Properties SystemType="Geometry">
+                <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+                <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+                <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+            </Properties>
+            <Properties SystemType="Graphics" ObjectType="Mesh">
+                <Property Name="Mesh" Value1="sky01.mesh"/>
+                <Property Name="CastShadows" Value1="1"/>
+            </Properties>
+        </Object>
+
+    <!--This is the visual effect for the fire hose that complements the physics/mesh object that puts out the fire.-->
+    <Object Name="FireHose">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0" Value2="0" Value3="-0"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="ParticleSystem">
+        <Property Name="PSystemType" Value1="FireHose"></Property>
+        <Property Name="PSystemScripts" Value1="FireHosePSystem" Value2="FireHoseScript"></Property>
+      </Properties>
+	  <Properties SystemType="Audio">
+		<Property Name="Source" Value1="1"/>
+		<Property Name="Position" Value1="10.0" Value2="0.0" Value3="0.0"/>
+		<Property Name="SoundFile" Value1="hose.wav" Value2="Looping" Value3="Water"/>
+		<Property Name="Priority" Value1="1"/>
+		<Property Name="Volume" Value1="0.1"/>
+	  </Properties>
+    </Object>
+    
+    <!--This is the mesh/physics object used to test collision with and extinguish burning objects.-->
+    <Object Name="WaterBall" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-100.0" Y="100.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="ProceduralFire" ObjectType="ColdParticle">
+        <Property Name="Technique" TechniqueName="WaterParticles"/>
+        <Property Name="Emitter" EType="Line"/>
+        <Property Name="FPImpulse" Value1="1.0" Value2="1.0" Value3="1.0"/>
+        <Property Name="FPShift" Value1="0.0" Value2="0.0" Value3="0.0"/>
+        <Property Name="FPDensity" Value1="600"/>
+        <Property Name="FPTimePerParticle" Value1="0.005"/>
+        <Property Name="FPMaxLifeTime" Value1="4.0"/>
+        <Property Name="FPMinLifeTime" Value1="2.0"/>
+        <Property Name="FPMinSize" Value1="25.0"/>
+        <Property Name="FPMaxSize" Value1="30.0"/>
+        <Property Name="HPImpulse" Value1="70.0" Value2="200.0" Value3="70.0"/>
+        <Property Name="HPShift" Value1="0.0" Value2="12.0" Value3="0.0"/>
+        <Property Name="HPDensity" Value1="300"/>
+        <Property Name="HPMinLifeTime" Value1="1.0"/>
+        <Property Name="HPMaxLifeTime" Value1="10.0"/>
+        <Property Name="HPTimePerParticle" Value1="0.002f"/>
+        <Property Name="ShowHP" Value1="0"/>
+        <Property Name="OnFire" Value1="1"/>
+      </Properties>
+      <Properties SystemType="Water" ObjectType="WaterStream">
+      </Properties>
+    </Object>
+    
+    <!-- Meteors and Fire balls! -->
+     <Object Name="Ball1" ODF="Test">
+       <Properties SystemType="Geometry">
+         <Property Name="Position" Value1="-1950.0" Value2="4310.0" Value3="-3500.0"/>
+         <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+         <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+       </Properties>
+       <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+         <Property Name="Mass" Value1="120.0"/>
+         <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+         <Property Name="LinearVelocity" X="0.0" Y="500.0" Z="1500.0"/>
+         <Property Name="Quality" Value1="2"/>
+       </Properties>
+       <Properties SystemType="Audio" ObjectType="Collision">
+         <Property Name="Source" Value1="1"/>
+         <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+         <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+         <Property Name="Priority" Value1="2"/>
+         <Property Name="Volume" Value1="0.5"/>
+         <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+         <Property Name="CollisionPriority" Value1="0"/>
+         <Property Name="CollisionVolume" Value1="1.0"/>
+       </Properties>
+     </Object>
+    <Object Name="FireBall1" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="Ball2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3850.0" Value2="4530.0" Value3="-3000.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="FireBall2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Ball3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6094.0" Value2="5530.0" Value3="-2450.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.22"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="FireBall3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Ball4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="5580.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse1">
+      <!-- This is for audio collision into the house -->
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="5880.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="wood_collapse.wav"/>
+        <Property Name="CollisionPriority" Value1="1"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse2">
+        <Properties SystemType="Geometry">
+          <Property Name="Position" Value1="6044.0" Value2="5580.0" Value3="-2500.0"/>
+          <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+          <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+        </Properties>
+        <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+          <Property Name="Mass" Value1="80.0"/>
+          <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+          <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+          <Property Name="Quality" Value1="4"/>
+        </Properties>
+        <Properties SystemType="Audio" ObjectType="Collision">
+          <Property Name="Source" Value1="1"/>
+          <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+          <Property Name="CollisionSF" Value1="meteor_barn_collision.wav"/>
+          <Property Name="CollisionPriority" Value1="1"/>
+          <Property Name="CollisionVolume" Value1="1.0"/>
+        </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse3">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="6080.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="wood_creak_01.wav"/>
+        <Property Name="CollisionPriority" Value1="1"/>
+        <Property Name="CollisionVolume" Value1="0.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse4">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="5580.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_large_crash.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse5">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="6180.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="wood_creak_01.wav"/>
+        <Property Name="CollisionPriority" Value1="1"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBallCollapse6">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="6044.0" Value2="6280.0" Value3="-2500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="4"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="wood_creak_01.wav"/>
+        <Property Name="CollisionPriority" Value1="1"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="FireBall4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Ball5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="1598.0" Value2="4000.0" Value3="-400.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="FireBall5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Ball6" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3600.0" Value2="8000.0" Value3="-4100.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="FireBall6" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+
+    <Object Name="Ball7" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="1998.0" Value2="4000.0" Value3="-100.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="FireBall7" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Ball8" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="4200.0" Value2="6500.0" Value3="-2600.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="SoundFile" Value1="meteor_fall.wav" Value2="Looping" Value3="" Value4="CollisionOff"/>
+        <Property Name="Priority" Value1="2"/>
+        <Property Name="Volume" Value1="0.5"/>
+        <Property Name="CollisionSF" Value1="MeteorImpact.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="FireBall8" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    
+    <!-- High pitched very small meteors -->
+    <Object Name="InvisibleBall1">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="2310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall2">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="1320.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall3">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="1310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_crash.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall4">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="2300.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall5">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="2360.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_med_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall6">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="2510.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_crash.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall7">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="3310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall8">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="10310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_med_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall9">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="500.0" Value2="2310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_fall.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+    <Object Name="InvisibleBall10">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3500.0" Value2="6310.0" Value3="1500.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="0.2" Value2="0.2" Value3="0.2"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="120.0"/>
+        <Property Name="Radii" Value1="10.0" Value2="10.0" Value3="10.0"/>
+        <Property Name="LinearVelocity" X="-1500.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio" ObjectType="Collision">
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="10000" Value2="10000" Value3="40000"/>
+        <Property Name="CollisionSF" Value1="meteor_small_crash.wav"/>
+        <Property Name="CollisionPriority" Value1="0"/>
+        <Property Name="CollisionVolume" Value1="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="MiniBall1" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall1" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-2000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-3000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-4000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-5000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall6" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-6000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall6" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall7" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall7" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall8" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-2000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall8" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall9" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-3000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall9" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="MiniBall10" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-4000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall10" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall11" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-4000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall11" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall12" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-1000.0" Value2="-5000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall12" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall13" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall13" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall14" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-2000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall14" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall15" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-3000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall15" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="MiniBall16" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-4000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall16" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall17" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-4000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall17" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall18" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2000.0" Value2="-5000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall18" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall19" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3000.0" Value2="-5000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall19" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    <Object Name="MiniBall20" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3000.0" Value2="-5000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="PhysicsCollision" ObjectType="Sphere">
+        <Property Name="Mass" Value1="80.0"/>
+        <Property Name="Radii" Value1="3.0" Value2="3.0" Value3="3.0"/>
+        <Property Name="LinearVelocity" X="-1700.0" Y="500.0" Z="0.0"/>
+        <Property Name="Quality" Value1="2"/>
+
+      </Properties>
+      <Properties SystemType="Audio">
+        <Property Name="SoundFile" Value1="MedFire.wav" Value2="Looping"/>
+        <Property Name="Listener" Value1="0"/>
+        <Property Name="Source" Value1="1"/>
+        <Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+        <Property Name="Priority" Value1="8"/>
+        <Property Name="Volume" Value1="0.05"/>
+      </Properties>
+      <Properties SystemType="Explosion" ObjectType="MeteorImpact">
+      </Properties>
+    </Object>
+    <Object Name="MiniFireBall20" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="-1000.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="PointList">
+        <Property Name="ProceduralPointList" Value1="1"/>
+        <Property Name="Material" Value1="Trees"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="truck">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="747.61835" Value2="-217.30157" Value3="-304.5589"/>
+        <Property Name="Orientation" Value1="-0.0003480094" Value2="-0.85486954" Value3="-0.038453206" Value4="-0.517416"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="truck.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="coop">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3956.2036" Value2="-34.945328" Value3="-2736.7229"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="coop.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="chicken_wire_03">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3908.8638" Value2="-34.945328" Value3="-2703.0564"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="chicken_wire_03.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="chicken_wire_00">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3908.8638" Value2="-34.945328" Value3="-2703.0564"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="chicken_wire_00.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+    
+    <Object Name="chicken_wire_01">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3908.8638" Value2="-34.945328" Value3="-2703.0564"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="chicken_wire_01.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <Object Name="chicken_wire_02">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3908.8638" Value2="-34.945328" Value3="-2703.0564"/>
+        <Property Name="Orientation" Value1="0" Value2="0" Value3="-0" Value4="-1"/>
+        <Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
+      </Properties>
+      <Properties SystemType="Graphics" ObjectType="Mesh">
+        <Property Name="Mesh" Value1="chicken_wire_02.mesh"/>
+        <Property Name="CastShadows" Value1="1"/>
+      </Properties>
+    </Object>
+
+    <!-- AI - Start -->
+    <Object Name="Horse0" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="600" Value2="0" Value3="3800"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Horse1" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="500" Value2="0" Value3="3300"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Horse2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="700" Value2="0" Value3="3550"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Horse3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-600" Value2="0" Value3="3800"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Horse4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-500" Value2="0" Value3="3300"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Horse5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-700" Value2="0" Value3="3550"/>
+        <Property Name="Orientation" Value1="0" Value2="0.5" Value3="0" Value4="-1"/>
+        <Property Name="Scale" Value1="1.0" Value2="1.0" Value3="1.0"/>
+      </Properties>
+    </Object>
+
+    <!-- Super fire chicken! Extra cripsy and extra cool -->
+    <Object Name="Chicken0" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="0.0" Value2="0.0" Value3="0.0"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+    
+    <!-- Chickens near the coop -->
+    <Object Name="Chicken1" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3351.47" Value2="0.0" Value3="-2542.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken2" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3351.47" Value2="0.0" Value3="-2442.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken3" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3351.47" Value2="0.0" Value3="-2645.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken4" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3451.47" Value2="0.0" Value3="-2642.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken5" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3251.47" Value2="0.0" Value3="-2602.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken6" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-3051.47" Value2="0.0" Value3="-2842.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken7" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2951.47" Value2="0.0" Value3="-2842.84"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+    
+    <!-- Chickens in front of the house -->
+    <Object Name="Chicken8" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2409.15" Value2="-175.0" Value3="759.41"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken9" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2509.15" Value2="-175.0" Value3="859.41"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken10" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="-2309.15" Value2="-175.0" Value3="859.41"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <!-- Chickens near the corral -->
+    <Object Name="Chicken16" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3336.08" Value2="-170.0" Value3="3370.38"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <Object Name="Chicken17" ODF="Test">
+      <Properties SystemType="Geometry">
+        <Property Name="Position" Value1="3336.08" Value2="-170.0" Value3="3670.38"/>
+        <Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0" Value4="1.0"/>
+        <Property Name="Scale" Value1="100.0" Value2="100.0" Value3="100.0"/>
+      </Properties>
+    </Object>
+
+    <!-- AI - End -->
+    
+  </Objects>
+
+  <Include SDF="Include"/>
+
+<Links>
+  <Link Subject="Ball1" Observer="FireBall1" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball1" Observer="FireBall1" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball1" Observer="FireBall1" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball2" Observer="FireBall2" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball2" Observer="FireBall2" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball2" Observer="FireBall2" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball3" Observer="FireBall3" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball3" Observer="FireBall3" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball3" Observer="FireBall3" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball4" Observer="FireBall4" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball4" Observer="FireBall4" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball4" Observer="FireBall4" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball5" Observer="FireBall5" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball5" Observer="FireBall5" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball5" Observer="FireBall5" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball6" Observer="FireBall6" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball6" Observer="FireBall6" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball6" Observer="FireBall6" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball7" Observer="FireBall7" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball7" Observer="FireBall7" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball7" Observer="FireBall7" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball8" Observer="FireBall8" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball8" Observer="FireBall8" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="Ball8" Observer="FireBall8" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+
+  <!--Links to hook the invisible water ball mesh to the camera which governs where the water impacted and extinguish burning elements.-->
+  <Link Subject="MainCamera" Observer="WaterBall" SubjectSystem="Graphics" ObserverSystem="Water"/><!--Get camera position and orientation updates-->
+  <Link Subject="MainCamera" Observer="WaterBall" SubjectSystem="Input" ObserverSystem="Water"/><!--Get hotkey event to turn fire impact element on/off-->
+
+  <!--Links to hook the Ogre particle system to the camera for position and orientation updates.-->
+  <Link Subject="MainCamera" Observer="FireHose" SubjectSystem="Graphics" ObserverSystem="Graphics"/><!--Get camera position and orientation updates-->
+  <Link Subject="MainCamera" Observer="FireHose" SubjectSystem="Input" ObserverSystem="Graphics"/><!--Get hotkey event to turn fire hose visuals on/off-->
+  <Link Subject="MainCamera" Observer="FireHose" SubjectSystem="Graphics" ObserverSystem="Audio"/><!--Get camera position and orientation updates-->
+  <Link Subject="MainCamera" Observer="FireHose" SubjectSystem="Input" ObserverSystem="Audio"/><!--Get hotkey event to turn fire hose sound fx on/off-->
+  
+  <!--Links to hook up the meteor impact fragments to the mini fire balls surrounding them.-->
+  <Link Subject="MiniBall1" Observer="MiniFireBall1" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall1" Observer="MiniFireBall1" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall1" Observer="MiniFireBall1" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall2" Observer="MiniFireBall2" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall2" Observer="MiniFireBall2" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall2" Observer="MiniFireBall2" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall3" Observer="MiniFireBall3" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall3" Observer="MiniFireBall3" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall3" Observer="MiniFireBall3" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall4" Observer="MiniFireBall4" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall4" Observer="MiniFireBall4" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall4" Observer="MiniFireBall4" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall5" Observer="MiniFireBall5" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall5" Observer="MiniFireBall5" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall5" Observer="MiniFireBall5" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall6" Observer="MiniFireBall6" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall6" Observer="MiniFireBall6" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall6" Observer="MiniFireBall6" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall7" Observer="MiniFireBall7" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall7" Observer="MiniFireBall7" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall7" Observer="MiniFireBall7" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall8" Observer="MiniFireBall8" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall8" Observer="MiniFireBall8" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall8" Observer="MiniFireBall8" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall9" Observer="MiniFireBall9" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall9" Observer="MiniFireBall9" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall9" Observer="MiniFireBall9" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall10" Observer="MiniFireBall10" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall10" Observer="MiniFireBall10" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall10" Observer="MiniFireBall10" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall11" Observer="MiniFireBall11" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall11" Observer="MiniFireBall11" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall11" Observer="MiniFireBall11" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall12" Observer="MiniFireBall12" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall12" Observer="MiniFireBall12" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall12" Observer="MiniFireBall12" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall13" Observer="MiniFireBall13" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall13" Observer="MiniFireBall13" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall13" Observer="MiniFireBall13" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall14" Observer="MiniFireBall14" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall14" Observer="MiniFireBall14" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall14" Observer="MiniFireBall14" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall15" Observer="MiniFireBall15" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall15" Observer="MiniFireBall15" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall15" Observer="MiniFireBall15" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall16" Observer="MiniFireBall16" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall16" Observer="MiniFireBall16" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall16" Observer="MiniFireBall16" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall17" Observer="MiniFireBall17" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall17" Observer="MiniFireBall17" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall17" Observer="MiniFireBall17" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall18" Observer="MiniFireBall18" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall18" Observer="MiniFireBall18" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall18" Observer="MiniFireBall18" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall19" Observer="MiniFireBall19" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall19" Observer="MiniFireBall19" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall19" Observer="MiniFireBall19" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall20" Observer="MiniFireBall20" SubjectSystem="Geometry" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall20" Observer="MiniFireBall20" SubjectSystem="Graphics" ObserverSystem="ProceduralFire"/>
+  <Link Subject="MiniBall20" Observer="MiniFireBall20" SubjectSystem="PhysicsCollision" ObserverSystem="ProceduralFire"/>
+</Links>
+
+</Scene>

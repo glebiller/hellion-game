@@ -1,0 +1,39 @@
+option java_package = "fr.kissy.encoder.proto";
+
+option java_outer_classname = "SdfProto";
+
+option java_generic_services = false;
+
+package Proto;
+
+import "property.proto";
+
+message Sdf {
+    message SystemProperties {
+        required string systemType = 10;
+        repeated Property properties = 11;
+    }
+
+    message ObjectProperties {
+        required string systemType = 20;
+        optional string objectType = 21;
+        repeated Property properties = 22;
+    }
+
+    message Object {
+        required string name = 30;
+        repeated ObjectProperties objectProperties = 31;
+    }
+
+    message Link {
+        required string subject = 40;
+        required string observer = 41;
+        required string subjectSystem = 42;
+        required string observerSystem = 43;
+    }
+
+    required string name = 1;
+    repeated SystemProperties systemProperties = 2;
+    repeated Object objects = 3;
+    repeated Link links = 4;
+}

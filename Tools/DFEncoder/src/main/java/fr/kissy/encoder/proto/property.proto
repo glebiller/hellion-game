@@ -1,0 +1,12 @@
+option java_package = "fr.kissy.encoder.proto";
+
+option java_outer_classname = "PropertyProto";
+
+option java_generic_services = false;
+
+package Proto;
+
+message Property {
+    required string name = 1;
+    repeated string value = 2;
+}

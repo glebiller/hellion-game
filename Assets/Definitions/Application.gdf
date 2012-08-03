@@ -1,0 +1,68 @@
+<GlobalDefinition>
+	<Properties>
+		<Property Name="Framework::Units" Value="0.01"/>
+		<Property Name="Framework::DebugWindow" Value="False"/>
+		<Property Name="Scheduler::Benchmarking" Value="False"/>
+		<Property Name="TaskManager::Threads" Value="0"/>
+		<Property Name="TaskManager::TPEventsForTasks" Value="False"/>
+		<Property Name="TaskManager::TPEventsForJobs" Value="False"/>
+		<Property Name="TaskManager::TPEventsForSynchronize" Value="False"/>
+		<Property Name="Physics::Parallel" Value="True"/>
+		<Property Name="AI::Parallel" Value="True"/>
+		<Property Name="AI::SubTasks" Value="4"/>
+	</Properties>
+	<Systems>
+		<!--<System Type="AI" Lib="AISystem"/>-->
+		<!--<System Type="Audio" Lib="AudioSystem">
+			<Properties>
+				<Property Name="ResourceLocation" Value1="../Media/Audio/" Value2="FileSystem" Value3="General"/>
+				<Property Name="MusicVol" Value1="1.0"/>
+				<Property Name="FXVol" Value1="1.0"/>
+				<! - - Speaker Mode Values:
+					0 - No speakers
+					1 - Mono
+					2 - Stereo (Default)
+					3 - Surround
+					4 - 5.1
+					5 - 7.1 - - >
+				<Property Name="SpeakerMode" Value1="2"/>
+			</Properties>
+		</System>-->
+		<System Type="Geometry" Lib="GeometrySystem"/>
+		<System Type="Graphic" Lib="GraphicSystem">
+			<Properties>
+                <Property Name="ResourceLocation" Value1="../Media/Graphic/default" Value2="FileSystem" Value3="Default" Value4="0"/>
+				<Property Name="WindowName" Value1="Smoke Demo"/>
+				<Property Name="Resolution" Value1="1024" Value2="768"/>
+				<Property Name="ShadowTextureCount" Value1="1"/>
+				<Property Name="ShadowTextureSize" Value1="1024"/>
+				<Property Name="FullScreen" Value1="0"/>
+				<Property Name="VerticalSync" Value1="0"/>
+				<!-- Full Screen Anti-Aliasing
+					Example Type's: 
+					D3DMULTISAMPLE_NONE            =  0,
+					D3DMULTISAMPLE_NONMASKABLE     =  1,
+					D3DMULTISAMPLE_2_SAMPLES       =  2,
+					D3DMULTISAMPLE_4_SAMPLES       =  4,
+					D3DMULTISAMPLE_16_SAMPLES      = 16,          
+					Quality levels are driver specific. 0 selects default quality level. -->
+				<Property Name="FSAntiAliasing" Type="4" Quality="0"/>
+			</Properties>
+		</System>
+		<System Type="Input" Lib="InputSystem">
+			<Properties>
+				<Property Name="MoveForward" Value1="W" Value2="0"/>
+				<Property Name="MoveBack" Value1="S" Value2="0"/>
+				<Property Name="MoveLeft" Value1="A" Value2="0"/>
+				<Property Name="MoveRight" Value1="D" Value2="0"/>
+				<Property Name="Quit" Value1="ESCAPE" Value2="0"/>
+				<Property Name="PolygonMode" Value1="P" Value2="1"/>
+			</Properties>
+		</System>
+		<!--<System Type="Network" Lib="NetworkSystem"/>-->
+		<System Type="Physic" Lib="PhysicSystem"/>
+	</Systems>
+	<Scenes Startup="Main">
+		<Scene Name="Main" CDF="Main"/>
+	</Scenes>
+</GlobalDefinition>

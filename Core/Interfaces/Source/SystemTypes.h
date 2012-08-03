@@ -1,0 +1,232 @@
+// Copyright � 2008-2009 Intel Corporation
+// All Rights Reserved
+//
+// Permission is granted to use, copy, distribute and prepare derivative works of this
+// software for any purpose and without fee, provided, that the above copyright notice
+// and this statement appear in all copies.  Intel makes no representations about the
+// suitability of this software for any purpose.  THIS SOFTWARE IS PROVIDED "AS IS."
+// INTEL SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, AND ALL LIABILITY,
+// INCLUDING CONSEQUENTIAL AND OTHER INDIRECT DAMAGES, FOR THE USE OF THIS SOFTWARE,
+// INCLUDING LIABILITY FOR INFRINGEMENT OF ANY PROPRIETARY RIGHTS, AND INCLUDING THE
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  Intel does not
+// assume any responsibility for any errors which may appear in this software nor any
+// responsibility to update it.
+
+#pragma once
+
+#pragma intrinsic(_BitScanForward)
+
+#include <DataTypes.h>
+
+//////////////////////////////////////////////////////////////////////////
+/// <summary>
+///     The System namespace contains meta-data about the various sytems,
+///     and various enums, datatypes and helper functions for system types.
+/// </summary>
+//////////////////////////////////////////////////////////////////////////
+namespace System {
+    enum Components {
+        System, Scene, Object, Task
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    ///     An int enum, used to index the types of systems.
+    ///     Custom systems do not have predefined types.  Their types are made with
+    ///     System::Types::MakeCustom(), so they're not listed here.
+    /// </summary>
+    /// <seealso cref="System::Types::MakeCustom()"/>
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    enum TypeIndices {
+        // Standard types
+        NotUsed = 0,
+        Generic,
+        Audio,
+        Geometry,
+        Graphic,
+        Input,
+        Network,
+        Physic,
+
+        /*
+        AI,
+        Animation,
+        Scripting,
+        Explosion,
+        Water,
+        */
+
+        // Custom indices are not fixed, so do not belong here.
+
+        MaxIndex
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    ///     The Types namespace contains specifics about the system types.
+    /// </summary>
+    //////////////////////////////////////////////////////////////////////////
+    namespace Types {
+
+        // Disabling the warning for using the non-standard scope operator with enums.
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4482 )
+#endif
+        // A bit mask of the different systems available.  Not all need to be actual
+        // systems.  Custom systems can identify themselves by setting their bit in
+        // the upper 16-bits, and can use the MakeCustom() function to make a custom
+        // type ID.
+        static const u32 Null                   = 0;
+        static const u32 Generic                = (1 << System::TypeIndices::Generic);
+        static const u32 Audio                  = (1 << System::TypeIndices::Audio);
+        static const u32 Geometry               = (1 << System::TypeIndices::Geometry);
+        static const u32 Graphic                = (1 << System::TypeIndices::Graphic);
+        static const u32 Input                  = (1 << System::TypeIndices::Input);
+        static const u32 Network                = (1 << System::TypeIndices::Network);
+        static const u32 Physic                 = (1 << System::TypeIndices::Physic);
+
+        /*
+        static const u32 AI                     = (1 << System::TypeIndices::AI);
+        static const u32 Animation              = (1 << System::TypeIndices::Animation);
+        static const u32 Scripting              = (1 << System::TypeIndices::Scripting);
+        static const u32 Explosion              = (1 << System::TypeIndices::Explosion);
+        static const u32 Water                  = (1 << System::TypeIndices::Water);
+        */
+
+        // If you extend this list to add a new system, also update the rest of the type-related
+        // lists in this file as well as the PerformanceHints list in the TaskManager.
+
+        static const u32 All                    = static_cast<u32>(-1);
+        static const u32 MAX                    = 32;
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+        //////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        ///     Get the index of the system with the given type ID.  Useful for
+        ///     looking up indexed properties.
+        /// </summary>
+        /// <remarks>
+        ///     This function works on both predefined and custom system type IDs.
+        /// </remarks>
+        /// <param name="SystemType">u32 - The type ID of a system.</param>
+        /// <returns>u32 - Index of this system.</returns>
+        //////////////////////////////////////////////////////////////////////////
+        __forceinline u32 GetIndex(u32 SystemType) {
+            u32 Index = All;
+#ifdef _MSC_VER
+            _BitScanForward((unsigned long*)&Index, SystemType);
+#endif
+            return Index;
+        };
+
+        typedef u32 BitMask;
+    }
+    typedef u32 Type;
+
+    //////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    ///     Plaintext names for the predefined systems, useful while debugging.
+    /// </summary>
+    //////////////////////////////////////////////////////////////////////////
+    namespace Names {
+        static pcstr Audio                      = "Audio";
+        static pcstr Geometry                   = "Geometry";
+        static pcstr Graphic                    = "Graphic";
+        static pcstr Input                      = "Input";
+        static pcstr Network                    = "Network";
+        static pcstr Physic                     = "Physic";
+
+        /*
+        static pcstr AI                         = "AI";
+        static pcstr Animation                  = "Animation";
+        static pcstr Scripting                  = "Scripting";
+        static pcstr Explosion                  = "Explosion";
+        static pcstr Water                      = "Water";
+        */
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    ///     Defines the different changes as a bit mask that the systems can request
+    ///     for other systems to perform.
+    ///     Custom changes are not allowed.
+    /// </summary>
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    namespace Changes {
+        static const u32 None                   = 0;
+
+        namespace Generic {
+            static const u32 CreateObject       = (1 <<  0);
+            static const u32 DeleteObject       = (1 <<  1);
+            static const u32 ExtendObject       = (1 <<  2);
+            static const u32 UnextendObject     = (1 <<  3);
+            static const u32 All                = CreateObject | DeleteObject | ExtendObject | UnextendObject;
+        }
+
+        /*
+        namespace AI
+        {
+            static const u32 Behavior           = (1 << 25);
+            static const u32 Velocity           = (1 << 26);
+        }
+        */
+
+        namespace Audio {
+
+        }
+
+        namespace Geometry {
+            static const u32 Position           = (1 <<  4);
+            static const u32 Orientation        = (1 <<  5);
+            static const u32 Scale              = (1 <<  6);
+            static const u32 All                = Position | Orientation | Scale;
+        }
+
+        namespace Graphics {
+            static const u32 IndexDecl          = (1 <<  7);
+            static const u32 VertexDecl         = (1 <<  8);
+            static const u32 IndexBuffer        = (1 <<  9);
+            static const u32 VertexBuffer       = (1 << 10);
+            static const u32 AABB               = (1 << 11);
+            static const u32 AllMesh            = IndexDecl | VertexDecl | AABB | IndexBuffer | VertexBuffer;
+            static const u32 ParticlesDecl      = (1 << 12);
+            static const u32 Particles          = (1 << 13);
+            static const u32 AllParticles       = ParticlesDecl | Particles;
+            static const u32 Animation          = (1 << 14);
+            static const u32 GUI                = (1 << 15);
+            static const u32 All                = AllMesh | AllParticles;
+        }
+
+        namespace Input {
+            static const u32 Velocity           = (1 << 16);
+        }
+
+        namespace Physics {
+            static const u32 Position           = (1 << 17);
+        }
+
+        /*
+        namespace POI
+        {
+            static const u32 Area               = (1 << 21);
+            static const u32 Contact            = (1 << 22);
+            static const u32 Target             = (1 << 23);
+            static const u32 Intersection       = (1 << 24);
+        }
+
+        */
+
+        static const u32 Link                   = (1 << 18);
+        static const u32 ParentLink             = (1 << 19);
+        static const u32 Custom                 = (static_cast<u32>(1) << 20);
+
+        static const u32 All                    = static_cast<u32>(-1);
+
+        typedef u32 BitMask;
+    }
+    typedef u32 Change;
+
+}

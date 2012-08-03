@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Action\OISBAction.h" />
+    <ClInclude Include="Source\Action\OISBAnalogAxisAction.h" />
+    <ClInclude Include="Source\Action\OISBSequenceAction.h" />
+    <ClInclude Include="Source\Action\OISBTriggerAction.h" />
+    <ClInclude Include="Source\Device\OISBDevice.h" />
+    <ClInclude Include="Source\Device\OISBJoyStick.h" />
+    <ClInclude Include="Source\Device\OISBKeyboard.h" />
+    <ClInclude Include="Source\Device\OISBMouse.h" />
+    <ClInclude Include="Source\OISB.h" />
+    <ClInclude Include="Source\OISBActionSchema.h" />
+    <ClInclude Include="Source\OISBAnalogEmulation.h" />
+    <ClInclude Include="Source\OISBBindable.h" />
+    <ClInclude Include="Source\OISBBinding.h" />
+    <ClInclude Include="Source\OISBGlobal.h" />
+    <ClInclude Include="Source\OISBPropertySet.h" />
+    <ClInclude Include="Source\OISBString.h" />
+    <ClInclude Include="Source\OISBSystem.h" />
+    <ClInclude Include="Source\State\OISBAnalogAxisState.h" />
+    <ClInclude Include="Source\State\OISBDigitalState.h" />
+    <ClInclude Include="Source\State\OISBState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Action\OISBAction.cpp" />
+    <ClCompile Include="Source\Action\OISBAnalogAxisAction.cpp" />
+    <ClCompile Include="Source\Action\OISBSequenceAction.cpp" />
+    <ClCompile Include="Source\Action\OISBTriggerAction.cpp" />
+    <ClCompile Include="Source\Device\OISBDevice.cpp" />
+    <ClCompile Include="Source\Device\OISBJoyStick.cpp" />
+    <ClCompile Include="Source\Device\OISBKeyboard.cpp" />
+    <ClCompile Include="Source\Device\OISBMouse.cpp" />
+    <ClCompile Include="Source\OISBActionSchema.cpp" />
+    <ClCompile Include="Source\OISBAnalogEmulation.cpp" />
+    <ClCompile Include="Source\OISBBindable.cpp" />
+    <ClCompile Include="Source\OISBBinding.cpp" />
+    <ClCompile Include="Source\OISBPropertySet.cpp" />
+    <ClCompile Include="Source\OISBSystem.cpp" />
+    <ClCompile Include="Source\State\OISBAnalogAxisState.cpp" />
+    <ClCompile Include="Source\State\OISBDigitalState.cpp" />
+    <ClCompile Include="Source\State\OISBState.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FF4B2C2F-C16E-456E-AC21-8BC057FB934D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OISB</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>Build\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OISB_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(OGRE_HOME)\include\OIS;$(OGRE_HOME)\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Action">
+      <UniqueIdentifier>{55564bac-10e8-470b-afc1-ef0df388670a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\State">
+      <UniqueIdentifier>{cade5fc6-3f10-4a80-b6cd-37cc188bb20f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Device">
+      <UniqueIdentifier>{65f35b57-4648-49e0-b1fb-2e64427fe67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Action">
+      <UniqueIdentifier>{7826020e-5855-4fb5-aa57-68bdaa20aaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Device">
+      <UniqueIdentifier>{aab8041f-947d-423e-b5bd-09b28a1b665f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\State">
+      <UniqueIdentifier>{9e4961e5-d462-41a0-940d-52616be47118}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\OISB.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBActionSchema.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBAnalogEmulation.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBBindable.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBBinding.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBGlobal.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBPropertySet.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBString.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\OISBSystem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Action\OISBAction.h">
+      <Filter>Fichiers d%27en-tête\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Action\OISBAnalogAxisAction.h">
+      <Filter>Fichiers d%27en-tête\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Action\OISBSequenceAction.h">
+      <Filter>Fichiers d%27en-tête\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Action\OISBTriggerAction.h">
+      <Filter>Fichiers d%27en-tête\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Device\OISBDevice.h">
+      <Filter>Fichiers d%27en-tête\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Device\OISBJoyStick.h">
+      <Filter>Fichiers d%27en-tête\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Device\OISBKeyboard.h">
+      <Filter>Fichiers d%27en-tête\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Device\OISBMouse.h">
+      <Filter>Fichiers d%27en-tête\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\State\OISBAnalogAxisState.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\State\OISBDigitalState.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\State\OISBState.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\OISBActionSchema.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OISBAnalogEmulation.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OISBBindable.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OISBBinding.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OISBPropertySet.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\OISBSystem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\State\OISBState.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\State\OISBDigitalState.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\State\OISBAnalogAxisState.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Device\OISBMouse.cpp">
+      <Filter>Fichiers sources\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Device\OISBKeyboard.cpp">
+      <Filter>Fichiers sources\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Device\OISBJoyStick.cpp">
+      <Filter>Fichiers sources\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Device\OISBDevice.cpp">
+      <Filter>Fichiers sources\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Action\OISBAction.cpp">
+      <Filter>Fichiers sources\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Action\OISBAnalogAxisAction.cpp">
+      <Filter>Fichiers sources\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Action\OISBSequenceAction.cpp">
+      <Filter>Fichiers sources\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Action\OISBTriggerAction.cpp">
+      <Filter>Fichiers sources\Action</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

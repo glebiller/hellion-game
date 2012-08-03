@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers sources\VClouds">
+      <UniqueIdentifier>{0f172120-fef9-4d8f-b512-8076b18221ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\VClouds">
+      <UniqueIdentifier>{c9968a26-6381-4a77-b4f2-856e30bba1c3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\AtmosphereManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BasicController.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CloudsManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ColorGradient.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GPUManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MoonManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Prerequisites.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SkyX.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VCloudsManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\DataManager.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\Ellipsoid.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\FastFakeRandom.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\GeometryBlock.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\GeometryManager.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\Lightning.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\LightningManager.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VClouds\VClouds.cpp">
+      <Filter>Fichiers sources\VClouds</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\AtmosphereManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BasicController.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CloudsManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ColorGradient.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GPUManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MoonManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Prerequisites.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SkyX.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VCloudsManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\DataManager.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\Ellipsoid.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\FastFakeRandom.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\GeometryBlock.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\GeometryManager.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\Lightning.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\LightningManager.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VClouds\VClouds.h">
+      <Filter>Fichiers d%27en-tête\VClouds</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

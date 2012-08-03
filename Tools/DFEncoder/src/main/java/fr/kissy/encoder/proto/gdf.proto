@@ -1,0 +1,27 @@
+option java_package = "fr.kissy.encoder.proto";
+
+option java_outer_classname = "GdfProto";
+
+option java_generic_services = false;
+
+package Proto;
+
+import "property.proto";
+
+message Gdf {
+    message System {
+        required string type = 10;
+        required string lib = 11;
+        repeated Property properties = 12;
+    }
+
+    message Scene {
+        required string name = 20;
+        required string sdf = 21;
+    }
+
+    required string startupScene = 1;
+    repeated Property properties = 2;
+    repeated System systems = 3;
+    repeated Scene scenes = 4;
+}
