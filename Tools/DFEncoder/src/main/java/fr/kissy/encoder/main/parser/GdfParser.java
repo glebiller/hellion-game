@@ -23,8 +23,8 @@ public class GdfParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public GdfParser(String xmlPath) throws XMLParseException {
-        super(xmlPath);
+    public GdfParser(String xmlPath, String outputPath) throws XMLParseException {
+        super(xmlPath, outputPath);
     }
 
     /**

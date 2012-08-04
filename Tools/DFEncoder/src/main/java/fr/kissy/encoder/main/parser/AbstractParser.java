@@ -16,16 +16,19 @@ public abstract class AbstractParser {
     protected GeneratedMessage.Builder builder;
     protected boolean parsed;
     protected File xmlFile;
+    protected File outputFile;
 
     /**
      * Default constructor.
      *
      * @param xmlPath The path to the XML file.
+     * @param outputPath The path to output the bin file.
      * @throws javax.management.modelmbean.XMLParseException The exception.
      */
-    public AbstractParser(String xmlPath) throws XMLParseException {
+    public AbstractParser(String xmlPath, String outputPath) throws XMLParseException {
         parsed = false;
         xmlFile = new File(xmlPath);
+        outputFile = new File(outputPath);
         AssertUtils.makeTest(xmlFile.exists() && xmlFile.canRead(),
                 "The xml file " + xmlFile.getAbsolutePath() + " does not exists or cannot be read.");
     }
@@ -59,7 +62,7 @@ public abstract class AbstractParser {
             parse();
         }
 
-        File proto = new File("..\\Debug\\" + xmlFile.getName() + ".bin");
+        File proto = new File(outputFile.getAbsolutePath() + "/" + xmlFile.getName() + ".bin");
         File parent = new File(proto.getParent());
         
         if (!parent.exists()) {

@@ -21,8 +21,8 @@ public class OdfParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public OdfParser(String xmlPath, SdfProto.Sdf.Object.Builder builder) throws XMLParseException {
-        super(xmlPath);
+    public OdfParser(String xmlPath, String outputPath, SdfProto.Sdf.Object.Builder builder) throws XMLParseException {
+        super(xmlPath, outputPath);
         this.builder = builder;
     }
 

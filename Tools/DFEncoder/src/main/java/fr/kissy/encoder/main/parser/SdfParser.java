@@ -30,16 +30,16 @@ public class SdfParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public SdfParser(String xmlPath, List<String> systems) throws XMLParseException {
-        super(xmlPath);
+    public SdfParser(String xmlPath, String outputPath, List<String> systems) throws XMLParseException {
+        super(xmlPath, outputPath);
         this.systems = systems;
     }
 
     /**
      * @inheritDoc
      */
-    public SdfParser(String xmlPath, List<String> systems, boolean include) throws XMLParseException {
-        this(xmlPath, systems);
+    public SdfParser(String xmlPath, String outputPath, List<String> systems, boolean include) throws XMLParseException {
+        this(xmlPath, outputPath, systems);
         this.include = include;
     }
 
@@ -99,7 +99,7 @@ public class SdfParser extends AbstractParser {
      */
     private void parseInclude(Element node) throws XMLParseException {
         SdfParser includeParser = new SdfParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
-                systems, true);
+                outputFile.getAbsolutePath(), systems, true);
         SdfProto.Sdf.Builder builder = (SdfProto.Sdf.Builder) includeParser.getBuilder();
         //getSdfBuidler().addAllSystemProperties(builder.getSystemPropertiesList());
         // TODO make system properties update correctly
@@ -159,7 +159,8 @@ public class SdfParser extends AbstractParser {
             // ODF : odf properties will be overridden by object properties
             String odf = objectElement.getAttribute("ODF");
             if (StringUtils.isNotEmpty(odf)) {
-                OdfParser odfParser = new OdfParser(xmlFile.getParent() + "\\"  + odf + ".odf", objectBuilder);
+                OdfParser odfParser = new OdfParser(xmlFile.getParent() + "\\"  + odf + ".odf",
+                        outputFile.getAbsolutePath(), objectBuilder);
                 try {
                     odfParser.writeBuilder();
                 } catch (IOException ignored) {}

@@ -11,6 +11,9 @@
 *.la
 *.a
 
+# C++
+Build
+
 # Java
 Target
 
