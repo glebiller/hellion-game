@@ -14,24 +14,17 @@
 
 #pragma once
 
-#include <stdarg.h>
-#include <stdio.h>
+#include <cstdarg>
+#include <cstdio>
 
 #include "DataTypes.h"
 
-#ifdef _DEBUG
-#define DEBUG_BUILD
-#endif
+#include "boost\thread\mutex.hpp"
 
 #define LOG_ACTUAL( x ) va_list ArgList;                                   \
                         va_start( ArgList, Format );                       \
                         Debug::GetDebugger()->Log( (x), Format, ArgList ); \
                         va_end( ArgList );
-
-// Forward declares
-struct _RTL_CRITICAL_SECTION;
-typedef _RTL_CRITICAL_SECTION* PRTL_CRITICAL_SECTION;
-typedef PRTL_CRITICAL_SECTION LPCRITICAL_SECTION;
 
 /**
  * Data structure for log files
@@ -80,7 +73,7 @@ namespace Debug {
              *
              * @param	bLogging	true to logging.
              */
-            Debugger(Bool bLogging);
+            Debugger(bool bLogging);
 
             /**
              * Destructor.
@@ -105,13 +98,9 @@ namespace Debug {
             void Log(LogType::LogType Type, const char* Format, va_list ArgList);
 
         private:
-
-            Bool m_bLogging;
+            boost::mutex mutex;
+            bool m_bLogging;
             LogFile m_LogFiles[ LogType::e_LogTypeCount ];
-
-#if defined ( WIN32 ) || defined ( WIN64 )
-            LPCRITICAL_SECTION m_CsFileWrite;  // Critical section for writing to logs
-#endif
     };
 
     /**
@@ -135,7 +124,7 @@ namespace Debug {
      *
      * @param	bLogging	(optional) the logging.
      */
-    inline void Startup(Bool bLogging = False) {
+    inline void Startup(bool bLogging = false) {
         s_Debugger = new Debugger(bLogging);
     }
 
@@ -180,56 +169,72 @@ namespace Debug {
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogAI(const char* Format, ...)        { LOG_ACTUAL(LogType::e_AI);        };
+    inline void LogAI(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_AI);
+    };
 
     /**
      * Logs an animation.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogAnimation(const char* Format, ...) { LOG_ACTUAL(LogType::e_Animation); };
+    inline void LogAnimation(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Animation);
+    };
 
     /**
      * Logs an audio.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogAudio(const char* Format, ...)     { LOG_ACTUAL(LogType::e_Audio);     };
+    inline void LogAudio(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Audio);
+    };
 
     /**
      * Logs a geometry.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogGeometry(const char* Format, ...)  { LOG_ACTUAL(LogType::e_Geometry);  };
+    inline void LogGeometry(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Geometry);
+    };
 
     /**
      * Logs the graphics.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogGraphics(const char* Format, ...)  { LOG_ACTUAL(LogType::e_Graphics);  };
+    inline void LogGraphics(const char* Format, ...)  {
+        LOG_ACTUAL(LogType::e_Graphics);
+    };
 
     /**
      * Logs an input.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogInput(const char* Format, ...)     { LOG_ACTUAL(LogType::e_Input);     };
+    inline void LogInput(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Input);
+    };
 
     /**
      * Logs a network.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogNetwork(const char* Format, ...)   { LOG_ACTUAL(LogType::e_Network);     };
+    inline void LogNetwork(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Network);
+    };
 
     /**
      * Logs the physics.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogPhysics(const char* Format, ...)   { LOG_ACTUAL(LogType::e_Physics);   };
+    inline void LogPhysics(const char* Format, ...) {
+        LOG_ACTUAL(LogType::e_Physics);
+    };
 
 #else  // Debugging disable, all functions will in inline and empty (aka removed)
 
@@ -248,7 +253,7 @@ namespace Debug {
      *
      * @param	bLogging	(optional) the logging.
      */
-    inline void Startup(Bool bLogging = False) {};
+    inline void Startup(bool bLogging = false) {};
 
     /**
      * Shuts down this object and frees any resources it is using.

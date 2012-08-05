@@ -75,7 +75,7 @@ class HavokCollisionService : public IService::ICollision {
         /// </summary>
         /// <returns>Coll::Handle - A unique handle for this registered test.</returns>
         /// <seealso cref="ICollision::Finalize"/>
-        virtual Bool Finalize(Coll::Handle Handle, Coll::Result* pResult);
+        virtual bool Finalize(Coll::Handle Handle, Coll::Result* pResult);
 
 
     protected:

@@ -26,7 +26,7 @@ class InputObject : public ISystemObject {
 
     protected:
 
-        InputObject(ISystemScene* pSystemScene, pcstr pszName);
+        InputObject(ISystemScene* pSystemScene, const char* pszName);
 
         /////////////////////////////////
         /// ISystemObject overrides
@@ -62,7 +62,7 @@ class InputObject : public ISystemObject {
         enum Types {
             Type_Controlled, Type_GUI
         };
-        static pcstr                        sm_kapszTypeNames[];
+        static const char*                        sm_kapszTypeNames[];
 
         enum PropertyTypes {
             Property_FKey,
@@ -70,7 +70,7 @@ class InputObject : public ISystemObject {
             Property_Count,
             Property_Instrumentation
         };
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         /////////////////////////////////

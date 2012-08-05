@@ -14,8 +14,8 @@
 
 #pragma once
 
-#include <DataTypes.h>
-#include <MathUtils.h>
+#include "DataTypes.h"
+#include "MathUtils.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -23,7 +23,6 @@
 ///    objects that modify or provide Area data are required to implement this class.
 /// </summary>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 class IAreaObject {
     public:
         enum AreaType {
@@ -43,7 +42,7 @@ class IAreaObject {
         /// <summary>
         ///   Returns the name to id this area.
         /// </summary>
-        virtual pcstr GetAreaName(void) = 0;
+        virtual const char* GetAreaName(void) = 0;
 
         /// <summary>
         ///   Returns the type of the area.
@@ -53,5 +52,5 @@ class IAreaObject {
         /// <summary>
         ///   Return True if this ares is active (i.e. the area has been triggered).
         /// </summary>
-        virtual Bool IsAreaActive(void) = 0;
+        virtual bool IsAreaActive(void) = 0;
 };

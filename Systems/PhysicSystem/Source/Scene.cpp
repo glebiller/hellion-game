@@ -57,8 +57,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Havok system includes
@@ -145,7 +145,7 @@ extern ManagerInterfaces    g_Managers;
 const Math::Vector3 HavokPhysicsScene::sm_kDefaultGravity(0.0f, -9.8f, 0.0f);
 const hkVector4 HavokPhysicsScene::sm_kDefaultUp(0.0f, 1.0f, 0.0f);
 
-pcstr HavokPhysicsScene::sm_kapszPropertyNames[] = {
+const char* HavokPhysicsScene::sm_kapszPropertyNames[] = {
     "SceneFile", "Gravity", "Material", "Elasticity", "Friction", "Softness",
 };
 
@@ -318,7 +318,7 @@ HavokPhysicsScene::Initialize(
                 } else if (sType == "BreakOffParts") {
                     sfd.Type = SceneFileTypes::BreakOffParts;
                 } else {
-                    ASSERTMSG(False, "Unknown scene type.");
+                    ASSERTMSG(false, "Unknown scene type.");
                 }
 
                 sfd.Value1 = it->GetFloat32(2);
@@ -360,7 +360,7 @@ HavokPhysicsScene::Initialize(
     //
     // Set this set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this scene.
     //
@@ -480,7 +480,7 @@ HavokPhysicsScene::SetProperties(
                 //    m_pWorld, Material1Id, Material2Id, Value
                 //    );
             } else {
-                ASSERTMSG(False, "Unknown property");
+                ASSERTMSG(false, "Unknown property");
             }
 
             //
@@ -496,7 +496,7 @@ HavokPhysicsScene::SetProperties(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetObjectTypes - Get Object types for this Scene
-pcstr*
+const char**
 HavokPhysicsScene::GetObjectTypes(
     void
 ) {
@@ -508,8 +508,8 @@ HavokPhysicsScene::GetObjectTypes(
 // CreateObject - Create an Object with the given Name and Type
 ISystemObject*
 HavokPhysicsScene::CreateObject(
-    pcstr pszName,
-    pcstr pszType
+    const char* pszName,
+    const char* pszType
 ) {
     ASSERT(m_bInitialized);
     ASSERT(pszType != NULL);
@@ -595,7 +595,7 @@ HavokPhysicsScene::GetCreateObjects(
     std::vector<CreateObjectData>& apszNames
 ) {
     UNREFERENCED_PARAM(apszNames);
-    ASSERT(False, "Not implemented.");
+    ASSERT(false, "Not implemented.");
 }
 
 
@@ -603,10 +603,10 @@ HavokPhysicsScene::GetCreateObjects(
 // GetDestroyObjects - Returns the names of all the universal objects to destroy.
 void
 HavokPhysicsScene::GetDestroyObjects(
-    std::vector<pcstr>& apszNames
+    std::vector<const char*>& apszNames
 ) {
     UNREFERENCED_PARAM(apszNames);
-    ASSERT(False, "Not implemented.");
+    ASSERT(false, "Not implemented.");
 }
 
 
@@ -634,10 +634,10 @@ HavokPhysicsScene::GetExtendObjects(
 // GetUnextendObjects - Returns the names of all the universal objects to unextend.
 void
 HavokPhysicsScene::GetUnextendObjects(
-    std::vector<pcstr>& apszNames
+    std::vector<const char*>& apszNames
 ) {
     UNREFERENCED_PARAM(apszNames);
-    ASSERT(False, "Not implemented.");
+    ASSERT(false, "Not implemented.");
 }
 
 
@@ -645,7 +645,7 @@ HavokPhysicsScene::GetUnextendObjects(
 // ExtendObject - Returns the universal object extension.
 ISystemObject*
 HavokPhysicsScene::ExtendObject(
-    pcstr pszName,
+    const char* pszName,
     void* pUserData
 ) {
     ASSERT(pszName != NULL);
@@ -670,10 +670,10 @@ HavokPhysicsScene::ExtendObject(
 // UnextendObject - Informs the ISystemScene of the object extension being removed.
 ISystemObject*
 HavokPhysicsScene::UnextendObject(
-    pcstr pszName
+    const char* pszName
 ) {
     UNREFERENCED_PARAM(pszName);
-    ASSERT(False, "Not implemented.");
+    ASSERT(false, "Not implemented.");
     return NULL;
 }
 
@@ -747,7 +747,7 @@ HavokPhysicsScene::breakOffSubPart(
             }
 
         default:
-            ASSERTMSG( False, "This shape is not implemented yet" );
+            ASSERTMSG( false, "This shape is not implemented yet" );
         }
 
         //
@@ -774,7 +774,7 @@ HavokPhysicsScene::breakOffSubPart(
         //
         // Check to see if it has already been detached by another thread.
         //
-        Bool bProcessDetach = False;
+        bool bProcessDetach = false;
 
         if ( pBrokenOffShape != NULL )
         {
@@ -796,7 +796,7 @@ HavokPhysicsScene::breakOffSubPart(
                 ::memset( &ed, 0, sizeof ed );
                 m_aExtensions[ (void*)pBrokenOffShape ] = ed;
 
-                bProcessDetach = True;
+                bProcessDetach = true;
             }
             else
             {
@@ -859,7 +859,7 @@ HavokPhysicsScene::breakOffSubPart(
             // Add to the list of broken off body parts.  Will be used later to extend a UObject.
             //
             ExtensionData ed;
-            ed.pszName = reinterpret_cast<pcstr>(pBrokenOffShape->getUserData());
+            ed.pszName = reinterpret_cast<const char*>(pBrokenOffShape->getUserData());
             ed.pBody = pNewBody;
 
             {

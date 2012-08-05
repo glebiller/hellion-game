@@ -16,8 +16,8 @@
 
 #pragma warning ( disable: 4718 )
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "ChangeControlManager.h"
 #include "IttNotify.h"

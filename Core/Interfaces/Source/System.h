@@ -57,7 +57,7 @@ class ISystem {
         ///   </para>
         /// </summary>
         /// <returns>The name of the system.</returns>
-        virtual pcstr GetName(void) = 0;
+        virtual const char* GetName(void) = 0;
 
         /// <summary>
         ///   Gets the system type for this system.
@@ -113,7 +113,7 @@ class ISystem {
 
     protected:
 
-        Bool                        m_bInitialized;
+        bool                        m_bInitialized;
 
 };
 
@@ -193,7 +193,7 @@ class ISystemScene : public CSubject, public IObserver {
         ///   Get all the available object types as names.
         /// </summary>
         /// <returns>A NULL terminated array of object type names.</returns>
-        virtual pcstr* GetObjectTypes(void) = 0;
+        virtual const char** GetObjectTypes(void) = 0;
 
         /// <summary>
         ///   Creates a system object used to extend a UObject.
@@ -201,7 +201,7 @@ class ISystemScene : public CSubject, public IObserver {
         /// <param name="pszName">The unique name for this object.</param>
         /// <param name="pszType">The object type to create.</param>
         /// <returns>The newly created system object.</returns>
-        virtual ISystemObject* CreateObject(pcstr pszName, pcstr pszType) = 0;
+        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType) = 0;
 
         /// <summary>
         ///   Destroys a system object.
@@ -241,7 +241,7 @@ class ISystemScene : public CSubject, public IObserver {
 
     protected:
 
-        Bool                        m_bInitialized;
+        bool                        m_bInitialized;
         ISystem*                    m_pSystem;
 
 };
@@ -271,8 +271,8 @@ class ISystemObject : public CSubject, public IObserver {
         /// </remarks>
         /// <param name="pSystemScene">The scene this object belongs to.</param>
         /// <param name="pszName">Name of this GUI object.</param>
-        ISystemObject(ISystemScene* pSystemScene, pcstr pszName)
-            : m_bInitialized(False)
+        ISystemObject(ISystemScene* pSystemScene, const char* pszName)
+            : m_bInitialized(false)
             , m_pSystemScene(pSystemScene) {
             if (pszName) {
                 SetName(pszName);
@@ -317,7 +317,7 @@ class ISystemObject : public CSubject, public IObserver {
         ///   Gets the name of the object.
         /// </summary>
         /// <returns>The name of the object.</returns>
-        virtual inline pcstr GetName(void) {
+        virtual inline const char* GetName(void) {
             return m_sName.c_str();
         }
 
@@ -325,7 +325,7 @@ class ISystemObject : public CSubject, public IObserver {
         ///   Sets the name of the object.
         /// </summary>
         /// <param name="pszName">The new name of the object.</param>
-        virtual inline void SetName(pcstr pszName) {
+        virtual inline void SetName(const char* pszName) {
             m_sName = pszName;
         }
 
@@ -363,7 +363,7 @@ class ISystemObject : public CSubject, public IObserver {
 
     protected:
 
-        Bool                        m_bInitialized;
+        bool                        m_bInitialized;
         ISystemScene*               m_pSystemScene;
         Handle                      m_hParentObject;
         std::string                 m_sName;
@@ -414,11 +414,11 @@ class ISystemTask {
         virtual void Update(f32 DeltaTime) = 0;
 
         /// <summary cref="ISystemTask::IsPrimaryThreadOnly">
-        ///   Implementing tasks should return True to indicate that their <c>Update</c> function
-        ///   should only be called from the primary thread.  False allows their <c>Update</c> function
+        ///   Implementing tasks should return true to indicate that their <c>Update</c> function
+        ///   should only be called from the primary thread.  false allows their <c>Update</c> function
         ///   to be called from an arbitrary thread.
         /// </summary>
-        virtual Bool IsPrimaryThreadOnly(void) = 0;
+        virtual bool IsPrimaryThreadOnly(void) = 0;
 
     protected:
 

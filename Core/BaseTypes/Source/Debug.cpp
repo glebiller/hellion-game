@@ -12,18 +12,19 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "BaseTypes.h"
+#ifdef _MSC_VER
+#pragma warning( disable : 4996 )
+#endif
+
+#include "Assert.h"
+#include "Debug.h"
 
 #ifdef DEBUG_BUILD
 
-#include <direct.h>
-#include <stdio.h>
-#include <time.h>
+#include <cstdio>
+#include <ctime>
 
-#if defined ( WIN32 ) || defined ( WIN64 )
-#define _WIN32_WINNT 0x0400
-#include <windows.h>  // For LPCRITICAL_SECTION
-#endif
+#include "boost\thread\locks.hpp"
 
 #define MAX_STRING_LENGTH 2048
 
@@ -47,33 +48,15 @@ COMPILE_ASSERT(sizeof(s_LogFiles) / sizeof(s_LogFiles[ 0 ]) == LogType::e_LogTyp
 /**
  * @inheritDoc
  */
-void Debug::Print(const char* Format, ...) {
-    va_list ArgList;
-    va_start(ArgList, Format);
-    s_Debugger->Print(Format, ArgList);
-    va_end(ArgList);
-}
-
-/**
- * @inheritDoc
- */
-Debug::Debugger::Debugger(Bool bLogging) {
+Debug::Debugger::Debugger(bool bLogging) {
     m_bLogging = bLogging;
-
-#if defined ( WIN32 ) || defined ( WIN64 )
-    // Create critical section
-    m_CsFileWrite = new CRITICAL_SECTION;
-    InitializeCriticalSection(m_CsFileWrite);
-#else
-    ASSERT(False);    // Only Windows critical sections are supported
-#endif
 
     if (m_bLogging) {
         // Copy the s_LogFiles into the instance
         memcpy(m_LogFiles, s_LogFiles, sizeof(s_LogFiles));
         // Create a directory with the current timestamp
         // ( Format: Month_Day_HourMinute )
-        time_t Time;
+        /*time_t Time;
         time(&Time);
         tm Date;
         localtime_s(&Date, &Time);
@@ -82,15 +65,15 @@ Debug::Debugger::Debugger(Bool bLogging) {
         int Result = _mkdir(FolderName);
         ASSERT(Result == 0);
 
-        if (Result == 0) {
+        if (Result == 0) {*/
             // Open all the log files
             for (u8 Index = 0; Index < LogType::e_LogTypeCount; Index++) {
                 char FileName[ MAX_STRING_LENGTH ];
-                strncpy_s(FileName, MAX_STRING_LENGTH, FolderName, MAX_STRING_LENGTH - strlen(m_LogFiles[ Index ].FileName));
+                strncpy_s(FileName, MAX_STRING_LENGTH, "logs", MAX_STRING_LENGTH - strlen(m_LogFiles[ Index ].FileName));
                 strcat_s(FileName, MAX_STRING_LENGTH, m_LogFiles[ Index ].FileName);
                 fopen_s(&m_LogFiles[ Index ].FileHandle, FileName, "w");
             }
-        }
+        //}
     }
 }
 
@@ -98,12 +81,6 @@ Debug::Debugger::Debugger(Bool bLogging) {
  * @inheritDoc
  */
 Debug::Debugger::~Debugger() {
-#if defined ( WIN32 ) || defined ( WIN64 )
-    // Release critical sections
-    DeleteCriticalSection(m_CsFileWrite);
-    delete m_CsFileWrite;
-#endif
-
     if (m_bLogging) {
         // Close all the log files
         for (u8 Index = 0; Index < LogType::e_LogTypeCount; Index++) {
@@ -115,63 +92,46 @@ Debug::Debugger::~Debugger() {
 /**
  * @inheritDoc
  */
+void Debug::Print(const char* Format, ...) {
+    va_list ArgList;
+    va_start(ArgList, Format);
+    s_Debugger->Print(Format, ArgList);
+    va_end(ArgList);
+}
+
+/**
+ * @inheritDoc
+ */
 void Debug::Debugger::Print(const char* Format, va_list ArgList) {
-#if defined ( WIN32 ) || defined ( WIN64 )
-    // Format the string
-    char Buffer[ MAX_STRING_LENGTH ];
-    vsprintf_s(Buffer, MAX_STRING_LENGTH, Format, ArgList);
-    EnterCriticalSection(m_CsFileWrite);
-    // Print the string
-    OutputDebugStringA(Buffer);
-    // Leave the critical section
-    LeaveCriticalSection(m_CsFileWrite);
-#else
-    vsprintf(_Format, Args);
-#endif
+    boost::lock_guard<boost::mutex> lock(mutex);
+    vprintf(Format, ArgList);
 }
 
 /**
  * @inheritDoc
  */
 void Debug::Debugger::Log(LogType::LogType Type, const char* Format, va_list ArgList) {
-    if (!m_bLogging)
-    { return; }
+    if (!m_bLogging) {
+        return;
+    }
 
     ASSERT(m_LogFiles[ Type ].FileHandle);
-    // Write to the appropriate log file
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    // Write to log file
     vfprintf(m_LogFiles[ Type ].FileHandle, Format, ArgList);
     fflush(m_LogFiles[ Type ].FileHandle);
-    // Format the string
-    char Buffer[ MAX_STRING_LENGTH ];
-    vsprintf_s(Buffer, MAX_STRING_LENGTH, Format, ArgList);
-    OutputDebugStringA(Buffer);
+    
+    // Ouput to stdout
+    vprintf(Format, ArgList);
 
     // If this is a system specific log file, also log it to the general log
     if (Type != LogType::e_Debug) {
         ASSERT(m_LogFiles[ LogType::e_Debug ].FileHandle);
-#if defined ( WIN32 ) || defined ( WIN64 )
-        // Try to enter the critical section
-        u32 Index;
-
-        for (Index = 0; Index < 1000; Index++) {
-            if (TryEnterCriticalSection(m_CsFileWrite)) {
-                break;
-            }
-
-            Sleep(1);
-        }
-
-        // If we failed to enter, call the full EnterCriticalSection and wait
-        if (Index == 1000) {
-            EnterCriticalSection(m_CsFileWrite);
-        }
-
-        // Print the string
-        fprintf_s(m_LogFiles[ LogType::e_Debug ].FileHandle, "[%s] %s", m_LogFiles[ Type ].SystemName, Buffer);
+        char Buffer[ MAX_STRING_LENGTH ];
+        vsprintf(Buffer, Format, ArgList);
+        fprintf(m_LogFiles[ LogType::e_Debug ].FileHandle, "[%s] %s", m_LogFiles[ Type ].SystemName, Buffer);
         fflush(m_LogFiles[ LogType::e_Debug ].FileHandle);
-        // Leave the critical section
-        LeaveCriticalSection(m_CsFileWrite);
-#endif
     }
 }
 

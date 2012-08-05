@@ -27,7 +27,7 @@ enum {
     TEXCOORD_BINDING
 };
 
-DynamicLines::DynamicLines(OperationType opType, pcstr pcstrMaterialName) {
+DynamicLines::DynamicLines(OperationType opType, const char* pcstrMaterialName) {
     initialize(opType, false);
     setMaterial(pcstrMaterialName);
     mDirty = true;

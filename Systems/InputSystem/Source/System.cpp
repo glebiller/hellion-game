@@ -20,8 +20,8 @@
 
 #include <OIS.h>
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 #include "OISB.h"
 
 #include "System.h"
@@ -36,7 +36,7 @@
 
 extern ManagerInterfaces    g_Managers;
 
-pcstr InputSystem::sm_kapszPropertyNames[] = {
+const char* InputSystem::sm_kapszPropertyNames[] = {
     "MoveForward",
     "MoveBack",
     "MoveLeft",
@@ -93,7 +93,7 @@ InputSystem::~InputSystem(
 }
 
 
-pcstr
+const char*
 InputSystem::GetName(
     void
 ) {
@@ -118,7 +118,7 @@ InputSystem::Initialize(
     ASSERTMSG(hWnd != 0, "Window handle should not be null !");
     OIS::InputManager* ois = OIS::InputManager::createInputSystem(hWnd);
     OISB::System::getSingleton().initialize(ois);
-    m_bInitialized = True;
+    m_bInitialized = true;
     SetProperties(Properties);
     return Errors::Success;
 }
@@ -156,7 +156,7 @@ InputSystem::SetProperties(
     for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
         if (it->GetFlags() & Properties::Flags::Valid) {
             // property name
-            pcstr sName = it->GetName();
+            const char* sName = it->GetName();
             // HOT! key (may be a combo)
             HotKey* hotKey = new HotKey;
             hotKey->psKey = it->GetString(0);

@@ -21,8 +21,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes

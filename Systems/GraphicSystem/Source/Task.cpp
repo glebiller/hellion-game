@@ -17,22 +17,14 @@
 //
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include <Ogre.h>
-#include <RenderSystems\Direct3D9\OgreD3D9Plugin.h>
+#include "Ogre.h"
 #pragma warning( pop )
-
-#ifdef SAFE_DELETE
-#undef SAFE_DELETE
-#endif
-#ifdef SAFE_DELETE_ARRAY
-#undef SAFE_DELETE_ARRAY
-#endif
 
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 // UPDATE: provides access to environment variables
 extern ManagerInterfaces   g_Managers;
@@ -93,21 +85,21 @@ enum PolygonModes {
 
 void OGREGraphicsTask::Update(f32 DeltaTime) {
     static const std::string sCaption = "Caption";
-    static Bool bMaterialsSaved     = False;
+    static bool bMaterialsSaved     = false;
     static i32  iPolygonModeOld     = 0;
-    static Bool bShowNormalsOld     = False;
-    static Bool bShowTangentsOld    = False;
-    static Bool bShowCaptionsOld    = False;
-    static Bool bShowBoundingBoxOld = False;
+    static bool bShowNormalsOld     = false;
+    static bool bShowTangentsOld    = false;
+    static bool bShowCaptionsOld    = false;
+    static bool bShowBoundingBoxOld = false;
     // Get current state as updated by the input system.
     i32  iPolygonMode     = g_Managers.pEnvironment->Variables().GetAsInt("Graphics::PolygonMode");
-    Bool bShowNormals     = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowNormals");
-    Bool bShowTangents    = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowTangents");
-    Bool bShowBoundingBox = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowBoundingBox");
-    Bool bShowCaptions    = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowCaptions");
+    bool bShowNormals     = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowNormals");
+    bool bShowTangents    = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowTangents");
+    bool bShowBoundingBox = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowBoundingBox");
+    bool bShowCaptions    = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowCaptions");
 
     if (bShowBoundingBox != bShowBoundingBoxOld) {
-        m_pScene->m_pSceneManager->showBoundingBoxes(bShowBoundingBox == True);
+        m_pScene->m_pSceneManager->showBoundingBoxes(bShowBoundingBox == true);
         bShowBoundingBoxOld = bShowBoundingBox;
     }
 
@@ -147,7 +139,7 @@ void OGREGraphicsTask::Update(f32 DeltaTime) {
                         break;
 
                     default:
-                        ASSERT(False);
+                        ASSERT(false);
                 }
             } else if ((GraphicObject::Type_Mesh == pObject->GetType()) ||
                        (GraphicObject::Type_MeshAnimated == pObject->GetType())) {
@@ -197,7 +189,7 @@ void OGREGraphicsTask::Update(f32 DeltaTime) {
                         break;
 
                     default:
-                        ASSERT(False);
+                        ASSERT(false);
                 }
             }
         }

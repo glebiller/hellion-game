@@ -12,8 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "Defines.h"
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include <Proto.h>
 
@@ -41,7 +42,7 @@ TaskManager*    g_pTaskManager = NULL;
 
 void
 ExecuteFramework(void) {
-#ifndef _DEBUG
+#ifndef DEBUG_BUILD
     try
 #endif
     {
@@ -53,7 +54,7 @@ ExecuteFramework(void) {
         }
     }
 
-#ifndef _DEBUG
+#ifndef DEBUG_BUILD
     catch (...) {
         // Display an error message.
     }
@@ -61,7 +62,7 @@ ExecuteFramework(void) {
 }
 
 
-Framework::Framework(void) : m_bExecuteLoop(True), m_pScheduler(NULL), m_pSceneCCM(NULL), m_pObjectCCM(NULL)
+Framework::Framework(void) : m_bExecuteLoop(true), m_pScheduler(NULL), m_pSceneCCM(NULL), m_pObjectCCM(NULL)
 #ifdef __ALLOW_DEBUG_WINDOW__
     , m_hDebugWindow(NULL)
 #endif
@@ -89,11 +90,11 @@ Error Framework::Initialize(void) {
     //
     // Set the current directory to the location of the GDF.
     //
-    static pcstr apszFile = "Application.gdf.bin";
-    static pcstr apszLocations[] = { ".\\." };
+    static const char* apszFile = "Application.gdf.bin";
+    static const char* apszLocations[] = { ".\\." };
 
     if (!Singletons::PlatformManager.FileSystem().SetCurrentDirToFileLocation(apszFile, apszLocations)) {
-        ASSERT(False, "Framework could not locate the GDF file Application.gdf.");
+        ASSERT(false, "Framework could not locate the GDF file Application.gdf.");
         return Errors::File::NotFound;
     }
 
@@ -193,7 +194,7 @@ Framework::Execute(
     // Create the debug window.
     //
 #ifdef __ALLOW_DEBUG_WINDOW__
-    if (Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", False)) {
+    if (Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false)) {
         m_hDebugWindow = CreateDebugWindow();
     }
 
@@ -265,7 +266,7 @@ Framework::Execute(
             //
             // Time to quit looping.
             //
-            m_bExecuteLoop = False;
+            m_bExecuteLoop = false;
         }
     }
 
@@ -278,7 +279,7 @@ Framework::Execute(
 
 Handle
 Framework::GetSystem(
-    pcstr pszSystemName
+    const char* pszSystemName
 ) {
     //
     // Get the pointer to the system from the system manager.  Handle is just a void* so it will
@@ -306,7 +307,7 @@ Framework::GetSystem(
 
 Handle
 Framework::GetScene(
-    pcstr pszSystemName
+    const char* pszSystemName
 ) {
     Handle hScene = NULL;
     //
@@ -345,8 +346,8 @@ Framework::GetScene(
 
 Handle
 Framework::GetSystemObject(
-    pcstr pszSystemName,
-    pcstr pszName
+    const char* pszSystemName,
+    const char* pszName
 ) {
     Handle hObject = NULL;
     //
@@ -365,7 +366,7 @@ Framework::GetSystemObject(
 Handle
 Framework::GetSystemObject(
     System::Type Type,
-    pcstr pszName
+    const char* pszName
 ) {
     Handle hObject = NULL;
     //
@@ -404,12 +405,12 @@ Framework::GetSystemProperty(
     //
     Properties::Array aProperties;
     pSystem->GetProperties(aProperties);
-    Bool bFound = False;
+    bool bFound = false;
 
     for (Properties::ConstIterator it = aProperties.begin(); it != aProperties.end(); it++) {
         if (sPropertyName == it->GetName()) {
             Property = *it;
-            bFound = True;
+            bFound = true;
         }
     }
 
@@ -424,7 +425,7 @@ Framework::SetSystemProperty(
 ) {
     ASSERT(hSystem != NULL);
     ISystem* pSystem = reinterpret_cast<ISystem*>(hSystem);
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     //
     // This will cause an assertion if the property doesn't exist.
     //
@@ -453,12 +454,12 @@ Framework::GetSceneProperty(
     //
     Properties::Array aProperties;
     pSystemScene->GetProperties(aProperties);
-    Bool bFound = False;
+    bool bFound = false;
 
     for (Properties::ConstIterator it = aProperties.begin(); it != aProperties.end(); it++) {
         if (sPropertyName == it->GetName()) {
             Property = *it;
-            bFound = True;
+            bFound = true;
         }
     }
 
@@ -473,7 +474,7 @@ Framework::SetSceneProperty(
 ) {
     ASSERT(hScene != NULL);
     ISystemScene* pSystemScene = reinterpret_cast<ISystemScene*>(hScene);
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     //
     // This will cause an assertion if the property doesn't exist.
     //
@@ -504,12 +505,12 @@ Framework::GetObjectProperty(
     //
     Properties::Array aProperties;
     pSystemObject->GetProperties(aProperties);
-    Bool bFound = False;
+    bool bFound = false;
 
     for (Properties::ConstIterator it = aProperties.begin(); it != aProperties.end(); it++) {
         if (sPropertyName == it->GetName()) {
             Property = *it;
-            bFound = True;
+            bFound = true;
         }
     }
 
@@ -524,7 +525,7 @@ Framework::SetObjectProperty(
 ) {
     ASSERT(hObject != NULL);
     ISystemObject* pSystemObject = reinterpret_cast<ISystemObject*>(hObject);
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     //
     // This will cause an assertion if the property doesn't exist.
     //
@@ -577,7 +578,7 @@ Framework::IssuePendingSystemPropertyChanges(
                     break;
 
                 default:
-                    ASSERTMSG(False, "Unhandled case.");
+                    ASSERTMSG(false, "Unhandled case.");
                     break;
             };
         }
@@ -854,7 +855,7 @@ Framework::GDFParser::ApplyProperties(
             //
             switch (getPropIt->GetValueType(iValue)) {
                 case Properties::Values::None:
-                    ASSERTMSG1(False, "Parser encoutered a value '%s' with no type.", prop->name());
+                    ASSERTMSG1(false, "Parser encoutered a value '%s' with no type.", prop->name());
                     break;
 
                 case Properties::Values::Boolean:
@@ -894,7 +895,7 @@ Framework::GDFParser::ApplyProperties(
                     break;
 
                 default:
-                    ASSERTMSG(False, "Parser encountered an unsupported property value.");
+                    ASSERTMSG(false, "Parser encountered an unsupported property value.");
                     break;
             }
 

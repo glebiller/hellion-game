@@ -16,7 +16,7 @@
 
 #include <string>
 
-#include <DataTypes.h>
+#include "DataTypes.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Any object that wants to provide gui data must implement this interface.

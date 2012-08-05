@@ -15,8 +15,8 @@
 #include <windows.h>
 #include <string.h>
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "EnvironmentManager.h"
 
@@ -42,8 +42,8 @@ EnvironmentManager::Variables::Variables(
 
 void
 EnvironmentManager::Variables::Add(
-    In pcstr pszName,
-    In pcstr pszValue
+    In char* pszName,
+    In char* pszValue
 ) {
     Variables::Pair vp;
     vp.sName = pszName;
@@ -55,8 +55,8 @@ EnvironmentManager::Variables::Add(
 // Environment variables are defined in Smoke.gdf.
 void
 EnvironmentManager::Variables::SetValue(
-    In pcstr pszName,
-    In pcstr pszValue
+    In char* pszName,
+    In char* pszValue
 ) {
     for (PairsIt it = m_Pairs.begin(); it != m_Pairs.end(); it++) {
         Pair& vp = *it;
@@ -69,24 +69,24 @@ EnvironmentManager::Variables::SetValue(
 }
 
 
-pcstr
+const char*
 EnvironmentManager::Variables::GetAsString(
-    In pcstr pszName,
-    In pcstr pszDefaultValue
+    In char* pszName,
+    In char* pszDefaultValue
 ) {
-    pcstr pszValue = pszDefaultValue;
+    const char* pszValue = pszDefaultValue;
     GetValue(pszName, pszValue);
     return pszValue;
 }
 
 
-Bool
+bool
 EnvironmentManager::Variables::IsString(
-    In pcstr pszName,
-    In pcstr pszCompareValue
+    In char* pszName,
+    In char* pszCompareValue
 ) {
-    Bool bValue = False;
-    pcstr pszValue = NULL;
+    bool bValue = false;
+    const char* pszValue = NULL;
     GetValue(pszName, pszValue);
 
     if (pszValue != NULL) {
@@ -97,17 +97,17 @@ EnvironmentManager::Variables::IsString(
 }
 
 
-Bool
+bool
 EnvironmentManager::Variables::GetAsBool(
-    In pcstr pszName,
-    In Bool bDefaultValue
+    In char* pszName,
+    In bool bDefaultValue
 ) {
-    Bool bValue = bDefaultValue;
-    pcstr pszValue;
+    bool bValue = bDefaultValue;
+    const char* pszValue;
 
     if (GetValue(pszName, pszValue)) {
-        ASSERT(!_stricmp(pszValue, "True") || !_stricmp(pszValue, "False"));
-        bValue = _stricmp(pszValue, "True") == 0;
+        ASSERT(!_stricmp(pszValue, "true") || !_stricmp(pszValue, "false"));
+        bValue = _stricmp(pszValue, "true") == 0;
     }
 
     return bValue;
@@ -116,11 +116,11 @@ EnvironmentManager::Variables::GetAsBool(
 
 i32
 EnvironmentManager::Variables::GetAsInt(
-    In pcstr pszName,
+    In char* pszName,
     In i32 DefaultValue
 ) {
     i32 Value = DefaultValue;
-    pcstr pszValue;
+    const char* pszValue;
 
     if (GetValue(pszName, pszValue)) {
         Value = atoi(pszValue);
@@ -132,11 +132,11 @@ EnvironmentManager::Variables::GetAsInt(
 
 f32
 EnvironmentManager::Variables::GetAsFloat(
-    In pcstr pszName,
+    In char* pszName,
     In f32 DefaultValue
 ) {
     f32 Value = DefaultValue;
-    pcstr pszValue;
+    const char* pszValue;
 
     if (GetValue(pszName, pszValue)) {
         Value = static_cast<f32>(atof(pszValue));
@@ -146,19 +146,19 @@ EnvironmentManager::Variables::GetAsFloat(
 }
 
 
-Bool
+bool
 EnvironmentManager::Variables::GetValue(
-    In pcstr pszName,
-    Out pcstr& pszValue
+    In char* pszName,
+    Out const char*& pszValue
 ) {
-    Bool bFound = False;
+    bool bFound = false;
 
     for (PairsIt it = m_Pairs.begin(); it != m_Pairs.end(); it++) {
         const Pair& vp = *it;
 
         if (vp.sName == pszName) {
             pszValue = vp.sValue.c_str();
-            bFound = True;
+            bFound = true;
             break;
         }
     }

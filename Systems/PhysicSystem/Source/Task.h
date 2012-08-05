@@ -47,8 +47,8 @@ class HavokPhysicsTask : public ISystemTask,
         ///   Add or removes the given object from actively tracked objects.
         /// </summary>
         /// <param name="pObject">The Object that we want to activate/deactivate.</param>
-        /// <param name="bActivated">True marks the Object as active.</param>
-        void SetObjectActivation(HavokPhysicsObject* pObject, Bool bActivated = True);
+        /// <param name="bActivated">true marks the Object as active.</param>
+        void SetObjectActivation(HavokPhysicsObject* pObject, bool bActivated = true);
 
         /// <summary cref="HavokPhysicsTask::Update">
         ///   Implementation of the <c>ISystemTask::Update</c> function.
@@ -80,12 +80,12 @@ class HavokPhysicsTask : public ISystemTask,
 
         /// <summary cref="HavokPhysicsTask::IsPrimaryThreadOnly">
         ///   Implementation of the <c>ISystemTask::IsPrimaryThreadOnly</c> function.
-        ///   This function returns False for HavokPhysicsTask.  HavokPhysicsTask does
+        ///   This function returns false for HavokPhysicsTask.  HavokPhysicsTask does
         ///   not need to run only on the primary thread.
         /// </summary>
-        /// <returns>Bool - Returns if this system should only run on the primary thread.</returns>
+        /// <returns>bool - Returns if this system should only run on the primary thread.</returns>
         /// <seealso cref="ISystemTask::IsPrimaryThreadOnly"/>
-        virtual Bool IsPrimaryThreadOnly(void) { return True; }
+        virtual bool IsPrimaryThreadOnly(void) { return true; }
 
 
     private:

@@ -19,7 +19,7 @@
 #if USE_SPIN_MUTEX
 
 //#if !defined(__PLATFORM_MANAGER)
-#include <tbb/spin_mutex.h>
+#include "tbb/spin_mutex.h"
 //#endif
 
 #define DEFINE_SPIN_MUTEX(mutex)             tbb::spin_mutex mutex

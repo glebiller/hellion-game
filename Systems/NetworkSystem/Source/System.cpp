@@ -15,8 +15,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Network system includes
@@ -25,7 +25,7 @@
 #include "Scene.h"
 #include "Object/Object.h"
 
-pcstr NetworkSystem::sm_kapszPropertyNames[] = {
+const char* NetworkSystem::sm_kapszPropertyNames[] = {
     "MoveForward",
     "MoveBack",
     "MoveLeft",
@@ -189,7 +189,7 @@ NetworkSystem::~NetworkSystem(
 }
 
 
-pcstr
+const char*
 NetworkSystem::GetName(
     void
 ) {
@@ -210,7 +210,7 @@ NetworkSystem::Initialize(
     Properties::Array Properties
 ) {
     ASSERT(!m_bInitialized);
-    m_bInitialized = True;
+    m_bInitialized = true;
     SetProperties(Properties);
     return Errors::Success;
 }
@@ -248,7 +248,7 @@ NetworkSystem::SetProperties(
     for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
         if (it->GetFlags() & Properties::Flags::Valid) {
             // property name
-            pcstr sName = it->GetName();
+            const char* sName = it->GetName();
             // HOT! key (may be a combo)
             HotKey* hotKey = new HotKey;
             hotKey->psKey = it->GetString(0);

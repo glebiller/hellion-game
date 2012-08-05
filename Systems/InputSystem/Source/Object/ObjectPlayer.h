@@ -34,7 +34,7 @@ class InputPlayerObject : public InputObject, public IGeometryObject, public IMo
 
     protected:
 
-        InputPlayerObject(ISystemScene* pSystemScene, pcstr pszName);
+        InputPlayerObject(ISystemScene* pSystemScene, const char* pszName);
         ~InputPlayerObject(void);
 
         /////////////////////////////////
@@ -95,7 +95,7 @@ class InputPlayerObject : public InputObject, public IGeometryObject, public IMo
         enum CommonPropertyTypes {
             Property_None, Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 
     private:

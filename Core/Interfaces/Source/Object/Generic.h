@@ -16,8 +16,7 @@
 
 #include <vector>
 
-#include <DataTypes.h>
-
+#include "DataTypes.h"
 #include "System.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,26 +29,26 @@ class IGenericScene {
     public:
 
         struct CreateObjectData {
-            pcstr                       pszName;    // The name of the object to create.
+            const char*                 pszName;    // The name of the object to create.
             System::Types::BitMask      Types;      // The types to extend this object with.
         };
         typedef std::vector<CreateObjectData> CreateObjectDataArray;
         typedef CreateObjectDataArray::iterator CreateObjectDataArrayIt;
         typedef CreateObjectDataArray::const_iterator CreateObjectDataArrayConstIt;
 
-        typedef std::vector<pcstr> DestroyObjectDataArray;
+        typedef std::vector<const char*> DestroyObjectDataArray;
         typedef DestroyObjectDataArray::iterator DestroyObjectDataArrayIt;
         typedef DestroyObjectDataArray::const_iterator DestroyObjectDataArrayConstIt;
 
         struct ExtendObjectData {
-            pcstr                       pszName;    // The name of the object to extend.
+            const char*                 pszName;    // The name of the object to extend.
             void*                       pUserData;  // User data.
         };
         typedef std::vector<ExtendObjectData> ExtendObjectDataArray;
         typedef ExtendObjectDataArray::iterator ExtendObjectDataArrayIt;
         typedef ExtendObjectDataArray::const_iterator ExtendObjectDataArrayConstIt;
 
-        typedef std::vector<pcstr> UnextendObjectDataArray;
+        typedef std::vector<const char*> UnextendObjectDataArray;
         typedef UnextendObjectDataArray::iterator UnextendObjectDataArrayIt;
         typedef UnextendObjectDataArray::const_iterator UnextendObjectDataArrayConstIt;
 
@@ -83,13 +82,13 @@ class IGenericScene {
         /// <param name="pszName">The name of the universal object to extend.</param>
         /// <param name="pUserData">Pointer to user data for this call.</param>
         /// <returns>A pointer to the new system object extension.</returns>
-        virtual ISystemObject* ExtendObject(pcstr pszName, void* pUserData) = 0;
+        virtual ISystemObject* ExtendObject(const char* pszName, void* pUserData) = 0;
 
         /// <summary>
         ///   Informs the ISystemScene of the object extension being removed.
         /// </summary>
         /// <param name="pszName">The name of the universal object to unextend.</param>
         /// <returns>A pointer to the system object extension to remove.</returns>
-        virtual ISystemObject* UnextendObject(pcstr pszName) = 0;
+        virtual ISystemObject* UnextendObject(const char* pszName) = 0;
 
 };

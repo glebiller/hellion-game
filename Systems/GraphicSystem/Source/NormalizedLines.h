@@ -18,7 +18,7 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
+#include "BaseTypes.h"
 
 #include "MovableText/DynamicRenderable.h"
 #include <vector>
@@ -39,7 +39,7 @@ class NormalizedLines : public DynamicRenderable {
 
     public:
         /// Constructor - see setOperationType() for description of argument.
-        NormalizedLines(pcstr MaterialName = "BaseWhiteNoLighting");
+        NormalizedLines(const char* MaterialName = "BaseWhiteNoLighting");
 
         virtual ~NormalizedLines();
 
@@ -79,7 +79,7 @@ class NormalizedLines : public DynamicRenderable {
 
         std::vector<Math::Vector3> m_Points;
         std::vector<Math::Vector3> m_Normals;
-        Bool m_bDirty;
+        bool m_bDirty;
 };
 
 

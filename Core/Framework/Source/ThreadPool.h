@@ -57,7 +57,7 @@ class WorkItem {
             return m_Status;
         }
 
-        virtual Bool IsDynamicallyAllocated(void) = 0;
+        virtual bool IsDynamicallyAllocated(void) = 0;
 
         /// <summary cref="WorkItem::SetStatus">
         /// This method is called by <c>TaskManagerTP</c> to change the status of this <c>WorkItem</c>.
@@ -119,7 +119,7 @@ class BasicThreadPool {
         u32                 m_NumThreads;
         u32                 m_NumActiveThreads;
         ThreadContext*      m_pThreadContext;
-        Bool                m_bInitialized;
+        bool                m_bInitialized;
         WorkQueue*          m_pWorkQueue;
         DEFINE_SPIN_MUTEX(m_QueueSW);
 
@@ -135,7 +135,7 @@ class BasicThreadPool {
             , m_hWorkerthreadIds(0)
             , m_NumThreads(0)
             , m_pThreadContext(0)
-            , m_bInitialized(False)
+            , m_bInitialized(false)
             , m_NumActiveThreads(0)
         {}
 
@@ -197,7 +197,7 @@ class BasicThreadPool {
         /// <seealso cref="TaskManagerTP::NonStandardPerThreadCallback"/>
         void NonStandardThreadExecute(ThreadContext::ThreadCallback pfnCallback, void* pData);
 
-        void PopAndProcessWorkItem(Bool bProcess = True);
+        void PopAndProcessWorkItem(bool bProcess = true);
 
     private:
 

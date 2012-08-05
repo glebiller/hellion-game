@@ -9,8 +9,8 @@
 //
 // Core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Graphic system includes
@@ -25,7 +25,7 @@
 
 GraphicObjectSky::GraphicObjectSky(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : GraphicObject(pSystemScene, pszName),
       mSkysImported(false) {

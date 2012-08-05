@@ -27,8 +27,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 #include <Manager/ServiceManager.h>
 
 //

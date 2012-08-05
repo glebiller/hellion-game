@@ -30,8 +30,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 using namespace Interface;
 
 //
@@ -58,7 +58,7 @@ const f32 GraphicObjectStatWindow::m_secondsPerUpdate = 1.0f;
 // Stat window constructor.
 //
 //-----------------------------------------------------------------------------
-GraphicObjectStatWindow::GraphicObjectStatWindow(ISystemScene* pSystemScene, pcstr pszName) :
+GraphicObjectStatWindow::GraphicObjectStatWindow(ISystemScene* pSystemScene, const char* pszName) :
     GraphicObjectWindow(pSystemScene, pszName),
     m_secondsSinceLastUpdate(0.0f),
     m_framesSinceLastUpdate(0) {

@@ -17,15 +17,15 @@
 //
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include <Ogre.h>
-#include <OgreFontManager.h>
+#include "Ogre.h"
+#include "OgreFontManager.h"
 #pragma warning( pop )
 
 //
 // Core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Graphics system includes
@@ -36,17 +36,12 @@
 #include "Object/Object.h"
 #include "Object/ObjectCamera.h"
 #include "Object/ObjectLight.h"
-#include "Object/ObjectLightFire.h"
 #include "Object/ObjectMesh.h"
-#include "Object/ObjectMeshAnimated.h"
-#include "Object/ObjectParticles.h"
 #include "Object/ObjectWindow.h"
 #include "Object/ObjectChart.h"
 #include "Object/ObjectStatWindow.h"
 #include "Object/ObjectWorkloadWindow.h"
 #include "Object/ObjectCPUChart.h"
-#include "Object/ObjectParticleSystem.h"
-#include "Object/ObjectPagedGeometryLayer.h"
 #include "Object/ObjectTerrain.h"
 #include "Object/ObjectSky.h"
 
@@ -78,7 +73,7 @@ static const u32   UpdateGrainSize = 120;
 DEFINE_SPIN_MUTEX(OGREGraphicsScene::m_mutex);
 
 
-pcstr OGREGraphicsScene::sm_kapszPropertyNames[] = {
+const char* OGREGraphicsScene::sm_kapszPropertyNames[] = {
     "ResourceLocation", "DelResourceLocation",
     "AmbientLight", "Shadows", "ShadowColor",
     "DrawBoundingBox", "ShowNormals", "ShowTangents",
@@ -216,7 +211,7 @@ OGREGraphicsScene::~OGREGraphicsScene(
  * @inheritDoc
  */
 void OGREGraphicsScene::Update(f32 DeltaTime) {
-    Bool bPaused = g_Managers.pEnvironment->Runtime().GetStatus() ==
+    bool bPaused = g_Managers.pEnvironment->Runtime().GetStatus() ==
                    IEnvironment::IRuntime::Status::Paused;
     m_bPause = bPaused;
     m_fDeltaTime = DeltaTime;
@@ -264,7 +259,7 @@ void OGREGraphicsScene::Update(f32 DeltaTime) {
                     objArr[ pObjMesh->m_ObjectIdxinInstGeom ]->setPositionAndOrientation(
                         TOOGREVEC(pObjMesh->m_Position),
                         TOOGREQUAT(pObjMesh->m_Orientation));
-                    pObjMesh->m_Dirty = False;
+                    pObjMesh->m_Dirty = false;
                 }
             }
         }
@@ -562,7 +557,7 @@ OGREGraphicsScene::Initialize(
     //
     // Set this set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Read the properties.
     //
@@ -574,16 +569,16 @@ OGREGraphicsScene::Initialize(
             std::string sName = it->GetName();
 
             if (sName == sm_kapszPropertyNames[ Property_ResourceLocation ]) {
-                pcstr pszName = it->GetStringPtr(0);
-                pcstr pszLocationType = it->GetStringPtr(1);
-                pcstr pszResourceGroup = it->GetStringPtr(2);
-                Bool  bRecursive = it->GetBool(3);
-                pResourceGroupManager->addResourceLocation(pszName, pszLocationType, pszResourceGroup, (bRecursive == True));
+                const char* pszName = it->GetStringPtr(0);
+                const char* pszLocationType = it->GetStringPtr(1);
+                const char* pszResourceGroup = it->GetStringPtr(2);
+                bool  bRecursive = it->GetBool(3);
+                pResourceGroupManager->addResourceLocation(pszName, pszLocationType, pszResourceGroup, (bRecursive == true));
                 pResourceGroupManager->initialiseResourceGroup(pszResourceGroup);
                 pResourceGroupManager->loadResourceGroup(pszResourceGroup);
             } else if (sName == sm_kapszPropertyNames[ Property_DelResourceLocation ]) {
-                pcstr pszName = it->GetStringPtr(0);
-                pcstr pszResourceGroup = it->GetStringPtr(1);
+                const char* pszName = it->GetStringPtr(0);
+                const char* pszResourceGroup = it->GetStringPtr(1);
                 pResourceGroupManager->unloadResourceGroup(pszResourceGroup);
                 pResourceGroupManager->clearResourceGroup(pszResourceGroup);
                 pResourceGroupManager->removeResourceLocation(pszName, pszResourceGroup);
@@ -678,7 +673,7 @@ OGREGraphicsScene::Initialize(
                 m_fTerrainLengthOffset = it->GetFloat32(1);
                 m_fTerrainHeightOffset = it->GetFloat32(2);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -809,9 +804,9 @@ void OGREGraphicsScene::SetProperties(Properties::Array Properties) {
                 //
                 // Enable/disable the drawing of Object BoundingBoxes.
                 //
-                m_pSceneManager->showBoundingBoxes(it->GetBool(0) == True);
+                m_pSceneManager->showBoundingBoxes(it->GetBool(0) == true);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -823,7 +818,7 @@ void OGREGraphicsScene::SetProperties(Properties::Array Properties) {
 }
 
 
-pcstr*
+const char**
 OGREGraphicsScene::GetObjectTypes(
     void
 ) {
@@ -833,8 +828,8 @@ OGREGraphicsScene::GetObjectTypes(
 
 ISystemObject*
 OGREGraphicsScene::CreateObject(
-    pcstr pszName,
-    pcstr pszType
+    const char* pszName,
+    const char* pszType
 ) {
     ASSERT(m_bInitialized);
     GraphicObject* pObject = NULL;
@@ -846,41 +841,17 @@ OGREGraphicsScene::CreateObject(
         //
         pObject = new GraphicObjectMesh(this, pszName);
     } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_PointList ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectParticles(this, pszName);
-    } else if (strcmp(pszType,
                       GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Light ]) == 0) {
         //
         // Create and return the OGRE graphics object.
         //
         pObject = new GraphicObjectLight(this, pszName);
     } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_LightFire ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectLightFire(this, pszName);
-    } else if (strcmp(pszType,
                       GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Camera ]) == 0) {
         //
         // Create and return the OGRE graphics object.
         //
         pObject = new GraphicObjectCamera(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_MeshAnimated ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectMeshAnimated(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_PointList ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectParticles(this, pszName);
     } else if (strcmp(pszType,
                       GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Window ]) == 0) {
         //
@@ -912,18 +883,6 @@ OGREGraphicsScene::CreateObject(
         //
         pObject = new GraphicObjectWorkloadWindow(this, pszName);
     } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_ParticleSystem ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectParticleSystem(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_PagedGeometryLayer ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectLayer(this, pszName);
-    } else if (strcmp(pszType,
                       GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Terrain ]) == 0) {
         //
         // Create and return the OGRE graphics object.
@@ -936,7 +895,7 @@ OGREGraphicsScene::CreateObject(
         pObject = new GraphicObjectSky(this, pszName);
         //
     } else {
-        ASSERT(False);
+        ASSERT(false);
     }
 
     //
@@ -945,7 +904,7 @@ OGREGraphicsScene::CreateObject(
     if (pObject != NULL) {
         m_Objects.push_back(pObject);
     } else {
-        ASSERT(False);
+        ASSERT(false);
     }
 
     return pObject;

@@ -14,7 +14,7 @@
 
 #include "NormalizedLines.h"
 
-NormalizedLines::NormalizedLines(pcstr pcstrMaterialName) {
+NormalizedLines::NormalizedLines(const char* pcstrMaterialName) {
     initialize(Ogre::RenderOperation::OT_LINE_LIST, false);
     setMaterial(pcstrMaterialName);
     m_bDirty = true;

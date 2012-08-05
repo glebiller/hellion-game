@@ -18,8 +18,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // audio system includes
@@ -49,9 +49,7 @@ DllMain(
 
 
 extern "C" ISystem* __stdcall
-CreateAudioSystem(
-    Debug::Debugger* p_Debugger
-) {
+CreateAudioSystem(Debug::Debugger* p_Debugger) {
     //Debug::Init( p_Debugger );
     //return new AudioSystem();
     return NULL;

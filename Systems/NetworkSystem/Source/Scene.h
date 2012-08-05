@@ -87,9 +87,9 @@ class NetworkScene : public ISystemScene {
         ///   Implementation of the <c>ISystemScene::GetObjectTypes</c> function.
         ///   Get all the available object types as names.
         /// </summary>
-        /// <returns>pcstr* - A NULL terminated array of object type names.</returns>
+        /// <returns>const char** - A NULL terminated array of object type names.</returns>
         /// <seealso cref="ISystemScene::GetObjectTypes"/>
-        virtual pcstr* GetObjectTypes(void);
+        virtual const char** GetObjectTypes(void);
 
         /// <summary cref="NetworkScene::CreateObject">
         ///   Implementation of the <c>ISystemScene::CreateObject</c> function.
@@ -99,7 +99,7 @@ class NetworkScene : public ISystemScene {
         /// <param name="pszType">The object type to create.</param>
         /// <returns>ISystemObject* - The newly created system object.</returns>
         /// <seealso cref="ISystemScene::CreateObject"/>
-        virtual ISystemObject* CreateObject(pcstr pszName, pcstr pszType);
+        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
 
         /// <summary cref="NetworkScene::DestroyObject">
         ///   Implementation of the <c>ISystemScene::DestroyObject</c> function.
@@ -147,8 +147,8 @@ class NetworkScene : public ISystemScene {
         std::list<NetworkObject*>         m_Objects;
 
         // Enable catching mouse movements
-        Bool                            m_MouseMoveEnabled;
-        Bool                            m_bControlKeyPressed;
+        bool                            m_MouseMoveEnabled;
+        bool                            m_bControlKeyPressed;
 
         LPDIRECTNetwork8                  m_pDI;          // The DirectNetwork object
         DIACTIONFORMAT                  m_diaf;

@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include "Defines.h"
+
 /**
  * Base case for all singleton classes.
  */
@@ -30,7 +32,7 @@ class Singleton {
          */
         ~Singleton(void);
 
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
         
         /**
          * Overrid new operator.

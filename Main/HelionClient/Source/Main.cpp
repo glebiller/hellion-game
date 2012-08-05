@@ -15,19 +15,14 @@
 #include <windows.h>
 #include <tchar.h>
 
-#include <BaseTypes.h>
-#include <Interface.h>
-#include <FrameworkAPI.h>
+#include "BaseTypes.h"
+#include "Interface.h"
+#include "FrameworkAPI.h"
 
 #include <atlbase.h>
 
 extern "C" int APIENTRY
-_tWinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPTSTR pszCmdLine,
-    int CmdShow
-) {
+_tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pszCmdLine, int CmdShow) {
     USES_CONVERSION;
     WCHAR**             argv;
     int                 argc, iArg;
@@ -46,7 +41,9 @@ _tWinMain(
         switch (*argv[iArg]) {
             case '-':
             case '/': {
-                if (0 == _wcsicmp(argv[iArg] + 1, L"logging"))     { bLogging      = true; }
+                if (0 == _wcsicmp(argv[iArg] + 1, L"logging"))     {
+					bLogging = true;
+				}
             }
             break;
         }
@@ -57,7 +54,7 @@ _tWinMain(
     // Start up debug functionality.
     //
     // NOTE: checking the environment will never work, because the Environment hasn't been read yet
-    //Bool bLogging = Singletons::EnvironmentManager.Variables().GetAsBool( "Debug::Logging", False );
+    //bool bLogging = Singletons::EnvironmentManager.Variables().GetAsBool( "Debug::Logging", false );
     Debug::Startup(bLogging);
     //
     // Call the engine to start execution.

@@ -14,7 +14,7 @@
 
 #include <StdArg.h>
 
-#include <BaseTypes.h>
+#include "BaseTypes.h"
 #include "Interface.h"
 
 
@@ -22,7 +22,7 @@ namespace Interface {
     namespace Properties {
 
         Property::Property(
-            pcstr pszName,
+            const char* pszName,
             u32 Type,
             u32 Flags,
             ...
@@ -81,11 +81,11 @@ namespace Interface {
 
                     case Values::String:
                     case Values::Path:
-                        m_asValues[ i ] = va_arg(pArg, pcstr);
+                        m_asValues[ i ] = va_arg(pArg, const char*);
                         break;
 
                     default:
-                        ASSERTMSG(False, "Unhandled property type.");
+                        ASSERTMSG(false, "Unhandled property type.");
                         break;
                 }
 

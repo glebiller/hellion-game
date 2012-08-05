@@ -17,11 +17,8 @@
 /// Includes
 /////////////////////////////////
 
-
-#include <windows.h>
-
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 #include "OISB.h"
 
 #include "System.h"
@@ -35,33 +32,21 @@
 /////////////////////////////////
 
 
-InputTask::InputTask(
-    InputScene* pScene
-)
-    : ISystemTask(pScene) {
+InputTask::InputTask(InputScene* pScene) : ISystemTask(pScene) {
     ASSERT(m_pSystemScene != NULL);
-    ASSERT(sizeof(LONG) == sizeof(i32));
 }
 
 
-InputTask::~InputTask(
-    void
-) {
+InputTask::~InputTask(void) {
 }
 
 
-System::Type
-InputTask::GetSystemType(
-    void
-) {
+System::Type InputTask::GetSystemType(void) {
     return System::Types::Input;
 }
 
 
-void
-InputTask::Update(
-    f32 DeltaTime
-) {
+void InputTask::Update(f32 DeltaTime) {
     OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);
 }

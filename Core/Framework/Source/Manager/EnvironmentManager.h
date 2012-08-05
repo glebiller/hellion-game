@@ -52,39 +52,39 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
                 /// </summary>
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="pszValue">The value of the variable.</param>
-                void Add(In pcstr pszName, In pcstr pszValue);
+                void Add(In char* pszName, In char* pszValue);
 
                 /// <summary>
                 ///   Sets new value for environment variable.
                 /// </summary>
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="pszValue">The new value of the variable.</param>
-                void SetValue(In pcstr pszName, In pcstr pszValue);
+                void SetValue(In char* pszName, In char* pszValue);
 
                 /// <summary cref="IEnvironment::IVariables::GetAsString">
                 ///   Implementation of IEnvironment::IVariables::GetAsString.
                 /// </summary>
-                virtual pcstr GetAsString(In pcstr pszName, In pcstr pszDefaultValue = "");
+                virtual const char* GetAsString(In char* pszName, In char* pszDefaultValue = "");
 
                 /// <summary cref="IEnvironment::IVariables::IsString">
                 ///   Implementation of IEnvironment::IVariables::IsString.
                 /// </summary>
-                virtual Bool IsString(In pcstr pszName, In pcstr pszCompareValue);
+                virtual bool IsString(In char* pszName, In char* pszCompareValue);
 
                 /// <summary cref="IEnvironment::IVariables::GetAsBool">
                 ///   Implementation of IEnvironment::IVariables::GetAsBool.
                 /// </summary>
-                virtual Bool GetAsBool(In pcstr pszName, In Bool bDefaultValue = False);
+                virtual bool GetAsBool(In char* pszName, In bool bDefaultValue = false);
 
                 /// <summary cref="IEnvironment::IVariables::GetAsInt">
                 ///   Implementation of IEnvironment::IVariables::GetAsInt.
                 /// </summary>
-                virtual i32 GetAsInt(In pcstr pszName, In i32 DefaultValue = 0);
+                virtual i32 GetAsInt(In char* pszName, In i32 DefaultValue = 0);
 
                 /// <summary cref="IEnvironment::IVariables::GetAsFloat">
                 ///   Implementation of IEnvironment::IVariables::GetAsFloat.
                 /// </summary>
-                virtual f32 GetAsFloat(In pcstr pszName, In f32 DefaultValue = 0.0f);
+                virtual f32 GetAsFloat(In char* pszName, In f32 DefaultValue = 0.0f);
 
 
             protected:
@@ -100,8 +100,8 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
                 /// </summary>
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="pszValue">The returned value of the variable.</param>
-                /// <returns>True if the variable exists, false otherwise.</returns>
-                Bool GetValue(In pcstr pszName, Out pcstr& pszValue);
+                /// <returns>true if the variable exists, false otherwise.</returns>
+                bool GetValue(In char* pszName, Out const char*& pszValue);
 
 
             protected:

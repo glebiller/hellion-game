@@ -29,9 +29,9 @@ class NetworkSystem : public ISystem {
         ///   Implementation of the <c>ISystem::GetName</c> function.
         ///   Gets the name of the system.  Only custom systems can return a custom name.
         /// </summary>
-        /// <returns>pcstr - The name of the system.</returns>
+        /// <returns>const char* - The name of the system.</returns>
         /// <seealso cref="ISystem::GetName"/>
-        virtual pcstr GetName(void);
+        virtual const char* GetName(void);
 
         /// <summary cref="NetworkSystem::GetSystemType">
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
@@ -111,7 +111,7 @@ class NetworkSystem : public ISystem {
             HotKey_Count
         };
 
-        static pcstr sm_kapszPropertyNames[];
+        static const char* sm_kapszPropertyNames[];
         static const Properties::Property sm_kaDefaultProperties[];
     public:
         NetworkSystem(void);
@@ -119,9 +119,9 @@ class NetworkSystem : public ISystem {
 
         typedef struct _HotKey {
             std::string psKey;
-            Bool  bCtrl;
+            bool  bCtrl;
         } HotKey;
-        std::map<pcstr, HotKey*> m_aHotKeys;
-        typedef std::map<pcstr, HotKey*>::iterator hotKeyIt;
+        std::map<const char*, HotKey*> m_aHotKeys;
+        typedef std::map<const char*, HotKey*>::iterator hotKeyIt;
 };
 

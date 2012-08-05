@@ -31,7 +31,7 @@
 		<System Type="Geometry" Lib="GeometrySystem"/>
 		<System Type="Graphic" Lib="GraphicSystem">
 			<Properties>
-                <Property Name="ResourceLocation" Value1="../Media/Graphic/default" Value2="FileSystem" Value3="Default" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/default" Value2="FileSystem" Value3="Default" Value4="0"/>
 				<Property Name="WindowName" Value1="Smoke Demo"/>
 				<Property Name="Resolution" Value1="1024" Value2="768"/>
 				<Property Name="ShadowTextureCount" Value1="1"/>

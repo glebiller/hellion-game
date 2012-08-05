@@ -34,7 +34,7 @@ class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
 
     protected:
 
-        GraphicObjectCamera(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectCamera(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectCamera(void);
 
         /// <summary cref="GraphicObjectCamera::Initialize">
@@ -125,7 +125,7 @@ class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
             Property_Count
         };
 
-        static const pcstr                  sm_kapszPropertyNames[];
+        static const const char*                  sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Ogre::Camera*                       m_pCamera;
@@ -144,7 +144,7 @@ class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
             PolygonMode_Count
         };
 
-        static const pcstr                  sm_kapszPolygonModeEnumOptions[];
+        static const const char*                  sm_kapszPolygonModeEnumOptions[];
         PolygonModes                        m_PolygonMode;
 
         Math::Vector3                       m_Position;     // Position of AI object

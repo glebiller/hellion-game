@@ -33,8 +33,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes
@@ -48,7 +48,7 @@
 //
 #define PHAVOKSCENE         reinterpret_cast<HavokPhysicsScene*>(m_pSystemScene)
 
-pcstr HavokCharacterObject::sm_kapszCommonPropertyNames[] = {
+const char* HavokCharacterObject::sm_kapszCommonPropertyNames[] = {
     "CapsuleA", "CapsuleB", "Radius",
 };
 
@@ -72,7 +72,7 @@ COMPILE_ASSERT(HavokCharacterObject::Property_Count == sizeof HavokCharacterObje
 // HavokCharacterObject - Default constructor
 HavokCharacterObject::HavokCharacterObject(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : HavokObject(pSystemScene, pszName)
     , m_CharacterProxy(NULL)
@@ -187,7 +187,7 @@ HavokCharacterObject::Initialize(
     //
     // Set this as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this object.
     //
@@ -259,7 +259,7 @@ HavokCharacterObject::Update(
         input.m_inputLR = m_Velocity.x;
         input.m_inputUD = m_Velocity.z;
         input.m_wantJump = m_Velocity.y != 0;
-        input.m_atLadder = False;
+        input.m_atLadder = false;
         input.m_up = up;
         input.m_forward.set(1, 0, 0);
         input.m_forward.setRotatedDir(m_CharacterOrientation, input.m_forward);

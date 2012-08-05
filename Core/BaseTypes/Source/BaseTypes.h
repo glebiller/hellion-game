@@ -29,7 +29,7 @@
 #include "DataTypes.h"
 #include "Debug.h"
 #include "Errors.h"
-#include "AssertUtils.h"
+#include "Assert.h"
 #include "MathUtils.h"
 #include "Singleton.h"
 #include "Convertor.h"

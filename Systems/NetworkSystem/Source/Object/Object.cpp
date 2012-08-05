@@ -15,20 +15,20 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Network system includes
 //
 #include "Object/Object.h"
 
-pcstr NetworkObject::sm_kapszTypeNames[] = {
+const char* NetworkObject::sm_kapszTypeNames[] = {
     "Controlled", "Overlay",
     NULL
 };
 
-pcstr NetworkObject::sm_kapszPropertyNames[] = {
+const char* NetworkObject::sm_kapszPropertyNames[] = {
     "FKey", "Orientation"
 };
 
@@ -50,7 +50,7 @@ const Properties::Property NetworkObject::sm_kaDefaultProperties[] = {
     0)
 };
 
-NetworkObject::NetworkObject(ISystemScene* pSystemScene, pcstr pszType, pcstr pszName) : ISystemObject(pSystemScene, NULL) {
+NetworkObject::NetworkObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName) : ISystemObject(pSystemScene, NULL) {
     ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
     ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
 
@@ -85,7 +85,7 @@ NetworkObject::Initialize(
     //
     // Set this set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     // fill out pitch and yaw
     m_Pitch = 0.0f;
     m_Yaw = 0.0f;
@@ -147,7 +147,7 @@ NetworkObject::SetProperties(
                 m_Orientation.w = 0;
                 PostChanges(System::Changes::Geometry::Orientation);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -217,7 +217,7 @@ const Math::Vector3*
 NetworkObject::GetScale(
     void
 ) {
-    ASSERT(False);
+    ASSERT(false);
     return NULL;
 }
 

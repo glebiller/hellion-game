@@ -42,8 +42,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes
@@ -58,7 +58,7 @@
 //
 #define PHAVOKSCENE         reinterpret_cast<HavokPhysicsScene*>(m_pSystemScene)
 
-pcstr PhysicObjectTerrain::sm_kapszCommonPropertyNames[] = {
+const char* PhysicObjectTerrain::sm_kapszCommonPropertyNames[] = {
     "Size",
 };
 
@@ -99,7 +99,7 @@ const Properties::Property PhysicObjectTerrain::sm_kaCommonDefaultProperties[] =
 
 PhysicObjectTerrain::PhysicObjectTerrain(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : HavokObject(pSystemScene, pszName) {
     ASSERT(Property_Count == sizeof sm_kapszCommonPropertyNames / sizeof sm_kapszCommonPropertyNames[ 0 ]);

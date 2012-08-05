@@ -18,8 +18,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // geometry system includes
@@ -49,9 +49,7 @@ DllMain(
 
 
 extern "C" ISystem* __stdcall
-CreateGeometrySystem(
-    Debug::Debugger* p_Debugger
-) {
+CreateGeometrySystem(Debug::Debugger* p_Debugger) {
     Debug::Init(p_Debugger);
     return new GeometrySystem();
 }

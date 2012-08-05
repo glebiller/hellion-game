@@ -61,9 +61,9 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
         ///   Implementation of the <c>ISystem::GetName</c> function.
         ///   Gets the name of the system.  Only custom systems can return a custom name.
         /// </summary>
-        /// <returns>pcstr - The name of the system.</returns>
+        /// <returns>const char* - The name of the system.</returns>
         /// <seealso cref="ISystem::GetName"/>
-        virtual pcstr GetName(void);
+        virtual const char* GetName(void);
 
         /// <summary cref="GraphicSystem::GetSystemType">
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
@@ -130,7 +130,7 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Ogre::Root*                         m_pRoot;

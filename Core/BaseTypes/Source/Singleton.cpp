@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Assert.h"
 #include "Defines.h"
-#include "AssertUtils.h"
 #include "Singleton.h"
 
 /**
@@ -30,13 +30,13 @@ Singleton::~Singleton(void) {
 
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
 
 /**
  *  @inheritDoc
  */
 void* Singleton::operator new(size_t) {
-    ASSERTMSG(False, "Not allowed to dynamically allocate a singleton.");
+    ASSERTMSG(false, "Not allowed to dynamically allocate a singleton.");
     return NULL;
 }
 
@@ -44,7 +44,7 @@ void* Singleton::operator new(size_t) {
  *  @inheritDoc
  */
 void* Singleton::operator new[](size_t) {
-    ASSERTMSG(False, "Not allowed to dynamically allocate a singleton.");
+    ASSERTMSG(false, "Not allowed to dynamically allocate a singleton.");
     return NULL;
 }
 
@@ -52,14 +52,14 @@ void* Singleton::operator new[](size_t) {
  *  @inheritDoc
  */
 void Singleton::operator delete(void*) {
-    ASSERTMSG(False, "Not allowed to dynamically free a singleton.");
+    ASSERTMSG(false, "Not allowed to dynamically free a singleton.");
 }
 
 /**
  *  @inheritDoc
  */
 void Singleton::operator delete[](void*) {
-    ASSERTMSG(False, "Not allowed to dynamically free a singleton.");
+    ASSERTMSG(false, "Not allowed to dynamically free a singleton.");
 }
 
 #endif

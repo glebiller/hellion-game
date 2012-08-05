@@ -17,9 +17,9 @@
 #include <string>
 #include <vector>
 
-#include <DataTypes.h>
-#include <AssertUtils.h>
-#include <MathUtils.h>
+#include "DataTypes.h"
+#include "Assert.h"
+#include "MathUtils.h"
 
 #pragma warning( push )
 #pragma warning( disable : 6385 6386 )
@@ -88,13 +88,13 @@ namespace Properties {
             /// <param name="pszPropertyName">The name of this property.</param>
             /// <param name="PropertyType">The type of property from Proerties::Values.</param>
             /// <param name="PropertyFlags">Flags for qualifying the use of the property.</param>
-            Property(pcstr pszPropertyName, u32 PropertyType, u32 PropertyFlags, ...);
+            Property(const char* pszPropertyName, u32 PropertyType, u32 PropertyFlags, ...);
 
             /// <summary>
             ///   Returns the property name.
             /// </summary>
             /// <returns>The property's name.</returns>
-            pcstr GetName(void) const {
+            const char* GetName(void) const {
                 return m_pszName;
             }
 
@@ -115,7 +115,7 @@ namespace Properties {
                 m_Flags &= ~Flag;
             }
 
-            Bool GetBool(i32 Index) const {
+            bool GetBool(i32 Index) const {
                 ASSERT(Index >= 0 && Index < Values::Count);
                 return m_aValues[ Index ].Boolean;
             }
@@ -135,7 +135,7 @@ namespace Properties {
                 return m_asValues[ Index ];
             }
 
-            pcstr GetStringPtr(i32 Index) const {
+            const char* GetStringPtr(i32 Index) const {
                 ASSERT(Index >= 0 && Index < Values::Count);
                 return m_asValues[ Index ].c_str();
             }
@@ -174,7 +174,7 @@ namespace Properties {
                 return c;
             }
 
-            void SetValue(i32 Index, const Bool& Value) {
+            void SetValue(i32 Index, const bool& Value) {
                 ASSERT(Index >= 0 && Index < Values::Count);
                 m_aValues[ Index ].Boolean = Value;
             }
@@ -182,6 +182,11 @@ namespace Properties {
             void SetValue(i32 Index, const i32& Value) {
                 ASSERT(Index >= 0 && Index < Values::Count);
                 m_aValues[ Index ].Int32 = Value;
+            }
+
+            void SetValue(i32 Index, const u32& Value) {
+                ASSERT(Index >= 0 && Index < Values::Count);
+                m_aValues[ Index ].Int32 = static_cast<i32> (Value);
             }
 
             void SetValue(i32 Index, const f32& Value) {
@@ -227,30 +232,30 @@ namespace Properties {
                 m_aValues[ 3 ].Float32 = Value.a;
             }
 
-            pcstr GetEnumOption(i32 Index) const {
+            const char* GetEnumOption(i32 Index) const {
                 return m_apszEnumOptions[ Index ];
             }
 
-            void SetEnumOptions(const pcstr* apszEnumOptions) {
+            void SetEnumOptions(const char** apszEnumOptions) {
                 m_apszEnumOptions = apszEnumOptions;
             }
 
         protected:
 
-            pcstr                   m_pszName;
+            const char*             m_pszName;
 
             u32                     m_Type;
             u32                     m_Flags;
 
             union Value {
-                u32                 Boolean;
+                bool                Boolean;
                 i32                 Int32;
                 f32                 Float32;
             };
             Value                   m_aValues[ Values::Count ];
             std::string             m_asValues[ Values::Count ];
 
-            const pcstr*            m_apszEnumOptions;
+            const char**      m_apszEnumOptions;
 
     };
 

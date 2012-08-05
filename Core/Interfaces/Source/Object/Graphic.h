@@ -16,9 +16,9 @@
 
 #include <string>
 
-#include <DataTypes.h>
-#include <MathUtils.h>
-#include <AssertUtils.h>
+#include "DataTypes.h"
+#include "MathUtils.h"
+#include "Assert.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CONSTANTS: IndexDecl
@@ -131,7 +131,7 @@ namespace VertexDecl {
                         break;
 
                     default:
-                        ASSERT(False);
+                        ASSERT(false);
                         break;
                 }
             }
@@ -190,7 +190,7 @@ namespace VertexDecl {
                         break;
 
                     default:
-                        ASSERT(False);
+                        ASSERT(false);
                         break;
                 }
             }

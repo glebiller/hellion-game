@@ -15,7 +15,7 @@ class GraphicObjectTerrain : public GraphicObject {
         friend OGREGraphicsTask;
 
     protected:
-        GraphicObjectTerrain(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectTerrain(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectTerrain(void);
 
         /// <summary cref="GraphicObjectCamera::Initialize">

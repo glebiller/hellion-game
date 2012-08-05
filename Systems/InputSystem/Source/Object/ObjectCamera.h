@@ -33,7 +33,7 @@ class InputCameraObject : public InputObject, public IGeometryObject, public IMo
 
     protected:
 
-        InputCameraObject(ISystemScene* pSystemScene, pcstr pszName);
+        InputCameraObject(ISystemScene* pSystemScene, const char* pszName);
         ~InputCameraObject(void);
 
         /////////////////////////////////
@@ -94,7 +94,7 @@ class InputCameraObject : public InputObject, public IGeometryObject, public IMo
         enum CommonPropertyTypes {
             Property_None, Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 
     private:

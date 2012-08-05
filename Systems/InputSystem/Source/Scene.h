@@ -44,9 +44,9 @@ class InputScene : public ISystemScene {
 
         virtual void SetProperties(Properties::Array Properties);
 
-        virtual pcstr* GetObjectTypes(void);
+        virtual const char** GetObjectTypes(void);
 
-        virtual ISystemObject* CreateObject(pcstr pszName, pcstr pszType);
+        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
 
         virtual Error DestroyObject(ISystemObject* pSystemObject);
 

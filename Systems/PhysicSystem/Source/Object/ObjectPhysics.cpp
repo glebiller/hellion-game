@@ -38,8 +38,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes
@@ -57,13 +57,13 @@
 //
 extern ManagerInterfaces    g_Managers;
 
-pcstr HavokPhysicsObject::sm_kapszTypeNames[] = {
+const char* HavokPhysicsObject::sm_kapszTypeNames[] = {
     "Box", "Sphere", "ConvexHull", "Mesh", "Space", "Dynamic",
     NULL
 };
 
 
-pcstr HavokPhysicsObject::sm_kapszCommonPropertyNames[] = {
+const char* HavokPhysicsObject::sm_kapszCommonPropertyNames[] = {
     "Mass", "Static", "Material", "LinearVelocity", "Quality"
 };
 
@@ -99,7 +99,7 @@ const Properties::Property HavokPhysicsObject::sm_kaCommonDefaultProperties[] = 
     1),
 };
 
-pcstr HavokPhysicsObject::sm_kapszBoxPropertyNames[] = {
+const char* HavokPhysicsObject::sm_kapszBoxPropertyNames[] = {
     "Lengths",
 };
 
@@ -112,7 +112,7 @@ const Properties::Property HavokPhysicsObject::sm_kaBoxDefaultProperties[] = {
     Math::Vector3::Zero),
 };
 
-pcstr HavokPhysicsObject::sm_kapszSpherePropertyNames[] = {
+const char* HavokPhysicsObject::sm_kapszSpherePropertyNames[] = {
     "Radii",
 };
 
@@ -130,14 +130,14 @@ const Properties::Property HavokPhysicsObject::sm_kaSphereDefaultProperties[] = 
 // HavokCharacterObject - Default constructor
 HavokPhysicsObject::HavokPhysicsObject(
     ISystemScene* pSystemScene,
-    pcstr pszType,
-    pcstr pszName,
+    const char* pszType,
+    const char* pszName,
     hkpRigidBody* pBody
 )
     : HavokObject(pSystemScene, pszName)
     , m_Offset(Math::Vector3::Zero)
     , m_pBody(NULL)
-    , m_bStatic(False)
+    , m_bStatic(false)
     , m_MaterialId(-1)
     , m_Mass(0.0f)
     , m_LinearVelocity(Math::Vector3::Zero)
@@ -168,14 +168,14 @@ HavokPhysicsObject::HavokPhysicsObject(
         m_Type = Type_ConvexHull;
     } else if (strcmp(pszType, sm_kapszTypeNames[ Type_Mesh ]) == 0) {
         m_Type = Type_Mesh;
-        m_bStatic = True;
+        m_bStatic = true;
     } else if (strcmp(pszType, sm_kapszTypeNames[ Type_Space ]) == 0) {
         m_Type = Type_Space;
     } else if (strcmp(pszType, sm_kapszTypeNames[ Type_Dynamic ]) == 0) {
         ASSERT(pBody != NULL);
         m_Type = Type_Dynamic;
     } else {
-        ASSERT(False);
+        ASSERT(false);
     }
 
     //
@@ -293,7 +293,7 @@ HavokPhysicsObject::Initialize(
     //
     // Create the collision geometry.
     //
-    Bool                bRigidBodyInfoSet = False;
+    bool                bRigidBodyInfoSet = false;
     hkpRigidBodyCinfo   RigidBodyCInfo;
 
     switch (m_Type) {
@@ -303,7 +303,7 @@ HavokPhysicsObject::Initialize(
                 hkpBoxShape* pBox = new hkpBoxShape(hkHalfExtent, 0);
                 RigidBodyCInfo.m_shape = pBox;
                 RigidBodyCInfo.m_restitution = 0.0f;  // Set restitution to 0 (no bounciness)
-                bRigidBodyInfoSet = True;
+                bRigidBodyInfoSet = true;
             }
 
             break;
@@ -313,7 +313,7 @@ HavokPhysicsObject::Initialize(
             hkpSphereShape* pSphere = new hkpSphereShape(Size.x);
             RigidBodyCInfo.m_shape = pSphere;
             RigidBodyCInfo.m_restitution = 0.5f;  // Set restitution to 0 (no bounciness)
-            bRigidBodyInfoSet = True;
+            bRigidBodyInfoSet = true;
             break;
         }
 
@@ -324,7 +324,7 @@ HavokPhysicsObject::Initialize(
             break;
 
         default:
-            ASSERT(False);
+            ASSERT(false);
             break;
     }
 
@@ -342,7 +342,7 @@ HavokPhysicsObject::Initialize(
     //
     // Set this as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this object.
     //
@@ -472,7 +472,7 @@ HavokPhysicsObject::SetProperties(
                     m_pBody->setQualityType(hkQuality);
                 }
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -935,7 +935,7 @@ HavokPhysicsObject::GetContact(
 
 ///////////////////////////////////////////////////////////////////////////////
 // IsStatic - Return true if this is a static object (doesn't move)
-const Bool
+const bool
 HavokPhysicsObject::IsStatic(
     void
 ) {

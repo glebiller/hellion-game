@@ -23,8 +23,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 using namespace Interface;
 
 //
@@ -50,7 +50,7 @@ const f32 GraphicObjectCPUChart::m_secondsPerUpdate = 1.0f;
 // CPU utilization charting object.  Constructor.
 //
 //-----------------------------------------------------------------------------
-GraphicObjectCPUChart::GraphicObjectCPUChart(ISystemScene* pSystemScene, pcstr pszName) :
+GraphicObjectCPUChart::GraphicObjectCPUChart(ISystemScene* pSystemScene, const char* pszName) :
     GraphicObjectChart(pSystemScene, pszName),
     m_secondsSinceLastUpdate(0.0f),
     m_framesSinceLastUpdate(0) {

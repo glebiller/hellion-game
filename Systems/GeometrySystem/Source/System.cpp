@@ -16,8 +16,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // geometry system includes
@@ -40,7 +40,7 @@ GeometrySystem::~GeometrySystem(
 }
 
 
-pcstr
+const char*
 GeometrySystem::GetName(
     void
 ) {
@@ -61,7 +61,7 @@ GeometrySystem::Initialize(
     Properties::Array Properties
 ) {
     ASSERT(!m_bInitialized);
-    m_bInitialized = True;
+    m_bInitialized = true;
     return Errors::Success;
 }
 

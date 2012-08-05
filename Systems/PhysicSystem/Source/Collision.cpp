@@ -31,8 +31,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // includes
@@ -194,7 +194,7 @@ HavokCollisionService::LineTest(
 
 ///////////////////////////////////////////////////////////////////////////////
 // Finalize - Gets results for the given handle
-Bool
+bool
 HavokCollisionService::Finalize(
     Coll::Handle Handle,
     Coll::Result* pResult
@@ -204,13 +204,13 @@ HavokCollisionService::Finalize(
 
     // Return if the handle isn't valid
     if (Handle == Coll::InvalidHandle) {
-        return False;
+        return false;
     }
 
     // Finalized will be returned if the test has completed
-    Bool Finalized = False;
+    bool Finalized = false;
     // Get the data for the given handle
-    Bool ResultAvailable = False;
+    bool ResultAvailable = false;
     Coll::Result PendingResult;
     memset(&PendingResult, 0, sizeof(PendingResult));
     {
@@ -218,14 +218,14 @@ HavokCollisionService::Finalize(
         std::map<Coll::Handle, Coll::Result>::iterator it = m_PendingResults.find(Handle);
 
         if (it != m_PendingResults.end()) {
-            ResultAvailable = True;
+            ResultAvailable = true;
             PendingResult = (*it).second;
         }
     }
 
     if (ResultAvailable) {
         // Get store the result
-        Finalized = True;
+        Finalized = true;
 
         if (pResult) {
             *pResult = PendingResult;
@@ -268,7 +268,7 @@ ProcessColl(
                 break;
 
             default:
-                ASSERT(False);    // Unsupported collision type
+                ASSERT(false);    // Unsupported collision type
                 break;
         }
     }
@@ -297,7 +297,7 @@ LineTest(
     // Process results
     if (output.hasHit()) {
         // Hit something
-        Result->m_Valid = True;
+        Result->m_Valid = true;
         // Set m_Position
         hkVector4 IntersectionPointWorld;
         IntersectionPointWorld.setInterpolate4(input.m_from, input.m_to, output.getHit().m_hitFraction);
@@ -313,11 +313,11 @@ LineTest(
         }
     } else {
         // Didn't hit anything
-        Result->m_Valid = False;
+        Result->m_Valid = false;
         Result->m_Position = Request.m_Position1;
     }
 
     // Mark is as finalized
-    Result->m_Finalized = True;
+    Result->m_Finalized = true;
 }
 

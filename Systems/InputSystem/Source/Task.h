@@ -34,8 +34,8 @@ class InputTask : public ISystemTask {
 
         virtual void Update(f32 DeltaTime);
 
-        virtual Bool IsPrimaryThreadOnly(void) {
-            return False;
+        virtual bool IsPrimaryThreadOnly(void) {
+            return false;
         };
 
 };

@@ -33,8 +33,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 
 //
@@ -49,12 +49,12 @@
 #define PSYSTEM         (reinterpret_cast<GraphicSystem*>(m_pSystemScene->GetSystem()))
 #define POGRESCENEMGR   (PSCENE->GetOGRESceneManager())
 
-const pcstr GraphicObjectCamera::sm_kapszPolygonModeEnumOptions[] = {
+const const char* GraphicObjectCamera::sm_kapszPolygonModeEnumOptions[] = {
     "Points", "WireFrame", "Solid",
     NULL
 };
 
-const pcstr GraphicObjectCamera::sm_kapszPropertyNames[] = {
+const const char* GraphicObjectCamera::sm_kapszPropertyNames[] = {
     "FOVy", "ClipDistances", "LookAt", "PolygonMode", "LockCamera", "PagedGeometry"
 };
 
@@ -93,7 +93,7 @@ const Properties::Property GraphicObjectCamera::sm_kaDefaultProperties[] = {
 
 GraphicObjectCamera::GraphicObjectCamera(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : GraphicObject(pSystemScene, pszName)
     , m_pCamera(NULL)
@@ -182,7 +182,7 @@ GraphicObjectCamera::Initialize(
             //
             // Set this set as initialized.
             //
-            m_bInitialized = True;
+            m_bInitialized = true;
             //
             // Set the properties for this object.
             //
@@ -277,7 +277,7 @@ GraphicObjectCamera::SetProperties(
                 PSCENE->SetCamera(m_pCamera);
                 PSCENE->SetDetailLevel();
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -341,7 +341,7 @@ GraphicObjectCamera::UpdatePolygonMode(void) {
             break;
 
         default:
-            ASSERT(False);
+            ASSERT(false);
     }
 }
 

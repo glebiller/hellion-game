@@ -28,7 +28,7 @@ class InputSystem : public ISystem {
         /// ISystem overrides
         /////////////////////////////////
 
-        virtual pcstr GetName(void);
+        virtual const char* GetName(void);
 
         virtual System::Type GetSystemType(void);
 
@@ -46,10 +46,10 @@ class InputSystem : public ISystem {
 
         typedef struct _HotKey {
             std::string psKey;
-            Bool  bCtrl;
+            bool  bCtrl;
         } HotKey;
-        std::map<pcstr, HotKey*> m_aHotKeys;
-        typedef std::map<pcstr, HotKey*>::iterator hotKeyIt;
+        std::map<const char*, HotKey*> m_aHotKeys;
+        typedef std::map<const char*, HotKey*>::iterator hotKeyIt;
 
     protected:
 
@@ -63,7 +63,7 @@ class InputSystem : public ISystem {
             HotKey_Count
         };
 
-        static pcstr sm_kapszPropertyNames[];
+        static const char* sm_kapszPropertyNames[];
         static const Properties::Property sm_kaDefaultProperties[];
 
 };

@@ -18,8 +18,8 @@
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
-#include <OgreBorderPanelOverlayElement.h>
-#include <OgreHardwarePixelBuffer.h>
+#include "OgreBorderPanelOverlayElement.h"
+#include "OgreHardwarePixelBuffer.h"
 #pragma warning( pop )
 
 #ifdef SAFE_DELETE
@@ -32,8 +32,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 using namespace Interface;
 
 //
@@ -54,7 +54,7 @@ using namespace Interface;
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 
-pcstr GraphicObjectWindow::sm_kapszPropertyNames[] = {
+const char* GraphicObjectWindow::sm_kapszPropertyNames[] = {
     "Color", "Position", "Size"
 };
 
@@ -75,7 +75,7 @@ const Properties::Property GraphicObjectWindow::sm_kaDefaultProperties[] = {
     0.0f),
 };
 
-GraphicObjectWindow::GraphicObjectWindow(ISystemScene* pSystemScene, pcstr pszName) : GraphicObject(pSystemScene, pszName) {
+GraphicObjectWindow::GraphicObjectWindow(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName) {
     ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
     ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
     m_Type          = GraphicObject::Type_Window;
@@ -342,7 +342,7 @@ void GraphicObjectWindow::SetProperties(Properties::Array Properties) {
                 m_Width = it->GetFloat32(0);
                 m_Height = it->GetFloat32(1);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //

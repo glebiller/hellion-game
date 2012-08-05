@@ -11,7 +11,7 @@ class PhysicObjectTerrain : public HavokObject {
 
     protected:
 
-        PhysicObjectTerrain(ISystemScene* pSystemScene, pcstr pszName);
+        PhysicObjectTerrain(ISystemScene* pSystemScene, const char* pszName);
         ~PhysicObjectTerrain(void);
 
         /// <summary cref="GraphicObjectCamera::Initialize">
@@ -78,7 +78,7 @@ class PhysicObjectTerrain : public HavokObject {
         enum CommonPropertyTypes {
             Property_Size ,/* Property_CapsuleB, Property_Radius,*/ Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 
 };

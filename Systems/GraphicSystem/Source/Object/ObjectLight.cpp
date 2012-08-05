@@ -20,18 +20,11 @@
 #include "Ogre.h"
 #pragma warning( pop )
 
-#ifdef SAFE_DELETE
-#undef SAFE_DELETE
-#endif
-#ifdef SAFE_DELETE_ARRAY
-#undef SAFE_DELETE_ARRAY
-#endif
-
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Ogre system includes
@@ -45,11 +38,11 @@
 #define POGRESCENEMGR (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRESceneManager())
 
 
-const pcstr GraphicObjectLight::sm_kapszLightTypeEnumOptions[] = {
+const const char* GraphicObjectLight::sm_kapszLightTypeEnumOptions[] = {
     "Point", "Spot", NULL
 };
 
-pcstr GraphicObjectLight::sm_kapszPropertyNames[] = {
+const char* GraphicObjectLight::sm_kapszPropertyNames[] = {
     "Type", "Position", "Diffuse", "Specular",
     "Direction", "Range", "Attenuation", // spotlight only
 };
@@ -88,7 +81,7 @@ const Properties::Property GraphicObjectLight::sm_kaDefaultProperties[] = {
 
 GraphicObjectLight::GraphicObjectLight(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : GraphicObject(pSystemScene, pszName)
     , m_LightType(LightType_Invalid)
@@ -163,14 +156,14 @@ GraphicObjectLight::Initialize(
             break;
 
         default:
-            ASSERT(False);
+            ASSERT(false);
     };
 
     if (m_pLight != NULL) {
         //
         // Set this set as initialized.
         //
-        m_bInitialized = True;
+        m_bInitialized = true;
         //
         // Set the remaining properties for this object.
         //
@@ -314,7 +307,7 @@ GraphicObjectLight::SetProperties(
                                              it->GetFloat32(3));
                 }
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //

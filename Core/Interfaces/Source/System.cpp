@@ -12,30 +12,23 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <BaseTypes.h>
+#include "BaseTypes.h"
 #include "Interface.h"
 
-
-ISystem::ISystem(
-    void
-)
-    : m_bInitialized(False) {
+ISystem::ISystem(void) : m_bInitialized(false) {
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetCPUUsage - Gets CPU Utilization
-// Default value is 0
-f32
-ISystem::GetCPUUsage(
-    void
-) {
-    return 0;
-}
-
-ISystemScene::ISystemScene(
-    ISystem* pSystem
-)
+ISystemScene::ISystemScene(ISystem* pSystem)
     : m_pSystem(pSystem)
-    , m_bInitialized(False) {
+    , m_bInitialized(false) {
     ASSERT(m_pSystem != NULL);
+}
+
+/**
+ * Gets the CPU usage.
+ * 
+ * @return	The CPU usage.
+ */
+f32 ISystem::GetCPUUsage(void) {
+    return 0;
 }

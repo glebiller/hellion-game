@@ -24,7 +24,7 @@ class GeometrySystem : public ISystem {
 
     protected:
 
-        virtual pcstr GetName(void);
+        virtual const char* GetName(void);
 
         virtual System::Type GetSystemType(void);
 

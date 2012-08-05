@@ -21,8 +21,8 @@
 #include <tbb/tbb_thread.h>
 #pragma warning( pop )
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include <SpinMutex.h>
 
@@ -106,7 +106,7 @@ class TaskManager: public ITaskManager {
         /// <param name="uNumberOfThreads">the limit of the number of threads to use</param>
         void SetNumberOfThreads(u32 uNumberOfThreads);
 
-        Bool IsPrimaryThread(void);
+        bool IsPrimaryThread(void);
 
         void AddStallTask(void);
 
@@ -136,7 +136,7 @@ class TaskManager: public ITaskManager {
 #endif
         tbb::task* m_pSystemTasksRoot;
 
-        Bool m_bTimeToQuit;
+        bool m_bTimeToQuit;
 
         // requested, maximum and current number of threads in use
         u32 m_uRequestedNumberOfThreads;
@@ -145,9 +145,9 @@ class TaskManager: public ITaskManager {
         u32 m_uTargetNumberOfThreads;
 
 #if defined(USE_THREAD_PROFILER)
-        Bool m_bTPEventsForTasks;
-        Bool m_bTPEventsForJobs;
-        Bool m_bTPEventsForSynchronize;
+        bool m_bTPEventsForTasks;
+        bool m_bTPEventsForJobs;
+        bool m_bTPEventsForSynchronize;
 
         __itt_event m_tSynchronizeTPEvent;
         __itt_event m_tpSystemTaskSpawn;
@@ -158,13 +158,13 @@ class TaskManager: public ITaskManager {
         /// <seealso cref="TaskManager::SystemTask"/>
         struct SystemTaskSupport {
             SystemTaskSupport()
-                : m_bInitialized(False)
+                : m_bInitialized(false)
                 , m_tpeSystemTask(0)
                 , m_tpeSystemTaskJob(0)
                 , m_tpeSystemTaskJobCompletion(0)
             {}
 
-            Bool m_bInitialized;
+            bool m_bInitialized;
             __itt_event m_tpeSystemTask;
             __itt_event m_tpeSystemTaskJob;
             __itt_event m_tpeSystemTaskJobCompletion;
@@ -204,7 +204,7 @@ class TaskManager: public ITaskManager {
         /// <remarks>Due to the difficulty using the Intel Threading Building Blocks API to determine this, and
         /// since no thread local storage is used as a workaround, this method always returns true.</remarks>
         /// <returns>true if the calling thread is managed by Intel Theading Building Blocks, false otherwise</returns>
-        static Bool IsTBBThread(void);
+        static bool IsTBBThread(void);
 
         /// <summary cref="TaskManager::UpdateThreadPoolSize">
         /// This method is called within <c>IssueJobsForSystemTasks</c> to update the size of TBB thread pool

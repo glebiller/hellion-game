@@ -35,7 +35,7 @@ class GraphicObjectChart : public GraphicObjectWindow {
 
     protected:
 
-        GraphicObjectChart(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectChart(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectChart(void);
 
         /// <summary cref="GraphicObjectChart::Initialize">

@@ -15,11 +15,11 @@
 
 #pragma once
 
-#include <SpinMutex.h>
+#include "SpinMutex.h"
 
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #pragma warning( push, 0 )
-#include <PagedGeometry.h>
+#include "PagedGeometry.h"
 #include "GrassLoader.h"
 #pragma warning( pop )
 
@@ -176,9 +176,9 @@ class OGREGraphicsScene : public ISystemScene {
         ///   Implementation of the <c>ISystemScene::GetObjectTypes</c> function.
         ///   Get all the available object types as names.
         /// </summary>
-        /// <returns>pcstr* - A NULL terminated array of object type names.</returns>
+        /// <returns>const char** - A NULL terminated array of object type names.</returns>
         /// <seealso cref="ISystemScene::GetObjectTypes"/>
-        virtual pcstr* GetObjectTypes(void);
+        virtual const char** GetObjectTypes(void);
 
         /// <summary cref="OGREGraphicsScene::CreateObject">
         ///   Implementation of the <c>ISystemScene::CreateObject</c> function.
@@ -188,7 +188,7 @@ class OGREGraphicsScene : public ISystemScene {
         /// <param name="pszType">The object type to create.</param>
         /// <returns>ISystemObject* - The newly created system object.</returns>
         /// <seealso cref="ISystemScene::CreateObject"/>
-        virtual ISystemObject* CreateObject(pcstr pszName, pcstr pszType);
+        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
 
         /// <summary cref="OGREGraphicsScene::DestroyObject">
         ///   Implementation of the <c>ISystemScene::DestroyObject</c> function.
@@ -242,7 +242,7 @@ class OGREGraphicsScene : public ISystemScene {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         ObjectsList                         m_Objects;
@@ -257,8 +257,8 @@ class OGREGraphicsScene : public ISystemScene {
         Ogre::OverlayManager*               m_pOverlayManager;
         Ogre::Overlay*                      m_pOverlay;
 
-        Bool                                m_bUseStaticGeom;
-        Bool                                m_bUseInstancedGeom;
+        bool                                m_bUseStaticGeom;
+        bool                                m_bUseInstancedGeom;
 
         ProcessData                         m_ProcessData[ MAX_NUM_JOBS ];
 
@@ -285,7 +285,7 @@ class OGREGraphicsScene : public ISystemScene {
         f32                                 m_fTerrainLengthOffset;
         f32                                 m_fTerrainHeightOffset;
 
-        Bool    m_bPause;
+        bool    m_bPause;
         f32     m_fDeltaTime;
 
         /// <summary cref="OGREGraphicsScene::UpdateCallback">

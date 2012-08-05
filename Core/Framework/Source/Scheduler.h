@@ -39,7 +39,7 @@ class Scheduler {
         /// <summary>
         ///   Turns benchmarking on or off.
         /// </summary>
-        void EnableBenchmarking(Bool bEnable = True) {
+        void EnableBenchmarking(bool bEnable = true) {
             m_bBenchmarkingEnabled = bEnable;
         }
 
@@ -63,7 +63,7 @@ class Scheduler {
         f32                             m_ClockFrequency;
         Handle                          m_hExecutionTimer;
 
-        Bool                            m_bBenchmarkingEnabled;
+        bool                            m_bBenchmarkingEnabled;
 
         typedef std::map<System::Type, ISystemScene*>   SceneExecs;
         typedef SceneExecs::iterator                    SceneExecsIt;

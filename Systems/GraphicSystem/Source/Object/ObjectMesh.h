@@ -38,7 +38,7 @@ class GraphicObjectMesh : public GraphicObject, public IGraphicsObject {
 
     protected:
 
-        GraphicObjectMesh(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectMesh(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectMesh(void);
 
         /// <summary cref="GraphicObjectMesh::Initialize">
@@ -183,7 +183,7 @@ class GraphicObjectMesh : public GraphicObject, public IGraphicsObject {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Math::Vector3                       m_Position;

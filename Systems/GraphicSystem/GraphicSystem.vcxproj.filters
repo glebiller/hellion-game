@@ -25,6 +25,18 @@
     <Filter Include="Fichiers sources\MovableText">
       <UniqueIdentifier>{eea23af2-b7a2-4664-b286-061ca69edf95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\Object\GUI">
+      <UniqueIdentifier>{83c3c3ae-7bfa-4d18-b447-9f60750109d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Object\GUI">
+      <UniqueIdentifier>{43cefcff-044b-4977-8352-cc56b9876ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Object\GUI\Debug">
+      <UniqueIdentifier>{e23670a4-2ac5-4a60-9e3c-504c373f9667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Object\GUI\Debug">
+      <UniqueIdentifier>{41dcf132-fec5-4814-86e5-69c563d7ee35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Task.cpp">
@@ -36,55 +48,19 @@
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NormalizedLines.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GraphicSystem.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DynamicBuffer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectWorkloadWindow.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectWindow.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object\ObjectTerrain.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectStatWindow.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object\ObjectSky.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\ObjectParticleSystem.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectParticles.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectPagedGeometryLayer.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectMeshAnimated.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object\ObjectMesh.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\ObjectLightFire.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object\ObjectLight.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectCPUChart.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectChart.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object\ObjectCamera.cpp">
@@ -102,14 +78,26 @@
     <ClCompile Include="Source\MovableText\DynamicLines.cpp">
       <Filter>Fichiers sources\MovableText</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\ObjectChart.cpp">
+      <Filter>Fichiers sources\Object\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\ObjectWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\ObjectWorkloadWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\ObjectStatWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\ObjectCPUChart.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NormalizedLines.cpp">
+      <Filter>Fichiers sources\MovableText</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DynamicBuffer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\NormalizedLines.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -125,46 +113,16 @@
     <ClInclude Include="Source\Object\ObjectCamera.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\ObjectChart.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectCPUChart.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object\ObjectLight.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectLightFire.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\ObjectMesh.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\ObjectMeshAnimated.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectPagedGeometryLayer.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectParticles.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectParticleSystem.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object\ObjectSky.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\ObjectStatWindow.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object\ObjectTerrain.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectWindow.h">
-      <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectWorkloadWindow.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\MovableText\DynamicLines.h">
@@ -174,6 +132,24 @@
       <Filter>Fichiers d%27en-tête\MovableText</Filter>
     </ClInclude>
     <ClInclude Include="Source\MovableText\MovableText.h">
+      <Filter>Fichiers d%27en-tête\MovableText</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ObjectWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ObjectWorkloadWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ObjectStatWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ObjectCPUChart.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ObjectChart.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NormalizedLines.h">
       <Filter>Fichiers d%27en-tête\MovableText</Filter>
     </ClInclude>
   </ItemGroup>

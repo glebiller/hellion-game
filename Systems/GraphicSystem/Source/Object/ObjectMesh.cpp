@@ -27,8 +27,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Ogre system includes
@@ -50,7 +50,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeChangeOccurred, "Graphics Mesh: ChangeOccurred", 
 u32 GraphicObjectMesh::sm_EntityId = 0;
 
 
-pcstr GraphicObjectMesh::sm_kapszPropertyNames[] = {
+const char* GraphicObjectMesh::sm_kapszPropertyNames[] = {
     "Mesh", "ProceduralMesh", "Material", "CastShadows",
     "DrawBoundingBox", "ShowNormals", "ShowTangents",
     "StaticGeom", "Instance",
@@ -64,7 +64,7 @@ const Properties::Property GraphicObjectMesh::sm_kaDefaultProperties[] = {
     Properties::Property(sm_kapszPropertyNames[ Property_ProceduralMesh ],
     VALUE1(Properties::Values::Boolean),
     Properties::Flags::Valid | Properties::Flags::InitOnly,
-    False),
+    false),
     Properties::Property(sm_kapszPropertyNames[ Property_Material ],
     VALUE1(Properties::Values::String),
     Properties::Flags::Valid | Properties::Flags::WriteOnly,
@@ -127,7 +127,7 @@ inline Ogre::VertexElementSemantic toOgreVertexSemantic(u32 usage) {
             return Ogre::VES_BLEND_WEIGHTS;
 
         default:
-            ASSERTMSG(False, "Unhandled case statement.");
+            ASSERTMSG(false, "Unhandled case statement.");
             return (Ogre::VertexElementSemantic)(0xbaadf00d);
     }
 }
@@ -160,7 +160,7 @@ inline u32 fromOgreVertexSemantic(u32 ogreVertexSemantic) {
             return VertexDecl::Usage::BlendWeights;
 
         default:
-            ASSERTMSG(False, "Unhandled case statement.");
+            ASSERTMSG(false, "Unhandled case statement.");
             return 0xbaadf00d;
     }
 }
@@ -187,7 +187,7 @@ inline Ogre::VertexElementType toOgreVertexType(u32 type) {
             return Ogre::VET_UBYTE4;
 
         default:
-            ASSERTMSG(False, "Unhandled case statement.");
+            ASSERTMSG(false, "Unhandled case statement.");
             return (Ogre::VertexElementType)(0xbaadf00d);
     }
 }
@@ -216,7 +216,7 @@ inline u32 fromOgreVertexType(u32 ogreVertexType) {
             return VertexDecl::Type::UByte4;
 
         default:
-            ASSERTMSG(False, "Unhandled case statement.");
+            ASSERTMSG(false, "Unhandled case statement.");
             return 0xbaadf00d;
     }
 }
@@ -224,7 +224,7 @@ inline u32 fromOgreVertexType(u32 ogreVertexType) {
 
 GraphicObjectMesh::GraphicObjectMesh(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : GraphicObject(pSystemScene, pszName)
     , m_pEntity(NULL)
@@ -234,7 +234,7 @@ GraphicObjectMesh::GraphicObjectMesh(
     , m_Orientation(Math::Quaternion::Zero)
     , m_Scale(Math::Vector3::One)
     , m_pCaption(NULL)
-    , m_Dirty(True) {    // Force Instanced Geom update initially
+    , m_Dirty(true) {    // Force Instanced Geom update initially
     ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
     ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
     m_Type = GraphicObject::Type_Mesh;
@@ -280,7 +280,7 @@ GraphicObjectMesh::Initialize(
     //
     // Read in the initialization only properties.
     //
-    pcstr pszMeshName = NULL;
+    const char* pszMeshName = NULL;
 
     for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
         if (it->GetFlags() & Properties::Flags::Valid &&
@@ -296,7 +296,7 @@ GraphicObjectMesh::Initialize(
             } else if (sName == sm_kapszPropertyNames[ Property_StaticGeom ]) {
                 m_strStaticGrpName = it->GetString(0);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -321,7 +321,7 @@ GraphicObjectMesh::Initialize(
         //
         // Set this set as initialized.
         //
-        m_bInitialized = True;
+        m_bInitialized = true;
         //
         // Set the remaining properties for this object.
         //
@@ -383,18 +383,18 @@ GraphicObjectMesh::SetProperties(
                 } else if (isProcedural) {
                     sMaterialName = it->GetStringPtr(0);
                 } else {
-                    ASSERT(False);
+                    ASSERT(false);
                 }
             } else if (sName == sm_kapszPropertyNames[ Property_CastShadows ]) {
                 if (m_pEntity != NULL) {
-                    m_pEntity->setCastShadows(it->GetBool(0) != False);
+                    m_pEntity->setCastShadows(it->GetBool(0) != false);
                 } else if (isProcedural) {
-                    bCastShadows = it->GetBool(0) != False;
+                    bCastShadows = it->GetBool(0) != false;
                 } else {
-                    ASSERT(False);
+                    ASSERT(false);
                 }
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -478,7 +478,7 @@ GraphicObjectMesh::ChangeOccurred(
                 //
                 // Currently don't allow redoing a mesh.
                 //
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //
@@ -670,7 +670,7 @@ void GraphicObjectMesh::GeometryChanged(System::Changes::BitMask ChangeType, IGe
             m_pNode->setPosition(m_Position.x, m_Position.y, m_Position.z);
         }
 
-        m_Dirty = True;
+        m_Dirty = true;
     }
 
     if (ChangeType & System::Changes::Geometry::Orientation) {
@@ -681,7 +681,7 @@ void GraphicObjectMesh::GeometryChanged(System::Changes::BitMask ChangeType, IGe
                                     m_Orientation.y, m_Orientation.z);
         }
 
-        m_Dirty = True;
+        m_Dirty = true;
     }
 
     if (ChangeType & System::Changes::Geometry::Scale) {
@@ -691,7 +691,7 @@ void GraphicObjectMesh::GeometryChanged(System::Changes::BitMask ChangeType, IGe
             m_pNode->setScale(m_Scale.x, m_Scale.y, m_Scale.z);
         }
 
-        m_Dirty = True;
+        m_Dirty = true;
     }
 } // GraphicObjectMesh::UpdateGeometry
 

@@ -18,8 +18,8 @@
 /////////////////////////////////
 
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "Scene.h"
 #include "Object/Object.h"
@@ -33,14 +33,14 @@
 
 #define PINPUTSCENE         reinterpret_cast<InputScene*>(m_pSystemScene)
 
-pcstr InputGuiObject::sm_kapszCommonPropertyNames[] = {
+const char* InputGuiObject::sm_kapszCommonPropertyNames[] = {
     "None"
 };
 
 const Properties::Property InputGuiObject::sm_kaCommonDefaultProperties[] = {
     Properties::Property(sm_kapszCommonPropertyNames[ Property_None ],
     Properties::Values::Boolean,
-    Properties::Flags::Valid, False),
+    Properties::Flags::Valid, false),
 };
 
 
@@ -51,7 +51,7 @@ const Properties::Property InputGuiObject::sm_kaCommonDefaultProperties[] = {
 
 InputGuiObject::InputGuiObject(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : InputObject(pSystemScene, pszName) {
     ASSERT(Property_Count == sizeof sm_kapszCommonPropertyNames / sizeof sm_kapszCommonPropertyNames[ 0 ]);
@@ -83,7 +83,7 @@ InputGuiObject::Initialize(
     //
     // Set this as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this object.
     //

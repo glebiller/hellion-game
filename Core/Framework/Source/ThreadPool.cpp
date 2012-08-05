@@ -14,8 +14,8 @@
 
 #include <Windows.h>
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include <Manager/PlatformManager.h>
 
@@ -41,11 +41,11 @@ BasicThreadPool::Initialize(
 
         for (u32 i = 0; i < m_NumThreads; i++) {
             m_pThreadContext[ i ].pThreadPool = this;
-            // Status event initialized to False
-            m_pThreadContext[ i ].hStatusEvent = CreateEvent(NULL, TRUE, False, NULL);
+            // Status event initialized to false
+            m_pThreadContext[ i ].hStatusEvent = CreateEvent(NULL, TRUE, false, NULL);
             m_pThreadContext[ i ].hWorkQueueSemaphore = m_hWorkQueueSemaphore;
-            m_pThreadContext[ i ].hSleepEvent = CreateEvent(NULL, TRUE, False, NULL);
-            m_pThreadContext[ i ].hWakeEvent = CreateEvent(NULL, TRUE, False, NULL);
+            m_pThreadContext[ i ].hSleepEvent = CreateEvent(NULL, TRUE, false, NULL);
+            m_pThreadContext[ i ].hWakeEvent = CreateEvent(NULL, TRUE, false, NULL);
         }
 
         for (u32 i = 0 ; i < m_NumThreads; i++) {
@@ -59,7 +59,7 @@ BasicThreadPool::Initialize(
         }
     }
 
-    m_bInitialized = True;
+    m_bInitialized = true;
 }
 
 
@@ -85,7 +85,7 @@ BasicThreadPool::Shutdown(
 
     // clean queue
     while (!m_pWorkQueue->empty()) {
-        PopAndProcessWorkItem(False);
+        PopAndProcessWorkItem(false);
     }
 
     SAFE_DELETE(m_pWorkQueue);
@@ -99,7 +99,7 @@ BasicThreadPool::Shutdown(
     SAFE_DELETE_ARRAY(m_pThreadContext);
     SAFE_DELETE_ARRAY(m_hWorkerThreads);
     SAFE_DELETE_ARRAY(m_hWorkerthreadIds);
-    m_bInitialized = False;
+    m_bInitialized = false;
 }
 
 
@@ -139,8 +139,8 @@ BasicThreadPool::QueueUserWorkItem(
         m_pWorkQueue->push(pWorkItem);
     }
 
-    if (ReleaseSemaphore(m_hWorkQueueSemaphore, 1, NULL) == False) {
-        ASSERT(False);
+    if (ReleaseSemaphore(m_hWorkQueueSemaphore, 1, NULL) == false) {
+        ASSERT(false);
     }
 }
 
@@ -173,10 +173,10 @@ u32 WINAPI BasicThreadPool::WorkerThreadProc(LPVOID pInThreadContext) {
 #pragma warning (push)
 #pragma warning (disable: 4127)
 
-    while (True)
+    while (true)
 #pragma warning (pop)
     {
-        uEventStatus = WaitForMultipleObjects(3, hSyncVector, False, INFINITE);
+        uEventStatus = WaitForMultipleObjects(3, hSyncVector, false, INFINITE);
 
         if (uEventStatus == WAIT_TIMEOUT) {
             continue;
@@ -209,13 +209,13 @@ u32 WINAPI BasicThreadPool::WorkerThreadProc(LPVOID pInThreadContext) {
                 break;
 
             default:
-                ASSERT(False);   // problem here
+                ASSERT(false);   // problem here
                 return 0;
         }
     }
 }
 
-void BasicThreadPool::PopAndProcessWorkItem(Bool bProcess) {
+void BasicThreadPool::PopAndProcessWorkItem(bool bProcess) {
     WorkItem* pWorkItem = RemoveWorkItem();
 
     if (pWorkItem != NULL) {

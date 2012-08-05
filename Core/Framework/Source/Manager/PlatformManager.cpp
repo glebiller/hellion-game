@@ -15,8 +15,8 @@
 // Prevent other headers from including any platform specific ones
 #define __PLATFORM_MANAGER
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "PlatformManager.h"
 #include "SystemManager.h"
@@ -168,11 +168,11 @@ PlatformManager::FileSystem::LoadProto(
 }
 
 
-Bool
+bool
 PlatformManager::FileSystem::FileExists(
-    In pcstr pszFileName
+    In const char* pszFileName
 ) {
-    Bool bFound = False;
+    bool bFound = false;
     //
     // Open the file for read access.
     //
@@ -184,21 +184,21 @@ PlatformManager::FileSystem::FileExists(
             // Close it since we're just checking if it exists.
             //
             CloseHandle(hFile);
-            bFound = True;
+            bFound = true;
         }
     }
     return bFound;
 }
 
 
-Bool
+bool
 PlatformManager::FileSystem::SetCurrentDirToFileLocation(
-    In pcstr pszFileName,
-    In pcstr apszLocations[],
-    Out pstr pszCurrentDir,
+    In const char* pszFileName,
+    In const char* apszLocations[],
+    Out char* pszCurrentDir,
     u32 BufferSize
 ) {
-    Bool bDirectorySet = False;
+    bool bDirectorySet = false;
 
     //
     // Check the current directory.
@@ -222,7 +222,7 @@ PlatformManager::FileSystem::SetCurrentDirToFileLocation(
                     //
                     // We found it.  The break will keep the original directory from being reset.
                     //
-                    bDirectorySet = True;
+                    bDirectorySet = true;
                     break;
                 }
             }
@@ -233,7 +233,7 @@ PlatformManager::FileSystem::SetCurrentDirToFileLocation(
             SetCurrentDirectoryA(szCurrentDir);
         }
     } else {
-        bDirectorySet = True;
+        bDirectorySet = true;
     }
 
     //
@@ -344,7 +344,7 @@ PlatformManager::Timers::Destroy(
 f32
 PlatformManager::Timers::Wait(
     Handle hTimer,
-    Bool bWait
+    bool bWait
 ) {
     WindowsTimerData* pTimerData = reinterpret_cast<WindowsTimerData*>(hTimer);
 
@@ -377,7 +377,7 @@ PlatformManager::Debugging::Debugging(
 
 void
 PlatformManager::Debugging::OutputMessage(
-    pcstr pszMessage
+    const char* pszMessage
 ) {
     OutputDebugStringA(pszMessage);
 }

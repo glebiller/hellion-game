@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <cmath>
 
-#include "AssertUtils.h"
+#include "Assert.h"
 #include "MathUtils.h"
 
 using namespace Math;

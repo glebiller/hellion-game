@@ -29,7 +29,7 @@ class InputGuiObject : public InputObject {
 
     protected:
 
-        InputGuiObject(ISystemScene* pSystemScene, pcstr pszName);
+        InputGuiObject(ISystemScene* pSystemScene, const char* pszName);
         ~InputGuiObject(void);
 
         /////////////////////////////////
@@ -59,7 +59,7 @@ class InputGuiObject : public InputObject {
         enum CommonPropertyTypes {
             Property_None, Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 
 };

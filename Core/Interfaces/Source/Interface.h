@@ -30,7 +30,7 @@ namespace Interface {
 #include "Object/Contact.h"
 #include "Object/Behavior.h"
 #include "Object/Area.h"
-#include "Object/Move.h"
+#include "Object/IMoveObject.h"
 #include "Object/Target.h"
 }
 using namespace Interface;

@@ -23,8 +23,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Network system includes
@@ -226,7 +226,7 @@ NetworkScene::NetworkScene(
     m_aKeyboard["PAUSE"] = DIKEYBOARD_PAUSE;
     m_aKeyboard["ESCAPE"] = DIKEYBOARD_ESCAPE;
     m_aKeyboard["SPACE"] = DIKEYBOARD_SPACE;
-    m_bControlKeyPressed = False;
+    m_bControlKeyPressed = false;
     // apply hot keys defined in Network.sdf
     char currKeyName[MAX_KEY_NAME_LENGTH];
     std::string currentKey;
@@ -235,7 +235,7 @@ NetworkScene::NetworkScene(
 
     // loop through the default Network actions and update anything according to the contents of Network.sdf
     for (u32 h = 0; h < NUM_ACTIONMAPS; h++) {
-        // convert the lptszActionName from Unicode LPWSTR to ASCII pcstr
+        // convert the lptszActionName from Unicode LPWSTR to ASCII const char*
         WideCharToMultiByte(CP_ACP, 0, g_rgGameAction[h].lptszActionName, -1, currKeyName, MAX_KEY_NAME_LENGTH , NULL, NULL);
         currentKey = currKeyName;
 
@@ -353,7 +353,7 @@ NetworkScene::Initialize(
         return Errors::Failure;
     }
 
-    m_bInitialized = True;
+    m_bInitialized = true;
     return Errors::Success;
 }
 
@@ -374,7 +374,7 @@ NetworkScene::SetProperties(
 }
 
 
-pcstr*
+const char**
 NetworkScene::GetObjectTypes(
     void
 ) {
@@ -384,8 +384,8 @@ NetworkScene::GetObjectTypes(
 
 ISystemObject*
 NetworkScene::CreateObject(
-    pcstr pszName,
-    pcstr pszType
+    const char* pszName,
+    const char* pszType
 ) {
     ASSERT(m_bInitialized);
     //
@@ -525,9 +525,9 @@ void NetworkScene::NetworkUpdate(f32 DeltaTime) {
                 case Network_LEFT_CTRL:
                 case Network_RIGHT_CTRL:
                     if (didod[i].dwData & 0x80) {
-                        m_bControlKeyPressed = True;
+                        m_bControlKeyPressed = true;
                     } else {
-                        m_bControlKeyPressed = False;
+                        m_bControlKeyPressed = false;
                     }
 
                     break;
@@ -556,12 +556,12 @@ void NetworkScene::NetworkUpdate(f32 DeltaTime) {
                 case Network_TOGGLE_NORMALS:  // HOT KEY: Ctrl + N
                     if (didod[i].dwData & 0x80) {
                         if (bControlKeyValid) {
-                            pcstr pszValue = "False";
-                            Bool bShowNormals = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowNormals");
+                            const char* pszValue = "false";
+                            bool bShowNormals = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowNormals");
                             bShowNormals = !bShowNormals;
 
                             if (bShowNormals) {
-                                pszValue = "True";
+                                pszValue = "true";
                             }
 
                             g_Managers.pEnvironment->Variables().SetValue("Graphics::ShowNormals", pszValue);
@@ -573,12 +573,12 @@ void NetworkScene::NetworkUpdate(f32 DeltaTime) {
                 case Network_TOGGLE_TANGENTS: // HOT KEY: Ctrl + T
                     if (didod[i].dwData & 0x80) {
                         if (bControlKeyValid) {
-                            pcstr pszValue = "False";
-                            Bool bShowTangents = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowTangents");
+                            const char* pszValue = "false";
+                            bool bShowTangents = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowTangents");
                             bShowTangents = !bShowTangents;
 
                             if (bShowTangents) {
-                                pszValue = "True";
+                                pszValue = "true";
                             }
 
                             g_Managers.pEnvironment->Variables().SetValue("Graphics::ShowTangents", pszValue);
@@ -590,12 +590,12 @@ void NetworkScene::NetworkUpdate(f32 DeltaTime) {
                 case Network_TOGGLE_BOUNDING_BOX: // HOT KEY: Ctrl + B
                     if (didod[i].dwData & 0x80) {
                         if (bControlKeyValid) {
-                            pcstr pszValue = "False";
-                            Bool bShowBoundingBox = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowBoundingBox");
+                            const char* pszValue = "false";
+                            bool bShowBoundingBox = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowBoundingBox");
                             bShowBoundingBox = !bShowBoundingBox;
 
                             if (bShowBoundingBox) {
-                                pszValue = "True";
+                                pszValue = "true";
                             }
 
                             g_Managers.pEnvironment->Variables().SetValue("Graphics::ShowBoundingBox", pszValue);
@@ -607,12 +607,12 @@ void NetworkScene::NetworkUpdate(f32 DeltaTime) {
                 case Network_TOGGLE_CAPTIONS:     // HOT KEY: Ctrl + O
                     if (didod[i].dwData & 0x80) {
                         if (bControlKeyValid) {
-                            pcstr pszValue = "False";
-                            Bool bShowCaptions = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowCaptions");
+                            const char* pszValue = "false";
+                            bool bShowCaptions = g_Managers.pEnvironment->Variables().GetAsBool("Graphics::ShowCaptions");
                             bShowCaptions = !bShowCaptions;
 
                             if (bShowCaptions) {
-                                pszValue = "True";
+                                pszValue = "true";
                             }
 
                             g_Managers.pEnvironment->Variables().SetValue("Graphics::ShowCaptions", pszValue);

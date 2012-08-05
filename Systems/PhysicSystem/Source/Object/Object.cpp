@@ -15,8 +15,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes
@@ -28,7 +28,7 @@
 // HavokObject - Constructor
 HavokObject::HavokObject(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : ISystemObject(pSystemScene, pszName)
     , m_Position(Math::Vector3::Zero)
@@ -81,6 +81,6 @@ const Math::Vector3*
 HavokObject::GetScale(
     void
 ) {
-    ASSERT(False);
+    ASSERT(false);
     return NULL;
 }

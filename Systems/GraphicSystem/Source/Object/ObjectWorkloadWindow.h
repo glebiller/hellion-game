@@ -29,8 +29,8 @@ class GraphicObjectWorkloadWindow : public GraphicObjectWindow {
         ///     Basic constructor; the only real one.
         /// </summary>
         /// <param name="pSystemScene">ISystemScene* - Pointer to the scene containing this window.</param>
-        /// <param name="pszName">pcstr - Name of this window.</param>
-        GraphicObjectWorkloadWindow(ISystemScene* pSystemScene, pcstr pszName);
+        /// <param name="pszName">const char* - Name of this window.</param>
+        GraphicObjectWorkloadWindow(ISystemScene* pSystemScene, const char* pszName);
 
         /// <summary cref="GraphicObjectWorkloadWindow::~GraphicObjectWorkloadWindow">
         ///     Basic destructor; the only one.

@@ -51,9 +51,9 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
 
         virtual void SetProperties(std::vector<Properties::Property> Properties);
 
-        virtual pcstr* GetObjectTypes(void);
+        virtual const char** GetObjectTypes(void);
 
-        virtual ISystemObject* CreateObject(pcstr pszName, pcstr pszType);
+        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
 
         virtual Error DestroyObject(ISystemObject* pSystemObject);
 
@@ -73,15 +73,15 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
 
         virtual void GetCreateObjects(CreateObjectDataArray& apszNames);
 
-        virtual void GetDestroyObjects(std::vector<pcstr>& apszNames);
+        virtual void GetDestroyObjects(std::vector<const char*>& apszNames);
 
         virtual void GetExtendObjects(ExtendObjectDataArray& apszNames);
 
-        virtual void GetUnextendObjects(std::vector<pcstr>& apszNames);
+        virtual void GetUnextendObjects(std::vector<const char*>& apszNames);
 
-        virtual ISystemObject* ExtendObject(pcstr pszName, void* pUserData);
+        virtual ISystemObject* ExtendObject(const char* pszName, void* pUserData);
 
-        virtual ISystemObject* UnextendObject(pcstr pszName);
+        virtual ISystemObject* UnextendObject(const char* pszName);
 
     public:
 
@@ -157,7 +157,7 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         std::list<HavokCharacterObject*>    m_Characters;
@@ -190,7 +190,7 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
         SceneFiles                          m_SceneFiles;
 
         struct ExtensionData {
-            pcstr                           pszName;
+            const char*                           pszName;
             hkpRigidBody*                   pBody;
         };
         std::map<void*, ExtensionData>      m_aExtensions;

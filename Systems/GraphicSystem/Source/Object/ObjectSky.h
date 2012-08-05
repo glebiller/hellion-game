@@ -9,7 +9,7 @@ class GraphicObjectSky : public GraphicObject {
         friend OGREGraphicsTask;
 
     protected:
-        GraphicObjectSky(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectSky(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectSky(void);
 
         /// <summary cref="GraphicObjectCamera::Initialize">

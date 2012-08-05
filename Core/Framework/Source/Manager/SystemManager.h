@@ -61,7 +61,7 @@ class SystemManager : public Singleton {
         /// </summary>
         /// <param name="pszName">The name of system to get.</param>
         /// <returns>A pointer to the system or <c>NULL</c> of failure.</returns>
-        ISystem* Get(pcstr pszName);
+        ISystem* Get(const char* pszName);
 
         //
         // TODO: These need to be defined better.  Maybe use something like the stl

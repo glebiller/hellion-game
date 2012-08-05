@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AssertUtils.h" />
+    <ClInclude Include="Source\Assert.h" />
     <ClInclude Include="Source\BaseTypes.h" />
     <ClInclude Include="Source\Convertor.h" />
     <ClInclude Include="Source\DataTypes.h" />
@@ -25,7 +25,6 @@
     <ClInclude Include="Source\Proto\sdf.pb.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\SpinMutex.h" />
-    <ClInclude Include="Source\Thread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\dbnew.cpp" />
@@ -35,7 +34,6 @@
     <ClCompile Include="Source\Proto\property.pb.cc" />
     <ClCompile Include="Source\Proto\sdf.pb.cc" />
     <ClCompile Include="Source\Singleton.cpp" />
-    <ClCompile Include="Source\Thread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Externs\ProtocolBuffers\ProtocolBuffers.vcxproj">
@@ -82,7 +80,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Externs/ProtocolBuffers/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(SolutionDir)Externs/ProtocolBuffers/Source;$(TBB_HOME)\include;$(OGRE_HOME)\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

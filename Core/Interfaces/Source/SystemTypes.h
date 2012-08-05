@@ -14,9 +14,11 @@
 
 #pragma once
 
-#pragma intrinsic(_BitScanForward)
+#include <intrin.h>
 
-#include <DataTypes.h>
+#include "DataTypes.h"
+
+#pragma intrinsic(_BitScanForward)
 
 //////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -132,19 +134,19 @@ namespace System {
     /// </summary>
     //////////////////////////////////////////////////////////////////////////
     namespace Names {
-        static pcstr Audio                      = "Audio";
-        static pcstr Geometry                   = "Geometry";
-        static pcstr Graphic                    = "Graphic";
-        static pcstr Input                      = "Input";
-        static pcstr Network                    = "Network";
-        static pcstr Physic                     = "Physic";
+        static const char* Audio                      = "Audio";
+        static const char* Geometry                   = "Geometry";
+        static const char* Graphic                    = "Graphic";
+        static const char* Input                      = "Input";
+        static const char* Network                    = "Network";
+        static const char* Physic                     = "Physic";
 
         /*
-        static pcstr AI                         = "AI";
-        static pcstr Animation                  = "Animation";
-        static pcstr Scripting                  = "Scripting";
-        static pcstr Explosion                  = "Explosion";
-        static pcstr Water                      = "Water";
+        static const char* AI                         = "AI";
+        static const char* Animation                  = "Animation";
+        static const char* Scripting                  = "Scripting";
+        static const char* Explosion                  = "Explosion";
+        static const char* Water                      = "Water";
         */
     }
 

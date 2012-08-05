@@ -18,8 +18,8 @@
 /////////////////////////////////
 
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "Scene.h"
 #include "Object/Object.h"
@@ -33,14 +33,14 @@
 
 #define PINPUTSCENE         reinterpret_cast<InputScene*>(m_pSystemScene)
 
-pcstr InputCameraObject::sm_kapszCommonPropertyNames[] = {
+const char* InputCameraObject::sm_kapszCommonPropertyNames[] = {
     "None"
 };
 
 const Properties::Property InputCameraObject::sm_kaCommonDefaultProperties[] = {
     Properties::Property(sm_kapszCommonPropertyNames[ Property_None ],
     Properties::Values::Boolean,
-    Properties::Flags::Valid, False),
+    Properties::Flags::Valid, false),
 };
 
 
@@ -51,7 +51,7 @@ const Properties::Property InputCameraObject::sm_kaCommonDefaultProperties[] = {
 
 InputCameraObject::InputCameraObject(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : InputObject(pSystemScene, pszName)
     , m_Velocity(Math::Vector3::Zero) {
@@ -84,7 +84,7 @@ InputCameraObject::Initialize(
     //
     // Set this as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this object.
     //
@@ -170,7 +170,7 @@ const Math::Vector3*
 InputCameraObject::GetPosition(
     void
 ) {
-    ASSERT(False);
+    ASSERT(false);
     return NULL;
 }
 
@@ -189,7 +189,7 @@ const Math::Vector3*
 InputCameraObject::GetScale(
     void
 ) {
-    ASSERT(False);
+    ASSERT(false);
     return NULL;
 }
 

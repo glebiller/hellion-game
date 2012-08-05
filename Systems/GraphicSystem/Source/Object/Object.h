@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include <SpinMutex.h>
+#include "SpinMutex.h"
 
 class GraphicSystem;
 class OGREGraphicsScene;
@@ -69,7 +69,7 @@ class GraphicObject : public ISystemObject {
 
     protected:
 
-        GraphicObject(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObject(void);
 
         /// <summary cref="GraphicObject::GetSystemType">
@@ -116,9 +116,9 @@ class GraphicObject : public ISystemObject {
     protected:
 
         Types                               m_Type;
-        static pcstr                        sm_kapszTypeNames[];
+        static const char*                        sm_kapszTypeNames[];
 
-        pcstr                               m_pszName;
+        const char*                               m_pszName;
 
         Ogre::SceneNode*                    m_pNode;
 

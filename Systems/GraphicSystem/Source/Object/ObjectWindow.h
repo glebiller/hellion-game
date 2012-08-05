@@ -33,7 +33,7 @@ class GraphicObjectWindow : public GraphicObject {
 
     protected:
 
-        GraphicObjectWindow(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectWindow(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectWindow(void);
 
         /// <summary cref="GraphicObjectWindow::Initialize">
@@ -111,7 +111,7 @@ class GraphicObjectWindow : public GraphicObject {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         f32                                 m_Left, m_Top;

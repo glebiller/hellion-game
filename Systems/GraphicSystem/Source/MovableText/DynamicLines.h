@@ -18,7 +18,7 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
+#include "BaseTypes.h"
 
 #include "DynamicRenderable.h"
 #include <vector>
@@ -33,7 +33,7 @@ class DynamicLines : public DynamicRenderable {
 
     public:
         /// Constructor - see setOperationType() for description of argument.
-        DynamicLines(OperationType opType = Ogre::RenderOperation::OT_LINE_STRIP, pcstr MaterialName = "BaseWhiteNoLighting");
+        DynamicLines(OperationType opType = Ogre::RenderOperation::OT_LINE_STRIP, const char* MaterialName = "BaseWhiteNoLighting");
         virtual ~DynamicLines();
 
         /// <summary cref="DynamicLines::addPoint">

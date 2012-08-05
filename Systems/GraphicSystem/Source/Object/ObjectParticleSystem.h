@@ -48,7 +48,7 @@ class GraphicObjectParticleSystem : public GraphicObject, public IGeometryObject
         /// </summary>
         /// <param name="pSystemScene">Pointer to the <c>ISystemScene</c> object.</param>
         /// <param name="pszName">Name of the GraphicObjectParticleSystem object.</param>
-        GraphicObjectParticleSystem(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectParticleSystem(ISystemScene* pSystemScene, const char* pszName);
 
         /// <summary cref="GraphicObjectParticleSystem::~GraphicObjectParticleSystem">
         /// dtor
@@ -157,7 +157,7 @@ class GraphicObjectParticleSystem : public GraphicObject, public IGeometryObject
         /// <summary >
         /// GraphicObjectParticleSystem object Property name array
         /// </summary >
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                  sm_kapszPropertyNames[];
 
         /// <summary >
         /// GraphicObjectParticleSystem object Property array of default values
@@ -218,6 +218,6 @@ class GraphicObjectParticleSystem : public GraphicObject, public IGeometryObject
         /// GraphicObjectParticleSystem object specifies whether or not to emit particles.
         /// (This does not destroy the particle system, but rather sets the emission rate to 0.
         /// </summary >
-        Bool                                m_bEmitParticles;
+        bool                                m_bEmitParticles;
 };
 

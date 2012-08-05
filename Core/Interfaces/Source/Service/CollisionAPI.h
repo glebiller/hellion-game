@@ -45,11 +45,11 @@ namespace Coll {
         Math::Vector3 m_Position1;  // End position of the test
         Type          m_Type;       // Type of test
         Handle        m_Handle;     // Unique handle for this request
-        pcstr         m_Ignore;     // Name of object to ignore in collision
+        const char*   m_Ignore;     // Name of object to ignore in collision
         Flags         m_Flags;      // Flags (see Coll::Flags)
 
         Request() { memset(this, 0, sizeof(this)); }
-        void SetIgnore(pcstr Ignore) { m_Ignore = Ignore; }
+        void SetIgnore(const char* Ignore) { m_Ignore = Ignore; }
         void SetFlags(Coll::Flags Flags) { m_Flags = Flags; }
     };
 
@@ -57,9 +57,9 @@ namespace Coll {
     struct Result {
         Math::Vector3 m_Position;   // Contact position
         Math::Vector3 m_Normal;     // Normal vector (vector pernedicular to contact surface)
-        pcstr         m_Hit;        // Name of object hit (null is no collision detected)
+        const char*   m_Hit;        // Name of object hit (null is no collision detected)
         f32           m_Depth;      // Penetration depth (along normal vector)
         u32           m_Finalized;  // Collision test has finished (0 = no, 1 = yes, >1 = delete)
-        Bool          m_Valid;      // A valid collision was detected
+        bool          m_Valid;      // A valid collision was detected
     };
 }

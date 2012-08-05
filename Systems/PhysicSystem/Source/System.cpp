@@ -53,8 +53,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // system includes
@@ -94,7 +94,7 @@ HavokPhysicsSystem::~HavokPhysicsSystem(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetName - Returns the name of this System
-pcstr
+const char*
 HavokPhysicsSystem::GetName(
     void
 ) {
@@ -152,7 +152,7 @@ HavokPhysicsSystem::Initialize(
     hkError::getInstance().setEnabled(0x1293ADE8, false);
     hkError::getInstance().setEnabled(0x1293ADEF, false);
 #endif
-    m_bInitialized = True;
+    m_bInitialized = true;
     return Errors::Success;
 }
 
@@ -265,10 +265,10 @@ HavokPhysicsSystem::FreeThreadResources(
 // ErrorReport - Callback for Havok to report an error
 void
 HavokPhysicsSystem::ErrorReport(
-    pcstr pString,
+    const char* pString,
     void* pErrorOutputObject
 ) {
     HavokPhysicsSystem* pSystem = reinterpret_cast<HavokPhysicsSystem*>(pErrorOutputObject);
     Debug::Print("[%s Error]: %s", pSystem->GetName(), pString);
-    //ASSERTMSG( False, pString );
+    //ASSERTMSG( false, pString );
 }

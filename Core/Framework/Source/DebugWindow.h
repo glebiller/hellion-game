@@ -15,7 +15,7 @@
 #pragma once
 
 
-#if defined( _DEBUG ) || defined( PROFILE )
+#if defined( DEBUG_BUILD ) || defined( PROFILE )
 #define __ALLOW_DEBUG_WINDOW__
 
 extern Handle CreateDebugWindow(void);

@@ -74,7 +74,7 @@ class UScene : public IObserver {
         /// </summary>
         /// <param name="pszName">The name for the object to use. (default = "")</param>
         /// <returns>The newly created object that has consequently been added to the scene.</returns>
-        UObject* CreateObject(pcstr pszName = "");
+        UObject* CreateObject(const char* pszName = "");
 
         /// <summary>
         ///   Destroys a UObject removing it from the scene.  It also deletes it's CCM.
@@ -83,7 +83,7 @@ class UScene : public IObserver {
         /// <returns>An error code.</returns>
         Error DestroyObject(UObject* pObject);
 
-        UObject* FindObject(pcstr pszName);
+        UObject* FindObject(const char* pszName);
 
         void CreateObjectLink(ISystemObject* pSubject,
                               ISystemObject* pObserver);
@@ -141,7 +141,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         // Constructor.
         //  pszName - the name of this object.
         //
-        UObject(UScene* pScene, pcstr pszName = "");
+        UObject(UScene* pScene, const char* pszName = "");
 
         //
         // Destructor.
@@ -160,7 +160,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         // Gets the name of the object.
         //   return - the name of the object.
         //
-        pcstr GetName(void) {
+        const char* GetName(void) {
             return m_sName.c_str();
         }
 
@@ -168,7 +168,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         // Sets the name of the object.
         //  pszName - the new name of the object.
         //
-        void SetName(pcstr pszName) {
+        void SetName(const char* pszName) {
             m_sName = pszName;
         }
 
@@ -176,14 +176,14 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         // Used to extend the objects functionality for a given system.
         //   return - the newly created system object.
         //
-        ISystemObject* Extend(ISystemScene* pSystemScene, pcstr pszSystemObjectType);
+        ISystemObject* Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType);
 
         /// <summary>
         ///   Used to extend the objects functionality for a given system.
         /// </summary>
         /// <param name="pSystemObject">A pointer to an already created object.</param>
-        /// <returns>True is successful, false otherwise.</returns>
-        Bool Extend(ISystemObject* pSystemObject);
+        /// <returns>true is successful, false otherwise.</returns>
+        bool Extend(ISystemObject* pSystemObject);
 
         //
         // Used to unextend the objects functionality for a given system.

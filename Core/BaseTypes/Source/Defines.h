@@ -14,47 +14,27 @@
 
 #pragma once
 
-#define True                                1
-#define False                               0
+#ifdef _DEBUG
+	#define DEBUG_BUILD
+#endif
 
 #ifndef NULL
-#define NULL                                0
+	#define NULL                            0
 #endif
-
-#if defined( _MSC_VER )
-#if defined( _WIN64 )
-#define W64SAFE
-#else
-#define W64SAFE __w64
-#endif
-#else
-#define W64SAFE
-#endif
-
-
-#define SAFE_DELETE( p )                    if ((p)!=NULL){delete (p); (p)=NULL;}
-#define SAFE_DELETE_ARRAY( p )              if ((p)!=NULL){delete [] (p); (p)=NULL;}
-
 
 #define UNREFERENCED_PARAM(P)               (P)
-#define DBG_UNREFERENCED_PARAM(P)           (P)
-#define DBG_UNREFERENCED_LOCAL_VAR(V)       (V)
+#define SAFE_DELETE(p)                    if ((p)!=NULL){delete (p); (p)=NULL;}
+#define SAFE_DELETE_ARRAY(p)              if ((p)!=NULL){delete [] (p); (p)=NULL;}
 
-
-#if defined( _MSC_VER )
-#define In                                  __in const
-#define Out                                 __out
-#define InOut                               __inout
+#ifdef _MSC_VER
+	#define In                              __in const
+	#define Out                             __out
+	#define InOut                           __inout
 #else
-#define In                                  const
-#define Out
-#define InOut
-#define __forceinline                       inline __attribute__((always_inline))
+	#define In                              const
+	#define Out
+	#define InOut
+	#define __forceinline                   inline __attribute__((always_inline))
 #endif
 
 
-#define COMPILEMSGSTR2( s )                 #s
-#define COMPILEMSGSTR( s )                  COMPILEMSGSTR2( s )
-#define COMPILEMSGLOC                       __FILE__ "(" COMPILEMSGSTR( __LINE__ ) ") : message: "
-
-#define COMPILE_ASSERT( e )                typedef char __FILE____LINE__[ (e) ? 1 : -1 ]

@@ -42,8 +42,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 #include <Thread.h>
 
 //
@@ -132,7 +132,7 @@ HavokPhysicsTask::GetSystemType(
 void
 HavokPhysicsTask::SetObjectActivation(
     HavokPhysicsObject* pObject,
-    Bool bActivated
+    bool bActivated
 ) {
     if (bActivated) {
         if (!pObject->m_bStatic) {

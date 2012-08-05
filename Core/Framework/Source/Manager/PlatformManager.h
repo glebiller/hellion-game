@@ -86,8 +86,8 @@ class PlatformManager : public IPlatform, public Singleton {
                 ///   Verfies the existence of a file for read access.
                 /// </summary>
                 /// <param name="pszFileName">The file name to look for.</param>
-                /// <returns>True if successful, otherwise false.</returns>
-                Bool FileExists(In pcstr pszFileName);
+                /// <returns>true if successful, otherwise false.</returns>
+                bool FileExists(In char* pszFileName);
 
                 /// <summary>
                 ///   Sets the current directory to the location of a file.
@@ -96,9 +96,9 @@ class PlatformManager : public IPlatform, public Singleton {
                 /// <param name="apszLocations">A null terminated array of relative search directories.</param>
                 /// <param name="pszCurrentDir">Location to store the new current directory or NULL.</param>
                 /// <param name="BufferSize">The size of <c>pszCurrentDir</c>.</param>
-                /// <returns>True if successful, otherwise false.</returns>
-                Bool SetCurrentDirToFileLocation(In pcstr pszFileName, In pcstr apszLocations[],
-                                                 Out pstr pszCurrentDir = NULL, u32 BufferSize = 0);
+                /// <returns>true if successful, otherwise false.</returns>
+                bool SetCurrentDirToFileLocation(In char* pszFileName, In char* apszLocations[],
+                                                 Out char* pszCurrentDir = NULL, u32 BufferSize = 0);
 
 
             protected:
@@ -196,9 +196,9 @@ class PlatformManager : public IPlatform, public Singleton {
                 ///   Waits for the timer object to signal.
                 /// </summary>
                 /// <param name="hTimer">A handle to the timer object.</param>
-                /// <param name="bWait">Should the call wait for the timer or calculate time immediately. (default = True)</param>
+                /// <param name="bWait">Should the call wait for the timer or calculate time immediately. (default = true)</param>
                 /// <returns>The time elapsed in seconds from the previous signal.</returns>
-                f32 Wait(Handle hTimer, Bool bWait = True);
+                f32 Wait(Handle hTimer, bool bWait = true);
         };
 
 
@@ -226,7 +226,7 @@ class PlatformManager : public IPlatform, public Singleton {
                 ///   Outputs a message to the debugger.
                 /// </summary>
                 /// <param name="pszMessage">The message to output.</param>
-                void OutputMessage(pcstr pszMessage);
+                void OutputMessage(const char* pszMessage);
         };
 
 

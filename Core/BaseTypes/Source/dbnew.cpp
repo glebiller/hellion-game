@@ -14,8 +14,10 @@
 
 #pragma once
 
-#ifndef NDEBUG
-#include <stdlib.h>
+#include "Defines.h"
+
+#ifdef DEBUG_BUILD
+#include <cstdlib>
 #include <new>
 
 void* operator new(size_t size) {

@@ -26,8 +26,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Ogre system includes
@@ -74,9 +74,7 @@ InitializeGraphicSystem(
 
 
 extern "C" ISystem* __stdcall
-CreateGraphicSystem(
-    Debug::Debugger* p_Debugger
-) {
+CreateGraphicSystem(Debug::Debugger* p_Debugger) {
     Debug::Init(p_Debugger);
     return new GraphicSystem();
 }

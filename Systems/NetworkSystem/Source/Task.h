@@ -53,9 +53,9 @@ class NetworkTask : public ISystemTask {
         /// <summary cref="NetworkTask::IsPrimaryThreadOnly">
         ///   Implementation of the <c>ISystemTask::IsPrimaryThreadOnly</c> function.
         /// </summary>
-        /// <returns>Bool - Returns true if this system should only run on the primary thread.</returns>
+        /// <returns>bool - Returns true if this system should only run on the primary thread.</returns>
         /// <seealso cref="ISystemTask::IsPrimaryThreadOnly"/>
-        virtual Bool IsPrimaryThreadOnly(void) { return True; }
+        virtual bool IsPrimaryThreadOnly(void) { return true; }
 
 
     private:

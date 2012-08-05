@@ -37,7 +37,7 @@ class IContactObject {
             Math::Vector3 m_Normal;
             Math::Vector3 m_Position;
             f32           m_Impact;
-            Bool          m_Static;
+            bool          m_Static;
         };
 
         /// <summary>
@@ -62,7 +62,7 @@ class IIntersectionObject {
         ///   Structure for providing Intersection information.
         /// </summary>
         struct Info {
-            pcstr               pszName;
+            const char*         pszName;
             Math::Vector3       Position;
             Math::Quaternion    Orientation;
             Math::Vector3       LinearVelocity;

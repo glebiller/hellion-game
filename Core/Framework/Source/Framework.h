@@ -59,35 +59,35 @@ class Framework : public IService::ISystemAccess {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // IService::ISystemAccess Implementations.
 
-        /// <summary cref="IService::ISystemAccess::GetSystem(pcstr)">
+        /// <summary cref="IService::ISystemAccess::GetSystem(const char*)">
         ///   Implementation of IService::ISystemAccess::GetSystem.
         /// </summary>
-        virtual Handle GetSystem(pcstr pszSystemName);
+        virtual Handle GetSystem(const char* pszSystemName);
 
         /// <summary>
         ///   Implementation of IService::ISystemAccess::GetSystem.
         /// </summary>
         virtual Handle GetSystem(System::Type Type);
 
-        /// <summary cref="IService::ISystemAccess::GetScene(pcstr)">
+        /// <summary cref="IService::ISystemAccess::GetScene(const char*)">
         ///   Implementation of IService::ISystemAccess::GetScene.
         /// </summary>
-        virtual Handle GetScene(pcstr pszSystemName);
+        virtual Handle GetScene(const char* pszSystemName);
 
         /// <summary>
         ///   Implementation of IService::ISystemAccess::GetScene.
         /// </summary>
         virtual Handle GetScene(System::Type Type);
 
-        /// <summary cref="IService::ISystemAccess::GetSystemObject(pcstr, pcstr)">
+        /// <summary cref="IService::ISystemAccess::GetSystemObject(const cconst char* const char*)">
         ///   Implementation of IService::ISystemAccess::GetSystemObject.
         /// </summary>
-        virtual Handle GetSystemObject(pcstr pszSystemName, pcstr pszName);
+        virtual Handle GetSystemObject(const char* pszSystemName, const char* pszName);
 
         /// <summary>
         ///   Implementation of IService::ISystemAccess::GetSystemObject.
         /// </summary>
-        virtual Handle GetSystemObject(System::Type Type, pcstr pszName);
+        virtual Handle GetSystemObject(System::Type Type, const char* pszName);
 
         /// <summary cref="IService::ISystemAccess::GetSystemProperty">
         ///   Implementation of IService::ISystemAccess::GetSystemProperty.
@@ -149,7 +149,7 @@ class Framework : public IService::ISystemAccess {
         ChangeManager*                          m_pObjectCCM;
         UScene*                                 m_pScene;
 
-        Bool                                    m_bExecuteLoop;
+        bool                                    m_bExecuteLoop;
 
 #ifdef __ALLOW_DEBUG_WINDOW__
         Handle                                  m_hDebugWindow;
@@ -172,7 +172,7 @@ class Framework : public IService::ISystemAccess {
 
                 std::string StartupScene(void);
 
-                GDFParser& operator=(const GDFParser&) { ASSERT(False); }
+                GDFParser& operator=(const GDFParser&) { ASSERT(false); }
 
             protected:
 

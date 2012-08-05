@@ -31,7 +31,7 @@ class GraphicObjectLight : public GraphicObject {
 
     protected:
 
-        GraphicObjectLight(ISystemScene* pSystemScene, pcstr pszName);
+        GraphicObjectLight(ISystemScene* pSystemScene, const char* pszName);
         ~GraphicObjectLight(void);
 
         /// <summary cref="GraphicObjectLight::Initialize">
@@ -67,7 +67,7 @@ class GraphicObjectLight : public GraphicObject {
             LightType_Count,
         };
 
-        static const pcstr                  sm_kapszLightTypeEnumOptions[];
+        static const const char*                  sm_kapszLightTypeEnumOptions[];
 
         LightTypes                          m_LightType;
 
@@ -78,7 +78,7 @@ class GraphicObjectLight : public GraphicObject {
             Property_Count
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Ogre::Light*                        m_pLight;

@@ -18,8 +18,8 @@
 /////////////////////////////////
 
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "Scene.h"
 #include "Object/Object.h"
@@ -65,7 +65,7 @@ GeometryScene::Initialize(
     std::vector<Properties::Property> Properties
 ) {
     ASSERT(!m_bInitialized);
-    m_bInitialized = True;
+    m_bInitialized = true;
     return Errors::Success;
 }
 
@@ -87,7 +87,7 @@ GeometryScene::SetProperties(
 }
 
 
-pcstr*
+const char**
 GeometryScene::GetObjectTypes(
     void
 ) {
@@ -97,8 +97,8 @@ GeometryScene::GetObjectTypes(
 
 ISystemObject*
 GeometryScene::CreateObject(
-    pcstr pszName,
-    pcstr pszType
+    const char* pszName,
+    const char* pszType
 ) {
     UNREFERENCED_PARAM(pszName);
     UNREFERENCED_PARAM(pszType);

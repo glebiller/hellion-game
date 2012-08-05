@@ -47,7 +47,7 @@ class IService {
                 /// </summary>
                 /// <param name="pszSystemName">The name of the system to get.</param>
                 /// <returns>A handle to the system or null if the system doesn't exist.</returns>
-                virtual Handle GetSystem(pcstr pszSystemName) = 0;
+                virtual Handle GetSystem(const char* pszSystemName) = 0;
 
                 /// <summary>
                 ///   Gets a system by its type.
@@ -61,7 +61,7 @@ class IService {
                 /// </summary>
                 /// <param name="pszSystemName">The name of the system scene to get.</param>
                 /// <returns>A handle to the system scene or null if it doesn't exist.</returns>
-                virtual Handle GetScene(pcstr pszSystemName) = 0;
+                virtual Handle GetScene(const char* pszSystemName) = 0;
 
                 /// <summary>
                 ///   Gets a system scene by its system type.
@@ -76,7 +76,7 @@ class IService {
                 /// <param name="pszSystemName">The name of the system object to get.</param>
                 /// <param name="pszName">The name of the object.</param>
                 /// <returns>A handle to the system object or null if it doesn't exist.</returns>
-                virtual Handle GetSystemObject(pcstr pszSystemName, pcstr pszName) = 0;
+                virtual Handle GetSystemObject(const char* pszSystemName, const char* pszName) = 0;
 
                 /// <summary>
                 ///   Gets a system object by its system type and name.
@@ -84,7 +84,7 @@ class IService {
                 /// <param name="Type">The type of the system object to get.</param>
                 /// <param name="pszName">Name of the object.</param>
                 /// <returns>A handle to the system object or null if it doesn't exist.</returns>
-                virtual Handle GetSystemObject(System::Type Type, pcstr pszName) = 0;
+                virtual Handle GetSystemObject(System::Type Type, const char* pszName) = 0;
 
                 /// <summary>
                 ///   Gets a single system property.
@@ -182,8 +182,8 @@ class IService {
                 /// </summary>
                 /// <param name="Handle">Collision test handle.</param>
                 /// <param name="Result">Pointer to structure to be filled with results.</param>
-                /// <returns>Returns True if test has finished.</returns>
-                virtual Bool Finalize(Coll::Handle Handle, Coll::Result* Result) = 0;
+                /// <returns>Returns true if test has finished.</returns>
+                virtual bool Finalize(Coll::Handle Handle, Coll::Result* Result) = 0;
 
         };
 

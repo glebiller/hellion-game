@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
 #include "TaskManager.h"
 #include "EnvironmentManager.h"
 #include "PlatformManager.h"
@@ -256,7 +257,7 @@ TaskManager::Init(void) {
     // Call this from the primary thread before calling any other TaskManager methods.
     g_pTaskManager = this;
     m_uPrimaryThreadID = tbb::this_tbb_thread::get_id();
-    m_bTimeToQuit = False;
+    m_bTimeToQuit = false;
     m_uRequestedNumberOfThreads = Singletons::EnvironmentManager.Variables().GetAsInt("TaskManager::Threads", 0);
 
     if (m_uRequestedNumberOfThreads == 0) {
@@ -276,11 +277,11 @@ TaskManager::Init(void) {
     m_uTargetNumberOfThreads = 0;
     m_pStallPoolParent = NULL;
     m_hStallPoolSemaphore = CreateSemaphore(NULL, 0, m_uRequestedNumberOfThreads, NULL);
-    SynchronizeTask::m_hAllCallbacksInvokedEvent = CreateEvent(NULL, True, False, NULL);
+    SynchronizeTask::m_hAllCallbacksInvokedEvent = CreateEvent(NULL, true, false, NULL);
 #if defined(USE_THREAD_PROFILER)
-    m_bTPEventsForTasks = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForTasks", False);
-    m_bTPEventsForJobs = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForJobs", False);
-    m_bTPEventsForSynchronize = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForSynchronize", False);
+    m_bTPEventsForTasks = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForTasks", false);
+    m_bTPEventsForJobs = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForJobs", false);
+    m_bTPEventsForSynchronize = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForSynchronize", false);
 
     if (m_bTPEventsForSynchronize) {
         m_tSynchronizeTPEvent = __itt_event_createA("Synchronize", 11);
@@ -304,7 +305,7 @@ TaskManager::Shutdown(void) {
     // Call this from the primary thread as the last TaskManager call.
     ASSERT(IsPrimaryThread());
     // get the callback thread to exit
-    m_bTimeToQuit = True;
+    m_bTimeToQuit = true;
     // trigger the release of the stall pool
     ReleaseSemaphore(m_hStallPoolSemaphore, m_uMaxNumberOfThreads, NULL);
     m_pSystemTasksRoot->destroy(*m_pSystemTasksRoot);
@@ -680,17 +681,17 @@ TaskManager::GetSupportForSystemTask(
 #endif /* USE_THREAD_PROFILER */
 
 
-Bool TaskManager::IsPrimaryThread(void) {
+bool TaskManager::IsPrimaryThread(void) {
     return (tbb::this_tbb_thread::get_id() == m_uPrimaryThreadID);
 }
 
-Bool TaskManager::IsTBBThread(void) {
+bool TaskManager::IsTBBThread(void) {
     // This method is used to determine if the calling thread is an Intel Threading Building Blocks thread.
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     // If called not from TBB thread task::self() will assert itself
     return &tbb::task::self() != NULL;
 #else
-    return True;
+    return true;
 #endif
 }
 

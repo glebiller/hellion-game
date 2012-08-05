@@ -12,8 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <atlbase.h>
-
 //
 // extern includes
 //
@@ -21,23 +19,15 @@
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
 #include "OgrePlugin.h"
-#include "RenderSystems/Direct3D9/OgreD3D9Plugin.h"
-#include "Plugins/ParticleFX/OgreParticleFXPlugin.h"
 #include "OgreWindowEventUtilities.h"
 #pragma warning( pop )
-
-#ifdef SAFE_DELETE
-#undef SAFE_DELETE
-#endif
-#ifdef SAFE_DELETE_ARRAY
-#undef SAFE_DELETE_ARRAY
-#endif
 
 //
 // Core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "Defines.h"
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Graphic system includes
@@ -55,7 +45,7 @@ extern ManagerInterfaces    g_Managers;
 //
 // Static member variables
 //
-pcstr GraphicSystem::sm_kapszPropertyNames[] = {
+const char* GraphicSystem::sm_kapszPropertyNames[] = {
     "ResourceLocation",
     "WindowName",
     "Resolution",
@@ -153,7 +143,7 @@ GraphicSystem::windowClosed(
 }
 
 
-pcstr
+const char*
 GraphicSystem::GetName(
     void
 ) {
@@ -187,8 +177,8 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     char    szWindowName[ 256 ] = "Window";
     u32     Width = 1024;
     u32     Height = 768;
-    Bool    bFullScreen = False;
-    Bool    bVerticalSync = True;
+    bool    bFullScreen = false;
+    bool    bVerticalSync = true;
     std::string     dFSAAType    = "0";  //D3DMULTISAMPLE_NONE;
     std::string     dFSAAQuality = "0";
 
@@ -200,11 +190,11 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
             std::string sName = it->GetName();
 
             if (sName == sm_kapszPropertyNames[ Property_ResourceLocation ]) {
-                pcstr pszName = it->GetStringPtr(0);
-                pcstr pszLocationType = it->GetStringPtr(1);
-                pcstr pszResourceGroup = it->GetStringPtr(2);
-                Bool  bRecursive = it->GetBool(3);
-                m_pResourceGroupManager->addResourceLocation(pszName, pszLocationType, pszResourceGroup, (bRecursive == True));
+                const char* pszName = it->GetStringPtr(0);
+                const char* pszLocationType = it->GetStringPtr(1);
+                const char* pszResourceGroup = it->GetStringPtr(2);
+                bool  bRecursive = it->GetBool(3);
+                m_pResourceGroupManager->addResourceLocation(pszName, pszLocationType, pszResourceGroup, (bRecursive == true));
                 m_pResourceGroupManager->initialiseResourceGroup(pszResourceGroup);
                 m_pResourceGroupManager->loadResourceGroup(pszResourceGroup);
             } else if (sName == sm_kapszPropertyNames[ Property_WindowName ]) {
@@ -235,7 +225,7 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     //
     // Intialize the render system and render window.
     //
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     m_pRoot->loadPlugin("RenderSystem_Direct3D9_d");
 #else
     m_pRoot->loadPlugin("RenderSystem_Direct3D9");
@@ -246,7 +236,7 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     m_pRoot->setRenderSystem(m_pRenderSystem);
     m_pRoot->initialise(false);
     // Install the particle fx plugin
-#ifdef _DEBUG
+#ifdef DEBUG_BUILD
     m_pRoot->loadPlugin("Plugin_ParticleFX_d");
 #else
     m_pRoot->loadPlugin("Plugin_ParticleFX");
@@ -258,7 +248,7 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     // Note: createRenderWindow() is now called directly so that a render winow is created.  The old calling steps
     // yielded a render system with no render window until after plugins load which causes assertions for CreateParticleSystem
     // which requires a render window at the time the billboard renderer loads.
-    m_pRenderWindow = m_pRoot->createRenderWindow(szWindowName, Width, Height, bFullScreen == True, &params);
+    m_pRenderWindow = m_pRoot->createRenderWindow(szWindowName, Width, Height, bFullScreen == true, &params);
     ASSERT(m_pRenderWindow != NULL);
     // Save the window handle
     size_t hWnd;
@@ -275,7 +265,7 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     //
     // Set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the remaining properties.
     //
@@ -331,7 +321,7 @@ GraphicSystem::SetProperties(
                 u32 Height = static_cast<u32>(it->GetInt32(1));
                 m_pRenderWindow->resize(Width, Height);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //

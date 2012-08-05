@@ -16,8 +16,8 @@
 
 #include <sstream>
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include <tchar.h>
 #include <pdh.h>

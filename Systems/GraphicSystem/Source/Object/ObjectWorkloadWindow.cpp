@@ -32,8 +32,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 using namespace Interface;
 
 //
@@ -57,7 +57,7 @@ const f32 GraphicObjectWorkloadWindow::m_secondsPerUpdate = 1.0f;
 // Constructor for workload window.  Used to show relative workloads between systems.
 //
 //-----------------------------------------------------------------------------
-GraphicObjectWorkloadWindow::GraphicObjectWorkloadWindow(ISystemScene* pSystemScene, pcstr pszName) :
+GraphicObjectWorkloadWindow::GraphicObjectWorkloadWindow(ISystemScene* pSystemScene, const char* pszName) :
     GraphicObjectWindow(pSystemScene, pszName),
     m_secondsSinceLastUpdate(0.0f),
     m_framesSinceLastUpdate(0) {

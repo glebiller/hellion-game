@@ -1,9 +1,9 @@
 <Scene Name="Main">
 	<Properties SystemType="Geometry" />
 	<Properties SystemType="Graphic">
-        <Property Name="ResourceLocation" Value1="../Media/Graphic/skyx" Value2="FileSystem" Value3="SkyX" Value4="0"/>
-        <Property Name="ResourceLocation" Value1="../Media/Graphic/bloodelffemale" Value2="FileSystem" Value3="BloodElfFemale" Value4="0"/>
-        <Property Name="ResourceLocation" Value1="../Media/Graphic/models" Value2="FileSystem" Value3="Models" Value4="0"/>
+        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/skyx" Value2="FileSystem" Value3="SkyX" Value4="0"/>
+        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/bloodelffemale" Value2="FileSystem" Value3="BloodElfFemale" Value4="0"/>
+        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/models" Value2="FileSystem" Value3="Models" Value4="0"/>
 		<Property Name="AmbientLight" R="0.8" G="0.8" B="0.8"/>
 		<!-- Shadow Value1's:
 			 SHADOWTYPE_NONE             = 0
@@ -14,7 +14,7 @@
 		<Property Name="UseInstancedGeom" Value1="1"/>
 		<Property Name="FogColor" R="0.7" G="0.7" B="0.8"/>
 		<Property Name="Fog" Mode="3" Density="0" Start="10000.0" Stop="25000.0"/>
-		<Property Name="Font" Value1="../Media/Font" Value2="bluebold.ttf"/>
+		<Property Name="Font" Value1="../../Assets/Media/Font" Value2="bluebold.ttf"/>
 	</Properties>
 	<!--<Properties SystemType="Audio">
 		<!- - Priority starts at 0 with highest - ->
@@ -45,7 +45,8 @@
 				<!--<Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0"/>-->
 			</Properties>
 			<Properties SystemType="Geometry">
-				<Property Name="Position" Value1="510" Value2="10" Value3="510"/>
+				<!--<Property Name="Position" Value1="510" Value2="10" Value3="510"/>-->
+				<Property Name="Position" Value1="510" Value2="10" Value3="-490"/>
 				<Property Name="Orientation" Value1="0" Value2="0" Value3="0" Value4="1"/>
 				<Property Name="Scale" Value1="1" Value2="1" Value3="1"/>
 			</Properties>
@@ -57,9 +58,9 @@
 				<Property Name="Animation" Value1="run" Value2="Running"/>-->
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Character">
-				<Property Name="CapsuleA" Value1="0.0" Value2="0.65" Value3="0.0"/>
-				<Property Name="CapsuleB" Value1="0.0" Value2="1.65" Value3="0.0"/>
-				<Property Name="Radius" Value1="0.6"/>
+				<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
+				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
+				<Property Name="Radius" Value1="0.3"/>
 			</Properties>
 		</Object>
 		<Object Name="MainCamera">

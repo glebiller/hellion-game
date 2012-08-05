@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "Universal.h"
 
@@ -142,7 +142,7 @@ UScene::Unextend(
 
 UObject*
 UScene::CreateObject(
-    pcstr pszName
+    const char* pszName
 ) {
     //
     // Create the new object.
@@ -178,7 +178,7 @@ UScene::DestroyObject(
 
 UObject*
 UScene::FindObject(
-    pcstr pszName
+    const char* pszName
 ) {
     UObject* pObject = NULL;
 
@@ -272,7 +272,7 @@ UScene::ChangeOccurred(
                             if (ssIt != m_SystemScenes.end()) {
                                 pObject->Extend(ssIt->second, NULL);
                             } else {
-                                ASSERT(False);
+                                ASSERT(false);
                             }
                         }
 
@@ -317,10 +317,10 @@ UScene::ChangeOccurred(
 
         case System::Changes::Generic::UnextendObject: {
             IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
-            std::vector<pcstr> aObjectsToUnextend;
+            std::vector<const char*> aObjectsToUnextend;
             pScene->GetUnextendObjects(aObjectsToUnextend);
 
-            for (std::vector<pcstr>::const_iterator it = aObjectsToUnextend.begin();
+            for (std::vector<const char*>::const_iterator it = aObjectsToUnextend.begin();
                     it != aObjectsToUnextend.end(); it++) {
                 UObject* pObject = FindObject(*it);
 
@@ -343,7 +343,7 @@ UScene::ChangeOccurred(
 
 UObject::UObject(
     UScene* pScene,
-    pcstr pszName
+    const char* pszName
 )
     : m_pScene(pScene)
     , m_pGeometryObject(NULL)
@@ -374,7 +374,7 @@ UObject::~UObject(
 ISystemObject*
 UObject::Extend(
     ISystemScene* pSystemScene,
-    pcstr pszSystemObjectType
+    const char* pszSystemObjectType
 ) {
     ASSERT(pSystemScene != NULL);
     ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
@@ -389,11 +389,11 @@ UObject::Extend(
 }
 
 
-Bool
+bool
 UObject::Extend(
     ISystemObject* pSystemObject
 ) {
-    Bool bSuccess = False;
+    bool bSuccess = false;
 
     if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) == m_ObjectExtensions.end()) {
         //
@@ -466,7 +466,7 @@ UObject::Extend(
             m_pGraphicsObject = dynamic_cast<IGraphicsObject*>(pSystemObject);
         }
 
-        bSuccess = True;
+        bSuccess = true;
     }
 
     return bSuccess;
@@ -619,7 +619,7 @@ u32
 UObject::GetSubMeshCount(
     void
 ) {
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 
@@ -629,7 +629,7 @@ UObject::GetIndexDeclaration(
     In  u16 nSubMeshIndex
 ) {
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 
@@ -639,7 +639,7 @@ UObject::GetVertexDeclarationCount(
     In  u16 nSubMeshIndex
 ) {
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 
@@ -651,7 +651,7 @@ UObject::GetVertexDeclaration(
 ) {
     UNREFERENCED_PARAM(pVertexDecl);
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
 }
 
 
@@ -660,7 +660,7 @@ UObject::GetIndexCount(
     In  u16 nSubMeshIndex
 ) {
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 
@@ -670,7 +670,7 @@ UObject::GetVertexCount(
     In  u16 nSubMeshIndex
 ) {
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 
@@ -682,7 +682,7 @@ UObject::GetIndices(
 ) {
     UNREFERENCED_PARAM(pIndices);
     UNREFERENCED_PARAM(nSubMeshIndex);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
 }
 
 
@@ -699,7 +699,7 @@ UObject::GetVertices(
     UNREFERENCED_PARAM(nStreamIndex);
     UNREFERENCED_PARAM(nVertexDeclCount);
     UNREFERENCED_PARAM(pVertexDecl);
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
 }
 
 
@@ -707,7 +707,7 @@ u32
 UObject::GetStreamsChanged(
     void
 ) {
-    ASSERTMSG(False, "Not applicable for UObject.");
+    ASSERTMSG(false, "Not applicable for UObject.");
     return 0;
 }
 

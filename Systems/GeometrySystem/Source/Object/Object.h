@@ -69,7 +69,7 @@ class GeometryObject : public ISystemObject, public IGeometryObject {
             Property_Position, Property_Orientation, Property_Scale,
             Property_Count
         };
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
     private:

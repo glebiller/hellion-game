@@ -15,8 +15,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // geometry system includes
@@ -24,7 +24,7 @@
 #include "Object.h"
 
 
-pcstr GeometryObject::sm_kapszPropertyNames[] = {
+const char* GeometryObject::sm_kapszPropertyNames[] = {
     "Position", "Orientation", "Scale",
 };
 
@@ -81,7 +81,7 @@ GeometryObject::Initialize(
     //
     // Set this set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     //
     // Set the properties for this object.
     //
@@ -139,7 +139,7 @@ GeometryObject::SetProperties(
                 m_Scale = it->GetVector3();
                 PostChanges(System::Changes::Geometry::Scale);
             } else {
-                ASSERT(False);
+                ASSERT(false);
             }
 
             //

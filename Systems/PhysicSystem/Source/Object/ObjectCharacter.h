@@ -37,7 +37,7 @@ class HavokCharacterObject : public HavokObject {
 
     protected:
 
-        HavokCharacterObject(ISystemScene* pSystemScene, pcstr pszName);
+        HavokCharacterObject(ISystemScene* pSystemScene, const char* pszName);
         ~HavokCharacterObject(void);
 
         /// <summary cref="HavokCharacterObject::Initialize">
@@ -116,7 +116,7 @@ class HavokCharacterObject : public HavokObject {
         enum CommonPropertyTypes {
             Property_CapsuleA, Property_CapsuleB, Property_Radius, Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 };
 

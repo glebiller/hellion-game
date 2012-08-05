@@ -50,9 +50,9 @@ class HavokPhysicsSystem : public ISystem {
         ///   Implementation of the <c>ISystem::GetName</c> function.
         ///   Gets the name of the system.  Only custom systems can return a custom name.
         /// </summary>
-        /// <returns>pcstr - The name of the system.</returns>
+        /// <returns>const char* - The name of the system.</returns>
         /// <seealso cref="ISystem::GetName"/>
-        virtual pcstr GetName(void);
+        virtual const char* GetName(void);
 
         /// <summary cref="HavokPhysicsSystem::GetSystemType">
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
@@ -125,7 +125,7 @@ class HavokPhysicsSystem : public ISystem {
         /// </summary>
         /// <param name="pString">The error string.</param>
         /// <param name="pErrorOutputObject">Pointer to the error object.</param>
-        static void ErrorReport(pcstr pString, void* pErrorOutputObject);
+        static void ErrorReport(const char* pString, void* pErrorOutputObject);
 
     private:
 

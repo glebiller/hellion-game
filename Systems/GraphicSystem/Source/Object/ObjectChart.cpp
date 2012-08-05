@@ -23,8 +23,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 using namespace Interface;
 
 //
@@ -48,7 +48,7 @@ using namespace Interface;
 // Generic charting object, constructor.
 //
 //-----------------------------------------------------------------------------
-GraphicObjectChart::GraphicObjectChart(ISystemScene* pSystemScene, pcstr pszName) :
+GraphicObjectChart::GraphicObjectChart(ISystemScene* pSystemScene, const char* pszName) :
     GraphicObjectWindow(pSystemScene, pszName) {
     m_Type        = GraphicObject::Type_Chart;
     m_dataMax     = 0.0;

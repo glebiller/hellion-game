@@ -50,7 +50,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Core\BaseTypes\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(OGRE_HOME)\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -83,14 +83,11 @@
     <ClInclude Include="Source\ChangeControl.h" />
     <ClInclude Include="Source\Environment.h" />
     <ClInclude Include="Source\Interface.h" />
-    <ClInclude Include="Source\Object\Area.h" />
-    <ClInclude Include="Source\Object\Behavior.h" />
-    <ClInclude Include="Source\Object\Contact.h" />
     <ClInclude Include="Source\Object\Generic.h" />
     <ClInclude Include="Source\Object\Geometry.h" />
     <ClInclude Include="Source\Object\Graphic.h" />
     <ClInclude Include="Source\Object\GUI.h" />
-    <ClInclude Include="Source\Object\Move.h" />
+    <ClInclude Include="Source\Object\IMoveObject.h" />
     <ClInclude Include="Source\Object\Target.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Property.h" />
@@ -99,6 +96,11 @@
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\SystemTypes.h" />
     <ClInclude Include="Source\TaskManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseTypes\BaseTypes.vcxproj">
+      <Project>{9706a061-ab63-4e59-8bc3-32e8ca0a84be}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

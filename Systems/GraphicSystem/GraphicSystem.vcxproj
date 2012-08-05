@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRAPHICSYSTEM_EXPORTS;SKYX_LIB;SKYX_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Core\Framework\Source;$(SolutionDir)Externs\OISB\Source;$(SolutionDir)Externs\PagedGeometry\Source;$(SolutionDir)Externs\SkyX\Source;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OIS;$(OGRE_HOME)\boost;$(TBB_HOME)\include;$(DXSDK_DIR)\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Core\Framework\Source;$(SolutionDir)Externs\OISB\Source;$(SolutionDir)Externs\PagedGeometry\Source;$(SolutionDir)Externs\SkyX\Source;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OIS;$(OGRE_HOME)\boost;$(TBB_HOME)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,7 +80,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\DynamicBuffer.cpp" />
     <ClCompile Include="Source\GraphicSystem.cpp" />
     <ClCompile Include="Source\MovableText\DynamicLines.cpp" />
     <ClCompile Include="Source\MovableText\DynamicRenderable.cpp" />
@@ -91,12 +90,7 @@
     <ClCompile Include="Source\Object\ObjectChart.cpp" />
     <ClCompile Include="Source\Object\ObjectCPUChart.cpp" />
     <ClCompile Include="Source\Object\ObjectLight.cpp" />
-    <ClCompile Include="Source\Object\ObjectLightFire.cpp" />
     <ClCompile Include="Source\Object\ObjectMesh.cpp" />
-    <ClCompile Include="Source\Object\ObjectMeshAnimated.cpp" />
-    <ClCompile Include="Source\Object\ObjectPagedGeometryLayer.cpp" />
-    <ClCompile Include="Source\Object\ObjectParticles.cpp" />
-    <ClCompile Include="Source\Object\ObjectParticleSystem.cpp" />
     <ClCompile Include="Source\Object\ObjectSky.cpp" />
     <ClCompile Include="Source\Object\ObjectStatWindow.cpp" />
     <ClCompile Include="Source\Object\ObjectTerrain.cpp" />
@@ -107,7 +101,6 @@
     <ClCompile Include="Source\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DynamicBuffer.h" />
     <ClInclude Include="Source\MovableText\DynamicLines.h" />
     <ClInclude Include="Source\MovableText\DynamicRenderable.h" />
     <ClInclude Include="Source\MovableText\MovableText.h" />
@@ -117,12 +110,7 @@
     <ClInclude Include="Source\Object\ObjectChart.h" />
     <ClInclude Include="Source\Object\ObjectCPUChart.h" />
     <ClInclude Include="Source\Object\ObjectLight.h" />
-    <ClInclude Include="Source\Object\ObjectLightFire.h" />
     <ClInclude Include="Source\Object\ObjectMesh.h" />
-    <ClInclude Include="Source\Object\ObjectMeshAnimated.h" />
-    <ClInclude Include="Source\Object\ObjectPagedGeometryLayer.h" />
-    <ClInclude Include="Source\Object\ObjectParticles.h" />
-    <ClInclude Include="Source\Object\ObjectParticleSystem.h" />
     <ClInclude Include="Source\Object\ObjectSky.h" />
     <ClInclude Include="Source\Object\ObjectStatWindow.h" />
     <ClInclude Include="Source\Object\ObjectTerrain.h" />

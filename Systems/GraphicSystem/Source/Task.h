@@ -54,9 +54,9 @@ class OGREGraphicsTask : public ISystemTask {
         /// <summary cref="OGREGraphicsTask::IsPrimaryThreadOnly">
         ///   Implementation of the <c>ISystemTask::IsPrimaryThreadOnly</c> function.
         /// </summary>
-        /// <returns>Bool - Returns if this system should only run on the primary thread.</returns>
+        /// <returns>bool - Returns if this system should only run on the primary thread.</returns>
         /// <seealso cref="ISystemTask::IsPrimaryThreadOnly"/>
-        virtual Bool IsPrimaryThreadOnly(void) { return False; };
+        virtual bool IsPrimaryThreadOnly(void) { return false; };
 
     private:
 

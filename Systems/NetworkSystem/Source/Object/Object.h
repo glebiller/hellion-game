@@ -34,7 +34,7 @@ class NetworkObject : public ISystemObject, public IGeometryObject, public IGUIO
     protected:
 
         NetworkObject(ISystemScene* pSystemScene);
-        NetworkObject(ISystemScene* pSystemScene, pcstr pszType, pcstr pszName);
+        NetworkObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName);
         virtual ~NetworkObject(void);
 
         /// <summary cref="NetworkObject::GetSystemType">
@@ -125,7 +125,7 @@ class NetworkObject : public ISystemObject, public IGeometryObject, public IGUIO
         f32                                 m_Pitch;
         f32                                 m_Roll;
 
-        static pcstr                        sm_kapszTypeNames[];
+        static const char*                        sm_kapszTypeNames[];
 
         enum Types {
             Type_Controlled, Type_GUI
@@ -147,7 +147,7 @@ class NetworkObject : public ISystemObject, public IGeometryObject, public IGUIO
             Property_Instrumentation
         };
 
-        static pcstr                        sm_kapszPropertyNames[];
+        static const char*                        sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 };
 

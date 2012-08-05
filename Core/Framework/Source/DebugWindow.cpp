@@ -15,8 +15,8 @@
 #include <windows.h>
 #include <commctrl.h>
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "Universal.h"
 #define __DEBUG_WINDOW__
@@ -109,10 +109,10 @@ DebugWindow::DebugWindow(
             ::ShowWindow(m_hWnd, SW_SHOWNORMAL);
             ::UpdateWindow(m_hWnd);
         } else {
-            ASSERT(False);
+            ASSERTMSG(false, "Window is null");
         }
     } else {
-        ASSERT(FALSE);
+        ASSERTMSG(false, "Failed to register window class");
     }
 }
 
@@ -295,8 +295,8 @@ DebugWindow::ChangeOccurred(
     ISubject* pSubject,
     System::Changes::BitMask ChangeType
 ) {
-    DBG_UNREFERENCED_PARAM(pSubject);
-    DBG_UNREFERENCED_PARAM(ChangeType);
+    UNREFERENCED_PARAM(pSubject);
+    UNREFERENCED_PARAM(ChangeType);
     return Errors::Success;
 }
 

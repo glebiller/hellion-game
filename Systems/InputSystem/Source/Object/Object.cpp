@@ -23,7 +23,7 @@
 #include <string>
 
 #include "Debug.h"
-#include <Interface.h>
+#include "Interface.h"
 
 #include "Object/Object.h"
 
@@ -33,12 +33,12 @@
 /////////////////////////////////
 
 
-pcstr InputObject::sm_kapszTypeNames[] = {
+const char* InputObject::sm_kapszTypeNames[] = {
     "Controlled", "Overlay",
     NULL
 };
 
-pcstr InputObject::sm_kapszPropertyNames[] = {
+const char* InputObject::sm_kapszPropertyNames[] = {
     "FKey", "Orientation"
 };
 
@@ -62,7 +62,7 @@ const Properties::Property InputObject::sm_kaDefaultProperties[] = {
 /////////////////////////////////
 
 
-InputObject::InputObject(ISystemScene* pSystemScene, pcstr pszName)
+InputObject::InputObject(ISystemScene* pSystemScene, const char* pszName)
     : ISystemObject(pSystemScene, NULL) {
     ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
     ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
@@ -91,7 +91,7 @@ InputObject::Initialize(
     //
     // Set this set as initialized.
     //
-    m_bInitialized = True;
+    m_bInitialized = true;
     SetProperties(Properties);
     return Errors::Success;
 }
@@ -128,7 +128,7 @@ InputObject::SetProperties(
     for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
         if (it->GetFlags() & Properties::Flags::Valid) {
             std::string sName = it->GetName();
-            ASSERT(False);
+            ASSERT(false);
             //
             // Set this property to invalid since it's already been read.
             //

@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include "SystemManager.h"
 
@@ -75,7 +75,7 @@ SystemManager::Get(
 
 ISystem*
 SystemManager::Get(
-    pcstr pszName
+    const char* pszName
 ) {
     ISystem* pSystem = NULL;
 

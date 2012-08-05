@@ -31,8 +31,8 @@
 //
 // core includes
 //
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 //
 // Ogre system includes
@@ -40,11 +40,10 @@
 #include "Scene.h"
 #include "Object.h"
 
-#include "ObjectParticleSystem.h"
 #define POGREROOTNODE (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode())
 
 
-pcstr GraphicObject::sm_kapszTypeNames[] = {
+const char* GraphicObject::sm_kapszTypeNames[] = {
     "Light", "LightFire", "Camera", "Mesh", "MeshAnimated", "PointList", "Window", "StatWindow", "Chart", "CPUChart", "WorkloadWindow",
     "ParticleSystem", "PagedGeometryLayer", "Terrain", "Sky",
     NULL
@@ -53,7 +52,7 @@ pcstr GraphicObject::sm_kapszTypeNames[] = {
 
 GraphicObject::GraphicObject(
     ISystemScene* pSystemScene,
-    pcstr pszName
+    const char* pszName
 )
     : ISystemObject(pSystemScene, pszName) {
     m_pszName = pszName;

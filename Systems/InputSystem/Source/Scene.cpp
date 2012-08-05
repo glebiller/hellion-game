@@ -18,8 +18,8 @@
 /////////////////////////////////
 
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 #include "OISB.h"
 
 #include "System.h"
@@ -140,7 +140,7 @@ InputScene::Initialize(
     m_InputActions.CameraRotateRightLeft->bind("Mouse/X Axis");
 
 
-    m_bInitialized = True;
+    m_bInitialized = true;
     return Errors::Success;
 }
 
@@ -161,7 +161,7 @@ InputScene::SetProperties(
 }
 
 
-pcstr*
+const char**
 InputScene::GetObjectTypes(
     void
 ) {
@@ -171,8 +171,8 @@ InputScene::GetObjectTypes(
 
 ISystemObject*
 InputScene::CreateObject(
-    pcstr pszName,
-    pcstr pszType
+    const char* pszName,
+    const char* pszType
 ) {
     ASSERT(m_bInitialized);
     //

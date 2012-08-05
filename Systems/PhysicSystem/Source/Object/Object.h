@@ -35,22 +35,22 @@ class HavokObject : public ISystemObject, public IGeometryObject {
 
     protected:
 
-        HavokObject(ISystemScene* pSystemScene, pcstr pszName);
+        HavokObject(ISystemScene* pSystemScene, const char* pszName);
         ~HavokObject(void);
 
         /// <summary cref="HavokObject::SetType">
         ///   Sets the type for this object (Physics or Character)
         /// </summary>
         /// <param name="pszType">Type of this object</param>
-        inline void SetType(pcstr pszType) {
+        inline void SetType(const char* pszType) {
             m_sType = pszType;
         }
 
         /// <summary cref="HavokObject::GetType">
         ///   Gets the type for this object (Physics or Character)
         /// </summary>
-        /// <returns>pcstr - Type of this object</returns>
-        inline pcstr GetType(void) {
+        /// <returns>const char* - Type of this object</returns>
+        inline const char* GetType(void) {
             return m_sType.c_str();
         }
 

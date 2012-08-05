@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <BaseTypes.h>
-#include <Interface.h>
+#include "BaseTypes.h"
+#include "Interface.h"
 
 #include <Manager/EnvironmentManager.h>
 #include <Manager/ServiceManager.h>
@@ -32,7 +32,7 @@ Scheduler::Scheduler(
     , m_hExecutionTimer(NULL) {
     m_hExecutionTimer = Singletons::PlatformManager.Timers().Create(m_ClockFrequency);
     m_bBenchmarkingEnabled =
-        Singletons::EnvironmentManager.Variables().GetAsBool("Scheduler::Benchmarking", False);
+        Singletons::EnvironmentManager.Variables().GetAsBool("Scheduler::Benchmarking", false);
 }
 
 

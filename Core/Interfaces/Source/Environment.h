@@ -39,15 +39,15 @@ class IEnvironment {
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="pszDefaultValue">The value returned if the variable doesn't exist.</param>
                 /// <returns>The value of the variable.</returns>
-                virtual pcstr GetAsString(In pcstr pszName, In pcstr pszDefaultValue = "") = 0;
+                virtual const char* GetAsString(In char* pszName, In char* pszDefaultValue = "") = 0;
 
                 /// <summary>
-                ///   Compares the environment variable against a string, returning True if equal.
+                ///   Compares the environment variable against a string, returning true if equal.
                 /// </summary>
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="pszCompareValue">The value to compare against.</param>
-                /// <returns>True if the variable exists and is equal to pszCompareValue, False otherwise.</returns>
-                virtual Bool IsString(In pcstr pszName, In pcstr pszCompareValue) = 0;
+                /// <returns>true if the variable exists and is equal to pszCompareValue, false otherwise.</returns>
+                virtual bool IsString(In char* pszName, In char* pszCompareValue) = 0;
 
                 /// <summary>
                 ///   Returns the environment variable value as a bool.
@@ -55,7 +55,7 @@ class IEnvironment {
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="bDefaultValue">The value returned if the variable doesn't exist.</param>
                 /// <returns>The value of the variable.</returns>
-                virtual Bool GetAsBool(In pcstr pszName, In Bool bDefaultValue = False) = 0;
+                virtual bool GetAsBool(In char* pszName, In bool bDefaultValue = false) = 0;
 
                 /// <summary>
                 ///   Returns the environment variable value as an int.
@@ -63,7 +63,7 @@ class IEnvironment {
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="DefaultValue">The value returned if the variable doesn't exist.</param>
                 /// <returns>The value of the variable.</returns>
-                virtual i32 GetAsInt(In pcstr pszName, In i32 DefaultValue = 0) = 0;
+                virtual i32 GetAsInt(In char* pszName, In i32 DefaultValue = 0) = 0;
 
                 /// <summary>
                 ///   Returns the environment variable value as a float.
@@ -71,14 +71,14 @@ class IEnvironment {
                 /// <param name="pszName">The name of the variable.</param>
                 /// <param name="DefaultValue">The value returned if the variable doesn't exist.</param>
                 /// <returns>The value of the variable.</returns>
-                virtual f32 GetAsFloat(In pcstr pszName, In f32 DefaultValue = 0.0f) = 0;
+                virtual f32 GetAsFloat(In char* pszName, In f32 DefaultValue = 0.0f) = 0;
 
                 /// <summary>
                 ///   Sets new value for environment variable.
                 /// </summary>
                 /// <param name="pszName">The name of the variable</param>
                 /// <param name="pszValue">The new value for the variable</param>
-                virtual void SetValue(In pcstr pszName, In pcstr pszValue) = 0;
+                virtual void SetValue(In char* pszName, In char* pszValue) = 0;
 
         };
 

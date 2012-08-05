@@ -56,7 +56,7 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
 
     protected:
 
-        HavokPhysicsObject(ISystemScene* pSystemScene, pcstr pszType, pcstr pszName,
+        HavokPhysicsObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName,
                            hkpRigidBody* pBody = NULL);
         ~HavokPhysicsObject(void);
 
@@ -125,7 +125,7 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
         /// <summary cref="IContactObject::IsStatic">
         ///   Implementation of the IContactObject IsStatic function.
         /// </summary>
-        virtual const Bool IsStatic(void);
+        virtual const bool IsStatic(void);
 
         /// <summary cref="IIntersectionObject::GetIntersections">
         ///   Implementation of the IIntersectionObject GetIntersections function.
@@ -154,7 +154,7 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
         Math::Vector3                       m_Offset;
 
         hkpRigidBody*                       m_pBody;
-        Bool                                m_bStatic;
+        bool                                m_bStatic;
 
         i32                                 m_MaterialId;
         f32                                 m_Mass;
@@ -171,7 +171,7 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
 
     private:
 
-        static pcstr                        sm_kapszTypeNames[];
+        static const char*                        sm_kapszTypeNames[];
 
         enum Types {
             Type_Box, Type_Sphere, Type_ConvexHull, Type_Mesh, Type_Space, Type_Dynamic,
@@ -182,14 +182,14 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
             Property_Mass, Property_Static, Property_Material, Property_LinearVelocity, Property_Quality,
             Property_Count
         };
-        static pcstr                        sm_kapszCommonPropertyNames[];
+        static const char*                        sm_kapszCommonPropertyNames[];
         static const Properties::Property   sm_kaCommonDefaultProperties[];
 
         enum BoxPropertyTypes {
             BoxProperty_Lengths,
             BoxProperty_Count
         };
-        static pcstr                        sm_kapszBoxPropertyNames[];
+        static const char*                        sm_kapszBoxPropertyNames[];
         static const Properties::Property   sm_kaBoxDefaultProperties[];
 
         enum SpherePropertyTypes {
@@ -197,7 +197,7 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
             SphereProperty_Count
         };
 
-        static pcstr                        sm_kapszSpherePropertyNames[];
+        static const char*                        sm_kapszSpherePropertyNames[];
         static const Properties::Property   sm_kaSphereDefaultProperties[];
 };
 
