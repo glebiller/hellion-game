@@ -19,16 +19,31 @@
     <Filter Include="Fichiers d%27en-tête\Object">
       <UniqueIdentifier>{89252bb3-e22e-4695-9b75-49cb69b31998}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\System">
+      <UniqueIdentifier>{39a40d9a-7349-455a-b8a1-8bac09bd3f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Observer">
+      <UniqueIdentifier>{95dcc04b-9642-45ee-9f69-9bf65c329ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Observer">
+      <UniqueIdentifier>{4134b866-fff9-44af-ad83-116935af3d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\System">
+      <UniqueIdentifier>{875c76f9-0f11-4847-bdc4-acb612ed8850}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ChangeControl.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Property.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\System.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Source\Observer\CSubject.cpp">
+      <Filter>Fichiers sources\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ISystem.cpp">
+      <Filter>Fichiers sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ISystemScene.cpp">
+      <Filter>Fichiers sources\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,9 +61,6 @@
     </ClInclude>
     <ClInclude Include="Source\Object\Target.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ChangeControl.h">
-      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Source\Interface.h">
       <Filter>Fichiers d%27en-tête</Filter>
@@ -79,6 +91,30 @@
     </ClInclude>
     <ClInclude Include="Source\Object\IMoveObject.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ISystem.h">
+      <Filter>Fichiers d%27en-tête\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ISystemScene.h">
+      <Filter>Fichiers d%27en-tête\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Observer\IObserver.h">
+      <Filter>Fichiers d%27en-tête\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Observer\ISubject.h">
+      <Filter>Fichiers d%27en-tête\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Observer\IChangeManager.h">
+      <Filter>Fichiers d%27en-tête\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Observer\CSubject.h">
+      <Filter>Fichiers d%27en-tête\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ISystemObject.h">
+      <Filter>Fichiers d%27en-tête\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ISystemTask.h">
+      <Filter>Fichiers d%27en-tête\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

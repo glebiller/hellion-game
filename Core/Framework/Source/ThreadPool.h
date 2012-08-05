@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <SpinMutex.h>
+#include "SpinMutex.h"
 
 /// <summary>
 /// This class is used by <c>TaskManagerTP</c> wrap tasks into objects that can be

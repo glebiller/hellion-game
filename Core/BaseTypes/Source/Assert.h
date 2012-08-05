@@ -30,12 +30,12 @@
         #define ASSERTMSG3(c,  m, p1, p2, p3)      (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1, p2, p3 )) || (__debugbreak(), 0))
         #define ASSERTMSG4(c,  m, p1, p2, p3, p4)  (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1, p2, p3, p4 )) || (__debugbreak(), 0))
     #else
-		#define ASSERT(c)                         
-		#define ASSERTMSG(c, m)                   
-		#define ASSERTMSG1(c,  m, p1)              
-		#define ASSERTMSG2(c,  m, p1, p2)          
-		#define ASSERTMSG3(c,  m, p1, p2, p3)      
-		#define ASSERTMSG4(c,  m, p1, p2, p3, p4)  
+        #define ASSERT(c)                         
+        #define ASSERTMSG(c, m)                   
+        #define ASSERTMSG1(c,  m, p1)              
+        #define ASSERTMSG2(c,  m, p1, p2)          
+        #define ASSERTMSG3(c,  m, p1, p2, p3)      
+        #define ASSERTMSG4(c,  m, p1, p2, p3, p4)  
     #endif
 #else
     #define ASSERT(c)

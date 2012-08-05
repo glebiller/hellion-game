@@ -14,68 +14,70 @@
 
 #pragma once
 
-#include <DataTypes.h>
+#include "DataTypes.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   An interface for accessing platform specific functionality for things like the OS and
-///    processor.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * An interface for accessing platform specific functionality for things like the OS and
+ *  processor.
+ */
 class IPlatform {
     public:
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   An interface for accessing processor information.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+         * An interface for accessing processor information.
+         */
         class IProcessor {
             public:
-                /// <summary>
-                ///   Returns the number of processors available for this process.
-                /// </summary>
-                /// <returns>The processor count.</returns>
+
+                /**
+                 * Returns the number of processors available for this process.
+                 *
+                 * @return  The processor count.
+                 */
                 virtual u32 GetNumProcessors(void) = 0;
 
-                /// <summary>
-                ///   Sets the calling threads affinity to the specified processor.
-                /// </summary>
-                /// <param name="ProcessorNumber">The processor number to set the affinity to.</param>
+                /**
+                 * Sets the calling threads affinity to the specified processor.
+                 *
+                 * @param   ProcessorNumber The processor number to set the affinity to.
+                 */
                 virtual void AffinitizeThreadToProcessor(u32 ProcessorNumber) = 0;
         };
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   An interface for accessing window information.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+         * Gets a reference to the IProcessor class.
+         *
+         * @return  A reference to the IProcessor class.
+         */
+        virtual IProcessor& Processor(void) = 0;
+
+        /**
+         * An interface for accessing window information.
+         */
         class IWindow {
             public:
-                /// <summary>
-                ///   Sets the window handle.
-                /// </summary>
-                /// <param name="windowHnd">The window handle to set.</param>
+
+                /**
+                 * Sets the window handle.
+                 *
+                 * @param   windowHnd   The window handle to set.
+                 */
                 virtual void SetHandle(size_t windowHnd) = 0;
 
-                /// <summary>
-                ///   Returns the window handle.
-                /// </summary>
-                /// <returns>The window handle.</returns>
+                /**
+                 * Returns the window handle.
+                 *
+                 * @return  The window handle.
+                 */
                 virtual size_t GetHandle(void) = 0;
 
         };
 
-        /// <summary>
-        ///   Gets a reference to the IProcessor class.
-        /// </summary>
-        /// <returns>A reference to the IProcessor class.</returns>
-        virtual IProcessor& Processor(void) = 0;
-
-        /// <summary>
-        ///   Gets a reference to the IWindow class.
-        /// </summary>
-        /// <returns>A reference to the IWindow class.</returns>
+        /**
+         * Gets a reference to the IWindow class.
+         *
+         * @return  A reference to the IWindow class.
+         */
         virtual IWindow& Window(void) = 0;
 
 };

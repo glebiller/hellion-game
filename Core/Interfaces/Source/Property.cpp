@@ -12,13 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <StdArg.h>
+#include <cstdarg>
 
 #include "BaseTypes.h"
 #include "Interface.h"
 
 
 namespace Interface {
+
     namespace Properties {
 
         Property::Property(
@@ -44,7 +45,7 @@ namespace Interface {
                         break;
 
                     case Values::Boolean:
-                        m_aValues[ i ].Boolean = va_arg(pArg, u32);
+                        m_aValues[ i ].Boolean = va_arg(pArg, bool);
                         break;
 
                     case Values::Enum:

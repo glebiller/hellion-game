@@ -14,87 +14,85 @@
 
 #pragma once
 
-#include <DataTypes.h>
+#include "DataTypes.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   An interface for getting and setting information about the environment.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * An interface for getting and setting information about the environment.
+ */
 class IEnvironment {
     public:
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   An interface for environment variable functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * An interface for environment variable functionality.
+         */
         class IVariables {
             public:
 
-                /// <summary>
-                ///   Returns the environment variable value as a string.
-                /// </summary>
-                /// <param name="pszName">The name of the variable.</param>
-                /// <param name="pszDefaultValue">The value returned if the variable doesn't exist.</param>
-                /// <returns>The value of the variable.</returns>
+                /**
+                 * Returns the environment variable value as a string.
+                 *
+                 * @param   pszName         The name of the variable.
+                 * @param   pszDefaultValue The value returned if the variable doesn't exist.
+                 * @return  The value of the variable.
+                 */
                 virtual const char* GetAsString(In char* pszName, In char* pszDefaultValue = "") = 0;
 
-                /// <summary>
-                ///   Compares the environment variable against a string, returning true if equal.
-                /// </summary>
-                /// <param name="pszName">The name of the variable.</param>
-                /// <param name="pszCompareValue">The value to compare against.</param>
-                /// <returns>true if the variable exists and is equal to pszCompareValue, false otherwise.</returns>
+                /**
+                 * Compares the environment variable against a string, returning true if equal.
+                 *
+                 * @param   pszName         The name of the variable.
+                 * @param   pszCompareValue The value to compare against.
+                 * @return  true if the variable exists and is equal to pszCompareValue, false otherwise.
+                 */
                 virtual bool IsString(In char* pszName, In char* pszCompareValue) = 0;
 
-                /// <summary>
-                ///   Returns the environment variable value as a bool.
-                /// </summary>
-                /// <param name="pszName">The name of the variable.</param>
-                /// <param name="bDefaultValue">The value returned if the variable doesn't exist.</param>
-                /// <returns>The value of the variable.</returns>
+                /**
+                 * Returns the environment variable value as a bool.
+                 *
+                 * @param   pszName         The name of the variable.
+                 * @param   bDefaultValue   The value returned if the variable doesn't exist.
+                 * @return  The value of the variable.
+                 */
                 virtual bool GetAsBool(In char* pszName, In bool bDefaultValue = false) = 0;
 
-                /// <summary>
-                ///   Returns the environment variable value as an int.
-                /// </summary>
-                /// <param name="pszName">The name of the variable.</param>
-                /// <param name="DefaultValue">The value returned if the variable doesn't exist.</param>
-                /// <returns>The value of the variable.</returns>
+                /**
+                 * Returns the environment variable value as an int.
+                 *
+                 * @param   pszName         The name of the variable.
+                 * @param   DefaultValue    The value returned if the variable doesn't exist.
+                 * @return  The value of the variable.
+                 */
                 virtual i32 GetAsInt(In char* pszName, In i32 DefaultValue = 0) = 0;
 
-                /// <summary>
-                ///   Returns the environment variable value as a float.
-                /// </summary>
-                /// <param name="pszName">The name of the variable.</param>
-                /// <param name="DefaultValue">The value returned if the variable doesn't exist.</param>
-                /// <returns>The value of the variable.</returns>
+                /**
+                 * Returns the environment variable value as a float.
+                 *
+                 * @param   pszName         The name of the variable.
+                 * @param   DefaultValue    The value returned if the variable doesn't exist.
+                 * @return  The value of the variable.
+                 */
                 virtual f32 GetAsFloat(In char* pszName, In f32 DefaultValue = 0.0f) = 0;
 
-                /// <summary>
-                ///   Sets new value for environment variable.
-                /// </summary>
-                /// <param name="pszName">The name of the variable</param>
-                /// <param name="pszValue">The new value for the variable</param>
+                /**
+                 * Sets new value for environment variable.
+                 *
+                 * @param   pszName     The name of the variable.
+                 * @param   pszValue    The new value for the variable.
+                 */
                 virtual void SetValue(In char* pszName, In char* pszValue) = 0;
 
         };
 
-        /// <summary>
-        ///   Returns a reference to the variables class for access to its functionality.
-        /// </summary>
-        /// <returns>A reference to the variables class.</returns>
+        /**
+         * Returns a reference to the variables class for access to its functionality.
+         *
+         * @return  A reference to the variables class.
+         */
         virtual IVariables& Variables(void) = 0;
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   An interface for environment runtime functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * An interface for environment runtime functionality.
+         */
         class IRuntime {
             public:
 
@@ -115,10 +113,11 @@ class IEnvironment {
                 virtual void SetStatus(Status Status) = 0;
         };
 
-        /// <summary>
-        ///   Returns a reference to the runtime class for access to its functionality.
-        /// </summary>
-        /// <returns>A reference to the runtime class.</returns>
+        /**
+         * Returns a reference to the runtime class for access to its functionality.
+         *
+         * @return  A reference to the runtime class.
+         */
         virtual IRuntime& Runtime(void) = 0;
 
 };

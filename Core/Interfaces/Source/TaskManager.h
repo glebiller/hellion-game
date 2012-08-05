@@ -14,71 +14,92 @@
 
 #pragma once
 
+#include "DataTypes.h"
+
 class ISystemTask;
 
-#include <DataTypes.h>
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>ITaskManager</c> is an interface class for linking ISystemTasks to a TaskManager
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * <c>ITaskManager</c> is an interface class for linking ISystemTasks to a TaskManager.
+ */
 class ITaskManager {
     public:
 
-        /// <summary cref="ITaskManager::JobFunction">
-        /// This type defines the callback used for generic jobs by the <c>ITaskManager</c>.
-        /// </summary>
+        /**
+         * Defines an alias representing the void*.
+         * This type defines the callback used for generic jobs by the <c>ITaskManager</c>.
+         */
         typedef void (*JobFunction)(void*);
 
-        /// <summary cref="ITaskManager::JobCompletionFunction">
-        /// This type defines the callback used for generic job completions by the <c>ITaskManager</c>.
-        /// </summary>
-        /// <returns>the number of jobs issued by this function</returns>
+        /**
+         * Defines an alias representing the void*.
+         * This type defines the callback used for generic job completions by the <c>ITaskManager</c>.
+         * ### return   the number of jobs issued by this function.
+         */
         typedef u32(*JobCompletionFunction)(void*);       // return number of jobs added
 
+        /**
+         * Defines an alias representing the end.
+         */
         typedef void (*ParallelForFunction)(void* param, u32 begin, u32 end);
 
-        /// <summary cref="ITaskManager::NonStandardPerThreadCallback">
-        /// This method triggers a synchronized callback to be called once by each thread used by the <c>ITaskManager</c>.
-        /// This method which should only be called during initialization and shutdown of
-        /// the <c>ITaskManager</c>.  This method waits until all callbacks have executed.
-        /// </summary>
-        /// <param name="pfnCallback">the function callback to execute</param>
-        /// <param name="pData">a pointer to data that is passed to the callback</param>
+        /**
+         * Callback, called when the non standard per thread.
+         * This method triggers a synchronized callback to be called once by each thread used by the
+         * <c>ITaskManager</c>. This method which should only be called during initialization and
+         * shutdown of the <c>ITaskManager</c>.  This method waits until all callbacks have executed.
+         *
+         * @param   pfnCallback the function callback to execute.
+         * @param   pData       a pointer to data that is passed to the callback.
+         */
         virtual void NonStandardPerThreadCallback(JobFunction pfnCallback, void* pData) = 0;
 
-        /// <summary cref="ITaskManager::JobCountInstructionHints">
-        /// This type provides hints to the <c>GetRecommendedJobCount</c> method on the type of work
-        /// about to be submitted to the <c>ITaskManager</c>.
-        /// </summary>
-        /// <seealso cref="ITaskManager::GetRecommendedJobCount"/>
+        /**
+         * Values that represent JobCountInstructionHints.
+         * This type provides hints to the <c>GetRecommendedJobCount</c> method on the type of work
+         * about to be submitted to the <c>ITaskManager</c>.
+         * @sa  ITaskManager::GetRecommendedJobCount    .
+         */
         enum JobCountInstructionHints {
             None, Generic, FP, SIMD_FP, SIMD_INT,
         };
 
-        /// <summary cref="ITaskManager::GetRecommendedJobCount">
-        /// Call this method to determine the ideal number of tasks to submit to the <c>ITaskManager</c>
-        /// for maximum performance.
-        /// </summary>
-        /// <param name="Hints">guidance on the type of work done in the jobs about to be submitted</param>
-        /// <returns>the number of jobs which is optimal for the type of work specified by <paramref name="Hints"/>
-        /// </returns>
+        /**
+         * Gets a recommended job count.
+         * Call this method to determine the ideal number of tasks to submit to the <c>ITaskManager</c>
+         * for maximum performance.
+         *
+         * @param   Hints   guidance on the type of work done in the jobs about to be submitted.
+         * @return  the number of jobs which is optimal for the type of work specified by
+         *          <paramref name="Hints"/>
+         */
         virtual u32 GetRecommendedJobCount(JobCountInstructionHints Hints = None) = 0;
 
-        /// <summary cref="ITaskManager::SetNumberOfThreads">
-        /// This method constrains the number of threads used by the <c>ITaskManager</c>.
-        /// </summary>
-        /// <param name="uNumberOfThreads">the limit of the number of threads to use</param>
+        /**
+         * Sets a number of threads.
+         * This method constrains the number of threads used by the <c>ITaskManager</c>.
+         *
+         * @param   uNumberOfThreads    the limit of the number of threads to use.
+         */
         virtual void SetNumberOfThreads(u32 uNumberOfThreads) = 0;
 
-        /// <summary cref="TaskManager::GetNumberOfThreads">
-        /// Call this method to get the number of threads in the thread pool which are active for running work.
-        /// </summary>
-        /// <returns>the number of threads being used</returns>
+        /**
+         * Gets the number of threads.
+         * Call this method to get the number of threads in the thread pool which are active for running
+         * work.
+         *
+         * @return  the number of threads being used.
+         */
         virtual u32 GetNumberOfThreads(void) = 0;
 
-        virtual void ParallelFor(ISystemTask* pSystemTask,
-                                 ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrain = 1) = 0;
+        /**
+         * Parallel for virtual function.
+         *
+         * @param [in,out]  pSystemTask If non-null, the system task.
+         * @param   pfnJobFunction      The pfn job function.
+         * @param [in,out]  pParam      If non-null, the parameter.
+         * @param   begin               The begin.
+         * @param   end                 The end.
+         * @param   minGrain            (optional) the minimum grain.
+         */
+        virtual void ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrain = 1) = 0;
 };

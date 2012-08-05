@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -15,21 +15,22 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// CSubject - Default constructor
+/**
+ * @inheritDoc
+ */
 CSubject::CSubject() {
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// ~CSubject - Default destructor
+/**
+ * @inheritDoc
+ */
 CSubject::~CSubject() {
     PreDestruct();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// PreDestruct - Called prior to destruction of the subject
+/**
+ * @inheritDoc
+ */
 void CSubject::PreDestruct() {
     // THREAD SAFETY NOTE
     // Currently this method is called from the destructor only (that is it is
@@ -45,9 +46,9 @@ void CSubject::PreDestruct() {
     m_observerList.clear();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// Attach - Associate an observer with this subject
+/**
+ * @inheritDoc
+ */
 Error CSubject::Attach(IObserver* pObserver,
                        System::Types::BitMask inInterest,
                        u32 uID,
@@ -74,7 +75,9 @@ Error CSubject::Attach(IObserver* pObserver,
     return Errors::Success;
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error CSubject::Detach(IObserver* pObserver) {
     // No need to check for pObs being nonzero since the find below guarantees correct work in any case
     Error curError = Errors::Failure;
@@ -92,7 +95,9 @@ Error CSubject::Detach(IObserver* pObserver) {
     return curError;
 } // CSubject::Detach
 
-
+/**
+ * @inheritDoc
+ */
 Error CSubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
     // No need to check for pObs being nonzero since the find below guarantees correct work in any case
     Error curError = Errors::Failure;
@@ -122,7 +127,9 @@ Error CSubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
     return curError;
 }
 
-
+/**
+ * @inheritDoc
+ */
 u32 CSubject::GetID(IObserver* pObserver) const {
     ObserverList::const_iterator it = m_observerList.begin();
 
@@ -135,23 +142,15 @@ u32 CSubject::GetID(IObserver* pObserver) const {
     return InvalidID;
 }
 
-
-namespace Interface {
-
-    inline
-    u32 GetBitsToPost(CSubject::ObserverRequest& req, System::Changes::BitMask changedBits) {
-        u32 changedBitsOfInterest = req.m_interestBits & changedBits;
-        return changedBitsOfInterest;
-    } // GetBitsToPost
-
-} // namespace Interface
-
-
 // The following implementation could be used in case of concurrent initial attach
 // or detach operations. But it is commented out since it is unsafe without ref
 // counting on IObserver interface.
 // See the comment to SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS as well.
 #if 0
+
+/**
+ * @inheritDoc
+ */
 void CSubject::PostChanges(System::Changes::BitMask changedBits) {
     if (!m_observerList.empty()) {
         typedef std::pair<IObserver*, u32> PostData;
@@ -179,11 +178,12 @@ void CSubject::PostChanges(System::Changes::BitMask changedBits) {
         }
     }
 } // CSubject::PostChanges
-#endif /* 0 */
 
+#else
 
-///////////////////////////////////////////////////////////////////////////////
-// PostChanges - Post a change to all observers of this subject
+/**
+ * @inheritDoc
+ */
 void CSubject::PostChanges(System::Changes::BitMask changedBits) {
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
     SCOPED_SPIN_LOCK(m_observerListMutex);
@@ -198,3 +198,5 @@ void CSubject::PostChanges(System::Changes::BitMask changedBits) {
         }
     }
 }
+
+#endif /* 0 */

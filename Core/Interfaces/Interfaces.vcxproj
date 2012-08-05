@@ -75,12 +75,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ChangeControl.cpp" />
+    <ClCompile Include="Source\Observer\CSubject.cpp" />
     <ClCompile Include="Source\Property.cpp" />
-    <ClCompile Include="Source\System.cpp" />
+    <ClCompile Include="Source\System\ISystem.cpp" />
+    <ClCompile Include="Source\System\ISystemScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\ChangeControl.h" />
     <ClInclude Include="Source\Environment.h" />
     <ClInclude Include="Source\Interface.h" />
     <ClInclude Include="Source\Object\Generic.h" />
@@ -89,12 +89,20 @@
     <ClInclude Include="Source\Object\GUI.h" />
     <ClInclude Include="Source\Object\IMoveObject.h" />
     <ClInclude Include="Source\Object\Target.h" />
+    <ClInclude Include="Source\Observer\CSubject.h" />
+    <ClInclude Include="Source\Observer\IChangeManager.h" />
+    <ClInclude Include="Source\Observer\IObserver.h" />
+    <ClInclude Include="Source\Observer\ISubject.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Property.h" />
     <ClInclude Include="Source\Service.h" />
     <ClInclude Include="Source\Service\CollisionAPI.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\SystemTypes.h" />
+    <ClInclude Include="Source\System\ISystem.h" />
+    <ClInclude Include="Source\System\ISystemObject.h" />
+    <ClInclude Include="Source\System\ISystemScene.h" />
+    <ClInclude Include="Source\System\ISystemTask.h" />
     <ClInclude Include="Source\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
