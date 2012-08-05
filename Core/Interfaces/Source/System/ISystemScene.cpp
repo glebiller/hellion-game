@@ -12,7 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "ISystemScene.h"
+#include "Assert.h"
+#include "System/ISystem.h"
+#include "System/ISystemScene.h"
+
 
 /**
  * @inheritDoc

@@ -30,9 +30,7 @@
 /////////////////////////////////
 
 
-GeometryScene::GeometryScene(
-    ISystem* pSystem
-)
+GeometryScene::GeometryScene(ISystem* pSystem)
     : ISystemScene(pSystem) {
 }
 

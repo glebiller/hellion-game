@@ -18,7 +18,7 @@
 #include "Interface.h"
 
 
-namespace Interface {
+//namespace Interface {
 
     namespace Properties {
 
@@ -96,4 +96,4 @@ namespace Interface {
             va_end(pArg);
         }
     }
-}
+//}

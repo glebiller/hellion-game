@@ -21,13 +21,6 @@
 #include "Ogre.h"
 #pragma warning( pop )
 
-#ifdef SAFE_DELETE
-#undef SAFE_DELETE
-#endif
-#ifdef SAFE_DELETE_ARRAY
-#undef SAFE_DELETE_ARRAY
-#endif
-
 //
 // core includes
 //

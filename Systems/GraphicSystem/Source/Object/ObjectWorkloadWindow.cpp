@@ -34,7 +34,6 @@
 //
 #include "BaseTypes.h"
 #include "Interface.h"
-using namespace Interface;
 
 //
 // Ogre system includes

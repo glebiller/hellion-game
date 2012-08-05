@@ -14,7 +14,6 @@
 
 #pragma once
 
-namespace Interface {
 #include "SystemTypes.h"
 #include "Property.h"
 #include "Platform.h"
@@ -39,5 +38,3 @@ namespace Interface {
 #include "Object/Area.h"
 #include "Object/IMoveObject.h"
 #include "Object/Target.h"
-}
-using namespace Interface;

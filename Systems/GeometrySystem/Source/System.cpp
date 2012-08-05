@@ -27,31 +27,21 @@
 #include "Object/Object.h"
 
 
-GeometrySystem::GeometrySystem(
-    void
-)
+GeometrySystem::GeometrySystem(void)
     : ISystem() {
 }
 
 
-GeometrySystem::~GeometrySystem(
-    void
-) {
+GeometrySystem::~GeometrySystem(void) {
 }
 
 
-const char*
-GeometrySystem::GetName(
-    void
-) {
+const char* GeometrySystem::GetName(void) {
     return System::Names::Geometry;
 }
 
 
-System::Type
-GeometrySystem::GetSystemType(
-    void
-) {
+System::Type GeometrySystem::GetSystemType(void) {
     return System::Types::Geometry;
 }
 

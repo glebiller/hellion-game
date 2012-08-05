@@ -12,12 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "ISystem.h"
+#include "DataTypes.h"
+#include "System/ISystem.h"
 
 /**
  * @inheritDoc
  */
-ISystem::ISystem(void) : m_bInitialized(false) {
+ISystem::ISystem(void) 
+    : m_bInitialized(false) {
 }
 
 /**

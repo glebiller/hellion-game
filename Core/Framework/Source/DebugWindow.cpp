@@ -175,7 +175,7 @@ DebugWindow::SetUScene(
         // Get the scene.
         //
         ISystemScene* pScene = it->second;
-        m_pSceneCCM->Register(pScene, Interface::System::Changes::All, this);
+        m_pSceneCCM->Register(pScene, System::Changes::All, this);
         //
         // Add the scene to the tree.
         //
@@ -237,7 +237,7 @@ DebugWindow::SetUScene(
             // Get the system object.
             //
             ISystemObject* pObject = it->second;
-            m_pObjectCCM->Register(pObject, Interface::System::Changes::All, this);
+            m_pObjectCCM->Register(pObject, System::Changes::All, this);
             //
             // Add the system object to the tree.
             //

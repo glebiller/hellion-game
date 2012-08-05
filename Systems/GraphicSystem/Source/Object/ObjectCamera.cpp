@@ -19,23 +19,15 @@
 #pragma warning( disable : 6326 6385 )
 #include "Ogre.h"
 //Include PagedGeometry headers that will be needed
-#include <PagedGeometry.h>
-#include <GrassLoader.h>
+#include "PagedGeometry.h"
+#include "GrassLoader.h"
 #pragma warning( pop )
-
-#ifdef SAFE_DELETE
-#undef SAFE_DELETE
-#endif
-#ifdef SAFE_DELETE_ARRAY
-#undef SAFE_DELETE_ARRAY
-#endif
 
 //
 // core includes
 //
 #include "BaseTypes.h"
 #include "Interface.h"
-
 
 //
 // Ogre system includes
@@ -135,6 +127,7 @@ GraphicObjectCamera::Initialize(
     Ogre::SceneNode* playerNode = POGRESCENEMGR->getSceneNode("Player_SceneNode");
     ASSERT(playerNode != NULL);
     m_pNode = playerNode->createChildSceneNode(std::string(m_pszName) + "_SceneNode");
+    m_pNode->setPosition(0, 1.0f, 0);
     ASSERT(m_pNode != NULL);
     m_pCameraNode = m_pNode->createChildSceneNode(std::string(m_pszName) + "Camera_SceneNode");
     ASSERT(m_pCameraNode != NULL);
@@ -163,8 +156,8 @@ GraphicObjectCamera::Initialize(
             //
             // Set auto tracking
             //
-            m_pCamera->setAutoTracking(true, playerNode);  // The camera will always look at the camera target
-            m_pCamera->setFixedYawAxis(true);  // Needed because of auto tracking
+            m_pCamera->setAutoTracking(true, m_pNode);
+            m_pCamera->setFixedYawAxis(true);
             //
             // Attach the camera to the Ogre scene node.
             //
