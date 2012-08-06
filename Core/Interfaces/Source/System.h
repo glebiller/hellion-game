@@ -37,6 +37,11 @@ extern "C"
         ITaskManager*       pTask;
     };
 
+#if defined( MSC_COMPILER )
+
+    /**
+     * Function definition for calling into a system library for initializing a system.
+     */
     typedef void (__stdcall* InitializeSystemLibFunction)(
         ManagerInterfaces* pManagers
     );
@@ -46,13 +51,44 @@ extern "C"
      * 
      * @return   The newly created system.
      */
-    typedef ISystem* (__stdcall* CreateSystemFunction)(Debug::Debugger* p_Debugger);
+    typedef ISystem* (__stdcall* CreateSystemFunction)(
+        Debug::Debugger* p_Debugger
+    );
 
     /**
      * Function definition for calling into a system library for destroying a system.
      * 
      * @param    pSystem The system to destroy.
      */
-    typedef void (__stdcall* DestroySystemFunction)(ISystem* pSystem);
+    typedef void (__stdcall* DestroySystemFunction)(
+        ISystem* pSystem
+    );
+
+#elif defined( GCC_COMPILER )
+    /**
+     * Function definition for calling into a system library for initializing a system.
+     */
+    void __attribute__((stdcall)) InitializeSystemLibFunction(
+        ManagerInterfaces* pManagers
+    );
+
+    /**
+     * Function definition for calling into a system library for creating a system.
+     * 
+     * @return   The newly created system.
+     */
+    ISystem* __attribute__((stdcall)) CreateSystemFunction(
+        Debug::Debugger* p_Debugger
+    );
+
+    /**
+     * Function definition for calling into a system library for destroying a system.
+     * 
+     * @param    pSystem The system to destroy.
+     */
+    void __attribute__((stdcall)) DestroySystemFunction(
+        ISystem* pSystem
+    );    
+#endif
 
 }

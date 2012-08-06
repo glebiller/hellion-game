@@ -14,11 +14,12 @@
 
 #pragma once
 
+#if defined( MSC_COMPILER )
 #include <intrin.h>
+#pragma intrinsic(_BitScanForward)
+#endif
 
 #include "DataTypes.h"
-
-#pragma intrinsic(_BitScanForward)
 
 //////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -27,6 +28,10 @@
 /// </summary>
 //////////////////////////////////////////////////////////////////////////
 namespace System {
+
+    /**
+     * The List of components
+     */
     enum Components {
         System, Scene, Object, Task
     };
@@ -71,7 +76,7 @@ namespace System {
     namespace Types {
 
         // Disabling the warning for using the non-standard scope operator with enums.
-#ifdef _MSC_VER
+#if defined( MSC_COMPILER )
 #pragma warning( push )
 #pragma warning( disable : 4482 )
 #endif
@@ -102,7 +107,7 @@ namespace System {
         static const u32 All                    = static_cast<u32>(-1);
         static const u32 MAX                    = 32;
 
-#ifdef _MSC_VER
+#if defined( MSC_COMPILER )
 #pragma warning( pop )
 #endif
         //////////////////////////////////////////////////////////////////////////
@@ -118,8 +123,10 @@ namespace System {
         //////////////////////////////////////////////////////////////////////////
         __forceinline u32 GetIndex(u32 SystemType) {
             u32 Index = All;
-#ifdef _MSC_VER
+#if defined( MSC_COMPILER )
             _BitScanForward((unsigned long*)&Index, SystemType);
+#elif defined( GCC_COMPILER )
+            Index = __builtin_ffs(SystemType);
 #endif
             return Index;
         };

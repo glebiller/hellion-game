@@ -19,7 +19,7 @@
 
 #include "DataTypes.h"
 
-#include "boost\thread\mutex.hpp"
+#include "boost/thread/mutex.hpp"
 
 #define LOG_ACTUAL( x ) va_list ArgList;                                   \
                         va_start( ArgList, Format );                       \
@@ -103,12 +103,12 @@ namespace Debug {
             LogFile m_LogFiles[ LogType::e_LogTypeCount ];
     };
 
+#ifdef DEBUG_BUILD
+
     /**
      * The debugger.
      */
     static Debugger* s_Debugger = NULL;
-
-#ifdef DEBUG_BUILD
 
     /**
      * Initialises this object.
@@ -238,8 +238,10 @@ namespace Debug {
 
 #else  // Debugging disable, all functions will in inline and empty (aka removed)
 
+#ifdef _MSC_VER
 #pragma warning( push )
 #pragma warning( disable: 4100 )
+#endif
 
     /**
      * Initialises this object.
@@ -351,7 +353,9 @@ namespace Debug {
      */
     inline void LogTrees(const char* Format, ...) {};
 
+#ifdef _MSC_VER
 #pragma warning( pop )
+#endif
 
 #endif
 }

@@ -21,8 +21,10 @@
 #include "Assert.h"
 #include "MathUtils.h"
 
+#if defined( _MSC_VER )
 #pragma warning( push )
 #pragma warning( disable : 6385 6386 )
+#endif
 
 /*******************************************************************************
 * STRUCT: Property
@@ -265,4 +267,6 @@ namespace Properties {
 
 }
 
+#if defined( _MSC_VER )
 #pragma warning( pop )
+#endif

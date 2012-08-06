@@ -25,22 +25,12 @@
 
 #pragma warning (push)
 #pragma warning (disable: 4100)
-#include <tbb/parallel_for.h>
-#include <tbb/blocked_range.h>
-#include <tbb/partitioner.h>
+#include "tbb/parallel_for.h"
+#include "tbb/blocked_range.h"
+#include "tbb/partitioner.h"
 #pragma warning (pop)
 
 //#include "trace.h"
-
-// Macros that improve readability of the rest of the code by eliminating the necessity
-// of frequent checks if the USE_THREAD_PROFILER and STATISTICS_BY_JOB_TYPE are defined
-#if defined(USE_THREAD_PROFILER)
-#define DECLARE_TP_EVENT_ARG( tpEvent ), __itt_event tpEvent
-#define PASS_TP_EVENT_ARG( tpEvent ), tpEvent
-#else
-#define DECLARE_TP_EVENT_ARG( tpEvent )
-#define PASS_TP_EVENT_ARG( tpEvent )
-#endif
 
 #if defined(STATISTICS_BY_JOB_TYPE)
 
@@ -299,7 +289,6 @@ TaskManager::Init(void) {
     Singletons::Instrumentation.setActiveThreadCount(m_uTargetNumberOfThreads);
 } // TaskManager::Init
 
-
 void
 TaskManager::Shutdown(void) {
     // Call this from the primary thread as the last TaskManager call.
@@ -318,7 +307,6 @@ TaskManager::Shutdown(void) {
     m_SupportForSystemTasks.clear();
 #endif
 } // TaskManager::Shutdown
-
 
 // PerformanceHint is used to modify the order that tasks are sent to the scheduler.
 // The order of definition is the order of scheduling.

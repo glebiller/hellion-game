@@ -2,6 +2,7 @@ package fr.kissy.encoder.main.utils;
 
 import fr.kissy.encoder.proto.PropertyProto;
 import fr.kissy.encoder.proto.SdfProto;
+import fr.kissy.encoder.proto.SystemProto;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
@@ -51,11 +52,11 @@ public class ParseUtils {
      * @return The group properties created.
      * @throws javax.management.modelmbean.XMLParseException If the xml is not well formatted.
      */
-    public static SdfProto.Sdf.SystemProperties.Builder parseSystemProperties(Element propertiesElement) throws XMLParseException {
+    public static SystemProto.System.Builder parseSystemProperties(Element propertiesElement) throws XMLParseException {
         // System type
-        SdfProto.Sdf.SystemProperties.Builder systemProperties = SdfProto.Sdf.SystemProperties.newBuilder();
-
-        systemProperties.setSystemType(safeGetAttribute(propertiesElement, "SystemType"));
+        SystemProto.System.Builder systemProperties = SystemProto.System.newBuilder();
+        String systemType = safeGetAttribute(propertiesElement, "SystemType");
+        systemProperties.setType(SystemProto.System.Type.valueOf(systemType));
 
         // System properties
         NodeList properties = propertiesElement.getElementsByTagName("Property");
@@ -77,10 +78,11 @@ public class ParseUtils {
         // System type
         SdfProto.Sdf.ObjectProperties.Builder objectProperties = SdfProto.Sdf.ObjectProperties.newBuilder();
 
-        objectProperties.setSystemType(safeGetAttribute(propertiesElement, "SystemType"));
+        String systemType = safeGetAttribute(propertiesElement, "SystemType");
+        objectProperties.setSystemType(SystemProto.System.Type.valueOf(systemType));
         String objectType = propertiesElement.getAttribute("ObjectType");
         if (StringUtils.isNotEmpty(objectType)) {
-            objectProperties.setObjectType(objectType);
+            objectProperties.setType(objectType);
         }
 
         // System properties

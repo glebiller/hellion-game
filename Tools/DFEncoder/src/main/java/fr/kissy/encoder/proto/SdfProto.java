@@ -15,35 +15,35 @@ public final class SdfProto {
     boolean hasName();
     String getName();
     
-    // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-    java.util.List<Sdf.SystemProperties>
-        getSystemPropertiesList();
-    Sdf.SystemProperties getSystemProperties(int index);
-    int getSystemPropertiesCount();
-    java.util.List<? extends Sdf.SystemPropertiesOrBuilder>
-        getSystemPropertiesOrBuilderList();
-    Sdf.SystemPropertiesOrBuilder getSystemPropertiesOrBuilder(
-            int index);
+    // repeated .System systems = 2;
+    java.util.List<fr.kissy.encoder.proto.SystemProto.System> 
+        getSystemsList();
+    fr.kissy.encoder.proto.SystemProto.System getSystems(int index);
+    int getSystemsCount();
+    java.util.List<? extends fr.kissy.encoder.proto.SystemProto.SystemOrBuilder> 
+        getSystemsOrBuilderList();
+    fr.kissy.encoder.proto.SystemProto.SystemOrBuilder getSystemsOrBuilder(
+        int index);
     
-    // repeated .Proto.Sdf.Object objects = 3;
-    java.util.List<Sdf.Object>
+    // repeated .Sdf.Object objects = 3;
+    java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object> 
         getObjectsList();
-    Sdf.Object getObjects(int index);
+    fr.kissy.encoder.proto.SdfProto.Sdf.Object getObjects(int index);
     int getObjectsCount();
-    java.util.List<? extends Sdf.ObjectOrBuilder>
+    java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder> 
         getObjectsOrBuilderList();
-    Sdf.ObjectOrBuilder getObjectsOrBuilder(
-            int index);
+    fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder getObjectsOrBuilder(
+        int index);
     
-    // repeated .Proto.Sdf.Link links = 4;
-    java.util.List<Sdf.Link>
+    // repeated .Sdf.Link links = 4;
+    java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link> 
         getLinksList();
-    Sdf.Link getLinks(int index);
+    fr.kissy.encoder.proto.SdfProto.Sdf.Link getLinks(int index);
     int getLinksCount();
-    java.util.List<? extends Sdf.LinkOrBuilder>
+    java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder> 
         getLinksOrBuilderList();
-    Sdf.LinkOrBuilder getLinksOrBuilder(
-            int index);
+    fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder getLinksOrBuilder(
+        int index);
   }
   public static final class Sdf extends
       com.google.protobuf.GeneratedMessage
@@ -65,1460 +65,30 @@ public final class SdfProto {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return SdfProto.internal_static_Proto_Sdf_descriptor;
+      return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return SdfProto.internal_static_Proto_Sdf_fieldAccessorTable;
-    }
-    
-    public interface SystemPropertiesOrBuilder
-        extends com.google.protobuf.MessageOrBuilder {
-      
-      // required string systemType = 10;
-      boolean hasSystemType();
-      String getSystemType();
-      
-      // repeated .Proto.Property properties = 11;
-      java.util.List<PropertyProto.Property>
-          getPropertiesList();
-      PropertyProto.Property getProperties(int index);
-      int getPropertiesCount();
-      java.util.List<? extends PropertyProto.PropertyOrBuilder>
-          getPropertiesOrBuilderList();
-      PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-              int index);
-    }
-    public static final class SystemProperties extends
-        com.google.protobuf.GeneratedMessage
-        implements SystemPropertiesOrBuilder {
-      // Use SystemProperties.newBuilder() to construct.
-      private SystemProperties(Builder builder) {
-        super(builder);
-      }
-      private SystemProperties(boolean noInit) {}
-      
-      private static final SystemProperties defaultInstance;
-      public static SystemProperties getDefaultInstance() {
-        return defaultInstance;
-      }
-      
-      public SystemProperties getDefaultInstanceForType() {
-        return defaultInstance;
-      }
-      
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return SdfProto.internal_static_Proto_Sdf_SystemProperties_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return SdfProto.internal_static_Proto_Sdf_SystemProperties_fieldAccessorTable;
-      }
-      
-      private int bitField0_;
-      // required string systemType = 10;
-      public static final int SYSTEMTYPE_FIELD_NUMBER = 10;
-      private java.lang.Object systemType_;
-      public boolean hasSystemType() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public String getSystemType() {
-        java.lang.Object ref = systemType_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            systemType_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSystemTypeBytes() {
-        java.lang.Object ref = systemType_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          systemType_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // repeated .Proto.Property properties = 11;
-      public static final int PROPERTIES_FIELD_NUMBER = 11;
-      private java.util.List<PropertyProto.Property> properties_;
-      public java.util.List<PropertyProto.Property> getPropertiesList() {
-        return properties_;
-      }
-      public java.util.List<? extends PropertyProto.PropertyOrBuilder>
-          getPropertiesOrBuilderList() {
-        return properties_;
-      }
-      public int getPropertiesCount() {
-        return properties_.size();
-      }
-      public PropertyProto.Property getProperties(int index) {
-        return properties_.get(index);
-      }
-      public PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-          int index) {
-        return properties_.get(index);
-      }
-      
-      private void initFields() {
-        systemType_ = "";
-        properties_ = java.util.Collections.emptyList();
-      }
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized != -1) return isInitialized == 1;
-        
-        if (!hasSystemType()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        for (int i = 0; i < getPropertiesCount(); i++) {
-          if (!getProperties(i).isInitialized()) {
-            memoizedIsInitialized = 0;
-            return false;
-          }
-        }
-        memoizedIsInitialized = 1;
-        return true;
-      }
-      
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        getSerializedSize();
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(10, getSystemTypeBytes());
-        }
-        for (int i = 0; i < properties_.size(); i++) {
-          output.writeMessage(11, properties_.get(i));
-        }
-        getUnknownFields().writeTo(output);
-      }
-      
-      private int memoizedSerializedSize = -1;
-      public int getSerializedSize() {
-        int size = memoizedSerializedSize;
-        if (size != -1) return size;
-      
-        size = 0;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(10, getSystemTypeBytes());
-        }
-        for (int i = 0; i < properties_.size(); i++) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(11, properties_.get(i));
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSerializedSize = size;
-        return size;
-      }
-      
-      private static final long serialVersionUID = 0L;
-      @Override
-      protected java.lang.Object writeReplace()
-          throws java.io.ObjectStreamException {
-        return super.writeReplace();
-      }
-      
-      public static SystemProperties parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static SystemProperties parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static SystemProperties parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static SystemProperties parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static SystemProperties parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static SystemProperties parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      public static SystemProperties parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static SystemProperties parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static SystemProperties parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static SystemProperties parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      
-      public static Builder newBuilder() { return Builder.create(); }
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(SystemProperties prototype) {
-        return newBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() { return newBuilder(this); }
-      
-      @Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements SystemPropertiesOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return SdfProto.internal_static_Proto_Sdf_SystemProperties_descriptor;
-        }
-        
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return SdfProto.internal_static_Proto_Sdf_SystemProperties_fieldAccessorTable;
-        }
-        
-        // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.SystemProperties.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-        
-        private Builder(BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            getPropertiesFieldBuilder();
-          }
-        }
-        private static Builder create() {
-          return new Builder();
-        }
-        
-        public Builder clear() {
-          super.clear();
-          systemType_ = "";
-          bitField0_ = (bitField0_ & ~0x00000001);
-          if (propertiesBuilder_ == null) {
-            properties_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            propertiesBuilder_.clear();
-          }
-          return this;
-        }
-        
-        public Builder clone() {
-          return create().mergeFrom(buildPartial());
-        }
-        
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return SystemProperties.getDescriptor();
-        }
-        
-        public SystemProperties getDefaultInstanceForType() {
-          return SystemProperties.getDefaultInstance();
-        }
-        
-        public SystemProperties build() {
-          SystemProperties result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-        
-        private SystemProperties buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          SystemProperties result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
-        public SystemProperties buildPartial() {
-          SystemProperties result = new SystemProperties(this);
-          int from_bitField0_ = bitField0_;
-          int to_bitField0_ = 0;
-          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-            to_bitField0_ |= 0x00000001;
-          }
-          result.systemType_ = systemType_;
-          if (propertiesBuilder_ == null) {
-            if (((bitField0_ & 0x00000002) == 0x00000002)) {
-              properties_ = java.util.Collections.unmodifiableList(properties_);
-              bitField0_ = (bitField0_ & ~0x00000002);
-            }
-            result.properties_ = properties_;
-          } else {
-            result.properties_ = propertiesBuilder_.build();
-          }
-          result.bitField0_ = to_bitField0_;
-          onBuilt();
-          return result;
-        }
-        
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof SystemProperties) {
-            return mergeFrom((SystemProperties)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-        
-        public Builder mergeFrom(SystemProperties other) {
-          if (other == SystemProperties.getDefaultInstance()) return this;
-          if (other.hasSystemType()) {
-            setSystemType(other.getSystemType());
-          }
-          if (propertiesBuilder_ == null) {
-            if (!other.properties_.isEmpty()) {
-              if (properties_.isEmpty()) {
-                properties_ = other.properties_;
-                bitField0_ = (bitField0_ & ~0x00000002);
-              } else {
-                ensurePropertiesIsMutable();
-                properties_.addAll(other.properties_);
-              }
-              onChanged();
-            }
-          } else {
-            if (!other.properties_.isEmpty()) {
-              if (propertiesBuilder_.isEmpty()) {
-                propertiesBuilder_.dispose();
-                propertiesBuilder_ = null;
-                properties_ = other.properties_;
-                bitField0_ = (bitField0_ & ~0x00000002);
-                propertiesBuilder_ = 
-                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                     getPropertiesFieldBuilder() : null;
-              } else {
-                propertiesBuilder_.addAllMessages(other.properties_);
-              }
-            }
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          return this;
-        }
-        
-        public final boolean isInitialized() {
-          if (!hasSystemType()) {
-            
-            return false;
-          }
-          for (int i = 0; i < getPropertiesCount(); i++) {
-            if (!getProperties(i).isInitialized()) {
-              
-              return false;
-            }
-          }
-          return true;
-        }
-        
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              default: {
-                if (!parseUnknownField(input, unknownFields,
-                                       extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                }
-                break;
-              }
-              case 82: {
-                bitField0_ |= 0x00000001;
-                systemType_ = input.readBytes();
-                break;
-              }
-              case 90: {
-                PropertyProto.Property.Builder subBuilder = PropertyProto.Property.newBuilder();
-                input.readMessage(subBuilder, extensionRegistry);
-                addProperties(subBuilder.buildPartial());
-                break;
-              }
-            }
-          }
-        }
-        
-        private int bitField0_;
-        
-        // required string systemType = 10;
-        private java.lang.Object systemType_ = "";
-        public boolean hasSystemType() {
-          return ((bitField0_ & 0x00000001) == 0x00000001);
-        }
-        public String getSystemType() {
-          java.lang.Object ref = systemType_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-            systemType_ = s;
-            return s;
-          } else {
-            return (String) ref;
-          }
-        }
-        public Builder setSystemType(String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-          systemType_ = value;
-          onChanged();
-          return this;
-        }
-        public Builder clearSystemType() {
-          bitField0_ = (bitField0_ & ~0x00000001);
-          systemType_ = getDefaultInstance().getSystemType();
-          onChanged();
-          return this;
-        }
-        void setSystemType(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
-          systemType_ = value;
-          onChanged();
-        }
-        
-        // repeated .Proto.Property properties = 11;
-        private java.util.List<PropertyProto.Property> properties_ =
-          java.util.Collections.emptyList();
-        private void ensurePropertiesIsMutable() {
-          if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-            properties_ = new java.util.ArrayList<PropertyProto.Property>(properties_);
-            bitField0_ |= 0x00000002;
-           }
-        }
-        
-        private com.google.protobuf.RepeatedFieldBuilder<
-            PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder> propertiesBuilder_;
-        
-        public java.util.List<PropertyProto.Property> getPropertiesList() {
-          if (propertiesBuilder_ == null) {
-            return java.util.Collections.unmodifiableList(properties_);
-          } else {
-            return propertiesBuilder_.getMessageList();
-          }
-        }
-        public int getPropertiesCount() {
-          if (propertiesBuilder_ == null) {
-            return properties_.size();
-          } else {
-            return propertiesBuilder_.getCount();
-          }
-        }
-        public PropertyProto.Property getProperties(int index) {
-          if (propertiesBuilder_ == null) {
-            return properties_.get(index);
-          } else {
-            return propertiesBuilder_.getMessage(index);
-          }
-        }
-        public Builder setProperties(
-            int index, PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.set(index, value);
-            onChanged();
-          } else {
-            propertiesBuilder_.setMessage(index, value);
-          }
-          return this;
-        }
-        public Builder setProperties(
-            int index, PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.set(index, builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.setMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addProperties(PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.add(value);
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(value);
-          }
-          return this;
-        }
-        public Builder addProperties(
-            int index, PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.add(index, value);
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(index, value);
-          }
-          return this;
-        }
-        public Builder addProperties(
-            PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.add(builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addProperties(
-            int index, PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.add(index, builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addAllProperties(
-            Iterable<? extends PropertyProto.Property> values) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            super.addAll(values, properties_);
-            onChanged();
-          } else {
-            propertiesBuilder_.addAllMessages(values);
-          }
-          return this;
-        }
-        public Builder clearProperties() {
-          if (propertiesBuilder_ == null) {
-            properties_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000002);
-            onChanged();
-          } else {
-            propertiesBuilder_.clear();
-          }
-          return this;
-        }
-        public Builder removeProperties(int index) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.remove(index);
-            onChanged();
-          } else {
-            propertiesBuilder_.remove(index);
-          }
-          return this;
-        }
-        public PropertyProto.Property.Builder getPropertiesBuilder(
-            int index) {
-          return getPropertiesFieldBuilder().getBuilder(index);
-        }
-        public PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-            int index) {
-          if (propertiesBuilder_ == null) {
-            return properties_.get(index);  } else {
-            return propertiesBuilder_.getMessageOrBuilder(index);
-          }
-        }
-        public java.util.List<? extends PropertyProto.PropertyOrBuilder>
-             getPropertiesOrBuilderList() {
-          if (propertiesBuilder_ != null) {
-            return propertiesBuilder_.getMessageOrBuilderList();
-          } else {
-            return java.util.Collections.unmodifiableList(properties_);
-          }
-        }
-        public PropertyProto.Property.Builder addPropertiesBuilder() {
-          return getPropertiesFieldBuilder().addBuilder(
-              PropertyProto.Property.getDefaultInstance());
-        }
-        public PropertyProto.Property.Builder addPropertiesBuilder(
-            int index) {
-          return getPropertiesFieldBuilder().addBuilder(
-              index, PropertyProto.Property.getDefaultInstance());
-        }
-        public java.util.List<PropertyProto.Property.Builder>
-             getPropertiesBuilderList() {
-          return getPropertiesFieldBuilder().getBuilderList();
-        }
-        private com.google.protobuf.RepeatedFieldBuilder<
-            PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder>
-            getPropertiesFieldBuilder() {
-          if (propertiesBuilder_ == null) {
-            propertiesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder>(
-                    properties_,
-                    ((bitField0_ & 0x00000002) == 0x00000002),
-                    getParentForChildren(),
-                    isClean());
-            properties_ = null;
-          }
-          return propertiesBuilder_;
-        }
-        
-        // @@protoc_insertion_point(builder_scope:Proto.Sdf.SystemProperties)
-      }
-      
-      static {
-        defaultInstance = new SystemProperties(true);
-        defaultInstance.initFields();
-      }
-      
-      // @@protoc_insertion_point(class_scope:Proto.Sdf.SystemProperties)
-    }
-    
-    public interface ObjectPropertiesOrBuilder
-        extends com.google.protobuf.MessageOrBuilder {
-      
-      // required string systemType = 20;
-      boolean hasSystemType();
-      String getSystemType();
-      
-      // optional string objectType = 21;
-      boolean hasObjectType();
-      String getObjectType();
-      
-      // repeated .Proto.Property properties = 22;
-      java.util.List<PropertyProto.Property>
-          getPropertiesList();
-      PropertyProto.Property getProperties(int index);
-      int getPropertiesCount();
-      java.util.List<? extends PropertyProto.PropertyOrBuilder>
-          getPropertiesOrBuilderList();
-      PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-              int index);
-    }
-    public static final class ObjectProperties extends
-        com.google.protobuf.GeneratedMessage
-        implements ObjectPropertiesOrBuilder {
-      // Use ObjectProperties.newBuilder() to construct.
-      private ObjectProperties(Builder builder) {
-        super(builder);
-      }
-      private ObjectProperties(boolean noInit) {}
-      
-      private static final ObjectProperties defaultInstance;
-      public static ObjectProperties getDefaultInstance() {
-        return defaultInstance;
-      }
-      
-      public ObjectProperties getDefaultInstanceForType() {
-        return defaultInstance;
-      }
-      
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return SdfProto.internal_static_Proto_Sdf_ObjectProperties_descriptor;
-      }
-      
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return SdfProto.internal_static_Proto_Sdf_ObjectProperties_fieldAccessorTable;
-      }
-      
-      private int bitField0_;
-      // required string systemType = 20;
-      public static final int SYSTEMTYPE_FIELD_NUMBER = 20;
-      private java.lang.Object systemType_;
-      public boolean hasSystemType() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public String getSystemType() {
-        java.lang.Object ref = systemType_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            systemType_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSystemTypeBytes() {
-        java.lang.Object ref = systemType_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          systemType_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // optional string objectType = 21;
-      public static final int OBJECTTYPE_FIELD_NUMBER = 21;
-      private java.lang.Object objectType_;
-      public boolean hasObjectType() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      public String getObjectType() {
-        java.lang.Object ref = objectType_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            objectType_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getObjectTypeBytes() {
-        java.lang.Object ref = objectType_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          objectType_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      
-      // repeated .Proto.Property properties = 22;
-      public static final int PROPERTIES_FIELD_NUMBER = 22;
-      private java.util.List<PropertyProto.Property> properties_;
-      public java.util.List<PropertyProto.Property> getPropertiesList() {
-        return properties_;
-      }
-      public java.util.List<? extends PropertyProto.PropertyOrBuilder>
-          getPropertiesOrBuilderList() {
-        return properties_;
-      }
-      public int getPropertiesCount() {
-        return properties_.size();
-      }
-      public PropertyProto.Property getProperties(int index) {
-        return properties_.get(index);
-      }
-      public PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-          int index) {
-        return properties_.get(index);
-      }
-      
-      private void initFields() {
-        systemType_ = "";
-        objectType_ = "";
-        properties_ = java.util.Collections.emptyList();
-      }
-      private byte memoizedIsInitialized = -1;
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized != -1) return isInitialized == 1;
-        
-        if (!hasSystemType()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-        for (int i = 0; i < getPropertiesCount(); i++) {
-          if (!getProperties(i).isInitialized()) {
-            memoizedIsInitialized = 0;
-            return false;
-          }
-        }
-        memoizedIsInitialized = 1;
-        return true;
-      }
-      
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        getSerializedSize();
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(20, getSystemTypeBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeBytes(21, getObjectTypeBytes());
-        }
-        for (int i = 0; i < properties_.size(); i++) {
-          output.writeMessage(22, properties_.get(i));
-        }
-        getUnknownFields().writeTo(output);
-      }
-      
-      private int memoizedSerializedSize = -1;
-      public int getSerializedSize() {
-        int size = memoizedSerializedSize;
-        if (size != -1) return size;
-      
-        size = 0;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(20, getSystemTypeBytes());
-        }
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(21, getObjectTypeBytes());
-        }
-        for (int i = 0; i < properties_.size(); i++) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(22, properties_.get(i));
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSerializedSize = size;
-        return size;
-      }
-      
-      private static final long serialVersionUID = 0L;
-      @Override
-      protected java.lang.Object writeReplace()
-          throws java.io.ObjectStreamException {
-        return super.writeReplace();
-      }
-      
-      public static ObjectProperties parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static ObjectProperties parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ObjectProperties parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data).buildParsed();
-      }
-      public static ObjectProperties parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return newBuilder().mergeFrom(data, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ObjectProperties parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static ObjectProperties parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      public static ObjectProperties parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static ObjectProperties parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        Builder builder = newBuilder();
-        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-          return builder.buildParsed();
-        } else {
-          return null;
-        }
-      }
-      public static ObjectProperties parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input).buildParsed();
-      }
-      public static ObjectProperties parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return newBuilder().mergeFrom(input, extensionRegistry)
-                 .buildParsed();
-      }
-      
-      public static Builder newBuilder() { return Builder.create(); }
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(ObjectProperties prototype) {
-        return newBuilder().mergeFrom(prototype);
-      }
-      public Builder toBuilder() { return newBuilder(this); }
-      
-      @Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements ObjectPropertiesOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return SdfProto.internal_static_Proto_Sdf_ObjectProperties_descriptor;
-        }
-        
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return SdfProto.internal_static_Proto_Sdf_ObjectProperties_fieldAccessorTable;
-        }
-        
-        // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-        
-        private Builder(BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-            getPropertiesFieldBuilder();
-          }
-        }
-        private static Builder create() {
-          return new Builder();
-        }
-        
-        public Builder clear() {
-          super.clear();
-          systemType_ = "";
-          bitField0_ = (bitField0_ & ~0x00000001);
-          objectType_ = "";
-          bitField0_ = (bitField0_ & ~0x00000002);
-          if (propertiesBuilder_ == null) {
-            properties_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            propertiesBuilder_.clear();
-          }
-          return this;
-        }
-        
-        public Builder clone() {
-          return create().mergeFrom(buildPartial());
-        }
-        
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return ObjectProperties.getDescriptor();
-        }
-        
-        public ObjectProperties getDefaultInstanceForType() {
-          return ObjectProperties.getDefaultInstance();
-        }
-        
-        public ObjectProperties build() {
-          ObjectProperties result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-        
-        private ObjectProperties buildParsed()
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          ObjectProperties result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(
-              result).asInvalidProtocolBufferException();
-          }
-          return result;
-        }
-        
-        public ObjectProperties buildPartial() {
-          ObjectProperties result = new ObjectProperties(this);
-          int from_bitField0_ = bitField0_;
-          int to_bitField0_ = 0;
-          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-            to_bitField0_ |= 0x00000001;
-          }
-          result.systemType_ = systemType_;
-          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-            to_bitField0_ |= 0x00000002;
-          }
-          result.objectType_ = objectType_;
-          if (propertiesBuilder_ == null) {
-            if (((bitField0_ & 0x00000004) == 0x00000004)) {
-              properties_ = java.util.Collections.unmodifiableList(properties_);
-              bitField0_ = (bitField0_ & ~0x00000004);
-            }
-            result.properties_ = properties_;
-          } else {
-            result.properties_ = propertiesBuilder_.build();
-          }
-          result.bitField0_ = to_bitField0_;
-          onBuilt();
-          return result;
-        }
-        
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof ObjectProperties) {
-            return mergeFrom((ObjectProperties)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-        
-        public Builder mergeFrom(ObjectProperties other) {
-          if (other == ObjectProperties.getDefaultInstance()) return this;
-          if (other.hasSystemType()) {
-            setSystemType(other.getSystemType());
-          }
-          if (other.hasObjectType()) {
-            setObjectType(other.getObjectType());
-          }
-          if (propertiesBuilder_ == null) {
-            if (!other.properties_.isEmpty()) {
-              if (properties_.isEmpty()) {
-                properties_ = other.properties_;
-                bitField0_ = (bitField0_ & ~0x00000004);
-              } else {
-                ensurePropertiesIsMutable();
-                properties_.addAll(other.properties_);
-              }
-              onChanged();
-            }
-          } else {
-            if (!other.properties_.isEmpty()) {
-              if (propertiesBuilder_.isEmpty()) {
-                propertiesBuilder_.dispose();
-                propertiesBuilder_ = null;
-                properties_ = other.properties_;
-                bitField0_ = (bitField0_ & ~0x00000004);
-                propertiesBuilder_ = 
-                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                     getPropertiesFieldBuilder() : null;
-              } else {
-                propertiesBuilder_.addAllMessages(other.properties_);
-              }
-            }
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          return this;
-        }
-        
-        public final boolean isInitialized() {
-          if (!hasSystemType()) {
-            
-            return false;
-          }
-          for (int i = 0; i < getPropertiesCount(); i++) {
-            if (!getProperties(i).isInitialized()) {
-              
-              return false;
-            }
-          }
-          return true;
-        }
-        
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder(
-              this.getUnknownFields());
-          while (true) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              default: {
-                if (!parseUnknownField(input, unknownFields,
-                                       extensionRegistry, tag)) {
-                  this.setUnknownFields(unknownFields.build());
-                  onChanged();
-                  return this;
-                }
-                break;
-              }
-              case 162: {
-                bitField0_ |= 0x00000001;
-                systemType_ = input.readBytes();
-                break;
-              }
-              case 170: {
-                bitField0_ |= 0x00000002;
-                objectType_ = input.readBytes();
-                break;
-              }
-              case 178: {
-                PropertyProto.Property.Builder subBuilder = PropertyProto.Property.newBuilder();
-                input.readMessage(subBuilder, extensionRegistry);
-                addProperties(subBuilder.buildPartial());
-                break;
-              }
-            }
-          }
-        }
-        
-        private int bitField0_;
-        
-        // required string systemType = 20;
-        private java.lang.Object systemType_ = "";
-        public boolean hasSystemType() {
-          return ((bitField0_ & 0x00000001) == 0x00000001);
-        }
-        public String getSystemType() {
-          java.lang.Object ref = systemType_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-            systemType_ = s;
-            return s;
-          } else {
-            return (String) ref;
-          }
-        }
-        public Builder setSystemType(String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-          systemType_ = value;
-          onChanged();
-          return this;
-        }
-        public Builder clearSystemType() {
-          bitField0_ = (bitField0_ & ~0x00000001);
-          systemType_ = getDefaultInstance().getSystemType();
-          onChanged();
-          return this;
-        }
-        void setSystemType(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000001;
-          systemType_ = value;
-          onChanged();
-        }
-        
-        // optional string objectType = 21;
-        private java.lang.Object objectType_ = "";
-        public boolean hasObjectType() {
-          return ((bitField0_ & 0x00000002) == 0x00000002);
-        }
-        public String getObjectType() {
-          java.lang.Object ref = objectType_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-            objectType_ = s;
-            return s;
-          } else {
-            return (String) ref;
-          }
-        }
-        public Builder setObjectType(String value) {
-          if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-          objectType_ = value;
-          onChanged();
-          return this;
-        }
-        public Builder clearObjectType() {
-          bitField0_ = (bitField0_ & ~0x00000002);
-          objectType_ = getDefaultInstance().getObjectType();
-          onChanged();
-          return this;
-        }
-        void setObjectType(com.google.protobuf.ByteString value) {
-          bitField0_ |= 0x00000002;
-          objectType_ = value;
-          onChanged();
-        }
-        
-        // repeated .Proto.Property properties = 22;
-        private java.util.List<PropertyProto.Property> properties_ =
-          java.util.Collections.emptyList();
-        private void ensurePropertiesIsMutable() {
-          if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-            properties_ = new java.util.ArrayList<PropertyProto.Property>(properties_);
-            bitField0_ |= 0x00000004;
-           }
-        }
-        
-        private com.google.protobuf.RepeatedFieldBuilder<
-            PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder> propertiesBuilder_;
-        
-        public java.util.List<PropertyProto.Property> getPropertiesList() {
-          if (propertiesBuilder_ == null) {
-            return java.util.Collections.unmodifiableList(properties_);
-          } else {
-            return propertiesBuilder_.getMessageList();
-          }
-        }
-        public int getPropertiesCount() {
-          if (propertiesBuilder_ == null) {
-            return properties_.size();
-          } else {
-            return propertiesBuilder_.getCount();
-          }
-        }
-        public PropertyProto.Property getProperties(int index) {
-          if (propertiesBuilder_ == null) {
-            return properties_.get(index);
-          } else {
-            return propertiesBuilder_.getMessage(index);
-          }
-        }
-        public Builder setProperties(
-            int index, PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.set(index, value);
-            onChanged();
-          } else {
-            propertiesBuilder_.setMessage(index, value);
-          }
-          return this;
-        }
-        public Builder setProperties(
-            int index, PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.set(index, builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.setMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addProperties(PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.add(value);
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(value);
-          }
-          return this;
-        }
-        public Builder addProperties(
-            int index, PropertyProto.Property value) {
-          if (propertiesBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            ensurePropertiesIsMutable();
-            properties_.add(index, value);
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(index, value);
-          }
-          return this;
-        }
-        public Builder addProperties(
-            PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.add(builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addProperties(
-            int index, PropertyProto.Property.Builder builderForValue) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.add(index, builderForValue.build());
-            onChanged();
-          } else {
-            propertiesBuilder_.addMessage(index, builderForValue.build());
-          }
-          return this;
-        }
-        public Builder addAllProperties(
-            Iterable<? extends PropertyProto.Property> values) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            super.addAll(values, properties_);
-            onChanged();
-          } else {
-            propertiesBuilder_.addAllMessages(values);
-          }
-          return this;
-        }
-        public Builder clearProperties() {
-          if (propertiesBuilder_ == null) {
-            properties_ = java.util.Collections.emptyList();
-            bitField0_ = (bitField0_ & ~0x00000004);
-            onChanged();
-          } else {
-            propertiesBuilder_.clear();
-          }
-          return this;
-        }
-        public Builder removeProperties(int index) {
-          if (propertiesBuilder_ == null) {
-            ensurePropertiesIsMutable();
-            properties_.remove(index);
-            onChanged();
-          } else {
-            propertiesBuilder_.remove(index);
-          }
-          return this;
-        }
-        public PropertyProto.Property.Builder getPropertiesBuilder(
-            int index) {
-          return getPropertiesFieldBuilder().getBuilder(index);
-        }
-        public PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
-            int index) {
-          if (propertiesBuilder_ == null) {
-            return properties_.get(index);  } else {
-            return propertiesBuilder_.getMessageOrBuilder(index);
-          }
-        }
-        public java.util.List<? extends PropertyProto.PropertyOrBuilder>
-             getPropertiesOrBuilderList() {
-          if (propertiesBuilder_ != null) {
-            return propertiesBuilder_.getMessageOrBuilderList();
-          } else {
-            return java.util.Collections.unmodifiableList(properties_);
-          }
-        }
-        public PropertyProto.Property.Builder addPropertiesBuilder() {
-          return getPropertiesFieldBuilder().addBuilder(
-              PropertyProto.Property.getDefaultInstance());
-        }
-        public PropertyProto.Property.Builder addPropertiesBuilder(
-            int index) {
-          return getPropertiesFieldBuilder().addBuilder(
-              index, PropertyProto.Property.getDefaultInstance());
-        }
-        public java.util.List<PropertyProto.Property.Builder>
-             getPropertiesBuilderList() {
-          return getPropertiesFieldBuilder().getBuilderList();
-        }
-        private com.google.protobuf.RepeatedFieldBuilder<
-            PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder>
-            getPropertiesFieldBuilder() {
-          if (propertiesBuilder_ == null) {
-            propertiesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                PropertyProto.Property, PropertyProto.Property.Builder, PropertyProto.PropertyOrBuilder>(
-                    properties_,
-                    ((bitField0_ & 0x00000004) == 0x00000004),
-                    getParentForChildren(),
-                    isClean());
-            properties_ = null;
-          }
-          return propertiesBuilder_;
-        }
-        
-        // @@protoc_insertion_point(builder_scope:Proto.Sdf.ObjectProperties)
-      }
-      
-      static {
-        defaultInstance = new ObjectProperties(true);
-        defaultInstance.initFields();
-      }
-      
-      // @@protoc_insertion_point(class_scope:Proto.Sdf.ObjectProperties)
+      return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_fieldAccessorTable;
     }
     
     public interface ObjectOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
       
-      // required string name = 30;
+      // required string name = 10;
       boolean hasName();
       String getName();
       
-      // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
-      java.util.List<ObjectProperties>
+      // repeated .Sdf.ObjectProperties objectProperties = 11;
+      java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> 
           getObjectPropertiesList();
-      ObjectProperties getObjectProperties(int index);
+      fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties getObjectProperties(int index);
       int getObjectPropertiesCount();
-      java.util.List<? extends ObjectPropertiesOrBuilder>
+      java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder> 
           getObjectPropertiesOrBuilderList();
-      ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
-              int index);
+      fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
+          int index);
     }
     public static final class Object extends
         com.google.protobuf.GeneratedMessage
@@ -1540,17 +110,17 @@ public final class SdfProto {
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return SdfProto.internal_static_Proto_Sdf_Object_descriptor;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Object_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return SdfProto.internal_static_Proto_Sdf_Object_fieldAccessorTable;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Object_fieldAccessorTable;
       }
       
       private int bitField0_;
-      // required string name = 30;
-      public static final int NAME_FIELD_NUMBER = 30;
+      // required string name = 10;
+      public static final int NAME_FIELD_NUMBER = 10;
       private java.lang.Object name_;
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -1581,23 +151,23 @@ public final class SdfProto {
         }
       }
       
-      // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
-      public static final int OBJECTPROPERTIES_FIELD_NUMBER = 31;
-      private java.util.List<ObjectProperties> objectProperties_;
-      public java.util.List<ObjectProperties> getObjectPropertiesList() {
+      // repeated .Sdf.ObjectProperties objectProperties = 11;
+      public static final int OBJECTPROPERTIES_FIELD_NUMBER = 11;
+      private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> objectProperties_;
+      public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> getObjectPropertiesList() {
         return objectProperties_;
       }
-      public java.util.List<? extends ObjectPropertiesOrBuilder>
+      public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder> 
           getObjectPropertiesOrBuilderList() {
         return objectProperties_;
       }
       public int getObjectPropertiesCount() {
         return objectProperties_.size();
       }
-      public ObjectProperties getObjectProperties(int index) {
+      public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties getObjectProperties(int index) {
         return objectProperties_.get(index);
       }
-      public ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
           int index) {
         return objectProperties_.get(index);
       }
@@ -1629,10 +199,10 @@ public final class SdfProto {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(30, getNameBytes());
+          output.writeBytes(10, getNameBytes());
         }
         for (int i = 0; i < objectProperties_.size(); i++) {
-          output.writeMessage(31, objectProperties_.get(i));
+          output.writeMessage(11, objectProperties_.get(i));
         }
         getUnknownFields().writeTo(output);
       }
@@ -1645,11 +215,11 @@ public final class SdfProto {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(30, getNameBytes());
+            .computeBytesSize(10, getNameBytes());
         }
         for (int i = 0; i < objectProperties_.size(); i++) {
           size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(31, objectProperties_.get(i));
+            .computeMessageSize(11, objectProperties_.get(i));
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -1657,47 +227,47 @@ public final class SdfProto {
       }
       
       private static final long serialVersionUID = 0L;
-      @Override
+      @java.lang.Override
       protected java.lang.Object writeReplace()
           throws java.io.ObjectStreamException {
         return super.writeReplace();
       }
       
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static Object parseFrom(byte[] data)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static Object parseFrom(java.io.InputStream input)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input, extensionRegistry)
                  .buildParsed();
       }
-      public static Object parseDelimitedFrom(java.io.InputStream input)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         Builder builder = newBuilder();
         if (builder.mergeDelimitedFrom(input)) {
@@ -1706,7 +276,7 @@ public final class SdfProto {
           return null;
         }
       }
-      public static Object parseDelimitedFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -1717,12 +287,12 @@ public final class SdfProto {
           return null;
         }
       }
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static Object parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Object parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -1732,12 +302,12 @@ public final class SdfProto {
       
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(Object prototype) {
+      public static Builder newBuilder(fr.kissy.encoder.proto.SdfProto.Sdf.Object prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
       
-      @Override
+      @java.lang.Override
       protected Builder newBuilderForType(
           com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
@@ -1745,15 +315,15 @@ public final class SdfProto {
       }
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements ObjectOrBuilder {
+         implements fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return SdfProto.internal_static_Proto_Sdf_Object_descriptor;
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Object_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return SdfProto.internal_static_Proto_Sdf_Object_fieldAccessorTable;
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Object_fieldAccessorTable;
         }
         
         // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.Object.newBuilder()
@@ -1793,24 +363,24 @@ public final class SdfProto {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return Object.getDescriptor();
+          return fr.kissy.encoder.proto.SdfProto.Sdf.Object.getDescriptor();
         }
         
-        public Object getDefaultInstanceForType() {
-          return Object.getDefaultInstance();
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Object getDefaultInstanceForType() {
+          return fr.kissy.encoder.proto.SdfProto.Sdf.Object.getDefaultInstance();
         }
         
-        public Object build() {
-          Object result = buildPartial();
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Object build() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
         
-        private Object buildParsed()
+        private fr.kissy.encoder.proto.SdfProto.Sdf.Object buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Object result = buildPartial();
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(
               result).asInvalidProtocolBufferException();
@@ -1818,8 +388,8 @@ public final class SdfProto {
           return result;
         }
         
-        public Object buildPartial() {
-          Object result = new Object(this);
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Object buildPartial() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object result = new fr.kissy.encoder.proto.SdfProto.Sdf.Object(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1841,16 +411,16 @@ public final class SdfProto {
         }
         
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof Object) {
-            return mergeFrom((Object)other);
+          if (other instanceof fr.kissy.encoder.proto.SdfProto.Sdf.Object) {
+            return mergeFrom((fr.kissy.encoder.proto.SdfProto.Sdf.Object)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
         
-        public Builder mergeFrom(Object other) {
-          if (other == Object.getDefaultInstance()) return this;
+        public Builder mergeFrom(fr.kissy.encoder.proto.SdfProto.Sdf.Object other) {
+          if (other == fr.kissy.encoder.proto.SdfProto.Sdf.Object.getDefaultInstance()) return this;
           if (other.hasName()) {
             setName(other.getName());
           }
@@ -1921,13 +491,13 @@ public final class SdfProto {
                 }
                 break;
               }
-              case 242: {
+              case 82: {
                 bitField0_ |= 0x00000001;
                 name_ = input.readBytes();
                 break;
               }
-              case 250: {
-                ObjectProperties.Builder subBuilder = ObjectProperties.newBuilder();
+              case 90: {
+                fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder subBuilder = fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.newBuilder();
                 input.readMessage(subBuilder, extensionRegistry);
                 addObjectProperties(subBuilder.buildPartial());
                 break;
@@ -1938,7 +508,7 @@ public final class SdfProto {
         
         private int bitField0_;
         
-        // required string name = 30;
+        // required string name = 10;
         private java.lang.Object name_ = "";
         public boolean hasName() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -1974,20 +544,20 @@ public final class SdfProto {
           onChanged();
         }
         
-        // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
-        private java.util.List<ObjectProperties> objectProperties_ =
+        // repeated .Sdf.ObjectProperties objectProperties = 11;
+        private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> objectProperties_ =
           java.util.Collections.emptyList();
         private void ensureObjectPropertiesIsMutable() {
           if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-            objectProperties_ = new java.util.ArrayList<ObjectProperties>(objectProperties_);
+            objectProperties_ = new java.util.ArrayList<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties>(objectProperties_);
             bitField0_ |= 0x00000002;
            }
         }
         
         private com.google.protobuf.RepeatedFieldBuilder<
-            ObjectProperties, ObjectProperties.Builder, ObjectPropertiesOrBuilder> objectPropertiesBuilder_;
+            fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder> objectPropertiesBuilder_;
         
-        public java.util.List<ObjectProperties> getObjectPropertiesList() {
+        public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> getObjectPropertiesList() {
           if (objectPropertiesBuilder_ == null) {
             return java.util.Collections.unmodifiableList(objectProperties_);
           } else {
@@ -2001,7 +571,7 @@ public final class SdfProto {
             return objectPropertiesBuilder_.getCount();
           }
         }
-        public ObjectProperties getObjectProperties(int index) {
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties getObjectProperties(int index) {
           if (objectPropertiesBuilder_ == null) {
             return objectProperties_.get(index);
           } else {
@@ -2009,7 +579,7 @@ public final class SdfProto {
           }
         }
         public Builder setObjectProperties(
-            int index, ObjectProperties value) {
+            int index, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties value) {
           if (objectPropertiesBuilder_ == null) {
             if (value == null) {
               throw new NullPointerException();
@@ -2023,7 +593,7 @@ public final class SdfProto {
           return this;
         }
         public Builder setObjectProperties(
-            int index, ObjectProperties.Builder builderForValue) {
+            int index, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder builderForValue) {
           if (objectPropertiesBuilder_ == null) {
             ensureObjectPropertiesIsMutable();
             objectProperties_.set(index, builderForValue.build());
@@ -2033,7 +603,7 @@ public final class SdfProto {
           }
           return this;
         }
-        public Builder addObjectProperties(ObjectProperties value) {
+        public Builder addObjectProperties(fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties value) {
           if (objectPropertiesBuilder_ == null) {
             if (value == null) {
               throw new NullPointerException();
@@ -2047,7 +617,7 @@ public final class SdfProto {
           return this;
         }
         public Builder addObjectProperties(
-            int index, ObjectProperties value) {
+            int index, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties value) {
           if (objectPropertiesBuilder_ == null) {
             if (value == null) {
               throw new NullPointerException();
@@ -2061,7 +631,7 @@ public final class SdfProto {
           return this;
         }
         public Builder addObjectProperties(
-            ObjectProperties.Builder builderForValue) {
+            fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder builderForValue) {
           if (objectPropertiesBuilder_ == null) {
             ensureObjectPropertiesIsMutable();
             objectProperties_.add(builderForValue.build());
@@ -2072,7 +642,7 @@ public final class SdfProto {
           return this;
         }
         public Builder addObjectProperties(
-            int index, ObjectProperties.Builder builderForValue) {
+            int index, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder builderForValue) {
           if (objectPropertiesBuilder_ == null) {
             ensureObjectPropertiesIsMutable();
             objectProperties_.add(index, builderForValue.build());
@@ -2083,7 +653,7 @@ public final class SdfProto {
           return this;
         }
         public Builder addAllObjectProperties(
-            Iterable<? extends ObjectProperties> values) {
+            java.lang.Iterable<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties> values) {
           if (objectPropertiesBuilder_ == null) {
             ensureObjectPropertiesIsMutable();
             super.addAll(values, objectProperties_);
@@ -2113,18 +683,18 @@ public final class SdfProto {
           }
           return this;
         }
-        public ObjectProperties.Builder getObjectPropertiesBuilder(
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder getObjectPropertiesBuilder(
             int index) {
           return getObjectPropertiesFieldBuilder().getBuilder(index);
         }
-        public ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder getObjectPropertiesOrBuilder(
             int index) {
           if (objectPropertiesBuilder_ == null) {
             return objectProperties_.get(index);  } else {
             return objectPropertiesBuilder_.getMessageOrBuilder(index);
           }
         }
-        public java.util.List<? extends ObjectPropertiesOrBuilder>
+        public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder> 
              getObjectPropertiesOrBuilderList() {
           if (objectPropertiesBuilder_ != null) {
             return objectPropertiesBuilder_.getMessageOrBuilderList();
@@ -2132,25 +702,25 @@ public final class SdfProto {
             return java.util.Collections.unmodifiableList(objectProperties_);
           }
         }
-        public ObjectProperties.Builder addObjectPropertiesBuilder() {
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder addObjectPropertiesBuilder() {
           return getObjectPropertiesFieldBuilder().addBuilder(
-              ObjectProperties.getDefaultInstance());
+              fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.getDefaultInstance());
         }
-        public ObjectProperties.Builder addObjectPropertiesBuilder(
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder addObjectPropertiesBuilder(
             int index) {
           return getObjectPropertiesFieldBuilder().addBuilder(
-              index, ObjectProperties.getDefaultInstance());
+              index, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.getDefaultInstance());
         }
-        public java.util.List<ObjectProperties.Builder>
+        public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder> 
              getObjectPropertiesBuilderList() {
           return getObjectPropertiesFieldBuilder().getBuilderList();
         }
         private com.google.protobuf.RepeatedFieldBuilder<
-            ObjectProperties, ObjectProperties.Builder, ObjectPropertiesOrBuilder>
+            fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder> 
             getObjectPropertiesFieldBuilder() {
           if (objectPropertiesBuilder_ == null) {
             objectPropertiesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                ObjectProperties, ObjectProperties.Builder, ObjectPropertiesOrBuilder>(
+                fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder>(
                     objectProperties_,
                     ((bitField0_ & 0x00000002) == 0x00000002),
                     getParentForChildren(),
@@ -2160,7 +730,7 @@ public final class SdfProto {
           return objectPropertiesBuilder_;
         }
         
-        // @@protoc_insertion_point(builder_scope:Proto.Sdf.Object)
+        // @@protoc_insertion_point(builder_scope:Sdf.Object)
       }
       
       static {
@@ -2168,27 +738,761 @@ public final class SdfProto {
         defaultInstance.initFields();
       }
       
-      // @@protoc_insertion_point(class_scope:Proto.Sdf.Object)
+      // @@protoc_insertion_point(class_scope:Sdf.Object)
+    }
+    
+    public interface ObjectPropertiesOrBuilder
+        extends com.google.protobuf.MessageOrBuilder {
+      
+      // optional string type = 20;
+      boolean hasType();
+      String getType();
+      
+      // required .System.Type systemType = 21;
+      boolean hasSystemType();
+      fr.kissy.encoder.proto.SystemProto.System.Type getSystemType();
+      
+      // repeated .Property properties = 22;
+      java.util.List<fr.kissy.encoder.proto.PropertyProto.Property> 
+          getPropertiesList();
+      fr.kissy.encoder.proto.PropertyProto.Property getProperties(int index);
+      int getPropertiesCount();
+      java.util.List<? extends fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder> 
+          getPropertiesOrBuilderList();
+      fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
+          int index);
+    }
+    public static final class ObjectProperties extends
+        com.google.protobuf.GeneratedMessage
+        implements ObjectPropertiesOrBuilder {
+      // Use ObjectProperties.newBuilder() to construct.
+      private ObjectProperties(Builder builder) {
+        super(builder);
+      }
+      private ObjectProperties(boolean noInit) {}
+      
+      private static final ObjectProperties defaultInstance;
+      public static ObjectProperties getDefaultInstance() {
+        return defaultInstance;
+      }
+      
+      public ObjectProperties getDefaultInstanceForType() {
+        return defaultInstance;
+      }
+      
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_ObjectProperties_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_ObjectProperties_fieldAccessorTable;
+      }
+      
+      private int bitField0_;
+      // optional string type = 20;
+      public static final int TYPE_FIELD_NUMBER = 20;
+      private java.lang.Object type_;
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      public String getType() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          return (String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+            type_ = s;
+          }
+          return s;
+        }
+      }
+      private com.google.protobuf.ByteString getTypeBytes() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          type_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      
+      // required .System.Type systemType = 21;
+      public static final int SYSTEMTYPE_FIELD_NUMBER = 21;
+      private fr.kissy.encoder.proto.SystemProto.System.Type systemType_;
+      public boolean hasSystemType() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      public fr.kissy.encoder.proto.SystemProto.System.Type getSystemType() {
+        return systemType_;
+      }
+      
+      // repeated .Property properties = 22;
+      public static final int PROPERTIES_FIELD_NUMBER = 22;
+      private java.util.List<fr.kissy.encoder.proto.PropertyProto.Property> properties_;
+      public java.util.List<fr.kissy.encoder.proto.PropertyProto.Property> getPropertiesList() {
+        return properties_;
+      }
+      public java.util.List<? extends fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder> 
+          getPropertiesOrBuilderList() {
+        return properties_;
+      }
+      public int getPropertiesCount() {
+        return properties_.size();
+      }
+      public fr.kissy.encoder.proto.PropertyProto.Property getProperties(int index) {
+        return properties_.get(index);
+      }
+      public fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
+          int index) {
+        return properties_.get(index);
+      }
+      
+      private void initFields() {
+        type_ = "";
+        systemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+        properties_ = java.util.Collections.emptyList();
+      }
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized != -1) return isInitialized == 1;
+        
+        if (!hasSystemType()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        for (int i = 0; i < getPropertiesCount(); i++) {
+          if (!getProperties(i).isInitialized()) {
+            memoizedIsInitialized = 0;
+            return false;
+          }
+        }
+        memoizedIsInitialized = 1;
+        return true;
+      }
+      
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        getSerializedSize();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          output.writeBytes(20, getTypeBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          output.writeEnum(21, systemType_.getNumber());
+        }
+        for (int i = 0; i < properties_.size(); i++) {
+          output.writeMessage(22, properties_.get(i));
+        }
+        getUnknownFields().writeTo(output);
+      }
+      
+      private int memoizedSerializedSize = -1;
+      public int getSerializedSize() {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+      
+        size = 0;
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(20, getTypeBytes());
+        }
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(21, systemType_.getNumber());
+        }
+        for (int i = 0; i < properties_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(22, properties_.get(i));
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSerializedSize = size;
+        return size;
+      }
+      
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      protected java.lang.Object writeReplace()
+          throws java.io.ObjectStreamException {
+        return super.writeReplace();
+      }
+      
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data).buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return newBuilder().mergeFrom(data, extensionRegistry)
+                 .buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        Builder builder = newBuilder();
+        if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+          return builder.buildParsed();
+        } else {
+          return null;
+        }
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input).buildParsed();
+      }
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return newBuilder().mergeFrom(input, extensionRegistry)
+                 .buildParsed();
+      }
+      
+      public static Builder newBuilder() { return Builder.create(); }
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder(fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties prototype) {
+        return newBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() { return newBuilder(this); }
+      
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessage.Builder<Builder>
+         implements fr.kissy.encoder.proto.SdfProto.Sdf.ObjectPropertiesOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_ObjectProperties_descriptor;
+        }
+        
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_ObjectProperties_fieldAccessorTable;
+        }
+        
+        // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+        
+        private Builder(BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+            getPropertiesFieldBuilder();
+          }
+        }
+        private static Builder create() {
+          return new Builder();
+        }
+        
+        public Builder clear() {
+          super.clear();
+          type_ = "";
+          bitField0_ = (bitField0_ & ~0x00000001);
+          systemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+          bitField0_ = (bitField0_ & ~0x00000002);
+          if (propertiesBuilder_ == null) {
+            properties_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            propertiesBuilder_.clear();
+          }
+          return this;
+        }
+        
+        public Builder clone() {
+          return create().mergeFrom(buildPartial());
+        }
+        
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.getDescriptor();
+        }
+        
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties getDefaultInstanceForType() {
+          return fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.getDefaultInstance();
+        }
+        
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties build() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+        
+        private fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties buildParsed()
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(
+              result).asInvalidProtocolBufferException();
+          }
+          return result;
+        }
+        
+        public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties buildPartial() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties result = new fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties(this);
+          int from_bitField0_ = bitField0_;
+          int to_bitField0_ = 0;
+          if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+            to_bitField0_ |= 0x00000001;
+          }
+          result.type_ = type_;
+          if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+            to_bitField0_ |= 0x00000002;
+          }
+          result.systemType_ = systemType_;
+          if (propertiesBuilder_ == null) {
+            if (((bitField0_ & 0x00000004) == 0x00000004)) {
+              properties_ = java.util.Collections.unmodifiableList(properties_);
+              bitField0_ = (bitField0_ & ~0x00000004);
+            }
+            result.properties_ = properties_;
+          } else {
+            result.properties_ = propertiesBuilder_.build();
+          }
+          result.bitField0_ = to_bitField0_;
+          onBuilt();
+          return result;
+        }
+        
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties) {
+            return mergeFrom((fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+        
+        public Builder mergeFrom(fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties other) {
+          if (other == fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.getDefaultInstance()) return this;
+          if (other.hasType()) {
+            setType(other.getType());
+          }
+          if (other.hasSystemType()) {
+            setSystemType(other.getSystemType());
+          }
+          if (propertiesBuilder_ == null) {
+            if (!other.properties_.isEmpty()) {
+              if (properties_.isEmpty()) {
+                properties_ = other.properties_;
+                bitField0_ = (bitField0_ & ~0x00000004);
+              } else {
+                ensurePropertiesIsMutable();
+                properties_.addAll(other.properties_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.properties_.isEmpty()) {
+              if (propertiesBuilder_.isEmpty()) {
+                propertiesBuilder_.dispose();
+                propertiesBuilder_ = null;
+                properties_ = other.properties_;
+                bitField0_ = (bitField0_ & ~0x00000004);
+                propertiesBuilder_ = 
+                  com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                     getPropertiesFieldBuilder() : null;
+              } else {
+                propertiesBuilder_.addAllMessages(other.properties_);
+              }
+            }
+          }
+          this.mergeUnknownFields(other.getUnknownFields());
+          return this;
+        }
+        
+        public final boolean isInitialized() {
+          if (!hasSystemType()) {
+            
+            return false;
+          }
+          for (int i = 0; i < getPropertiesCount(); i++) {
+            if (!getProperties(i).isInitialized()) {
+              
+              return false;
+            }
+          }
+          return true;
+        }
+        
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder(
+              this.getUnknownFields());
+          while (true) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              default: {
+                if (!parseUnknownField(input, unknownFields,
+                                       extensionRegistry, tag)) {
+                  this.setUnknownFields(unknownFields.build());
+                  onChanged();
+                  return this;
+                }
+                break;
+              }
+              case 162: {
+                bitField0_ |= 0x00000001;
+                type_ = input.readBytes();
+                break;
+              }
+              case 168: {
+                int rawValue = input.readEnum();
+                fr.kissy.encoder.proto.SystemProto.System.Type value = fr.kissy.encoder.proto.SystemProto.System.Type.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(21, rawValue);
+                } else {
+                  bitField0_ |= 0x00000002;
+                  systemType_ = value;
+                }
+                break;
+              }
+              case 178: {
+                fr.kissy.encoder.proto.PropertyProto.Property.Builder subBuilder = fr.kissy.encoder.proto.PropertyProto.Property.newBuilder();
+                input.readMessage(subBuilder, extensionRegistry);
+                addProperties(subBuilder.buildPartial());
+                break;
+              }
+            }
+          }
+        }
+        
+        private int bitField0_;
+        
+        // optional string type = 20;
+        private java.lang.Object type_ = "";
+        public boolean hasType() {
+          return ((bitField0_ & 0x00000001) == 0x00000001);
+        }
+        public String getType() {
+          java.lang.Object ref = type_;
+          if (!(ref instanceof String)) {
+            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+            type_ = s;
+            return s;
+          } else {
+            return (String) ref;
+          }
+        }
+        public Builder setType(String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+          type_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearType() {
+          bitField0_ = (bitField0_ & ~0x00000001);
+          type_ = getDefaultInstance().getType();
+          onChanged();
+          return this;
+        }
+        void setType(com.google.protobuf.ByteString value) {
+          bitField0_ |= 0x00000001;
+          type_ = value;
+          onChanged();
+        }
+        
+        // required .System.Type systemType = 21;
+        private fr.kissy.encoder.proto.SystemProto.System.Type systemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+        public boolean hasSystemType() {
+          return ((bitField0_ & 0x00000002) == 0x00000002);
+        }
+        public fr.kissy.encoder.proto.SystemProto.System.Type getSystemType() {
+          return systemType_;
+        }
+        public Builder setSystemType(fr.kissy.encoder.proto.SystemProto.System.Type value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          bitField0_ |= 0x00000002;
+          systemType_ = value;
+          onChanged();
+          return this;
+        }
+        public Builder clearSystemType() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          systemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+          onChanged();
+          return this;
+        }
+        
+        // repeated .Property properties = 22;
+        private java.util.List<fr.kissy.encoder.proto.PropertyProto.Property> properties_ =
+          java.util.Collections.emptyList();
+        private void ensurePropertiesIsMutable() {
+          if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+            properties_ = new java.util.ArrayList<fr.kissy.encoder.proto.PropertyProto.Property>(properties_);
+            bitField0_ |= 0x00000004;
+           }
+        }
+        
+        private com.google.protobuf.RepeatedFieldBuilder<
+            fr.kissy.encoder.proto.PropertyProto.Property, fr.kissy.encoder.proto.PropertyProto.Property.Builder, fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder> propertiesBuilder_;
+        
+        public java.util.List<fr.kissy.encoder.proto.PropertyProto.Property> getPropertiesList() {
+          if (propertiesBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(properties_);
+          } else {
+            return propertiesBuilder_.getMessageList();
+          }
+        }
+        public int getPropertiesCount() {
+          if (propertiesBuilder_ == null) {
+            return properties_.size();
+          } else {
+            return propertiesBuilder_.getCount();
+          }
+        }
+        public fr.kissy.encoder.proto.PropertyProto.Property getProperties(int index) {
+          if (propertiesBuilder_ == null) {
+            return properties_.get(index);
+          } else {
+            return propertiesBuilder_.getMessage(index);
+          }
+        }
+        public Builder setProperties(
+            int index, fr.kissy.encoder.proto.PropertyProto.Property value) {
+          if (propertiesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePropertiesIsMutable();
+            properties_.set(index, value);
+            onChanged();
+          } else {
+            propertiesBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        public Builder setProperties(
+            int index, fr.kissy.encoder.proto.PropertyProto.Property.Builder builderForValue) {
+          if (propertiesBuilder_ == null) {
+            ensurePropertiesIsMutable();
+            properties_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            propertiesBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addProperties(fr.kissy.encoder.proto.PropertyProto.Property value) {
+          if (propertiesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePropertiesIsMutable();
+            properties_.add(value);
+            onChanged();
+          } else {
+            propertiesBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        public Builder addProperties(
+            int index, fr.kissy.encoder.proto.PropertyProto.Property value) {
+          if (propertiesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensurePropertiesIsMutable();
+            properties_.add(index, value);
+            onChanged();
+          } else {
+            propertiesBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        public Builder addProperties(
+            fr.kissy.encoder.proto.PropertyProto.Property.Builder builderForValue) {
+          if (propertiesBuilder_ == null) {
+            ensurePropertiesIsMutable();
+            properties_.add(builderForValue.build());
+            onChanged();
+          } else {
+            propertiesBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addProperties(
+            int index, fr.kissy.encoder.proto.PropertyProto.Property.Builder builderForValue) {
+          if (propertiesBuilder_ == null) {
+            ensurePropertiesIsMutable();
+            properties_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            propertiesBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        public Builder addAllProperties(
+            java.lang.Iterable<? extends fr.kissy.encoder.proto.PropertyProto.Property> values) {
+          if (propertiesBuilder_ == null) {
+            ensurePropertiesIsMutable();
+            super.addAll(values, properties_);
+            onChanged();
+          } else {
+            propertiesBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        public Builder clearProperties() {
+          if (propertiesBuilder_ == null) {
+            properties_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000004);
+            onChanged();
+          } else {
+            propertiesBuilder_.clear();
+          }
+          return this;
+        }
+        public Builder removeProperties(int index) {
+          if (propertiesBuilder_ == null) {
+            ensurePropertiesIsMutable();
+            properties_.remove(index);
+            onChanged();
+          } else {
+            propertiesBuilder_.remove(index);
+          }
+          return this;
+        }
+        public fr.kissy.encoder.proto.PropertyProto.Property.Builder getPropertiesBuilder(
+            int index) {
+          return getPropertiesFieldBuilder().getBuilder(index);
+        }
+        public fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder getPropertiesOrBuilder(
+            int index) {
+          if (propertiesBuilder_ == null) {
+            return properties_.get(index);  } else {
+            return propertiesBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        public java.util.List<? extends fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder> 
+             getPropertiesOrBuilderList() {
+          if (propertiesBuilder_ != null) {
+            return propertiesBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(properties_);
+          }
+        }
+        public fr.kissy.encoder.proto.PropertyProto.Property.Builder addPropertiesBuilder() {
+          return getPropertiesFieldBuilder().addBuilder(
+              fr.kissy.encoder.proto.PropertyProto.Property.getDefaultInstance());
+        }
+        public fr.kissy.encoder.proto.PropertyProto.Property.Builder addPropertiesBuilder(
+            int index) {
+          return getPropertiesFieldBuilder().addBuilder(
+              index, fr.kissy.encoder.proto.PropertyProto.Property.getDefaultInstance());
+        }
+        public java.util.List<fr.kissy.encoder.proto.PropertyProto.Property.Builder> 
+             getPropertiesBuilderList() {
+          return getPropertiesFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilder<
+            fr.kissy.encoder.proto.PropertyProto.Property, fr.kissy.encoder.proto.PropertyProto.Property.Builder, fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder> 
+            getPropertiesFieldBuilder() {
+          if (propertiesBuilder_ == null) {
+            propertiesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                fr.kissy.encoder.proto.PropertyProto.Property, fr.kissy.encoder.proto.PropertyProto.Property.Builder, fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder>(
+                    properties_,
+                    ((bitField0_ & 0x00000004) == 0x00000004),
+                    getParentForChildren(),
+                    isClean());
+            properties_ = null;
+          }
+          return propertiesBuilder_;
+        }
+        
+        // @@protoc_insertion_point(builder_scope:Sdf.ObjectProperties)
+      }
+      
+      static {
+        defaultInstance = new ObjectProperties(true);
+        defaultInstance.initFields();
+      }
+      
+      // @@protoc_insertion_point(class_scope:Sdf.ObjectProperties)
     }
     
     public interface LinkOrBuilder
         extends com.google.protobuf.MessageOrBuilder {
       
-      // required string subject = 40;
+      // required string subject = 30;
       boolean hasSubject();
       String getSubject();
       
-      // required string observer = 41;
+      // required string observer = 31;
       boolean hasObserver();
       String getObserver();
       
-      // required string subjectSystem = 42;
-      boolean hasSubjectSystem();
-      String getSubjectSystem();
+      // required .System.Type subjectSystemType = 32;
+      boolean hasSubjectSystemType();
+      fr.kissy.encoder.proto.SystemProto.System.Type getSubjectSystemType();
       
-      // required string observerSystem = 43;
-      boolean hasObserverSystem();
-      String getObserverSystem();
+      // required .System.Type observerSystemType = 33;
+      boolean hasObserverSystemType();
+      fr.kissy.encoder.proto.SystemProto.System.Type getObserverSystemType();
     }
     public static final class Link extends
         com.google.protobuf.GeneratedMessage
@@ -2210,17 +1514,17 @@ public final class SdfProto {
       
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return SdfProto.internal_static_Proto_Sdf_Link_descriptor;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Link_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return SdfProto.internal_static_Proto_Sdf_Link_fieldAccessorTable;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Link_fieldAccessorTable;
       }
       
       private int bitField0_;
-      // required string subject = 40;
-      public static final int SUBJECT_FIELD_NUMBER = 40;
+      // required string subject = 30;
+      public static final int SUBJECT_FIELD_NUMBER = 30;
       private java.lang.Object subject_;
       public boolean hasSubject() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -2251,8 +1555,8 @@ public final class SdfProto {
         }
       }
       
-      // required string observer = 41;
-      public static final int OBSERVER_FIELD_NUMBER = 41;
+      // required string observer = 31;
+      public static final int OBSERVER_FIELD_NUMBER = 31;
       private java.lang.Object observer_;
       public boolean hasObserver() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
@@ -2283,75 +1587,31 @@ public final class SdfProto {
         }
       }
       
-      // required string subjectSystem = 42;
-      public static final int SUBJECTSYSTEM_FIELD_NUMBER = 42;
-      private java.lang.Object subjectSystem_;
-      public boolean hasSubjectSystem() {
+      // required .System.Type subjectSystemType = 32;
+      public static final int SUBJECTSYSTEMTYPE_FIELD_NUMBER = 32;
+      private fr.kissy.encoder.proto.SystemProto.System.Type subjectSystemType_;
+      public boolean hasSubjectSystemType() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
-      public String getSubjectSystem() {
-        java.lang.Object ref = subjectSystem_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            subjectSystem_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getSubjectSystemBytes() {
-        java.lang.Object ref = subjectSystem_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          subjectSystem_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+      public fr.kissy.encoder.proto.SystemProto.System.Type getSubjectSystemType() {
+        return subjectSystemType_;
       }
       
-      // required string observerSystem = 43;
-      public static final int OBSERVERSYSTEM_FIELD_NUMBER = 43;
-      private java.lang.Object observerSystem_;
-      public boolean hasObserverSystem() {
+      // required .System.Type observerSystemType = 33;
+      public static final int OBSERVERSYSTEMTYPE_FIELD_NUMBER = 33;
+      private fr.kissy.encoder.proto.SystemProto.System.Type observerSystemType_;
+      public boolean hasObserverSystemType() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
-      public String getObserverSystem() {
-        java.lang.Object ref = observerSystem_;
-        if (ref instanceof String) {
-          return (String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          if (com.google.protobuf.Internal.isValidUtf8(bs)) {
-            observerSystem_ = s;
-          }
-          return s;
-        }
-      }
-      private com.google.protobuf.ByteString getObserverSystemBytes() {
-        java.lang.Object ref = observerSystem_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8((String) ref);
-          observerSystem_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+      public fr.kissy.encoder.proto.SystemProto.System.Type getObserverSystemType() {
+        return observerSystemType_;
       }
       
       private void initFields() {
         subject_ = "";
         observer_ = "";
-        subjectSystem_ = "";
-        observerSystem_ = "";
+        subjectSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+        observerSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -2366,11 +1626,11 @@ public final class SdfProto {
           memoizedIsInitialized = 0;
           return false;
         }
-        if (!hasSubjectSystem()) {
+        if (!hasSubjectSystemType()) {
           memoizedIsInitialized = 0;
           return false;
         }
-        if (!hasObserverSystem()) {
+        if (!hasObserverSystemType()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -2382,16 +1642,16 @@ public final class SdfProto {
                           throws java.io.IOException {
         getSerializedSize();
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          output.writeBytes(40, getSubjectBytes());
+          output.writeBytes(30, getSubjectBytes());
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          output.writeBytes(41, getObserverBytes());
+          output.writeBytes(31, getObserverBytes());
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          output.writeBytes(42, getSubjectSystemBytes());
+          output.writeEnum(32, subjectSystemType_.getNumber());
         }
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          output.writeBytes(43, getObserverSystemBytes());
+          output.writeEnum(33, observerSystemType_.getNumber());
         }
         getUnknownFields().writeTo(output);
       }
@@ -2404,19 +1664,19 @@ public final class SdfProto {
         size = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(40, getSubjectBytes());
+            .computeBytesSize(30, getSubjectBytes());
         }
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(41, getObserverBytes());
+            .computeBytesSize(31, getObserverBytes());
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(42, getSubjectSystemBytes());
+            .computeEnumSize(32, subjectSystemType_.getNumber());
         }
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
           size += com.google.protobuf.CodedOutputStream
-            .computeBytesSize(43, getObserverSystemBytes());
+            .computeEnumSize(33, observerSystemType_.getNumber());
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -2424,47 +1684,47 @@ public final class SdfProto {
       }
       
       private static final long serialVersionUID = 0L;
-      @Override
+      @java.lang.Override
       protected java.lang.Object writeReplace()
           throws java.io.ObjectStreamException {
         return super.writeReplace();
       }
       
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           com.google.protobuf.ByteString data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           com.google.protobuf.ByteString data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static Link parseFrom(byte[] data)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(byte[] data)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data).buildParsed();
       }
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           byte[] data,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         return newBuilder().mergeFrom(data, extensionRegistry)
                  .buildParsed();
       }
-      public static Link parseFrom(java.io.InputStream input)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(java.io.InputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input, extensionRegistry)
                  .buildParsed();
       }
-      public static Link parseDelimitedFrom(java.io.InputStream input)
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         Builder builder = newBuilder();
         if (builder.mergeDelimitedFrom(input)) {
@@ -2473,7 +1733,7 @@ public final class SdfProto {
           return null;
         }
       }
-      public static Link parseDelimitedFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -2484,12 +1744,12 @@ public final class SdfProto {
           return null;
         }
       }
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           com.google.protobuf.CodedInputStream input)
           throws java.io.IOException {
         return newBuilder().mergeFrom(input).buildParsed();
       }
-      public static Link parseFrom(
+      public static fr.kissy.encoder.proto.SdfProto.Sdf.Link parseFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
@@ -2499,12 +1759,12 @@ public final class SdfProto {
       
       public static Builder newBuilder() { return Builder.create(); }
       public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder(Link prototype) {
+      public static Builder newBuilder(fr.kissy.encoder.proto.SdfProto.Sdf.Link prototype) {
         return newBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() { return newBuilder(this); }
       
-      @Override
+      @java.lang.Override
       protected Builder newBuilderForType(
           com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
@@ -2512,15 +1772,15 @@ public final class SdfProto {
       }
       public static final class Builder extends
           com.google.protobuf.GeneratedMessage.Builder<Builder>
-         implements LinkOrBuilder {
+         implements fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-          return SdfProto.internal_static_Proto_Sdf_Link_descriptor;
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Link_descriptor;
         }
         
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return SdfProto.internal_static_Proto_Sdf_Link_fieldAccessorTable;
+          return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_Link_fieldAccessorTable;
         }
         
         // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.Link.newBuilder()
@@ -2546,9 +1806,9 @@ public final class SdfProto {
           bitField0_ = (bitField0_ & ~0x00000001);
           observer_ = "";
           bitField0_ = (bitField0_ & ~0x00000002);
-          subjectSystem_ = "";
+          subjectSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
           bitField0_ = (bitField0_ & ~0x00000004);
-          observerSystem_ = "";
+          observerSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
           bitField0_ = (bitField0_ & ~0x00000008);
           return this;
         }
@@ -2559,24 +1819,24 @@ public final class SdfProto {
         
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-          return Link.getDescriptor();
+          return fr.kissy.encoder.proto.SdfProto.Sdf.Link.getDescriptor();
         }
         
-        public Link getDefaultInstanceForType() {
-          return Link.getDefaultInstance();
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Link getDefaultInstanceForType() {
+          return fr.kissy.encoder.proto.SdfProto.Sdf.Link.getDefaultInstance();
         }
         
-        public Link build() {
-          Link result = buildPartial();
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Link build() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
         
-        private Link buildParsed()
+        private fr.kissy.encoder.proto.SdfProto.Sdf.Link buildParsed()
             throws com.google.protobuf.InvalidProtocolBufferException {
-          Link result = buildPartial();
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(
               result).asInvalidProtocolBufferException();
@@ -2584,8 +1844,8 @@ public final class SdfProto {
           return result;
         }
         
-        public Link buildPartial() {
-          Link result = new Link(this);
+        public fr.kissy.encoder.proto.SdfProto.Sdf.Link buildPartial() {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link result = new fr.kissy.encoder.proto.SdfProto.Sdf.Link(this);
           int from_bitField0_ = bitField0_;
           int to_bitField0_ = 0;
           if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2599,38 +1859,38 @@ public final class SdfProto {
           if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
             to_bitField0_ |= 0x00000004;
           }
-          result.subjectSystem_ = subjectSystem_;
+          result.subjectSystemType_ = subjectSystemType_;
           if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
             to_bitField0_ |= 0x00000008;
           }
-          result.observerSystem_ = observerSystem_;
+          result.observerSystemType_ = observerSystemType_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
         }
         
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof Link) {
-            return mergeFrom((Link)other);
+          if (other instanceof fr.kissy.encoder.proto.SdfProto.Sdf.Link) {
+            return mergeFrom((fr.kissy.encoder.proto.SdfProto.Sdf.Link)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
         
-        public Builder mergeFrom(Link other) {
-          if (other == Link.getDefaultInstance()) return this;
+        public Builder mergeFrom(fr.kissy.encoder.proto.SdfProto.Sdf.Link other) {
+          if (other == fr.kissy.encoder.proto.SdfProto.Sdf.Link.getDefaultInstance()) return this;
           if (other.hasSubject()) {
             setSubject(other.getSubject());
           }
           if (other.hasObserver()) {
             setObserver(other.getObserver());
           }
-          if (other.hasSubjectSystem()) {
-            setSubjectSystem(other.getSubjectSystem());
+          if (other.hasSubjectSystemType()) {
+            setSubjectSystemType(other.getSubjectSystemType());
           }
-          if (other.hasObserverSystem()) {
-            setObserverSystem(other.getObserverSystem());
+          if (other.hasObserverSystemType()) {
+            setObserverSystemType(other.getObserverSystemType());
           }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
@@ -2645,11 +1905,11 @@ public final class SdfProto {
             
             return false;
           }
-          if (!hasSubjectSystem()) {
+          if (!hasSubjectSystemType()) {
             
             return false;
           }
-          if (!hasObserverSystem()) {
+          if (!hasObserverSystemType()) {
             
             return false;
           }
@@ -2679,24 +1939,36 @@ public final class SdfProto {
                 }
                 break;
               }
-              case 322: {
+              case 242: {
                 bitField0_ |= 0x00000001;
                 subject_ = input.readBytes();
                 break;
               }
-              case 330: {
+              case 250: {
                 bitField0_ |= 0x00000002;
                 observer_ = input.readBytes();
                 break;
               }
-              case 338: {
-                bitField0_ |= 0x00000004;
-                subjectSystem_ = input.readBytes();
+              case 256: {
+                int rawValue = input.readEnum();
+                fr.kissy.encoder.proto.SystemProto.System.Type value = fr.kissy.encoder.proto.SystemProto.System.Type.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(32, rawValue);
+                } else {
+                  bitField0_ |= 0x00000004;
+                  subjectSystemType_ = value;
+                }
                 break;
               }
-              case 346: {
-                bitField0_ |= 0x00000008;
-                observerSystem_ = input.readBytes();
+              case 264: {
+                int rawValue = input.readEnum();
+                fr.kissy.encoder.proto.SystemProto.System.Type value = fr.kissy.encoder.proto.SystemProto.System.Type.valueOf(rawValue);
+                if (value == null) {
+                  unknownFields.mergeVarintField(33, rawValue);
+                } else {
+                  bitField0_ |= 0x00000008;
+                  observerSystemType_ = value;
+                }
                 break;
               }
             }
@@ -2705,7 +1977,7 @@ public final class SdfProto {
         
         private int bitField0_;
         
-        // required string subject = 40;
+        // required string subject = 30;
         private java.lang.Object subject_ = "";
         public boolean hasSubject() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
@@ -2741,7 +2013,7 @@ public final class SdfProto {
           onChanged();
         }
         
-        // required string observer = 41;
+        // required string observer = 31;
         private java.lang.Object observer_ = "";
         public boolean hasObserver() {
           return ((bitField0_ & 0x00000002) == 0x00000002);
@@ -2777,79 +2049,55 @@ public final class SdfProto {
           onChanged();
         }
         
-        // required string subjectSystem = 42;
-        private java.lang.Object subjectSystem_ = "";
-        public boolean hasSubjectSystem() {
+        // required .System.Type subjectSystemType = 32;
+        private fr.kissy.encoder.proto.SystemProto.System.Type subjectSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+        public boolean hasSubjectSystemType() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
-        public String getSubjectSystem() {
-          java.lang.Object ref = subjectSystem_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-            subjectSystem_ = s;
-            return s;
-          } else {
-            return (String) ref;
-          }
+        public fr.kissy.encoder.proto.SystemProto.System.Type getSubjectSystemType() {
+          return subjectSystemType_;
         }
-        public Builder setSubjectSystem(String value) {
+        public Builder setSubjectSystemType(fr.kissy.encoder.proto.SystemProto.System.Type value) {
           if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000004;
-          subjectSystem_ = value;
-          onChanged();
-          return this;
-        }
-        public Builder clearSubjectSystem() {
-          bitField0_ = (bitField0_ & ~0x00000004);
-          subjectSystem_ = getDefaultInstance().getSubjectSystem();
-          onChanged();
-          return this;
-        }
-        void setSubjectSystem(com.google.protobuf.ByteString value) {
+            throw new NullPointerException();
+          }
           bitField0_ |= 0x00000004;
-          subjectSystem_ = value;
+          subjectSystemType_ = value;
           onChanged();
+          return this;
+        }
+        public Builder clearSubjectSystemType() {
+          bitField0_ = (bitField0_ & ~0x00000004);
+          subjectSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+          onChanged();
+          return this;
         }
         
-        // required string observerSystem = 43;
-        private java.lang.Object observerSystem_ = "";
-        public boolean hasObserverSystem() {
+        // required .System.Type observerSystemType = 33;
+        private fr.kissy.encoder.proto.SystemProto.System.Type observerSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+        public boolean hasObserverSystemType() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
-        public String getObserverSystem() {
-          java.lang.Object ref = observerSystem_;
-          if (!(ref instanceof String)) {
-            String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
-            observerSystem_ = s;
-            return s;
-          } else {
-            return (String) ref;
-          }
+        public fr.kissy.encoder.proto.SystemProto.System.Type getObserverSystemType() {
+          return observerSystemType_;
         }
-        public Builder setObserverSystem(String value) {
+        public Builder setObserverSystemType(fr.kissy.encoder.proto.SystemProto.System.Type value) {
           if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-          observerSystem_ = value;
-          onChanged();
-          return this;
-        }
-        public Builder clearObserverSystem() {
-          bitField0_ = (bitField0_ & ~0x00000008);
-          observerSystem_ = getDefaultInstance().getObserverSystem();
-          onChanged();
-          return this;
-        }
-        void setObserverSystem(com.google.protobuf.ByteString value) {
+            throw new NullPointerException();
+          }
           bitField0_ |= 0x00000008;
-          observerSystem_ = value;
+          observerSystemType_ = value;
           onChanged();
+          return this;
+        }
+        public Builder clearObserverSystemType() {
+          bitField0_ = (bitField0_ & ~0x00000008);
+          observerSystemType_ = fr.kissy.encoder.proto.SystemProto.System.Type.AI;
+          onChanged();
+          return this;
         }
         
-        // @@protoc_insertion_point(builder_scope:Proto.Sdf.Link)
+        // @@protoc_insertion_point(builder_scope:Sdf.Link)
       }
       
       static {
@@ -2857,7 +2105,7 @@ public final class SdfProto {
         defaultInstance.initFields();
       }
       
-      // @@protoc_insertion_point(class_scope:Proto.Sdf.Link)
+      // @@protoc_insertion_point(class_scope:Sdf.Link)
     }
     
     private int bitField0_;
@@ -2893,72 +2141,72 @@ public final class SdfProto {
       }
     }
     
-    // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-    public static final int SYSTEMPROPERTIES_FIELD_NUMBER = 2;
-    private java.util.List<SystemProperties> systemProperties_;
-    public java.util.List<SystemProperties> getSystemPropertiesList() {
-      return systemProperties_;
+    // repeated .System systems = 2;
+    public static final int SYSTEMS_FIELD_NUMBER = 2;
+    private java.util.List<fr.kissy.encoder.proto.SystemProto.System> systems_;
+    public java.util.List<fr.kissy.encoder.proto.SystemProto.System> getSystemsList() {
+      return systems_;
     }
-    public java.util.List<? extends SystemPropertiesOrBuilder>
-        getSystemPropertiesOrBuilderList() {
-      return systemProperties_;
+    public java.util.List<? extends fr.kissy.encoder.proto.SystemProto.SystemOrBuilder> 
+        getSystemsOrBuilderList() {
+      return systems_;
     }
-    public int getSystemPropertiesCount() {
-      return systemProperties_.size();
+    public int getSystemsCount() {
+      return systems_.size();
     }
-    public SystemProperties getSystemProperties(int index) {
-      return systemProperties_.get(index);
+    public fr.kissy.encoder.proto.SystemProto.System getSystems(int index) {
+      return systems_.get(index);
     }
-    public SystemPropertiesOrBuilder getSystemPropertiesOrBuilder(
+    public fr.kissy.encoder.proto.SystemProto.SystemOrBuilder getSystemsOrBuilder(
         int index) {
-      return systemProperties_.get(index);
+      return systems_.get(index);
     }
     
-    // repeated .Proto.Sdf.Object objects = 3;
+    // repeated .Sdf.Object objects = 3;
     public static final int OBJECTS_FIELD_NUMBER = 3;
-    private java.util.List<Object> objects_;
-    public java.util.List<Object> getObjectsList() {
+    private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object> objects_;
+    public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object> getObjectsList() {
       return objects_;
     }
-    public java.util.List<? extends ObjectOrBuilder>
+    public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder> 
         getObjectsOrBuilderList() {
       return objects_;
     }
     public int getObjectsCount() {
       return objects_.size();
     }
-    public Object getObjects(int index) {
+    public fr.kissy.encoder.proto.SdfProto.Sdf.Object getObjects(int index) {
       return objects_.get(index);
     }
-    public ObjectOrBuilder getObjectsOrBuilder(
+    public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder getObjectsOrBuilder(
         int index) {
       return objects_.get(index);
     }
     
-    // repeated .Proto.Sdf.Link links = 4;
+    // repeated .Sdf.Link links = 4;
     public static final int LINKS_FIELD_NUMBER = 4;
-    private java.util.List<Link> links_;
-    public java.util.List<Link> getLinksList() {
+    private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link> links_;
+    public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link> getLinksList() {
       return links_;
     }
-    public java.util.List<? extends LinkOrBuilder>
+    public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder> 
         getLinksOrBuilderList() {
       return links_;
     }
     public int getLinksCount() {
       return links_.size();
     }
-    public Link getLinks(int index) {
+    public fr.kissy.encoder.proto.SdfProto.Sdf.Link getLinks(int index) {
       return links_.get(index);
     }
-    public LinkOrBuilder getLinksOrBuilder(
+    public fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder getLinksOrBuilder(
         int index) {
       return links_.get(index);
     }
     
     private void initFields() {
       name_ = "";
-      systemProperties_ = java.util.Collections.emptyList();
+      systems_ = java.util.Collections.emptyList();
       objects_ = java.util.Collections.emptyList();
       links_ = java.util.Collections.emptyList();
     }
@@ -2971,8 +2219,8 @@ public final class SdfProto {
         memoizedIsInitialized = 0;
         return false;
       }
-      for (int i = 0; i < getSystemPropertiesCount(); i++) {
-        if (!getSystemProperties(i).isInitialized()) {
+      for (int i = 0; i < getSystemsCount(); i++) {
+        if (!getSystems(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -2999,8 +2247,8 @@ public final class SdfProto {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getNameBytes());
       }
-      for (int i = 0; i < systemProperties_.size(); i++) {
-        output.writeMessage(2, systemProperties_.get(i));
+      for (int i = 0; i < systems_.size(); i++) {
+        output.writeMessage(2, systems_.get(i));
       }
       for (int i = 0; i < objects_.size(); i++) {
         output.writeMessage(3, objects_.get(i));
@@ -3021,9 +2269,9 @@ public final class SdfProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getNameBytes());
       }
-      for (int i = 0; i < systemProperties_.size(); i++) {
+      for (int i = 0; i < systems_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, systemProperties_.get(i));
+          .computeMessageSize(2, systems_.get(i));
       }
       for (int i = 0; i < objects_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -3039,47 +2287,47 @@ public final class SdfProto {
     }
     
     private static final long serialVersionUID = 0L;
-    @Override
+    @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
     
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static Sdf parseFrom(byte[] data)
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static Sdf parseFrom(java.io.InputStream input)
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static Sdf parseDelimitedFrom(java.io.InputStream input)
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -3088,7 +2336,7 @@ public final class SdfProto {
         return null;
       }
     }
-    public static Sdf parseDelimitedFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3099,12 +2347,12 @@ public final class SdfProto {
         return null;
       }
     }
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static Sdf parseFrom(
+    public static fr.kissy.encoder.proto.SdfProto.Sdf parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3114,12 +2362,12 @@ public final class SdfProto {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(Sdf prototype) {
+    public static Builder newBuilder(fr.kissy.encoder.proto.SdfProto.Sdf prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
     
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
@@ -3127,15 +2375,15 @@ public final class SdfProto {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements SdfOrBuilder {
+       implements fr.kissy.encoder.proto.SdfProto.SdfOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return SdfProto.internal_static_Proto_Sdf_descriptor;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return SdfProto.internal_static_Proto_Sdf_fieldAccessorTable;
+        return fr.kissy.encoder.proto.SdfProto.internal_static_Sdf_fieldAccessorTable;
       }
       
       // Construct using fr.kissy.encoder.proto.SdfProto.Sdf.newBuilder()
@@ -3149,7 +2397,7 @@ public final class SdfProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getSystemPropertiesFieldBuilder();
+          getSystemsFieldBuilder();
           getObjectsFieldBuilder();
           getLinksFieldBuilder();
         }
@@ -3162,11 +2410,11 @@ public final class SdfProto {
         super.clear();
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        if (systemPropertiesBuilder_ == null) {
-          systemProperties_ = java.util.Collections.emptyList();
+        if (systemsBuilder_ == null) {
+          systems_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
         } else {
-          systemPropertiesBuilder_.clear();
+          systemsBuilder_.clear();
         }
         if (objectsBuilder_ == null) {
           objects_ = java.util.Collections.emptyList();
@@ -3189,24 +2437,24 @@ public final class SdfProto {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return Sdf.getDescriptor();
+        return fr.kissy.encoder.proto.SdfProto.Sdf.getDescriptor();
       }
       
-      public Sdf getDefaultInstanceForType() {
-        return Sdf.getDefaultInstance();
+      public fr.kissy.encoder.proto.SdfProto.Sdf getDefaultInstanceForType() {
+        return fr.kissy.encoder.proto.SdfProto.Sdf.getDefaultInstance();
       }
       
-      public Sdf build() {
-        Sdf result = buildPartial();
+      public fr.kissy.encoder.proto.SdfProto.Sdf build() {
+        fr.kissy.encoder.proto.SdfProto.Sdf result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private Sdf buildParsed()
+      private fr.kissy.encoder.proto.SdfProto.Sdf buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        Sdf result = buildPartial();
+        fr.kissy.encoder.proto.SdfProto.Sdf result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -3214,22 +2462,22 @@ public final class SdfProto {
         return result;
       }
       
-      public Sdf buildPartial() {
-        Sdf result = new Sdf(this);
+      public fr.kissy.encoder.proto.SdfProto.Sdf buildPartial() {
+        fr.kissy.encoder.proto.SdfProto.Sdf result = new fr.kissy.encoder.proto.SdfProto.Sdf(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.name_ = name_;
-        if (systemPropertiesBuilder_ == null) {
+        if (systemsBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            systemProperties_ = java.util.Collections.unmodifiableList(systemProperties_);
+            systems_ = java.util.Collections.unmodifiableList(systems_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
-          result.systemProperties_ = systemProperties_;
+          result.systems_ = systems_;
         } else {
-          result.systemProperties_ = systemPropertiesBuilder_.build();
+          result.systems_ = systemsBuilder_.build();
         }
         if (objectsBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -3255,42 +2503,42 @@ public final class SdfProto {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Sdf) {
-          return mergeFrom((Sdf)other);
+        if (other instanceof fr.kissy.encoder.proto.SdfProto.Sdf) {
+          return mergeFrom((fr.kissy.encoder.proto.SdfProto.Sdf)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(Sdf other) {
-        if (other == Sdf.getDefaultInstance()) return this;
+      public Builder mergeFrom(fr.kissy.encoder.proto.SdfProto.Sdf other) {
+        if (other == fr.kissy.encoder.proto.SdfProto.Sdf.getDefaultInstance()) return this;
         if (other.hasName()) {
           setName(other.getName());
         }
-        if (systemPropertiesBuilder_ == null) {
-          if (!other.systemProperties_.isEmpty()) {
-            if (systemProperties_.isEmpty()) {
-              systemProperties_ = other.systemProperties_;
+        if (systemsBuilder_ == null) {
+          if (!other.systems_.isEmpty()) {
+            if (systems_.isEmpty()) {
+              systems_ = other.systems_;
               bitField0_ = (bitField0_ & ~0x00000002);
             } else {
-              ensureSystemPropertiesIsMutable();
-              systemProperties_.addAll(other.systemProperties_);
+              ensureSystemsIsMutable();
+              systems_.addAll(other.systems_);
             }
             onChanged();
           }
         } else {
-          if (!other.systemProperties_.isEmpty()) {
-            if (systemPropertiesBuilder_.isEmpty()) {
-              systemPropertiesBuilder_.dispose();
-              systemPropertiesBuilder_ = null;
-              systemProperties_ = other.systemProperties_;
+          if (!other.systems_.isEmpty()) {
+            if (systemsBuilder_.isEmpty()) {
+              systemsBuilder_.dispose();
+              systemsBuilder_ = null;
+              systems_ = other.systems_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              systemPropertiesBuilder_ = 
+              systemsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getSystemPropertiesFieldBuilder() : null;
+                   getSystemsFieldBuilder() : null;
             } else {
-              systemPropertiesBuilder_.addAllMessages(other.systemProperties_);
+              systemsBuilder_.addAllMessages(other.systems_);
             }
           }
         }
@@ -3355,8 +2603,8 @@ public final class SdfProto {
           
           return false;
         }
-        for (int i = 0; i < getSystemPropertiesCount(); i++) {
-          if (!getSystemProperties(i).isInitialized()) {
+        for (int i = 0; i < getSystemsCount(); i++) {
+          if (!getSystems(i).isInitialized()) {
             
             return false;
           }
@@ -3405,19 +2653,19 @@ public final class SdfProto {
               break;
             }
             case 18: {
-              SystemProperties.Builder subBuilder = SystemProperties.newBuilder();
+              fr.kissy.encoder.proto.SystemProto.System.Builder subBuilder = fr.kissy.encoder.proto.SystemProto.System.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
-              addSystemProperties(subBuilder.buildPartial());
+              addSystems(subBuilder.buildPartial());
               break;
             }
             case 26: {
-              Object.Builder subBuilder = Object.newBuilder();
+              fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder subBuilder = fr.kissy.encoder.proto.SdfProto.Sdf.Object.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addObjects(subBuilder.buildPartial());
               break;
             }
             case 34: {
-              Link.Builder subBuilder = Link.newBuilder();
+              fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder subBuilder = fr.kissy.encoder.proto.SdfProto.Sdf.Link.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addLinks(subBuilder.buildPartial());
               break;
@@ -3464,206 +2712,206 @@ public final class SdfProto {
         onChanged();
       }
       
-      // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-      private java.util.List<SystemProperties> systemProperties_ =
+      // repeated .System systems = 2;
+      private java.util.List<fr.kissy.encoder.proto.SystemProto.System> systems_ =
         java.util.Collections.emptyList();
-      private void ensureSystemPropertiesIsMutable() {
+      private void ensureSystemsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          systemProperties_ = new java.util.ArrayList<SystemProperties>(systemProperties_);
+          systems_ = new java.util.ArrayList<fr.kissy.encoder.proto.SystemProto.System>(systems_);
           bitField0_ |= 0x00000002;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          SystemProperties, SystemProperties.Builder, SystemPropertiesOrBuilder> systemPropertiesBuilder_;
+          fr.kissy.encoder.proto.SystemProto.System, fr.kissy.encoder.proto.SystemProto.System.Builder, fr.kissy.encoder.proto.SystemProto.SystemOrBuilder> systemsBuilder_;
       
-      public java.util.List<SystemProperties> getSystemPropertiesList() {
-        if (systemPropertiesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(systemProperties_);
+      public java.util.List<fr.kissy.encoder.proto.SystemProto.System> getSystemsList() {
+        if (systemsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(systems_);
         } else {
-          return systemPropertiesBuilder_.getMessageList();
+          return systemsBuilder_.getMessageList();
         }
       }
-      public int getSystemPropertiesCount() {
-        if (systemPropertiesBuilder_ == null) {
-          return systemProperties_.size();
+      public int getSystemsCount() {
+        if (systemsBuilder_ == null) {
+          return systems_.size();
         } else {
-          return systemPropertiesBuilder_.getCount();
+          return systemsBuilder_.getCount();
         }
       }
-      public SystemProperties getSystemProperties(int index) {
-        if (systemPropertiesBuilder_ == null) {
-          return systemProperties_.get(index);
+      public fr.kissy.encoder.proto.SystemProto.System getSystems(int index) {
+        if (systemsBuilder_ == null) {
+          return systems_.get(index);
         } else {
-          return systemPropertiesBuilder_.getMessage(index);
+          return systemsBuilder_.getMessage(index);
         }
       }
-      public Builder setSystemProperties(
-          int index, SystemProperties value) {
-        if (systemPropertiesBuilder_ == null) {
+      public Builder setSystems(
+          int index, fr.kissy.encoder.proto.SystemProto.System value) {
+        if (systemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.set(index, value);
+          ensureSystemsIsMutable();
+          systems_.set(index, value);
           onChanged();
         } else {
-          systemPropertiesBuilder_.setMessage(index, value);
+          systemsBuilder_.setMessage(index, value);
         }
         return this;
       }
-      public Builder setSystemProperties(
-          int index, SystemProperties.Builder builderForValue) {
-        if (systemPropertiesBuilder_ == null) {
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.set(index, builderForValue.build());
+      public Builder setSystems(
+          int index, fr.kissy.encoder.proto.SystemProto.System.Builder builderForValue) {
+        if (systemsBuilder_ == null) {
+          ensureSystemsIsMutable();
+          systems_.set(index, builderForValue.build());
           onChanged();
         } else {
-          systemPropertiesBuilder_.setMessage(index, builderForValue.build());
+          systemsBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addSystemProperties(SystemProperties value) {
-        if (systemPropertiesBuilder_ == null) {
+      public Builder addSystems(fr.kissy.encoder.proto.SystemProto.System value) {
+        if (systemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.add(value);
+          ensureSystemsIsMutable();
+          systems_.add(value);
           onChanged();
         } else {
-          systemPropertiesBuilder_.addMessage(value);
+          systemsBuilder_.addMessage(value);
         }
         return this;
       }
-      public Builder addSystemProperties(
-          int index, SystemProperties value) {
-        if (systemPropertiesBuilder_ == null) {
+      public Builder addSystems(
+          int index, fr.kissy.encoder.proto.SystemProto.System value) {
+        if (systemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.add(index, value);
+          ensureSystemsIsMutable();
+          systems_.add(index, value);
           onChanged();
         } else {
-          systemPropertiesBuilder_.addMessage(index, value);
+          systemsBuilder_.addMessage(index, value);
         }
         return this;
       }
-      public Builder addSystemProperties(
-          SystemProperties.Builder builderForValue) {
-        if (systemPropertiesBuilder_ == null) {
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.add(builderForValue.build());
+      public Builder addSystems(
+          fr.kissy.encoder.proto.SystemProto.System.Builder builderForValue) {
+        if (systemsBuilder_ == null) {
+          ensureSystemsIsMutable();
+          systems_.add(builderForValue.build());
           onChanged();
         } else {
-          systemPropertiesBuilder_.addMessage(builderForValue.build());
+          systemsBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
-      public Builder addSystemProperties(
-          int index, SystemProperties.Builder builderForValue) {
-        if (systemPropertiesBuilder_ == null) {
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.add(index, builderForValue.build());
+      public Builder addSystems(
+          int index, fr.kissy.encoder.proto.SystemProto.System.Builder builderForValue) {
+        if (systemsBuilder_ == null) {
+          ensureSystemsIsMutable();
+          systems_.add(index, builderForValue.build());
           onChanged();
         } else {
-          systemPropertiesBuilder_.addMessage(index, builderForValue.build());
+          systemsBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addAllSystemProperties(
-          Iterable<? extends SystemProperties> values) {
-        if (systemPropertiesBuilder_ == null) {
-          ensureSystemPropertiesIsMutable();
-          super.addAll(values, systemProperties_);
+      public Builder addAllSystems(
+          java.lang.Iterable<? extends fr.kissy.encoder.proto.SystemProto.System> values) {
+        if (systemsBuilder_ == null) {
+          ensureSystemsIsMutable();
+          super.addAll(values, systems_);
           onChanged();
         } else {
-          systemPropertiesBuilder_.addAllMessages(values);
+          systemsBuilder_.addAllMessages(values);
         }
         return this;
       }
-      public Builder clearSystemProperties() {
-        if (systemPropertiesBuilder_ == null) {
-          systemProperties_ = java.util.Collections.emptyList();
+      public Builder clearSystems() {
+        if (systemsBuilder_ == null) {
+          systems_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
-          systemPropertiesBuilder_.clear();
+          systemsBuilder_.clear();
         }
         return this;
       }
-      public Builder removeSystemProperties(int index) {
-        if (systemPropertiesBuilder_ == null) {
-          ensureSystemPropertiesIsMutable();
-          systemProperties_.remove(index);
+      public Builder removeSystems(int index) {
+        if (systemsBuilder_ == null) {
+          ensureSystemsIsMutable();
+          systems_.remove(index);
           onChanged();
         } else {
-          systemPropertiesBuilder_.remove(index);
+          systemsBuilder_.remove(index);
         }
         return this;
       }
-      public SystemProperties.Builder getSystemPropertiesBuilder(
+      public fr.kissy.encoder.proto.SystemProto.System.Builder getSystemsBuilder(
           int index) {
-        return getSystemPropertiesFieldBuilder().getBuilder(index);
+        return getSystemsFieldBuilder().getBuilder(index);
       }
-      public SystemPropertiesOrBuilder getSystemPropertiesOrBuilder(
+      public fr.kissy.encoder.proto.SystemProto.SystemOrBuilder getSystemsOrBuilder(
           int index) {
-        if (systemPropertiesBuilder_ == null) {
-          return systemProperties_.get(index);  } else {
-          return systemPropertiesBuilder_.getMessageOrBuilder(index);
+        if (systemsBuilder_ == null) {
+          return systems_.get(index);  } else {
+          return systemsBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends SystemPropertiesOrBuilder>
-           getSystemPropertiesOrBuilderList() {
-        if (systemPropertiesBuilder_ != null) {
-          return systemPropertiesBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends fr.kissy.encoder.proto.SystemProto.SystemOrBuilder> 
+           getSystemsOrBuilderList() {
+        if (systemsBuilder_ != null) {
+          return systemsBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(systemProperties_);
+          return java.util.Collections.unmodifiableList(systems_);
         }
       }
-      public SystemProperties.Builder addSystemPropertiesBuilder() {
-        return getSystemPropertiesFieldBuilder().addBuilder(
-            SystemProperties.getDefaultInstance());
+      public fr.kissy.encoder.proto.SystemProto.System.Builder addSystemsBuilder() {
+        return getSystemsFieldBuilder().addBuilder(
+            fr.kissy.encoder.proto.SystemProto.System.getDefaultInstance());
       }
-      public SystemProperties.Builder addSystemPropertiesBuilder(
+      public fr.kissy.encoder.proto.SystemProto.System.Builder addSystemsBuilder(
           int index) {
-        return getSystemPropertiesFieldBuilder().addBuilder(
-            index, SystemProperties.getDefaultInstance());
+        return getSystemsFieldBuilder().addBuilder(
+            index, fr.kissy.encoder.proto.SystemProto.System.getDefaultInstance());
       }
-      public java.util.List<SystemProperties.Builder>
-           getSystemPropertiesBuilderList() {
-        return getSystemPropertiesFieldBuilder().getBuilderList();
+      public java.util.List<fr.kissy.encoder.proto.SystemProto.System.Builder> 
+           getSystemsBuilderList() {
+        return getSystemsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          SystemProperties, SystemProperties.Builder, SystemPropertiesOrBuilder>
-          getSystemPropertiesFieldBuilder() {
-        if (systemPropertiesBuilder_ == null) {
-          systemPropertiesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              SystemProperties, SystemProperties.Builder, SystemPropertiesOrBuilder>(
-                  systemProperties_,
+          fr.kissy.encoder.proto.SystemProto.System, fr.kissy.encoder.proto.SystemProto.System.Builder, fr.kissy.encoder.proto.SystemProto.SystemOrBuilder> 
+          getSystemsFieldBuilder() {
+        if (systemsBuilder_ == null) {
+          systemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              fr.kissy.encoder.proto.SystemProto.System, fr.kissy.encoder.proto.SystemProto.System.Builder, fr.kissy.encoder.proto.SystemProto.SystemOrBuilder>(
+                  systems_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
-          systemProperties_ = null;
+          systems_ = null;
         }
-        return systemPropertiesBuilder_;
+        return systemsBuilder_;
       }
       
-      // repeated .Proto.Sdf.Object objects = 3;
-      private java.util.List<Object> objects_ =
+      // repeated .Sdf.Object objects = 3;
+      private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object> objects_ =
         java.util.Collections.emptyList();
       private void ensureObjectsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          objects_ = new java.util.ArrayList<Object>(objects_);
+          objects_ = new java.util.ArrayList<fr.kissy.encoder.proto.SdfProto.Sdf.Object>(objects_);
           bitField0_ |= 0x00000004;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          Object, Object.Builder, ObjectOrBuilder> objectsBuilder_;
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object, fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder> objectsBuilder_;
       
-      public java.util.List<Object> getObjectsList() {
+      public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object> getObjectsList() {
         if (objectsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(objects_);
         } else {
@@ -3677,7 +2925,7 @@ public final class SdfProto {
           return objectsBuilder_.getCount();
         }
       }
-      public Object getObjects(int index) {
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Object getObjects(int index) {
         if (objectsBuilder_ == null) {
           return objects_.get(index);
         } else {
@@ -3685,7 +2933,7 @@ public final class SdfProto {
         }
       }
       public Builder setObjects(
-          int index, Object value) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Object value) {
         if (objectsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3699,7 +2947,7 @@ public final class SdfProto {
         return this;
       }
       public Builder setObjects(
-          int index, Object.Builder builderForValue) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder builderForValue) {
         if (objectsBuilder_ == null) {
           ensureObjectsIsMutable();
           objects_.set(index, builderForValue.build());
@@ -3709,7 +2957,7 @@ public final class SdfProto {
         }
         return this;
       }
-      public Builder addObjects(Object value) {
+      public Builder addObjects(fr.kissy.encoder.proto.SdfProto.Sdf.Object value) {
         if (objectsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3723,7 +2971,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addObjects(
-          int index, Object value) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Object value) {
         if (objectsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3737,7 +2985,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addObjects(
-          Object.Builder builderForValue) {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder builderForValue) {
         if (objectsBuilder_ == null) {
           ensureObjectsIsMutable();
           objects_.add(builderForValue.build());
@@ -3748,7 +2996,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addObjects(
-          int index, Object.Builder builderForValue) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder builderForValue) {
         if (objectsBuilder_ == null) {
           ensureObjectsIsMutable();
           objects_.add(index, builderForValue.build());
@@ -3759,7 +3007,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addAllObjects(
-          Iterable<? extends Object> values) {
+          java.lang.Iterable<? extends fr.kissy.encoder.proto.SdfProto.Sdf.Object> values) {
         if (objectsBuilder_ == null) {
           ensureObjectsIsMutable();
           super.addAll(values, objects_);
@@ -3789,18 +3037,18 @@ public final class SdfProto {
         }
         return this;
       }
-      public Object.Builder getObjectsBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder getObjectsBuilder(
           int index) {
         return getObjectsFieldBuilder().getBuilder(index);
       }
-      public ObjectOrBuilder getObjectsOrBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder getObjectsOrBuilder(
           int index) {
         if (objectsBuilder_ == null) {
           return objects_.get(index);  } else {
           return objectsBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends ObjectOrBuilder>
+      public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder> 
            getObjectsOrBuilderList() {
         if (objectsBuilder_ != null) {
           return objectsBuilder_.getMessageOrBuilderList();
@@ -3808,25 +3056,25 @@ public final class SdfProto {
           return java.util.Collections.unmodifiableList(objects_);
         }
       }
-      public Object.Builder addObjectsBuilder() {
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder addObjectsBuilder() {
         return getObjectsFieldBuilder().addBuilder(
-            Object.getDefaultInstance());
+            fr.kissy.encoder.proto.SdfProto.Sdf.Object.getDefaultInstance());
       }
-      public Object.Builder addObjectsBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder addObjectsBuilder(
           int index) {
         return getObjectsFieldBuilder().addBuilder(
-            index, Object.getDefaultInstance());
+            index, fr.kissy.encoder.proto.SdfProto.Sdf.Object.getDefaultInstance());
       }
-      public java.util.List<Object.Builder>
+      public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder> 
            getObjectsBuilderList() {
         return getObjectsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          Object, Object.Builder, ObjectOrBuilder>
+          fr.kissy.encoder.proto.SdfProto.Sdf.Object, fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder> 
           getObjectsFieldBuilder() {
         if (objectsBuilder_ == null) {
           objectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              Object, Object.Builder, ObjectOrBuilder>(
+              fr.kissy.encoder.proto.SdfProto.Sdf.Object, fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.ObjectOrBuilder>(
                   objects_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
@@ -3836,20 +3084,20 @@ public final class SdfProto {
         return objectsBuilder_;
       }
       
-      // repeated .Proto.Sdf.Link links = 4;
-      private java.util.List<Link> links_ =
+      // repeated .Sdf.Link links = 4;
+      private java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link> links_ =
         java.util.Collections.emptyList();
       private void ensureLinksIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-          links_ = new java.util.ArrayList<Link>(links_);
+          links_ = new java.util.ArrayList<fr.kissy.encoder.proto.SdfProto.Sdf.Link>(links_);
           bitField0_ |= 0x00000008;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          Link, Link.Builder, LinkOrBuilder> linksBuilder_;
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link, fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder> linksBuilder_;
       
-      public java.util.List<Link> getLinksList() {
+      public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link> getLinksList() {
         if (linksBuilder_ == null) {
           return java.util.Collections.unmodifiableList(links_);
         } else {
@@ -3863,7 +3111,7 @@ public final class SdfProto {
           return linksBuilder_.getCount();
         }
       }
-      public Link getLinks(int index) {
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Link getLinks(int index) {
         if (linksBuilder_ == null) {
           return links_.get(index);
         } else {
@@ -3871,7 +3119,7 @@ public final class SdfProto {
         }
       }
       public Builder setLinks(
-          int index, Link value) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Link value) {
         if (linksBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3885,7 +3133,7 @@ public final class SdfProto {
         return this;
       }
       public Builder setLinks(
-          int index, Link.Builder builderForValue) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder builderForValue) {
         if (linksBuilder_ == null) {
           ensureLinksIsMutable();
           links_.set(index, builderForValue.build());
@@ -3895,7 +3143,7 @@ public final class SdfProto {
         }
         return this;
       }
-      public Builder addLinks(Link value) {
+      public Builder addLinks(fr.kissy.encoder.proto.SdfProto.Sdf.Link value) {
         if (linksBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3909,7 +3157,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addLinks(
-          int index, Link value) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Link value) {
         if (linksBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3923,7 +3171,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addLinks(
-          Link.Builder builderForValue) {
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder builderForValue) {
         if (linksBuilder_ == null) {
           ensureLinksIsMutable();
           links_.add(builderForValue.build());
@@ -3934,7 +3182,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addLinks(
-          int index, Link.Builder builderForValue) {
+          int index, fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder builderForValue) {
         if (linksBuilder_ == null) {
           ensureLinksIsMutable();
           links_.add(index, builderForValue.build());
@@ -3945,7 +3193,7 @@ public final class SdfProto {
         return this;
       }
       public Builder addAllLinks(
-          Iterable<? extends Link> values) {
+          java.lang.Iterable<? extends fr.kissy.encoder.proto.SdfProto.Sdf.Link> values) {
         if (linksBuilder_ == null) {
           ensureLinksIsMutable();
           super.addAll(values, links_);
@@ -3975,18 +3223,18 @@ public final class SdfProto {
         }
         return this;
       }
-      public Link.Builder getLinksBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder getLinksBuilder(
           int index) {
         return getLinksFieldBuilder().getBuilder(index);
       }
-      public LinkOrBuilder getLinksOrBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder getLinksOrBuilder(
           int index) {
         if (linksBuilder_ == null) {
           return links_.get(index);  } else {
           return linksBuilder_.getMessageOrBuilder(index);
         }
       }
-      public java.util.List<? extends LinkOrBuilder>
+      public java.util.List<? extends fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder> 
            getLinksOrBuilderList() {
         if (linksBuilder_ != null) {
           return linksBuilder_.getMessageOrBuilderList();
@@ -3994,25 +3242,25 @@ public final class SdfProto {
           return java.util.Collections.unmodifiableList(links_);
         }
       }
-      public Link.Builder addLinksBuilder() {
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder addLinksBuilder() {
         return getLinksFieldBuilder().addBuilder(
-            Link.getDefaultInstance());
+            fr.kissy.encoder.proto.SdfProto.Sdf.Link.getDefaultInstance());
       }
-      public Link.Builder addLinksBuilder(
+      public fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder addLinksBuilder(
           int index) {
         return getLinksFieldBuilder().addBuilder(
-            index, Link.getDefaultInstance());
+            index, fr.kissy.encoder.proto.SdfProto.Sdf.Link.getDefaultInstance());
       }
-      public java.util.List<Link.Builder>
+      public java.util.List<fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder> 
            getLinksBuilderList() {
         return getLinksFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          Link, Link.Builder, LinkOrBuilder>
+          fr.kissy.encoder.proto.SdfProto.Sdf.Link, fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder> 
           getLinksFieldBuilder() {
         if (linksBuilder_ == null) {
           linksBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              Link, Link.Builder, LinkOrBuilder>(
+              fr.kissy.encoder.proto.SdfProto.Sdf.Link, fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder, fr.kissy.encoder.proto.SdfProto.Sdf.LinkOrBuilder>(
                   links_,
                   ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
@@ -4022,7 +3270,7 @@ public final class SdfProto {
         return linksBuilder_;
       }
       
-      // @@protoc_insertion_point(builder_scope:Proto.Sdf)
+      // @@protoc_insertion_point(builder_scope:Sdf)
     }
     
     static {
@@ -4030,34 +3278,29 @@ public final class SdfProto {
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:Proto.Sdf)
+    // @@protoc_insertion_point(class_scope:Sdf)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Sdf_descriptor;
+    internal_static_Sdf_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Sdf_fieldAccessorTable;
+      internal_static_Sdf_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Sdf_SystemProperties_descriptor;
+    internal_static_Sdf_Object_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Sdf_SystemProperties_fieldAccessorTable;
+      internal_static_Sdf_Object_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Sdf_ObjectProperties_descriptor;
+    internal_static_Sdf_ObjectProperties_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Sdf_ObjectProperties_fieldAccessorTable;
+      internal_static_Sdf_ObjectProperties_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Sdf_Object_descriptor;
+    internal_static_Sdf_Link_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Sdf_Object_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Sdf_Link_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Sdf_Link_fieldAccessorTable;
+      internal_static_Sdf_Link_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4066,75 +3309,66 @@ public final class SdfProto {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
-      "\n\tsdf.proto\022\005Proto\032\016property.proto\"\345\003\n\003S" +
-      "df\022\014\n\004name\030\001 \002(\t\0225\n\020systemProperties\030\002 \003" +
-      "(\0132\033.Proto.Sdf.SystemProperties\022\"\n\007objec" +
-      "ts\030\003 \003(\0132\021.Proto.Sdf.Object\022\036\n\005links\030\004 \003" +
-      "(\0132\017.Proto.Sdf.Link\032K\n\020SystemProperties\022" +
-      "\022\n\nsystemType\030\n \002(\t\022#\n\nproperties\030\013 \003(\0132" +
-      "\017.Proto.Property\032_\n\020ObjectProperties\022\022\n\n" +
-      "systemType\030\024 \002(\t\022\022\n\nobjectType\030\025 \001(\t\022#\n\n" +
-      "properties\030\026 \003(\0132\017.Proto.Property\032M\n\006Obj" +
-      "ect\022\014\n\004name\030\036 \002(\t\0225\n\020objectProperties\030\037 ",
-      "\003(\0132\033.Proto.Sdf.ObjectProperties\032X\n\004Link" +
-      "\022\017\n\007subject\030( \002(\t\022\020\n\010observer\030) \002(\t\022\025\n\rs" +
-      "ubjectSystem\030* \002(\t\022\026\n\016observerSystem\030+ \002" +
-      "(\tB%\n\026fr.kissy.encoder.protoB\010SdfProto\210\001" +
-      "\000"
+    java.lang.String[] descriptorData = {
+      "\n\tsdf.proto\032\014system.proto\032\016property.prot" +
+      "o\"\217\003\n\003Sdf\022\014\n\004name\030\001 \002(\t\022\030\n\007systems\030\002 \003(\013" +
+      "2\007.System\022\034\n\007objects\030\003 \003(\0132\013.Sdf.Object\022" +
+      "\030\n\005links\030\004 \003(\0132\t.Sdf.Link\032G\n\006Object\022\014\n\004n" +
+      "ame\030\n \002(\t\022/\n\020objectProperties\030\013 \003(\0132\025.Sd" +
+      "f.ObjectProperties\032a\n\020ObjectProperties\022\014" +
+      "\n\004type\030\024 \001(\t\022 \n\nsystemType\030\025 \002(\0162\014.Syste" +
+      "m.Type\022\035\n\nproperties\030\026 \003(\0132\t.Property\032|\n" +
+      "\004Link\022\017\n\007subject\030\036 \002(\t\022\020\n\010observer\030\037 \002(\t" +
+      "\022\'\n\021subjectSystemType\030  \002(\0162\014.System.Typ",
+      "e\022(\n\022observerSystemType\030! \002(\0162\014.System.T" +
+      "ypeB%\n\026fr.kissy.encoder.protoB\010SdfProto\210" +
+      "\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Proto_Sdf_descriptor =
+          internal_static_Sdf_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_Proto_Sdf_fieldAccessorTable = new
+          internal_static_Sdf_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Sdf_descriptor,
-              new String[] { "Name", "SystemProperties", "Objects", "Links", },
-              Sdf.class,
-              Sdf.Builder.class);
-          internal_static_Proto_Sdf_SystemProperties_descriptor =
-            internal_static_Proto_Sdf_descriptor.getNestedTypes().get(0);
-          internal_static_Proto_Sdf_SystemProperties_fieldAccessorTable = new
+              internal_static_Sdf_descriptor,
+              new java.lang.String[] { "Name", "Systems", "Objects", "Links", },
+              fr.kissy.encoder.proto.SdfProto.Sdf.class,
+              fr.kissy.encoder.proto.SdfProto.Sdf.Builder.class);
+          internal_static_Sdf_Object_descriptor =
+            internal_static_Sdf_descriptor.getNestedTypes().get(0);
+          internal_static_Sdf_Object_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Sdf_SystemProperties_descriptor,
-              new String[] { "SystemType", "Properties", },
-              Sdf.SystemProperties.class,
-              Sdf.SystemProperties.Builder.class);
-          internal_static_Proto_Sdf_ObjectProperties_descriptor =
-            internal_static_Proto_Sdf_descriptor.getNestedTypes().get(1);
-          internal_static_Proto_Sdf_ObjectProperties_fieldAccessorTable = new
+              internal_static_Sdf_Object_descriptor,
+              new java.lang.String[] { "Name", "ObjectProperties", },
+              fr.kissy.encoder.proto.SdfProto.Sdf.Object.class,
+              fr.kissy.encoder.proto.SdfProto.Sdf.Object.Builder.class);
+          internal_static_Sdf_ObjectProperties_descriptor =
+            internal_static_Sdf_descriptor.getNestedTypes().get(1);
+          internal_static_Sdf_ObjectProperties_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Sdf_ObjectProperties_descriptor,
-              new String[] { "SystemType", "ObjectType", "Properties", },
-              Sdf.ObjectProperties.class,
-              Sdf.ObjectProperties.Builder.class);
-          internal_static_Proto_Sdf_Object_descriptor =
-            internal_static_Proto_Sdf_descriptor.getNestedTypes().get(2);
-          internal_static_Proto_Sdf_Object_fieldAccessorTable = new
+              internal_static_Sdf_ObjectProperties_descriptor,
+              new java.lang.String[] { "Type", "SystemType", "Properties", },
+              fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.class,
+              fr.kissy.encoder.proto.SdfProto.Sdf.ObjectProperties.Builder.class);
+          internal_static_Sdf_Link_descriptor =
+            internal_static_Sdf_descriptor.getNestedTypes().get(2);
+          internal_static_Sdf_Link_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Sdf_Object_descriptor,
-              new String[] { "Name", "ObjectProperties", },
-              Sdf.Object.class,
-              Sdf.Object.Builder.class);
-          internal_static_Proto_Sdf_Link_descriptor =
-            internal_static_Proto_Sdf_descriptor.getNestedTypes().get(3);
-          internal_static_Proto_Sdf_Link_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Sdf_Link_descriptor,
-              new String[] { "Subject", "Observer", "SubjectSystem", "ObserverSystem", },
-              Sdf.Link.class,
-              Sdf.Link.Builder.class);
+              internal_static_Sdf_Link_descriptor,
+              new java.lang.String[] { "Subject", "Observer", "SubjectSystemType", "ObserverSystemType", },
+              fr.kissy.encoder.proto.SdfProto.Sdf.Link.class,
+              fr.kissy.encoder.proto.SdfProto.Sdf.Link.Builder.class);
           return null;
         }
       };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          PropertyProto.getDescriptor(),
+          fr.kissy.encoder.proto.SystemProto.getDescriptor(),
+          fr.kissy.encoder.proto.PropertyProto.getDescriptor(),
         }, assigner);
   }
   

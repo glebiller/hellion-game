@@ -4,6 +4,7 @@ import fr.kissy.encoder.main.utils.AssertUtils;
 import fr.kissy.encoder.main.utils.ParseUtils;
 import fr.kissy.encoder.proto.PropertyProto;
 import fr.kissy.encoder.proto.SdfProto;
+import fr.kissy.encoder.proto.SystemProto;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,13 +25,13 @@ import java.util.Map;
 public class SdfParser extends AbstractParser {
     
     private boolean include = false;
-    private List<String> systems;
+    private List<SystemProto.System.Type> systems;
     private List<String> objects = new ArrayList<String>();
 
     /**
      * @inheritDoc
      */
-    public SdfParser(String xmlPath, String outputPath, List<String> systems) throws XMLParseException {
+    public SdfParser(String xmlPath, String outputPath, List<SystemProto.System.Type> systems) throws XMLParseException {
         super(xmlPath, outputPath);
         this.systems = systems;
     }
@@ -38,7 +39,7 @@ public class SdfParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public SdfParser(String xmlPath, String outputPath, List<String> systems, boolean include) throws XMLParseException {
+    public SdfParser(String xmlPath, String outputPath, List<SystemProto.System.Type> systems, boolean include) throws XMLParseException {
         this(xmlPath, outputPath, systems);
         this.include = include;
     }
@@ -101,7 +102,6 @@ public class SdfParser extends AbstractParser {
         SdfParser includeParser = new SdfParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
                 outputFile.getAbsolutePath(), systems, true);
         SdfProto.Sdf.Builder builder = (SdfProto.Sdf.Builder) includeParser.getBuilder();
-        //getSdfBuidler().addAllSystemProperties(builder.getSystemPropertiesList());
         // TODO make system properties update correctly
         getSdfBuidler().addAllObjects(builder.getObjectsList());
         getSdfBuidler().addAllLinks(builder.getLinksList());
@@ -128,11 +128,10 @@ public class SdfParser extends AbstractParser {
     private void parseSystemProperties(Element propertiesElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
 
-        SdfProto.Sdf.SystemProperties.Builder properties = ParseUtils.parseSystemProperties(propertiesElement);
-        AssertUtils.makeTest(systems.contains(properties.getSystemType()),
-                properties.getSystemType() + " is not a known systemType");
+        SystemProto.System.Builder systems = ParseUtils.parseSystemProperties(propertiesElement);
+        AssertUtils.makeTest(this.systems.contains(systems.getType()), systems.getType() + " is not a known systemType");
 
-        getSdfBuidler().addSystemProperties(properties);
+        getSdfBuidler().addSystems(systems);
     }
 
     /**
@@ -167,7 +166,7 @@ public class SdfParser extends AbstractParser {
                 
                 // Fill the properties map
                 for (SdfProto.Sdf.ObjectProperties properties : objectBuilder.getObjectPropertiesList()) {
-                    propertiesMap.put(properties.getSystemType(), properties);
+                    propertiesMap.put(properties.getType(), properties);
                 }
             }
     
@@ -175,7 +174,7 @@ public class SdfParser extends AbstractParser {
             NodeList properties = objectElement.getElementsByTagName("Properties");
             for (int j = 0; j < properties.getLength(); j++) {
                 SdfProto.Sdf.ObjectProperties.Builder propertiesBuilder = ParseUtils.parseObjectProperties((Element) properties.item(j));
-                if (propertiesMap.containsKey(propertiesBuilder.getSystemType())) {
+                if (propertiesMap.containsKey(propertiesBuilder.getType())) {
                     List<String> currentSystemProperties = getCurrentSystemProperties(propertiesBuilder.getPropertiesList());
                     for (PropertyProto.Property property : propertiesBuilder.getPropertiesList()) {
                         if (currentSystemProperties.contains(property.getName())) {
@@ -246,17 +245,19 @@ public class SdfParser extends AbstractParser {
             
             linkBuilder.setSubject(ParseUtils.safeGetAttribute(linkElement, "Subject"));
             linkBuilder.setObserver(ParseUtils.safeGetAttribute(linkElement, "Observer"));
-            linkBuilder.setSubjectSystem(ParseUtils.safeGetAttribute(linkElement, "SubjectSystem"));
-            linkBuilder.setObserverSystem(ParseUtils.safeGetAttribute(linkElement, "ObserverSystem"));
+            String subjectSystemType = ParseUtils.safeGetAttribute(linkElement, "SubjectSystem");
+            linkBuilder.setSubjectSystemType(SystemProto.System.Type.valueOf(subjectSystemType));
+            String observerSystemType = ParseUtils.safeGetAttribute(linkElement, "ObserverSystem");
+            linkBuilder.setObserverSystemType(SystemProto.System.Type.valueOf(observerSystemType));
 
             AssertUtils.makeTest(objects.contains(linkBuilder.getSubject()),
                     linkBuilder.getSubject() + " is not a known object");
             AssertUtils.makeTest(objects.contains(linkBuilder.getObserver()),
                     linkBuilder.getObserver() + " is not a known object");
-            AssertUtils.makeTest(systems.contains(linkBuilder.getSubjectSystem()),
-                    linkBuilder.getSubjectSystem() + " is not a known systemType");
-            AssertUtils.makeTest(systems.contains(linkBuilder.getObserverSystem()),
-                    linkBuilder.getObserverSystem() + " is not a known systemType");
+            AssertUtils.makeTest(systems.contains(linkBuilder.getSubjectSystemType()),
+                    linkBuilder.getSubjectSystemType() + " is not a known systemType");
+            AssertUtils.makeTest(systems.contains(linkBuilder.getObserverSystemType()),
+                    linkBuilder.getObserverSystemType() + " is not a known systemType");
             
             getSdfBuidler().addLinks(linkBuilder);
         }

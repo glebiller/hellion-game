@@ -319,8 +319,11 @@ class IGraphicsParticleObject {
 
 
     public:
+
+#if defined( _MSC_VER )
 #pragma warning( push, 0 )
 #pragma warning( disable : 4100 )
+#endif
 
         virtual u32 GetParticleGroupCount(void) {return 0;};
 
@@ -333,7 +336,9 @@ class IGraphicsParticleObject {
         virtual std::string GetParticleGroupTechnique(void) {return "turkey breath";};
 
         virtual f32 GetParticleSystemAge() {return 0.0f;};
-#pragma warning( pop )
 
+#if defined( _MSC_VER )
+#pragma warning( pop )
+#endif
 
 };

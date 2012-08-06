@@ -24,7 +24,7 @@
 #include <cstdio>
 #include <ctime>
 
-#include "boost\thread\locks.hpp"
+#include "boost/thread/locks.hpp"
 
 #define MAX_STRING_LENGTH 2048
 

@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Main {
     
     public static void main(String[] args) throws IOException, XMLParseException {
-        if (args.length < 1) {
+        if (args.length < 2) {
             System.out.println("The first argument must be the file to process, " +
                     "and the second argument must be the output path.");
             return;
@@ -59,8 +59,8 @@ public class Main {
         GdfParser gdfParser = new GdfParser(gdfFile.getAbsolutePath(), outputFile.getAbsolutePath());
         File gdfProto = gdfParser.writeBuilder();
 
-        for (GdfProto.Gdf.Scene scene : gdfParser.getGdfBuidler().getScenesList()) {
-            SdfParser sdfParser = new SdfParser(gdfDirectoryFile.getAbsolutePath() + "\\" + scene.getSdf() + ".sdf",
+        for (String scene : gdfParser.getGdfBuidler().getScenesList()) {
+            SdfParser sdfParser = new SdfParser(gdfDirectoryFile.getAbsolutePath() + "/" + scene + ".sdf",
                     outputFile.getAbsolutePath(), gdfParser.getSystems());
             sdfParser.writeBuilder();
         }

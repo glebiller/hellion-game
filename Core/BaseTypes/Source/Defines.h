@@ -14,18 +14,41 @@
 
 #pragma once
 
-#ifdef _DEBUG
+//
+// Build options
+//
+#if defined( _DEBUG )
 	#define DEBUG_BUILD
 #endif
 
+//
+// Compiler options
+//
+#if defined( _MSC_VER )
+	#define MSC_COMPILER
+#elif defined( __GNUC__ )
+	#define GCC_COMPILER
+#else
+	#pragma error "Unkown compiler"
+#endif
+
+//
+// Custom values
+//
 #ifndef NULL
 	#define NULL                            0
 #endif
 
+//
+// Easy macro
+//
 #define UNREFERENCED_PARAM(P)               (P)
-#define SAFE_DELETE(p)                    if ((p)!=NULL){delete (p); (p)=NULL;}
-#define SAFE_DELETE_ARRAY(p)              if ((p)!=NULL){delete [] (p); (p)=NULL;}
+#define SAFE_DELETE(p)                    	if ((p)!=NULL){delete (p); (p)=NULL;}
+#define SAFE_DELETE_ARRAY(p)              	if ((p)!=NULL){delete [] (p); (p)=NULL;}
 
+//
+// In Out InOut Inline
+//
 #ifdef _MSC_VER
 	#define In                              __in const
 	#define Out                             __out

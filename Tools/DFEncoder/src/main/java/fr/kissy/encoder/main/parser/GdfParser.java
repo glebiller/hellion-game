@@ -3,6 +3,7 @@ package fr.kissy.encoder.main.parser;
 import fr.kissy.encoder.main.utils.AssertUtils;
 import fr.kissy.encoder.main.utils.ParseUtils;
 import fr.kissy.encoder.proto.GdfProto;
+import fr.kissy.encoder.proto.SystemProto;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class GdfParser extends AbstractParser {
     
-    private List<String> systems = new ArrayList<String>();
+    private List<SystemProto.System.Type> systems = new ArrayList<SystemProto.System.Type>();
 
     /**
      * @inheritDoc
@@ -93,11 +94,11 @@ public class GdfParser extends AbstractParser {
 
         NodeList systemList = systemsElement.getElementsByTagName("System");
         for (int i = 0; i < systemList.getLength(); i++) {
-            GdfProto.Gdf.System.Builder systemBuilder = GdfProto.Gdf.System.newBuilder();
+            SystemProto.System.Builder systemBuilder = SystemProto.System.newBuilder();
             Element systemElement = (Element) systemList.item(i);
 
-            systemBuilder.setType(ParseUtils.safeGetAttribute(systemElement, "Type"));
-            systemBuilder.setLib(ParseUtils.safeGetAttribute(systemElement, "Lib"));
+            String type = ParseUtils.safeGetAttribute(systemElement, "Type");
+            systemBuilder.setType(SystemProto.System.Type.valueOf(type));
 
             NodeList properties = systemElement.getElementsByTagName("Property");
             for (int j = 0; j < properties.getLength(); j++) {
@@ -125,13 +126,8 @@ public class GdfParser extends AbstractParser {
         // Scenes
         NodeList scenesList = scenesElement.getElementsByTagName("Scene");
         for (int i = 0; i < scenesList.getLength(); i++) {
-            GdfProto.Gdf.Scene.Builder sceneBuilder = GdfProto.Gdf.Scene.newBuilder();
             Element sceneElement = (Element) scenesList.item(i);
-
-            sceneBuilder.setName(ParseUtils.safeGetAttribute(sceneElement, "Name"));
-            sceneBuilder.setSdf(ParseUtils.safeGetAttribute(sceneElement, "CDF"));
-            
-            getGdfBuidler().addScenes(sceneBuilder);
+            getGdfBuidler().addScenes(ParseUtils.safeGetAttribute(sceneElement, "Name"));
         }
     }
 
@@ -149,7 +145,7 @@ public class GdfParser extends AbstractParser {
      *
      * @return The system list.
      */
-    public List<String> getSystems() {
+    public List<SystemProto.System.Type> getSystems() {
         return systems;
     }
 }

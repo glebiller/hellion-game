@@ -19,6 +19,9 @@
 #ifdef ASSERT
     #undef ASSERT
 #endif
+#ifdef assert
+    #undef assert
+#endif
 
 #ifdef DEBUG_BUILD
     #ifdef _MSC_VER

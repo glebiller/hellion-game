@@ -40,23 +40,23 @@ public final class PropertyProto {
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return PropertyProto.internal_static_Proto_Property_descriptor;
+      return fr.kissy.encoder.proto.PropertyProto.internal_static_Property_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return PropertyProto.internal_static_Proto_Property_fieldAccessorTable;
+      return fr.kissy.encoder.proto.PropertyProto.internal_static_Property_fieldAccessorTable;
     }
     
     private int bitField0_;
     // required string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
-    private Object name_;
+    private java.lang.Object name_;
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     public String getName() {
-      Object ref = name_;
+      java.lang.Object ref = name_;
       if (ref instanceof String) {
         return (String) ref;
       } else {
@@ -70,7 +70,7 @@ public final class PropertyProto {
       }
     }
     private com.google.protobuf.ByteString getNameBytes() {
-      Object ref = name_;
+      java.lang.Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8((String) ref);
@@ -149,47 +149,47 @@ public final class PropertyProto {
     }
     
     private static final long serialVersionUID = 0L;
-    @Override
-    protected Object writeReplace()
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
     
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static Property parseFrom(byte[] data)
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static Property parseFrom(java.io.InputStream input)
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static Property parseDelimitedFrom(java.io.InputStream input)
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       Builder builder = newBuilder();
       if (builder.mergeDelimitedFrom(input)) {
@@ -198,7 +198,7 @@ public final class PropertyProto {
         return null;
       }
     }
-    public static Property parseDelimitedFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -209,12 +209,12 @@ public final class PropertyProto {
         return null;
       }
     }
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static Property parseFrom(
+    public static fr.kissy.encoder.proto.PropertyProto.Property parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -224,12 +224,12 @@ public final class PropertyProto {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(Property prototype) {
+    public static Builder newBuilder(fr.kissy.encoder.proto.PropertyProto.Property prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
     
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
@@ -237,15 +237,15 @@ public final class PropertyProto {
     }
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements PropertyOrBuilder {
+       implements fr.kissy.encoder.proto.PropertyProto.PropertyOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return PropertyProto.internal_static_Proto_Property_descriptor;
+        return fr.kissy.encoder.proto.PropertyProto.internal_static_Property_descriptor;
       }
       
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return PropertyProto.internal_static_Proto_Property_fieldAccessorTable;
+        return fr.kissy.encoder.proto.PropertyProto.internal_static_Property_fieldAccessorTable;
       }
       
       // Construct using fr.kissy.encoder.proto.PropertyProto.Property.newBuilder()
@@ -280,24 +280,24 @@ public final class PropertyProto {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return Property.getDescriptor();
+        return fr.kissy.encoder.proto.PropertyProto.Property.getDescriptor();
       }
       
-      public Property getDefaultInstanceForType() {
-        return Property.getDefaultInstance();
+      public fr.kissy.encoder.proto.PropertyProto.Property getDefaultInstanceForType() {
+        return fr.kissy.encoder.proto.PropertyProto.Property.getDefaultInstance();
       }
       
-      public Property build() {
-        Property result = buildPartial();
+      public fr.kissy.encoder.proto.PropertyProto.Property build() {
+        fr.kissy.encoder.proto.PropertyProto.Property result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
       
-      private Property buildParsed()
+      private fr.kissy.encoder.proto.PropertyProto.Property buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
-        Property result = buildPartial();
+        fr.kissy.encoder.proto.PropertyProto.Property result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(
             result).asInvalidProtocolBufferException();
@@ -305,8 +305,8 @@ public final class PropertyProto {
         return result;
       }
       
-      public Property buildPartial() {
-        Property result = new Property(this);
+      public fr.kissy.encoder.proto.PropertyProto.Property buildPartial() {
+        fr.kissy.encoder.proto.PropertyProto.Property result = new fr.kissy.encoder.proto.PropertyProto.Property(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -325,16 +325,16 @@ public final class PropertyProto {
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Property) {
-          return mergeFrom((Property)other);
+        if (other instanceof fr.kissy.encoder.proto.PropertyProto.Property) {
+          return mergeFrom((fr.kissy.encoder.proto.PropertyProto.Property)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(Property other) {
-        if (other == Property.getDefaultInstance()) return this;
+      public Builder mergeFrom(fr.kissy.encoder.proto.PropertyProto.Property other) {
+        if (other == fr.kissy.encoder.proto.PropertyProto.Property.getDefaultInstance()) return this;
         if (other.hasName()) {
           setName(other.getName());
         }
@@ -400,12 +400,12 @@ public final class PropertyProto {
       private int bitField0_;
       
       // required string name = 1;
-      private Object name_ = "";
+      private java.lang.Object name_ = "";
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       public String getName() {
-        Object ref = name_;
+        java.lang.Object ref = name_;
         if (!(ref instanceof String)) {
           String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
           name_ = s;
@@ -473,7 +473,7 @@ public final class PropertyProto {
         return this;
       }
       public Builder addAllValue(
-          Iterable<String> values) {
+          java.lang.Iterable<String> values) {
         ensureValueIsMutable();
         super.addAll(values, value_);
         onChanged();
@@ -491,7 +491,7 @@ public final class PropertyProto {
         onChanged();
       }
       
-      // @@protoc_insertion_point(builder_scope:Proto.Property)
+      // @@protoc_insertion_point(builder_scope:Property)
     }
     
     static {
@@ -499,14 +499,14 @@ public final class PropertyProto {
       defaultInstance.initFields();
     }
     
-    // @@protoc_insertion_point(class_scope:Proto.Property)
+    // @@protoc_insertion_point(class_scope:Property)
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Proto_Property_descriptor;
+    internal_static_Property_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Proto_Property_fieldAccessorTable;
+      internal_static_Property_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -515,24 +515,24 @@ public final class PropertyProto {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
-      "\n\016property.proto\022\005Proto\"\'\n\010Property\022\014\n\004n" +
-      "ame\030\001 \002(\t\022\r\n\005value\030\002 \003(\tB*\n\026fr.kissy.enc" +
-      "oder.protoB\rPropertyProto\210\001\000"
+    java.lang.String[] descriptorData = {
+      "\n\016property.proto\"\'\n\010Property\022\014\n\004name\030\001 \002" +
+      "(\t\022\r\n\005value\030\002 \003(\tB*\n\026fr.kissy.encoder.pr" +
+      "otoB\rPropertyProto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Proto_Property_descriptor =
+          internal_static_Property_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_Proto_Property_fieldAccessorTable = new
+          internal_static_Property_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Proto_Property_descriptor,
-              new String[] { "Name", "Value", },
-              Property.class,
-              Property.Builder.class);
+              internal_static_Property_descriptor,
+              new java.lang.String[] { "Name", "Value", },
+              fr.kissy.encoder.proto.PropertyProto.Property.class,
+              fr.kissy.encoder.proto.PropertyProto.Property.Builder.class);
           return null;
         }
       };

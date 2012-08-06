@@ -146,7 +146,9 @@ class ISystemScene : public CSubject, public IObserver {
          *
          * @return  A System::Changes::BitMask.
          */
-        virtual System::Changes::BitMask GetDesiredSystemChanges(void) { return System::Changes::None; };
+        virtual System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
 
         /**
          * Change occurred.
@@ -163,7 +165,7 @@ class ISystemScene : public CSubject, public IObserver {
 
     protected:
 
-        bool                        m_bInitialized;
         ISystem*                    m_pSystem;
+        bool                        m_bInitialized;
 
 };
