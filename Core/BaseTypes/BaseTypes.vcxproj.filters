@@ -63,6 +63,9 @@
     <ClInclude Include="Source\Assert.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Proto\system.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Debug.cpp">
@@ -81,6 +84,9 @@
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
     <ClCompile Include="Source\Proto\sdf.pb.cc">
+      <Filter>Fichiers sources\Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\system.pb.cc">
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
   </ItemGroup>

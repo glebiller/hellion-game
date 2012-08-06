@@ -15,27 +15,64 @@
 
 #pragma once
 
+#include "Property.h"
+#include "System.h"
 
+class ISystemScene;
+
+/**
+ * Geometry system.
+ * 
+ * @sa  ISystem
+ */
 class GeometrySystem : public ISystem {
     public:
-
+        
+        /**
+         * @inheritDoc
+         */
         GeometrySystem(void);
+
+        /**
+         * Destructor.
+         */
         virtual ~GeometrySystem(void);
 
     protected:
 
+        /**
+         * @inheritDoc
+         */
         virtual const char* GetName(void);
-
+        
+        /**
+         * @inheritDoc
+         */
         virtual System::Type GetSystemType(void);
-
+        
+        /**
+         * @inheritDoc
+         */
         virtual Error Initialize(Properties::Array Properties);
-
+        
+        /**
+         * @inheritDoc
+         */
         virtual void GetProperties(Properties::Array& Properties);
-
+        
+        /**
+         * @inheritDoc
+         */
         virtual void SetProperties(Properties::Array Properties);
 
+        /**
+         * @inheritDoc
+         */
         virtual ISystemScene* CreateScene(void);
 
+        /**
+         * @inheritDoc
+         */
         virtual Error DestroyScene(ISystemScene* pSystemScene);
 
 };

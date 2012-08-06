@@ -23,6 +23,7 @@
     <ClInclude Include="Source\Proto\gdf.pb.h" />
     <ClInclude Include="Source\Proto\property.pb.h" />
     <ClInclude Include="Source\Proto\sdf.pb.h" />
+    <ClInclude Include="Source\Proto\system.pb.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\SpinMutex.h" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     <ClCompile Include="Source\Proto\gdf.pb.cc" />
     <ClCompile Include="Source\Proto\property.pb.cc" />
     <ClCompile Include="Source\Proto\sdf.pb.cc" />
+    <ClCompile Include="Source\Proto\system.pb.cc" />
     <ClCompile Include="Source\Singleton.cpp" />
   </ItemGroup>
   <ItemGroup>

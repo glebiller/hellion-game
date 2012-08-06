@@ -13,22 +13,17 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace Proto {
-
 namespace {
 
 const ::google::protobuf::Descriptor* Sdf_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Sdf_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Sdf_SystemProperties_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Sdf_SystemProperties_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Sdf_ObjectProperties_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Sdf_ObjectProperties_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Sdf_Object_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Sdf_Object_reflection_ = NULL;
+const ::google::protobuf::Descriptor* Sdf_ObjectProperties_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  Sdf_ObjectProperties_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Sdf_Link_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Sdf_Link_reflection_ = NULL;
@@ -45,7 +40,7 @@ void protobuf_AssignDesc_sdf_2eproto() {
   Sdf_descriptor_ = file->message_type(0);
   static const int Sdf_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf, systemproperties_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf, systems_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf, objects_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf, links_),
   };
@@ -60,40 +55,7 @@ void protobuf_AssignDesc_sdf_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Sdf));
-  Sdf_SystemProperties_descriptor_ = Sdf_descriptor_->nested_type(0);
-  static const int Sdf_SystemProperties_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_SystemProperties, systemtype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_SystemProperties, properties_),
-  };
-  Sdf_SystemProperties_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      Sdf_SystemProperties_descriptor_,
-      Sdf_SystemProperties::default_instance_,
-      Sdf_SystemProperties_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_SystemProperties, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_SystemProperties, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Sdf_SystemProperties));
-  Sdf_ObjectProperties_descriptor_ = Sdf_descriptor_->nested_type(1);
-  static const int Sdf_ObjectProperties_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, systemtype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, objecttype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, properties_),
-  };
-  Sdf_ObjectProperties_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      Sdf_ObjectProperties_descriptor_,
-      Sdf_ObjectProperties::default_instance_,
-      Sdf_ObjectProperties_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Sdf_ObjectProperties));
-  Sdf_Object_descriptor_ = Sdf_descriptor_->nested_type(2);
+  Sdf_Object_descriptor_ = Sdf_descriptor_->nested_type(0);
   static const int Sdf_Object_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Object, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Object, objectproperties_),
@@ -109,12 +71,29 @@ void protobuf_AssignDesc_sdf_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Sdf_Object));
-  Sdf_Link_descriptor_ = Sdf_descriptor_->nested_type(3);
+  Sdf_ObjectProperties_descriptor_ = Sdf_descriptor_->nested_type(1);
+  static const int Sdf_ObjectProperties_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, systemtype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, properties_),
+  };
+  Sdf_ObjectProperties_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      Sdf_ObjectProperties_descriptor_,
+      Sdf_ObjectProperties::default_instance_,
+      Sdf_ObjectProperties_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_ObjectProperties, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(Sdf_ObjectProperties));
+  Sdf_Link_descriptor_ = Sdf_descriptor_->nested_type(2);
   static const int Sdf_Link_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, subject_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, observer_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, subjectsystem_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, observersystem_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, subjectsystemtype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Sdf_Link, observersystemtype_),
   };
   Sdf_Link_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -142,11 +121,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Sdf_descriptor_, &Sdf::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Sdf_SystemProperties_descriptor_, &Sdf_SystemProperties::default_instance());
+    Sdf_Object_descriptor_, &Sdf_Object::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Sdf_ObjectProperties_descriptor_, &Sdf_ObjectProperties::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Sdf_Object_descriptor_, &Sdf_Object::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Sdf_Link_descriptor_, &Sdf_Link::default_instance());
 }
@@ -156,12 +133,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_sdf_2eproto() {
   delete Sdf::default_instance_;
   delete Sdf_reflection_;
-  delete Sdf_SystemProperties::default_instance_;
-  delete Sdf_SystemProperties_reflection_;
-  delete Sdf_ObjectProperties::default_instance_;
-  delete Sdf_ObjectProperties_reflection_;
   delete Sdf_Object::default_instance_;
   delete Sdf_Object_reflection_;
+  delete Sdf_ObjectProperties::default_instance_;
+  delete Sdf_ObjectProperties_reflection_;
   delete Sdf_Link::default_instance_;
   delete Sdf_Link_reflection_;
 }
@@ -172,34 +147,31 @@ void protobuf_AddDesc_sdf_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::Proto::protobuf_AddDesc_property_2eproto();
+  ::protobuf_AddDesc_system_2eproto();
+  ::protobuf_AddDesc_property_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tsdf.proto\022\005Proto\032\016property.proto\"\345\003\n\003S"
-    "df\022\014\n\004name\030\001 \002(\t\0225\n\020systemProperties\030\002 \003"
-    "(\0132\033.Proto.Sdf.SystemProperties\022\"\n\007objec"
-    "ts\030\003 \003(\0132\021.Proto.Sdf.Object\022\036\n\005links\030\004 \003"
-    "(\0132\017.Proto.Sdf.Link\032K\n\020SystemProperties\022"
-    "\022\n\nsystemType\030\n \002(\t\022#\n\nproperties\030\013 \003(\0132"
-    "\017.Proto.Property\032_\n\020ObjectProperties\022\022\n\n"
-    "systemType\030\024 \002(\t\022\022\n\nobjectType\030\025 \001(\t\022#\n\n"
-    "properties\030\026 \003(\0132\017.Proto.Property\032M\n\006Obj"
-    "ect\022\014\n\004name\030\036 \002(\t\0225\n\020objectProperties\030\037 "
-    "\003(\0132\033.Proto.Sdf.ObjectProperties\032X\n\004Link"
-    "\022\017\n\007subject\030( \002(\t\022\020\n\010observer\030) \002(\t\022\025\n\rs"
-    "ubjectSystem\030* \002(\t\022\026\n\016observerSystem\030+ \002"
-    "(\tB%\n\026fr.kissy.encoder.protoB\010SdfProto\210\001"
-    "\000", 561);
+    "\n\tsdf.proto\032\014system.proto\032\016property.prot"
+    "o\"\217\003\n\003Sdf\022\014\n\004name\030\001 \002(\t\022\030\n\007systems\030\002 \003(\013"
+    "2\007.System\022\034\n\007objects\030\003 \003(\0132\013.Sdf.Object\022"
+    "\030\n\005links\030\004 \003(\0132\t.Sdf.Link\032G\n\006Object\022\014\n\004n"
+    "ame\030\n \002(\t\022/\n\020objectProperties\030\013 \003(\0132\025.Sd"
+    "f.ObjectProperties\032a\n\020ObjectProperties\022\014"
+    "\n\004type\030\024 \001(\t\022 \n\nsystemType\030\025 \002(\0162\014.Syste"
+    "m.Type\022\035\n\nproperties\030\026 \003(\0132\t.Property\032|\n"
+    "\004Link\022\017\n\007subject\030\036 \002(\t\022\020\n\010observer\030\037 \002(\t"
+    "\022\'\n\021subjectSystemType\030  \002(\0162\014.System.Typ"
+    "e\022(\n\022observerSystemType\030! \002(\0162\014.System.T"
+    "ypeB%\n\026fr.kissy.encoder.protoB\010SdfProto\210"
+    "\001\000", 482);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "sdf.proto", &protobuf_RegisterTypes);
   Sdf::default_instance_ = new Sdf();
-  Sdf_SystemProperties::default_instance_ = new Sdf_SystemProperties();
-  Sdf_ObjectProperties::default_instance_ = new Sdf_ObjectProperties();
   Sdf_Object::default_instance_ = new Sdf_Object();
+  Sdf_ObjectProperties::default_instance_ = new Sdf_ObjectProperties();
   Sdf_Link::default_instance_ = new Sdf_Link();
   Sdf::default_instance_->InitAsDefaultInstance();
-  Sdf_SystemProperties::default_instance_->InitAsDefaultInstance();
-  Sdf_ObjectProperties::default_instance_->InitAsDefaultInstance();
   Sdf_Object::default_instance_->InitAsDefaultInstance();
+  Sdf_ObjectProperties::default_instance_->InitAsDefaultInstance();
   Sdf_Link::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_sdf_2eproto);
 }
@@ -213,599 +185,6 @@ struct StaticDescriptorInitializer_sdf_2eproto {
 
 
 // ===================================================================
-
-#ifndef _MSC_VER
-const int Sdf_SystemProperties::kSystemTypeFieldNumber;
-const int Sdf_SystemProperties::kPropertiesFieldNumber;
-#endif  // !_MSC_VER
-
-Sdf_SystemProperties::Sdf_SystemProperties()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void Sdf_SystemProperties::InitAsDefaultInstance() {
-}
-
-Sdf_SystemProperties::Sdf_SystemProperties(const Sdf_SystemProperties& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void Sdf_SystemProperties::SharedCtor() {
-  _cached_size_ = 0;
-  systemtype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-Sdf_SystemProperties::~Sdf_SystemProperties() {
-  SharedDtor();
-}
-
-void Sdf_SystemProperties::SharedDtor() {
-  if (systemtype_ != &::google::protobuf::internal::kEmptyString) {
-    delete systemtype_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void Sdf_SystemProperties::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* Sdf_SystemProperties::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return Sdf_SystemProperties_descriptor_;
-}
-
-const Sdf_SystemProperties& Sdf_SystemProperties::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_sdf_2eproto();  return *default_instance_;
-}
-
-Sdf_SystemProperties* Sdf_SystemProperties::default_instance_ = NULL;
-
-Sdf_SystemProperties* Sdf_SystemProperties::New() const {
-  return new Sdf_SystemProperties;
-}
-
-void Sdf_SystemProperties::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_systemtype()) {
-      if (systemtype_ != &::google::protobuf::internal::kEmptyString) {
-        systemtype_->clear();
-      }
-    }
-  }
-  properties_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool Sdf_SystemProperties::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string systemType = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_systemtype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->systemtype().data(), this->systemtype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(90)) goto parse_properties;
-        break;
-      }
-      
-      // repeated .Proto.Property properties = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_properties:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_properties()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(90)) goto parse_properties;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void Sdf_SystemProperties::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string systemType = 10;
-  if (has_systemtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->systemtype().data(), this->systemtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      10, this->systemtype(), output);
-  }
-  
-  // repeated .Proto.Property properties = 11;
-  for (int i = 0; i < this->properties_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      11, this->properties(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* Sdf_SystemProperties::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string systemType = 10;
-  if (has_systemtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->systemtype().data(), this->systemtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->systemtype(), target);
-  }
-  
-  // repeated .Proto.Property properties = 11;
-  for (int i = 0; i < this->properties_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        11, this->properties(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int Sdf_SystemProperties::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string systemType = 10;
-    if (has_systemtype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->systemtype());
-    }
-    
-  }
-  // repeated .Proto.Property properties = 11;
-  total_size += 1 * this->properties_size();
-  for (int i = 0; i < this->properties_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->properties(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void Sdf_SystemProperties::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const Sdf_SystemProperties* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Sdf_SystemProperties*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void Sdf_SystemProperties::MergeFrom(const Sdf_SystemProperties& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  properties_.MergeFrom(from.properties_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_systemtype()) {
-      set_systemtype(from.systemtype());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void Sdf_SystemProperties::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void Sdf_SystemProperties::CopyFrom(const Sdf_SystemProperties& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool Sdf_SystemProperties::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  for (int i = 0; i < properties_size(); i++) {
-    if (!this->properties(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void Sdf_SystemProperties::Swap(Sdf_SystemProperties* other) {
-  if (other != this) {
-    std::swap(systemtype_, other->systemtype_);
-    properties_.Swap(&other->properties_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata Sdf_SystemProperties::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Sdf_SystemProperties_descriptor_;
-  metadata.reflection = Sdf_SystemProperties_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
-
-#ifndef _MSC_VER
-const int Sdf_ObjectProperties::kSystemTypeFieldNumber;
-const int Sdf_ObjectProperties::kObjectTypeFieldNumber;
-const int Sdf_ObjectProperties::kPropertiesFieldNumber;
-#endif  // !_MSC_VER
-
-Sdf_ObjectProperties::Sdf_ObjectProperties()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-}
-
-void Sdf_ObjectProperties::InitAsDefaultInstance() {
-}
-
-Sdf_ObjectProperties::Sdf_ObjectProperties(const Sdf_ObjectProperties& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void Sdf_ObjectProperties::SharedCtor() {
-  _cached_size_ = 0;
-  systemtype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  objecttype_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-Sdf_ObjectProperties::~Sdf_ObjectProperties() {
-  SharedDtor();
-}
-
-void Sdf_ObjectProperties::SharedDtor() {
-  if (systemtype_ != &::google::protobuf::internal::kEmptyString) {
-    delete systemtype_;
-  }
-  if (objecttype_ != &::google::protobuf::internal::kEmptyString) {
-    delete objecttype_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void Sdf_ObjectProperties::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* Sdf_ObjectProperties::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return Sdf_ObjectProperties_descriptor_;
-}
-
-const Sdf_ObjectProperties& Sdf_ObjectProperties::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_sdf_2eproto();  return *default_instance_;
-}
-
-Sdf_ObjectProperties* Sdf_ObjectProperties::default_instance_ = NULL;
-
-Sdf_ObjectProperties* Sdf_ObjectProperties::New() const {
-  return new Sdf_ObjectProperties;
-}
-
-void Sdf_ObjectProperties::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_systemtype()) {
-      if (systemtype_ != &::google::protobuf::internal::kEmptyString) {
-        systemtype_->clear();
-      }
-    }
-    if (has_objecttype()) {
-      if (objecttype_ != &::google::protobuf::internal::kEmptyString) {
-        objecttype_->clear();
-      }
-    }
-  }
-  properties_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool Sdf_ObjectProperties::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string systemType = 20;
-      case 20: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_systemtype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->systemtype().data(), this->systemtype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(170)) goto parse_objectType;
-        break;
-      }
-      
-      // optional string objectType = 21;
-      case 21: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_objectType:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_objecttype()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->objecttype().data(), this->objecttype().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(178)) goto parse_properties;
-        break;
-      }
-      
-      // repeated .Proto.Property properties = 22;
-      case 22: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_properties:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_properties()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(178)) goto parse_properties;
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void Sdf_ObjectProperties::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string systemType = 20;
-  if (has_systemtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->systemtype().data(), this->systemtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      20, this->systemtype(), output);
-  }
-  
-  // optional string objectType = 21;
-  if (has_objecttype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->objecttype().data(), this->objecttype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      21, this->objecttype(), output);
-  }
-  
-  // repeated .Proto.Property properties = 22;
-  for (int i = 0; i < this->properties_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      22, this->properties(i), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* Sdf_ObjectProperties::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string systemType = 20;
-  if (has_systemtype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->systemtype().data(), this->systemtype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        20, this->systemtype(), target);
-  }
-  
-  // optional string objectType = 21;
-  if (has_objecttype()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->objecttype().data(), this->objecttype().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        21, this->objecttype(), target);
-  }
-  
-  // repeated .Proto.Property properties = 22;
-  for (int i = 0; i < this->properties_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        22, this->properties(i), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int Sdf_ObjectProperties::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string systemType = 20;
-    if (has_systemtype()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->systemtype());
-    }
-    
-    // optional string objectType = 21;
-    if (has_objecttype()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->objecttype());
-    }
-    
-  }
-  // repeated .Proto.Property properties = 22;
-  total_size += 2 * this->properties_size();
-  for (int i = 0; i < this->properties_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->properties(i));
-  }
-  
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void Sdf_ObjectProperties::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const Sdf_ObjectProperties* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Sdf_ObjectProperties*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void Sdf_ObjectProperties::MergeFrom(const Sdf_ObjectProperties& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  properties_.MergeFrom(from.properties_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_systemtype()) {
-      set_systemtype(from.systemtype());
-    }
-    if (from.has_objecttype()) {
-      set_objecttype(from.objecttype());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void Sdf_ObjectProperties::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void Sdf_ObjectProperties::CopyFrom(const Sdf_ObjectProperties& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool Sdf_ObjectProperties::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  for (int i = 0; i < properties_size(); i++) {
-    if (!this->properties(i).IsInitialized()) return false;
-  }
-  return true;
-}
-
-void Sdf_ObjectProperties::Swap(Sdf_ObjectProperties* other) {
-  if (other != this) {
-    std::swap(systemtype_, other->systemtype_);
-    std::swap(objecttype_, other->objecttype_);
-    properties_.Swap(&other->properties_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata Sdf_ObjectProperties::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Sdf_ObjectProperties_descriptor_;
-  metadata.reflection = Sdf_ObjectProperties_reflection_;
-  return metadata;
-}
-
-
-// -------------------------------------------------------------------
 
 #ifndef _MSC_VER
 const int Sdf_Object::kNameFieldNumber;
@@ -883,8 +262,8 @@ bool Sdf_Object::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string name = 30;
-      case 30: {
+      // required string name = 10;
+      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
@@ -895,12 +274,12 @@ bool Sdf_Object::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(250)) goto parse_objectProperties;
+        if (input->ExpectTag(90)) goto parse_objectProperties;
         break;
       }
       
-      // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
-      case 31: {
+      // repeated .Sdf.ObjectProperties objectProperties = 11;
+      case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_objectProperties:
@@ -909,7 +288,7 @@ bool Sdf_Object::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(250)) goto parse_objectProperties;
+        if (input->ExpectTag(90)) goto parse_objectProperties;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -932,19 +311,19 @@ bool Sdf_Object::MergePartialFromCodedStream(
 
 void Sdf_Object::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string name = 30;
+  // required string name = 10;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      30, this->name(), output);
+      10, this->name(), output);
   }
   
-  // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
+  // repeated .Sdf.ObjectProperties objectProperties = 11;
   for (int i = 0; i < this->objectproperties_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      31, this->objectproperties(i), output);
+      11, this->objectproperties(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -955,21 +334,21 @@ void Sdf_Object::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Sdf_Object::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string name = 30;
+  // required string name = 10;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        30, this->name(), target);
+        10, this->name(), target);
   }
   
-  // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
+  // repeated .Sdf.ObjectProperties objectProperties = 11;
   for (int i = 0; i < this->objectproperties_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        31, this->objectproperties(i), target);
+        11, this->objectproperties(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -983,16 +362,16 @@ int Sdf_Object::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string name = 30;
+    // required string name = 10;
     if (has_name()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
     
   }
-  // repeated .Proto.Sdf.ObjectProperties objectProperties = 31;
-  total_size += 2 * this->objectproperties_size();
+  // repeated .Sdf.ObjectProperties objectProperties = 11;
+  total_size += 1 * this->objectproperties_size();
   for (int i = 0; i < this->objectproperties_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1076,10 +455,324 @@ void Sdf_Object::Swap(Sdf_Object* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
+const int Sdf_ObjectProperties::kTypeFieldNumber;
+const int Sdf_ObjectProperties::kSystemTypeFieldNumber;
+const int Sdf_ObjectProperties::kPropertiesFieldNumber;
+#endif  // !_MSC_VER
+
+Sdf_ObjectProperties::Sdf_ObjectProperties()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void Sdf_ObjectProperties::InitAsDefaultInstance() {
+}
+
+Sdf_ObjectProperties::Sdf_ObjectProperties(const Sdf_ObjectProperties& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void Sdf_ObjectProperties::SharedCtor() {
+  _cached_size_ = 0;
+  type_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  systemtype_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+Sdf_ObjectProperties::~Sdf_ObjectProperties() {
+  SharedDtor();
+}
+
+void Sdf_ObjectProperties::SharedDtor() {
+  if (type_ != &::google::protobuf::internal::kEmptyString) {
+    delete type_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void Sdf_ObjectProperties::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Sdf_ObjectProperties::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Sdf_ObjectProperties_descriptor_;
+}
+
+const Sdf_ObjectProperties& Sdf_ObjectProperties::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_sdf_2eproto();  return *default_instance_;
+}
+
+Sdf_ObjectProperties* Sdf_ObjectProperties::default_instance_ = NULL;
+
+Sdf_ObjectProperties* Sdf_ObjectProperties::New() const {
+  return new Sdf_ObjectProperties;
+}
+
+void Sdf_ObjectProperties::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_type()) {
+      if (type_ != &::google::protobuf::internal::kEmptyString) {
+        type_->clear();
+      }
+    }
+    systemtype_ = 0;
+  }
+  properties_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool Sdf_ObjectProperties::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string type = 20;
+      case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_type()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->type().data(), this->type().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(168)) goto parse_systemType;
+        break;
+      }
+      
+      // required .System.Type systemType = 21;
+      case 21: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_systemType:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::System_Type_IsValid(value)) {
+            set_systemtype(static_cast< ::System_Type >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(21, value);
+          }
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(178)) goto parse_properties;
+        break;
+      }
+      
+      // repeated .Property properties = 22;
+      case 22: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_properties:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_properties()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(178)) goto parse_properties;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void Sdf_ObjectProperties::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional string type = 20;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->type().data(), this->type().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      20, this->type(), output);
+  }
+  
+  // required .System.Type systemType = 21;
+  if (has_systemtype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      21, this->systemtype(), output);
+  }
+  
+  // repeated .Property properties = 22;
+  for (int i = 0; i < this->properties_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      22, this->properties(i), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* Sdf_ObjectProperties::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional string type = 20;
+  if (has_type()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->type().data(), this->type().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        20, this->type(), target);
+  }
+  
+  // required .System.Type systemType = 21;
+  if (has_systemtype()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      21, this->systemtype(), target);
+  }
+  
+  // repeated .Property properties = 22;
+  for (int i = 0; i < this->properties_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        22, this->properties(i), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int Sdf_ObjectProperties::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string type = 20;
+    if (has_type()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->type());
+    }
+    
+    // required .System.Type systemType = 21;
+    if (has_systemtype()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->systemtype());
+    }
+    
+  }
+  // repeated .Property properties = 22;
+  total_size += 2 * this->properties_size();
+  for (int i = 0; i < this->properties_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->properties(i));
+  }
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Sdf_ObjectProperties::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const Sdf_ObjectProperties* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const Sdf_ObjectProperties*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void Sdf_ObjectProperties::MergeFrom(const Sdf_ObjectProperties& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  properties_.MergeFrom(from.properties_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_type()) {
+      set_type(from.type());
+    }
+    if (from.has_systemtype()) {
+      set_systemtype(from.systemtype());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void Sdf_ObjectProperties::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Sdf_ObjectProperties::CopyFrom(const Sdf_ObjectProperties& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Sdf_ObjectProperties::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000002) != 0x00000002) return false;
+  
+  for (int i = 0; i < properties_size(); i++) {
+    if (!this->properties(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void Sdf_ObjectProperties::Swap(Sdf_ObjectProperties* other) {
+  if (other != this) {
+    std::swap(type_, other->type_);
+    std::swap(systemtype_, other->systemtype_);
+    properties_.Swap(&other->properties_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata Sdf_ObjectProperties::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = Sdf_ObjectProperties_descriptor_;
+  metadata.reflection = Sdf_ObjectProperties_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
 const int Sdf_Link::kSubjectFieldNumber;
 const int Sdf_Link::kObserverFieldNumber;
-const int Sdf_Link::kSubjectSystemFieldNumber;
-const int Sdf_Link::kObserverSystemFieldNumber;
+const int Sdf_Link::kSubjectSystemTypeFieldNumber;
+const int Sdf_Link::kObserverSystemTypeFieldNumber;
 #endif  // !_MSC_VER
 
 Sdf_Link::Sdf_Link()
@@ -1100,8 +793,8 @@ void Sdf_Link::SharedCtor() {
   _cached_size_ = 0;
   subject_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   observer_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  subjectsystem_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  observersystem_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  subjectsystemtype_ = 0;
+  observersystemtype_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1115,12 +808,6 @@ void Sdf_Link::SharedDtor() {
   }
   if (observer_ != &::google::protobuf::internal::kEmptyString) {
     delete observer_;
-  }
-  if (subjectsystem_ != &::google::protobuf::internal::kEmptyString) {
-    delete subjectsystem_;
-  }
-  if (observersystem_ != &::google::protobuf::internal::kEmptyString) {
-    delete observersystem_;
   }
   if (this != default_instance_) {
   }
@@ -1158,16 +845,8 @@ void Sdf_Link::Clear() {
         observer_->clear();
       }
     }
-    if (has_subjectsystem()) {
-      if (subjectsystem_ != &::google::protobuf::internal::kEmptyString) {
-        subjectsystem_->clear();
-      }
-    }
-    if (has_observersystem()) {
-      if (observersystem_ != &::google::protobuf::internal::kEmptyString) {
-        observersystem_->clear();
-      }
-    }
+    subjectsystemtype_ = 0;
+    observersystemtype_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1179,8 +858,8 @@ bool Sdf_Link::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string subject = 40;
-      case 40: {
+      // required string subject = 30;
+      case 30: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
@@ -1191,12 +870,12 @@ bool Sdf_Link::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(330)) goto parse_observer;
+        if (input->ExpectTag(250)) goto parse_observer;
         break;
       }
       
-      // required string observer = 41;
-      case 41: {
+      // required string observer = 31;
+      case 31: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_observer:
@@ -1208,37 +887,45 @@ bool Sdf_Link::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(338)) goto parse_subjectSystem;
+        if (input->ExpectTag(256)) goto parse_subjectSystemType;
         break;
       }
       
-      // required string subjectSystem = 42;
-      case 42: {
+      // required .System.Type subjectSystemType = 32;
+      case 32: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_subjectSystem:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_subjectsystem()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->subjectsystem().data(), this->subjectsystem().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_subjectSystemType:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::System_Type_IsValid(value)) {
+            set_subjectsystemtype(static_cast< ::System_Type >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(32, value);
+          }
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(346)) goto parse_observerSystem;
+        if (input->ExpectTag(264)) goto parse_observerSystemType;
         break;
       }
       
-      // required string observerSystem = 43;
-      case 43: {
+      // required .System.Type observerSystemType = 33;
+      case 33: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_observerSystem:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_observersystem()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->observersystem().data(), this->observersystem().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_observerSystemType:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::System_Type_IsValid(value)) {
+            set_observersystemtype(static_cast< ::System_Type >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(33, value);
+          }
         } else {
           goto handle_uninterpreted;
         }
@@ -1264,40 +951,34 @@ bool Sdf_Link::MergePartialFromCodedStream(
 
 void Sdf_Link::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required string subject = 40;
+  // required string subject = 30;
   if (has_subject()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->subject().data(), this->subject().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      40, this->subject(), output);
+      30, this->subject(), output);
   }
   
-  // required string observer = 41;
+  // required string observer = 31;
   if (has_observer()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->observer().data(), this->observer().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      41, this->observer(), output);
+      31, this->observer(), output);
   }
   
-  // required string subjectSystem = 42;
-  if (has_subjectsystem()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->subjectsystem().data(), this->subjectsystem().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      42, this->subjectsystem(), output);
+  // required .System.Type subjectSystemType = 32;
+  if (has_subjectsystemtype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      32, this->subjectsystemtype(), output);
   }
   
-  // required string observerSystem = 43;
-  if (has_observersystem()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->observersystem().data(), this->observersystem().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      43, this->observersystem(), output);
+  // required .System.Type observerSystemType = 33;
+  if (has_observersystemtype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      33, this->observersystemtype(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1308,44 +989,36 @@ void Sdf_Link::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Sdf_Link::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string subject = 40;
+  // required string subject = 30;
   if (has_subject()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->subject().data(), this->subject().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        40, this->subject(), target);
+        30, this->subject(), target);
   }
   
-  // required string observer = 41;
+  // required string observer = 31;
   if (has_observer()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->observer().data(), this->observer().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        41, this->observer(), target);
+        31, this->observer(), target);
   }
   
-  // required string subjectSystem = 42;
-  if (has_subjectsystem()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->subjectsystem().data(), this->subjectsystem().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        42, this->subjectsystem(), target);
+  // required .System.Type subjectSystemType = 32;
+  if (has_subjectsystemtype()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      32, this->subjectsystemtype(), target);
   }
   
-  // required string observerSystem = 43;
-  if (has_observersystem()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->observersystem().data(), this->observersystem().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        43, this->observersystem(), target);
+  // required .System.Type observerSystemType = 33;
+  if (has_observersystemtype()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      33, this->observersystemtype(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1359,32 +1032,30 @@ int Sdf_Link::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string subject = 40;
+    // required string subject = 30;
     if (has_subject()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->subject());
     }
     
-    // required string observer = 41;
+    // required string observer = 31;
     if (has_observer()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->observer());
     }
     
-    // required string subjectSystem = 42;
-    if (has_subjectsystem()) {
+    // required .System.Type subjectSystemType = 32;
+    if (has_subjectsystemtype()) {
       total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->subjectsystem());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->subjectsystemtype());
     }
     
-    // required string observerSystem = 43;
-    if (has_observersystem()) {
+    // required .System.Type observerSystemType = 33;
+    if (has_observersystemtype()) {
       total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->observersystem());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->observersystemtype());
     }
     
   }
@@ -1420,11 +1091,11 @@ void Sdf_Link::MergeFrom(const Sdf_Link& from) {
     if (from.has_observer()) {
       set_observer(from.observer());
     }
-    if (from.has_subjectsystem()) {
-      set_subjectsystem(from.subjectsystem());
+    if (from.has_subjectsystemtype()) {
+      set_subjectsystemtype(from.subjectsystemtype());
     }
-    if (from.has_observersystem()) {
-      set_observersystem(from.observersystem());
+    if (from.has_observersystemtype()) {
+      set_observersystemtype(from.observersystemtype());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1452,8 +1123,8 @@ void Sdf_Link::Swap(Sdf_Link* other) {
   if (other != this) {
     std::swap(subject_, other->subject_);
     std::swap(observer_, other->observer_);
-    std::swap(subjectsystem_, other->subjectsystem_);
-    std::swap(observersystem_, other->observersystem_);
+    std::swap(subjectsystemtype_, other->subjectsystemtype_);
+    std::swap(observersystemtype_, other->observersystemtype_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1473,7 +1144,7 @@ void Sdf_Link::Swap(Sdf_Link* other) {
 
 #ifndef _MSC_VER
 const int Sdf::kNameFieldNumber;
-const int Sdf::kSystemPropertiesFieldNumber;
+const int Sdf::kSystemsFieldNumber;
 const int Sdf::kObjectsFieldNumber;
 const int Sdf::kLinksFieldNumber;
 #endif  // !_MSC_VER
@@ -1538,7 +1209,7 @@ void Sdf::Clear() {
       }
     }
   }
-  systemproperties_.Clear();
+  systems_.Clear();
   objects_.Clear();
   links_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1563,26 +1234,26 @@ bool Sdf::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_systemProperties;
+        if (input->ExpectTag(18)) goto parse_systems;
         break;
       }
       
-      // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
+      // repeated .System systems = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_systemProperties:
+         parse_systems:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_systemproperties()));
+                input, add_systems()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_systemProperties;
+        if (input->ExpectTag(18)) goto parse_systems;
         if (input->ExpectTag(26)) goto parse_objects;
         break;
       }
       
-      // repeated .Proto.Sdf.Object objects = 3;
+      // repeated .Sdf.Object objects = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1597,7 +1268,7 @@ bool Sdf::MergePartialFromCodedStream(
         break;
       }
       
-      // repeated .Proto.Sdf.Link links = 4;
+      // repeated .Sdf.Link links = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1639,19 +1310,19 @@ void Sdf::SerializeWithCachedSizes(
       1, this->name(), output);
   }
   
-  // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-  for (int i = 0; i < this->systemproperties_size(); i++) {
+  // repeated .System systems = 2;
+  for (int i = 0; i < this->systems_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->systemproperties(i), output);
+      2, this->systems(i), output);
   }
   
-  // repeated .Proto.Sdf.Object objects = 3;
+  // repeated .Sdf.Object objects = 3;
   for (int i = 0; i < this->objects_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->objects(i), output);
   }
   
-  // repeated .Proto.Sdf.Link links = 4;
+  // repeated .Sdf.Link links = 4;
   for (int i = 0; i < this->links_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->links(i), output);
@@ -1675,21 +1346,21 @@ void Sdf::SerializeWithCachedSizes(
         1, this->name(), target);
   }
   
-  // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-  for (int i = 0; i < this->systemproperties_size(); i++) {
+  // repeated .System systems = 2;
+  for (int i = 0; i < this->systems_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->systemproperties(i), target);
+        2, this->systems(i), target);
   }
   
-  // repeated .Proto.Sdf.Object objects = 3;
+  // repeated .Sdf.Object objects = 3;
   for (int i = 0; i < this->objects_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->objects(i), target);
   }
   
-  // repeated .Proto.Sdf.Link links = 4;
+  // repeated .Sdf.Link links = 4;
   for (int i = 0; i < this->links_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1715,15 +1386,15 @@ int Sdf::ByteSize() const {
     }
     
   }
-  // repeated .Proto.Sdf.SystemProperties systemProperties = 2;
-  total_size += 1 * this->systemproperties_size();
-  for (int i = 0; i < this->systemproperties_size(); i++) {
+  // repeated .System systems = 2;
+  total_size += 1 * this->systems_size();
+  for (int i = 0; i < this->systems_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->systemproperties(i));
+        this->systems(i));
   }
   
-  // repeated .Proto.Sdf.Object objects = 3;
+  // repeated .Sdf.Object objects = 3;
   total_size += 1 * this->objects_size();
   for (int i = 0; i < this->objects_size(); i++) {
     total_size +=
@@ -1731,7 +1402,7 @@ int Sdf::ByteSize() const {
         this->objects(i));
   }
   
-  // repeated .Proto.Sdf.Link links = 4;
+  // repeated .Sdf.Link links = 4;
   total_size += 1 * this->links_size();
   for (int i = 0; i < this->links_size(); i++) {
     total_size +=
@@ -1764,7 +1435,7 @@ void Sdf::MergeFrom(const ::google::protobuf::Message& from) {
 
 void Sdf::MergeFrom(const Sdf& from) {
   GOOGLE_CHECK_NE(&from, this);
-  systemproperties_.MergeFrom(from.systemproperties_);
+  systems_.MergeFrom(from.systems_);
   objects_.MergeFrom(from.objects_);
   links_.MergeFrom(from.links_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1790,8 +1461,8 @@ void Sdf::CopyFrom(const Sdf& from) {
 bool Sdf::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
-  for (int i = 0; i < systemproperties_size(); i++) {
-    if (!this->systemproperties(i).IsInitialized()) return false;
+  for (int i = 0; i < systems_size(); i++) {
+    if (!this->systems(i).IsInitialized()) return false;
   }
   for (int i = 0; i < objects_size(); i++) {
     if (!this->objects(i).IsInitialized()) return false;
@@ -1805,7 +1476,7 @@ bool Sdf::IsInitialized() const {
 void Sdf::Swap(Sdf* other) {
   if (other != this) {
     std::swap(name_, other->name_);
-    systemproperties_.Swap(&other->systemproperties_);
+    systems_.Swap(&other->systems_);
     objects_.Swap(&other->objects_);
     links_.Swap(&other->links_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1824,7 +1495,5 @@ void Sdf::Swap(Sdf* other) {
 
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace Proto
 
 // @@protoc_insertion_point(global_scope)

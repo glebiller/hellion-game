@@ -25,248 +25,234 @@
 #include <google/protobuf/generated_message_reflection.h>
 // @@protoc_insertion_point(includes)
 
-namespace Proto {
+// Internal implementation detail -- do not call these.
+void  protobuf_AddDesc_property_2eproto();
+void protobuf_AssignDesc_property_2eproto();
+void protobuf_ShutdownFile_property_2eproto();
 
-    // Internal implementation detail -- do not call these.
-    void  protobuf_AddDesc_property_2eproto();
-    void protobuf_AssignDesc_property_2eproto();
-    void protobuf_ShutdownFile_property_2eproto();
+class Property;
 
-    class Property;
+// ===================================================================
 
-    // ===================================================================
-
-    class Property : public ::google::protobuf::Message {
-        public:
-            Property();
-            virtual ~Property();
-
-            Property(const Property& from);
-
-            inline Property& operator=(const Property& from) {
-                CopyFrom(from);
-                return *this;
-            }
-
-            inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-                return _unknown_fields_;
-            }
-
-            inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-                return &_unknown_fields_;
-            }
-
-            static const ::google::protobuf::Descriptor* descriptor();
-            static const Property& default_instance();
-
-            void Swap(Property* other);
-
-            // implements Message ----------------------------------------------
-
-            Property* New() const;
-            void CopyFrom(const ::google::protobuf::Message& from);
-            void MergeFrom(const ::google::protobuf::Message& from);
-            void CopyFrom(const Property& from);
-            void MergeFrom(const Property& from);
-            void Clear();
-            bool IsInitialized() const;
-
-            int ByteSize() const;
-            bool MergePartialFromCodedStream(
-                ::google::protobuf::io::CodedInputStream* input);
-            void SerializeWithCachedSizes(
-                ::google::protobuf::io::CodedOutputStream* output) const;
-            ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-            int GetCachedSize() const { return _cached_size_; }
-        private:
-            void SharedCtor();
-            void SharedDtor();
-            void SetCachedSize(int size) const;
-        public:
-
-            ::google::protobuf::Metadata GetMetadata() const;
-
-            // nested types ----------------------------------------------------
-
-            // accessors -------------------------------------------------------
-
-            // required string name = 1;
-            inline bool has_name() const;
-            inline void clear_name();
-            static const int kNameFieldNumber = 1;
-            inline const ::std::string& name() const;
-            inline void set_name(const ::std::string& value);
-            inline void set_name(const char* value);
-            inline void set_name(const char* value, size_t size);
-            inline ::std::string* mutable_name();
-            inline ::std::string* release_name();
-
-            // repeated string value = 2;
-            inline int value_size() const;
-            inline void clear_value();
-            static const int kValueFieldNumber = 2;
-            inline const ::std::string& value(int index) const;
-            inline ::std::string* mutable_value(int index);
-            inline void set_value(int index, const ::std::string& value);
-            inline void set_value(int index, const char* value);
-            inline void set_value(int index, const char* value, size_t size);
-            inline ::std::string* add_value();
-            inline void add_value(const ::std::string& value);
-            inline void add_value(const char* value);
-            inline void add_value(const char* value, size_t size);
-            inline const ::google::protobuf::RepeatedPtrField< ::std::string>& value() const;
-            inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_value();
-
-            // @@protoc_insertion_point(class_scope:Proto.Property)
-        private:
-            inline void set_has_name();
-            inline void clear_has_name();
-
-            ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-            ::std::string* name_;
-            ::google::protobuf::RepeatedPtrField< ::std::string> value_;
-
-            mutable int _cached_size_;
-            ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-            friend void  protobuf_AddDesc_property_2eproto();
-            friend void protobuf_AssignDesc_property_2eproto();
-            friend void protobuf_ShutdownFile_property_2eproto();
-
-            void InitAsDefaultInstance();
-            static Property* default_instance_;
-    };
-    // ===================================================================
+class Property : public ::google::protobuf::Message {
+ public:
+  Property();
+  virtual ~Property();
+  
+  Property(const Property& from);
+  
+  inline Property& operator=(const Property& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Property& default_instance();
+  
+  void Swap(Property* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Property* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Property& from);
+  void MergeFrom(const Property& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  
+  // repeated string value = 2;
+  inline int value_size() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline const ::std::string& value(int index) const;
+  inline ::std::string* mutable_value(int index);
+  inline void set_value(int index, const ::std::string& value);
+  inline void set_value(int index, const char* value);
+  inline void set_value(int index, const char* value, size_t size);
+  inline ::std::string* add_value();
+  inline void add_value(const ::std::string& value);
+  inline void add_value(const char* value);
+  inline void add_value(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& value() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_value();
+  
+  // @@protoc_insertion_point(class_scope:Property)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::std::string* name_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> value_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_property_2eproto();
+  friend void protobuf_AssignDesc_property_2eproto();
+  friend void protobuf_ShutdownFile_property_2eproto();
+  
+  void InitAsDefaultInstance();
+  static Property* default_instance_;
+};
+// ===================================================================
 
 
-    // ===================================================================
+// ===================================================================
 
-    // Property
+// Property
 
-    // required string name = 1;
-    inline bool Property::has_name() const {
-        return (_has_bits_[0] & 0x00000001u) != 0;
-    }
-    inline void Property::set_has_name() {
-        _has_bits_[0] |= 0x00000001u;
-    }
-    inline void Property::clear_has_name() {
-        _has_bits_[0] &= ~0x00000001u;
-    }
-    inline void Property::clear_name() {
-        if (name_ != &::google::protobuf::internal::kEmptyString) {
-            name_->clear();
-        }
+// required string name = 1;
+inline bool Property::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Property::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Property::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Property::clear_name() {
+  if (name_ != &::google::protobuf::internal::kEmptyString) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& Property::name() const {
+  return *name_;
+}
+inline void Property::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void Property::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void Property::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Property::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+inline ::std::string* Property::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
 
-        clear_has_name();
-    }
-    inline const ::std::string& Property::name() const {
-        return *name_;
-    }
-    inline void Property::set_name(const ::std::string& value) {
-        set_has_name();
-
-        if (name_ == &::google::protobuf::internal::kEmptyString) {
-            name_ = new ::std::string;
-        }
-
-        name_->assign(value);
-    }
-    inline void Property::set_name(const char* value) {
-        set_has_name();
-
-        if (name_ == &::google::protobuf::internal::kEmptyString) {
-            name_ = new ::std::string;
-        }
-
-        name_->assign(value);
-    }
-    inline void Property::set_name(const char* value, size_t size) {
-        set_has_name();
-
-        if (name_ == &::google::protobuf::internal::kEmptyString) {
-            name_ = new ::std::string;
-        }
-
-        name_->assign(reinterpret_cast<const char*>(value), size);
-    }
-    inline ::std::string* Property::mutable_name() {
-        set_has_name();
-
-        if (name_ == &::google::protobuf::internal::kEmptyString) {
-            name_ = new ::std::string;
-        }
-
-        return name_;
-    }
-    inline ::std::string* Property::release_name() {
-        clear_has_name();
-
-        if (name_ == &::google::protobuf::internal::kEmptyString) {
-            return NULL;
-        } else {
-            ::std::string* temp = name_;
-            name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-            return temp;
-        }
-    }
-
-    // repeated string value = 2;
-    inline int Property::value_size() const {
-        return value_.size();
-    }
-    inline void Property::clear_value() {
-        value_.Clear();
-    }
-    inline const ::std::string& Property::value(int index) const {
-        return value_.Get(index);
-    }
-    inline ::std::string* Property::mutable_value(int index) {
-        return value_.Mutable(index);
-    }
-    inline void Property::set_value(int index, const ::std::string& value) {
-        value_.Mutable(index)->assign(value);
-    }
-    inline void Property::set_value(int index, const char* value) {
-        value_.Mutable(index)->assign(value);
-    }
-    inline void Property::set_value(int index, const char* value, size_t size) {
-        value_.Mutable(index)->assign(
-            reinterpret_cast<const char*>(value), size);
-    }
-    inline ::std::string* Property::add_value() {
-        return value_.Add();
-    }
-    inline void Property::add_value(const ::std::string& value) {
-        value_.Add()->assign(value);
-    }
-    inline void Property::add_value(const char* value) {
-        value_.Add()->assign(value);
-    }
-    inline void Property::add_value(const char* value, size_t size) {
-        value_.Add()->assign(reinterpret_cast<const char*>(value), size);
-    }
-    inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-    Property::value() const {
-        return value_;
-    }
-    inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-    Property::mutable_value() {
-        return &value_;
-    }
+// repeated string value = 2;
+inline int Property::value_size() const {
+  return value_.size();
+}
+inline void Property::clear_value() {
+  value_.Clear();
+}
+inline const ::std::string& Property::value(int index) const {
+  return value_.Get(index);
+}
+inline ::std::string* Property::mutable_value(int index) {
+  return value_.Mutable(index);
+}
+inline void Property::set_value(int index, const ::std::string& value) {
+  value_.Mutable(index)->assign(value);
+}
+inline void Property::set_value(int index, const char* value) {
+  value_.Mutable(index)->assign(value);
+}
+inline void Property::set_value(int index, const char* value, size_t size) {
+  value_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Property::add_value() {
+  return value_.Add();
+}
+inline void Property::add_value(const ::std::string& value) {
+  value_.Add()->assign(value);
+}
+inline void Property::add_value(const char* value) {
+  value_.Add()->assign(value);
+}
+inline void Property::add_value(const char* value, size_t size) {
+  value_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+Property::value() const {
+  return value_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+Property::mutable_value() {
+  return &value_;
+}
 
 
-    // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace Proto
+// @@protoc_insertion_point(namespace_scope)
 
 #ifndef SWIG
 namespace google {
-    namespace protobuf {
+namespace protobuf {
 
 
-    }  // namespace google
+}  // namespace google
 }  // namespace protobuf
 #endif  // SWIG
 

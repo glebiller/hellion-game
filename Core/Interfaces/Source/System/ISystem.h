@@ -14,8 +14,6 @@
 
 #pragma once
 
-#include <vector>
-
 #include "Property.h"
 #include "System.h"
 
@@ -56,7 +54,7 @@ class ISystem {
          * @param   Properties  Property structure array to fill in.
          * @return  An error code.
          */
-        virtual Error Initialize(std::vector<Properties::Property> Properties) = 0;
+        virtual Error Initialize(Properties::Array Properties) = 0;
 
         /**
          * Gets the properties of this system.
@@ -64,14 +62,14 @@ class ISystem {
          *
          * @param   Properties  Property structure array to fill.
          */
-        virtual void GetProperties(std::vector<Properties::Property>& Properties) = 0;
+        virtual void GetProperties(Properties::Array& Properties) = 0;
 
         /**
          * Sets the properties for this system.
          *
          * @param   Properties  Property structure array to get values from.
          */
-        virtual void SetProperties(std::vector<Properties::Property> Properties) = 0;
+        virtual void SetProperties(Properties::Array Properties) = 0;
 
         /**
          * Creates a system scene for containing system objects.

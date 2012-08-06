@@ -31,6 +31,9 @@
     <Filter Include="Fichiers sources\System">
       <UniqueIdentifier>{875c76f9-0f11-4847-bdc4-acb612ed8850}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Service\API">
+      <UniqueIdentifier>{76ee7da2-b612-480b-a358-336b24efe3ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Property.cpp">
@@ -47,9 +50,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Service\CollisionAPI.h">
-      <Filter>Fichiers d%27en-tête\Service</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object\Generic.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
@@ -101,17 +101,20 @@
     <ClInclude Include="Source\System\ISystemTask.h">
       <Filter>Fichiers d%27en-tête\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ITaskManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\IPlatform.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\IEnvironment.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Source\Service\CollisionAPI.h">
+      <Filter>Fichiers d%27en-tête\Service\API</Filter>
     </ClInclude>
     <ClInclude Include="Source\IService.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IPlatform.h">
+      <Filter>Fichiers d%27en-tête\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ITaskManager.h">
+      <Filter>Fichiers d%27en-tête\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IEnvironment.h">
+      <Filter>Fichiers d%27en-tête\Service</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

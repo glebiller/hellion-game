@@ -13,8 +13,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace Proto {
-
 namespace {
 
 const ::google::protobuf::Descriptor* Property_descriptor_ = NULL;
@@ -76,9 +74,9 @@ void protobuf_AddDesc_property_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016property.proto\022\005Proto\"\'\n\010Property\022\014\n\004n"
-    "ame\030\001 \002(\t\022\r\n\005value\030\002 \003(\tB*\n\026fr.kissy.enc"
-    "oder.protoB\rPropertyProto\210\001\000", 108);
+    "\n\016property.proto\"\'\n\010Property\022\014\n\004name\030\001 \002"
+    "(\t\022\r\n\005value\030\002 \003(\tB*\n\026fr.kissy.encoder.pr"
+    "otoB\rPropertyProto\210\001\000", 101);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "property.proto", &protobuf_RegisterTypes);
   Property::default_instance_ = new Property();
@@ -367,7 +365,5 @@ void Property::Swap(Property* other) {
 
 
 // @@protoc_insertion_point(namespace_scope)
-
-}  // namespace Proto
 
 // @@protoc_insertion_point(global_scope)
