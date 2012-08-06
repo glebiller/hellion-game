@@ -21,8 +21,8 @@ class IChangeManager;
 #include <list>
 
 #include "Errors.h"
-#include "SystemTypes.h"
-#include "ISubject.h"
+#include "System.h"
+#include "Observer/ISubject.h"
 
 
 // THREAD SAFETY NOTE

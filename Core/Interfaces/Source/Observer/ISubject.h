@@ -15,7 +15,7 @@
 #pragma once
 
 #include "Errors.h"
-#include "SystemTypes.h"
+#include "System.h"
 
 class IObserver;
 

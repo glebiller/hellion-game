@@ -85,8 +85,9 @@
     <ClCompile Include="Source\System\ISystemScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Environment.h" />
+    <ClInclude Include="Source\IEnvironment.h" />
     <ClInclude Include="Source\Interface.h" />
+    <ClInclude Include="Source\ITaskManager.h" />
     <ClInclude Include="Source\Object\Generic.h" />
     <ClInclude Include="Source\Object\Geometry.h" />
     <ClInclude Include="Source\Object\Graphic.h" />
@@ -97,17 +98,15 @@
     <ClInclude Include="Source\Observer\IChangeManager.h" />
     <ClInclude Include="Source\Observer\IObserver.h" />
     <ClInclude Include="Source\Observer\ISubject.h" />
-    <ClInclude Include="Source\Platform.h" />
+    <ClInclude Include="Source\IPlatform.h" />
     <ClInclude Include="Source\Property.h" />
-    <ClInclude Include="Source\Service.h" />
+    <ClInclude Include="Source\IService.h" />
     <ClInclude Include="Source\Service\CollisionAPI.h" />
     <ClInclude Include="Source\System.h" />
-    <ClInclude Include="Source\SystemTypes.h" />
     <ClInclude Include="Source\System\ISystem.h" />
     <ClInclude Include="Source\System\ISystemObject.h" />
     <ClInclude Include="Source\System\ISystemScene.h" />
     <ClInclude Include="Source\System\ISystemTask.h" />
-    <ClInclude Include="Source\TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseTypes\BaseTypes.vcxproj">

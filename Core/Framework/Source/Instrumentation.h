@@ -16,74 +16,83 @@
 
 #include <windows.h>
 
-/// <summary>
-/// The Instrumentation class collects and records performance stats about
-/// the various parts of the system.
-///
-/// It is hooked in to the framework and is updated from within the scheduler.
-/// It caches performance stats until they are needed for display.
-///
-/// This class implements the service Instrumentation interface, and is a Singleton.
-/// </summary>
-/// <seealso cref="IService::Instrumentation">
+#include "Singleton.h"
+
+/**
+ * The Instrumentation class collects and records performance stats about the various parts of
+ * the system.
+ * It is hooked in to the framework and is updated from within the scheduler. It caches
+ * performance stats until they are needed for display.
+ * This class implements the service Instrumentation interface, and is a Singleton.
+ * 
+ * @sa Singleton
+ * @sa IService::Instrumentation
+ */
 class Instrumentation : public IService::IInstrumentation, public Singleton {
     public:
-        /// <summary cref="Instrumentation:;Instrumentation">
-        ///     Basic constructor.
-        /// </summary>
+
+        /**
+         * Basic constructor.
+         */
         Instrumentation(void);
 
-        /// <summary cref=Instrumentation::~Instrumentation>
-        ///     Basic destructor.
-        /// </summary>
+        /**
+         * Basic destructor.
+         */
         ~Instrumentation();
 
-        /// <summary cref="Instrumentation::UpdatePeriodicData">
-        ///     This function drives the instrumentation; it's called regularly from
-        ///     the scheduler in the framework, to let the instrumentation know that another
-        ///     frame has elapsed.  Whenever it is called, this function will make sure that
-        ///     the cached stats used by the instrumentation are up to date; if they've gotten
-        ///     too old, it will refresh those stats.
-        /// </summary>
-        /// <param name="deltaTime">f32 - Elapsed wall-clock time since the last call to this function.</param>
-        void        UpdatePeriodicData(f32 deltaTime);
+        /**
+         * Updates the periodic data described by deltaTime.
+         * This function drives the instrumentation; it's called regularly from the scheduler in the
+         * framework, to let the instrumentation know that another frame has elapsed.  Whenever it is
+         * called, this function will make sure that the cached stats used by the instrumentation are up
+         * to date; if they've gotten too old, it will refresh those stats.
+         *
+         * @param   deltaTime   f32 - Elapsed wall-clock time since the last call to this function.
+         */
+        void UpdatePeriodicData(f32 deltaTime);
 
-        /// <summary cref=Instrumentation::getCPUCount>
-        ///     Get the number of available CPUs in the system, including physical and logical CPUs.
-        /// </summary>
-        /// <returns>i32 - Number of available CPUs in the system.</returns>
-        i32         getCPUCount() {
+        /**
+         * Get the number of available CPUs in the system, including physical and logical CPUs.
+         *
+         * @return  i32 - Number of available CPUs in the system.
+         */
+        i32 getCPUCount() {
             return m_CPUCount;
         };
 
-        /// <summary cref=Instrumentation::getCurrentFPS>
-        ///     Get the most recently-measured frame rate (in Frames Per Second).  This value is
-        ///     automatically refreshed.  It is averaged over the last few frames (defined by the
-        ///     update interval in this class).
-        /// </summary>
-        /// <returns>f32 - Frame rate, in frames per second.</returns>
-        /// <seealso cref="Instrumentation::m_secondsPerUpdate"/>
-        f32         getCurrentFPS() {
+        /**
+         * Get the most recently-measured frame rate (in Frames Per Second).  This value is
+         * automatically refreshed.  It is averaged over the last few frames (defined by the update
+         * interval in this class).
+         *
+         * @return  f32 - Frame rate, in frames per second.
+         *
+         * ### sa   Instrumentation::m_secondsPerUpdate .
+         */
+        f32 getCurrentFPS() {
             return m_currentFPS;
         };
 
-        /// <summary cref=Instrumentation::getNumCounters>
-        ///     Get the number of CPU performance counters that we're using.  There will be one for
-        ///     each available CPU, and one more for the total.
-        /// </summary>
-        /// <returns>i32 - Number of CPU performance counters, which will be returned by the getCPUCounters call.</returns>
-        i32         getNumCounters() {
+        /**
+         * Get the number of CPU performance counters that we're using.  There will be one for each
+         * available CPU, and one more for the total.
+         *
+         * @return  i32 - Number of CPU performance counters, which will be returned by the
+         *          getCPUCounters call.
+         */
+        i32 getNumCounters() {
             return m_numCounters;
         };
 
-        /// <summary cref=Instrumentation::getCPUCounters>
-        ///     Get the most recently measured CPU counters.  This value is automatically refreshed.
-        /// </summary>
-        /// <param name="CPUPercent">
-        ///     f64* - Array, filled by this call, of CPU counters showing percent CPU load.
-        ///     Must be big enough to hold all counters, see Instrumentation::getNumCounters().
-        /// </param>
-        void        getCPUCounters(f64* CPUPercent) {
+        /**
+         * Get the most recently measured CPU counters.  This value is automatically refreshed.
+         *
+         * @param   CPUPercent  f64* - Array, filled by this call, of CPU counters showing percent CPU
+         *                      load. Must be big enough to hold all counters, see
+         *                      Instrumentation::getNumCounters().
+         */
+        void getCPUCounters(f64* CPUPercent) {
             ASSERT(CPUPercent != NULL);
 
             if (CPUPercent != NULL) {
@@ -95,29 +104,35 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
             return;
         };
 
-        /// <summary cref=Instrumentation::setActiveThreadCount>
-        ///     Set the number of threads the application will now run.
-        /// </summary>
-        /// <param name="activeThreadCount">i32 - Number of active threads the app should use now.</param>
+        /**
+         * Set the number of threads the application will now run.
+         *
+         * @param   activeThreadCount   i32 - Number of active threads the app should use now.
+         */
         void setActiveThreadCount(i32 activeThreadCount) {
             m_activeThreadCount = activeThreadCount;
         }
 
-        /// <summary cref=Instrumentation::getActiveThreadCount>
-        ///     Get the number of threads that we're currently using in this application.
-        /// </summary>
-        /// <returns>i32 - Current active thread count.</returns>
-        i32     getActiveThreadCount() {
+        /**
+         * Get the number of threads that we're currently using in this application.
+         *
+         * @return  i32 - Current active thread count.
+         */
+        i32 getActiveThreadCount() {
             return m_activeThreadCount;
         }
 
-        /// <summary cref=Instrumentation::CaptureJobCounterTicks>
-        ///     Called when some job has finished.  Keep track of how much time this job has spent in this frame.
-        ///     There may be many jobs of one type passed in during a single frame; their results will be appended.
-        /// </summary>
-        /// <param name="jobType">u32 - The type of the job that has just completed; a member of System::Types.</param>
-        /// <param name="jobCounterTicks">i64 - The number of clock ticks, from _RDTSC, that this job used during this frame.</param>
-        void    CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) {
+        /**
+         * Called when some job has finished.  Keep track of how much time this job has spent in this
+         * frame. There may be many jobs of one type passed in during a single frame; their results will
+         * be appended.
+         *
+         * @param   jobType         u32 - The type of the job that has just completed; a member of
+         *                          System::Types.
+         * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
+         *                          during this frame.
+         */
+        void CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) {
             u32 jobIndex = System::Types::GetIndex(jobType);
 
             if (jobIndex < System::Types::MAX) {
@@ -137,21 +152,23 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
             }
         }
 
-        /// <summary cref=Instrumentation::getJobCount>
-        ///     Get the max number of job types possible in the system, so the caller can allocate the right sized array.
-        /// </summary>
-        /// <returns>i32 - Max number of job types.</returns>
+        /**
+         * Get the max number of job types possible in the system, so the caller can allocate the right
+         * sized array.
+         *
+         * @return  i32 - Max number of job types.
+         */
         i32 getJobCount() {
             return (i32)System::Types::MAX;
         }
 
-        /// <summary cref=Instrumentation::getJobRatios>
-        ///     Get the ratios of job work done in this most recent frame.
-        /// </summary>
-        /// <param name="jobRatios">
-        ///     f32* - Array that this function should fill with the ratios of time spent in each workload on this frame.
-        ///     Must be the right length; call getJobCount.
-        /// </param>
+        /**
+         * Get the ratios of job work done in this most recent frame.
+         *
+         * @param   jobRatios   f32* - Array that this function should fill with the ratios of time spent
+         *                      in each workload on this frame. Must be the right length; call
+         *                      getJobCount.
+         */
         void getJobRatios(f32* jobRatios) {
             for (int i = 0; i < System::Types::MAX; i++) {
                 jobRatios[i] = m_pLastFrameRatio[i];
@@ -165,9 +182,10 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
         f64*        m_CPUPercentCounters;
         i32         m_activeThreadCount;
 
-        /// <summary cref="Instrumentation::m_secondsPerUpdate">
-        ///     Update interval - this is how often this object will refresh its data from its sources.
-        /// </summary>
+        /**
+         * The seconds per update.
+         * Update interval - this is how often this object will refresh its data from its sources.
+         */
         static const f32    m_secondsPerUpdate;
 
         f32         m_secondsSinceLastUpdate;

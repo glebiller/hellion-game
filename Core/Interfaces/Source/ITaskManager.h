@@ -35,7 +35,7 @@ class ITaskManager {
          * This type defines the callback used for generic job completions by the <c>ITaskManager</c>.
          * ### return   the number of jobs issued by this function.
          */
-        typedef u32(*JobCompletionFunction)(void*);       // return number of jobs added
+        typedef u32(*JobCompletionFunction)(void*);
 
         /**
          * Defines an alias representing the end.
@@ -102,4 +102,5 @@ class ITaskManager {
          * @param   minGrain            (optional) the minimum grain.
          */
         virtual void ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrain = 1) = 0;
+
 };

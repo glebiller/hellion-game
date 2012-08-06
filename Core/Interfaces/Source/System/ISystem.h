@@ -16,8 +16,8 @@
 
 #include <vector>
 
-#include "SystemTypes.h"
 #include "Property.h"
+#include "System.h"
 
 class ISystemScene;
 

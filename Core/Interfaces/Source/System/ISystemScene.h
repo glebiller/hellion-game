@@ -18,7 +18,7 @@
 
 #include "Errors.h"
 #include "Property.h"
-#include "SystemTypes.h"
+#include "System.h"
 #include "Observer/IObserver.h"
 #include "Observer/CSubject.h"
 

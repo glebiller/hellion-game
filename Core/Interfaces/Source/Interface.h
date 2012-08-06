@@ -14,16 +14,15 @@
 
 #pragma once
 
-#include "SystemTypes.h"
 #include "Property.h"
-#include "Platform.h"
+#include "IPlatform.h"
 #include "Observer/IObserver.h"
 #include "Observer/ISubject.h"
 #include "Observer/IChangeManager.h"
 #include "Observer/CSubject.h"
-#include "TaskManager.h"
-#include "Environment.h"
-#include "Service.h"
+#include "ITaskManager.h"
+#include "IEnvironment.h"
+#include "IService.h"
 #include "System.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"

@@ -27,7 +27,6 @@
     <ClInclude Include="Source\SpinMutex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\dbnew.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\MathUtils.cpp" />
     <ClCompile Include="Source\Proto\gdf.pb.cc" />

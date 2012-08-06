@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "SystemTypes.h"
+#include "System.h"
 
 class ISystemScene;
 

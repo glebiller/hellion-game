@@ -23,9 +23,9 @@
 #include <pdh.h>
 #include <pdhmsg.h>
 
-#include <Manager/ServiceManager.h>
-#include <Manager/PlatformManager.h>
-#include "TaskManager.h"
+#include "Manager/ServiceManager.h"
+#include "Manager/PlatformManager.h"
+#include "ITaskManager.h"
 #include "Instrumentation.h"
 
 

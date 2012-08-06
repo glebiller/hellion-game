@@ -44,7 +44,6 @@
 //
 #include "BaseTypes.h"
 #include "Interface.h"
-#include <Thread.h>
 
 //
 // system includes

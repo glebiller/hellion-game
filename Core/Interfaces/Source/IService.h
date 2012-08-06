@@ -19,11 +19,11 @@
 //
 class ISystemObject;
 
-#include <MathUtils.h>
+#include "MathUtils.h"
 
 #include "Service/CollisionAPI.h"
 #include "Property.h"
-#include "SystemTypes.h"
+#include "System.h"
 
 /**
  * Interface class for providing services to the systems.
