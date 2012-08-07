@@ -1,11 +1,11 @@
 <GlobalDefinition>
 	<Properties>
-		<Property Name="Framework::DebugWindow" Value="false"/>
-		<Property Name="Scheduler::Benchmarking" Value="false"/>
+		<Property Name="Framework::DebugWindow" Value="0"/>
+		<Property Name="Scheduler::Benchmarking" Value="0"/>
 		<Property Name="TaskManager::Threads" Value="0"/>
-		<Property Name="TaskManager::TPEventsForTasks" Value="False"/>
-		<Property Name="TaskManager::TPEventsForJobs" Value="False"/>
-		<Property Name="TaskManager::TPEventsForSynchronize" Value="False"/>
+		<Property Name="TaskManager::TPEventsForTasks" Value="0"/>
+		<Property Name="TaskManager::TPEventsForJobs" Value="0"/>
+		<Property Name="TaskManager::TPEventsForSynchronize" Value="0"/>
 	</Properties>
 	<Systems>
 		<!--<System Type="AI"/>-->
@@ -31,8 +31,8 @@
 				<Property Name="WindowName" Value1="Hellion Game"/>
 				<Property Name="Resolution" Value1="1024" Value2="768"/>
 				<Property Name="ShadowTexture" Value1="1" Value2="1024"/>
-				<Property Name="FullScreen" Value1="False"/>
-				<Property Name="VerticalSync" Value1="False"/>
+				<Property Name="FullScreen" Value1="0"/>
+				<Property Name="VerticalSync" Value1="0"/>
 				<!-- Full Screen Anti-Aliasing
 					Example Type's: (Value1)
 					D3DMULTISAMPLE_NONE            =  0,
@@ -47,12 +47,12 @@
 		</System>
 		<System Type="INPUT">
 			<Properties>
-				<Property Name="MoveForward" Value1="W" Value2="False"/>
-				<Property Name="MoveBack" Value1="S" Value2="False"/>
-				<Property Name="MoveLeft" Value1="A" Value2="False"/>
-				<Property Name="MoveRight" Value1="D" Value2="False"/>
-				<Property Name="Quit" Value1="ESCAPE" Value2="False"/>
-				<Property Name="PolygonMode" Value1="P" Value2="True"/>
+				<Property Name="MoveForward" Value1="W" Value2="0"/>
+				<Property Name="MoveBack" Value1="S" Value2="0"/>
+				<Property Name="MoveLeft" Value1="A" Value2="0"/>
+				<Property Name="MoveRight" Value1="D" Value2="0"/>
+				<Property Name="Quit" Value1="ESCAPE" Value2="0"/>
+				<Property Name="PolygonMode" Value1="P" Value2="1"/>
 			</Properties>
 		</System>
 		<!--<System Type="NETWORK"/>-->

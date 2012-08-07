@@ -32,10 +32,10 @@
 	<Objects>
 		<Object Name="Sun">
 			<Properties SystemType="GRAPHIC" ObjectType="Light">
-				<Property Name="Type" Value1="Point"></Property>
-				<Property Name="Position" Value1="-10359.527" Value2="25641.795" Value3="60803.297"></Property>
-				<Property Name="Diffuse" R="0.862745" G="0.768628" B="0.607843"></Property>
-				<Property Name="Specular" R="0.862745" G="0.768628" B="0.607843"></Property>
+				<Property Name="Type" Value1="Point"/>
+				<Property Name="Position" Value1="-10359.527" Value2="25641.795" Value3="60803.297"/>
+				<Property Name="Diffuse" R="0.862745" G="0.768628" B="0.607843"/>
+				<Property Name="Specular" R="0.862745" G="0.768628" B="0.607843"/>
 			</Properties>
 		</Object>
 		<Object Name="Terrain">

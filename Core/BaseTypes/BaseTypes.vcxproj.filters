@@ -51,19 +51,22 @@
     <ClInclude Include="Source\SpinMutex.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\gdf.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\property.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\sdf.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Assert.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\system.pb.h">
+    <ClInclude Include="Source\Proto\GlobalDefinition.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Object.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Property.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\SceneDefinition.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\System.pb.h">
       <Filter>Fichiers d%27en-tête\Proto</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,16 +80,19 @@
     <ClCompile Include="Source\Singleton.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\gdf.pb.cc">
+    <ClCompile Include="Source\Proto\Object.pb.cc">
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\property.pb.cc">
+    <ClCompile Include="Source\Proto\Property.pb.cc">
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\sdf.pb.cc">
+    <ClCompile Include="Source\Proto\SceneDefinition.pb.cc">
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\system.pb.cc">
+    <ClCompile Include="Source\Proto\System.pb.cc">
+      <Filter>Fichiers sources\Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\GlobalDefinition.pb.cc">
       <Filter>Fichiers sources\Proto</Filter>
     </ClCompile>
   </ItemGroup>

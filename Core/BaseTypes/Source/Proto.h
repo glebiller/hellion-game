@@ -1,6 +1,6 @@
 
-#include "Proto/gdf.pb.h"
-#include "Proto/sdf.pb.h"
+#include "Proto/GlobalDefinition.pb.h"
+#include "Proto/SceneDefinition.pb.h"
 
 typedef google::protobuf::RepeatedPtrField<std::string>                 ProtoStringList;
 typedef google::protobuf::RepeatedPtrField<Proto::Property>             ProtoPropertyList;
