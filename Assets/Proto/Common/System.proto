@@ -1,0 +1,18 @@
+option java_package = "fr.kissy.hellion.definition.encoder.proto";
+option java_outer_classname = "SystemDto";
+option java_generic_services = false;
+
+import "Common/Property.proto";
+
+message SystemProto {
+    enum Type {
+        AI = 0;
+        AUDIO = 1;
+        GEOMETRY = 2;
+        GRAPHIC = 3;
+        INPUT = 4;
+        PHYSIC = 5;
+    }
+    required Type type = 1;
+    repeated PropertyProto properties = 2;
+}

@@ -1,0 +1,8 @@
+option java_package = "fr.kissy.hellion.definition.encoder.proto";
+option java_outer_classname = "PropertyDto";
+option java_generic_services = false;
+
+message PropertyProto {
+    required string name = 1;
+    repeated bytes value = 2;
+}

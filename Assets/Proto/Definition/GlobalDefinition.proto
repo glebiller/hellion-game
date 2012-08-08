@@ -1,0 +1,13 @@
+option java_package = "fr.kissy.hellion.definition.encoder.proto";
+option java_outer_classname = "GlobalDefinitionDto";
+option java_generic_services = false;
+
+import "Common/System.proto";
+import "Common/Property.proto";
+
+message GlobalDefinitionProto {
+    required string startupScene = 1;
+    repeated PropertyProto properties = 2;
+    repeated SystemProto systems = 3;
+    repeated string scenes = 4;
+}
