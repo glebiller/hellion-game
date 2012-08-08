@@ -3,7 +3,7 @@ package fr.kissy.hellion.definition.encoder.main;
 import fr.kissy.hellion.definition.encoder.main.parser.GlobalDefinitionParser;
 import fr.kissy.hellion.definition.encoder.main.parser.SceneDefinitionParser;
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
-import fr.kissy.hellion.definition.encoder.proto.GlobalDefinitionProto;
+import fr.kissy.hellion.definition.encoder.proto.GlobalDefinitionDto;
 
 import javax.management.modelmbean.XMLParseException;
 import java.io.File;
@@ -66,7 +66,7 @@ public class Main {
         }
 
         // Test generated files
-        GlobalDefinitionProto.GlobalDefinition.Builder gdfBuilder = GlobalDefinitionProto.GlobalDefinition.newBuilder();
+        GlobalDefinitionDto.GlobalDefinitionProto.Builder gdfBuilder = GlobalDefinitionDto.GlobalDefinitionProto.newBuilder();
         gdfBuilder.mergeFrom(new FileInputStream(gdfProto));
         AssertUtils.makeTest(gdfBuilder.getSystemsCount() > 0);
     }

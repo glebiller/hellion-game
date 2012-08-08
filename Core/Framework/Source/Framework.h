@@ -14,15 +14,8 @@
 
 #pragma once
 
+#include "System.h"
 #include "FrameworkAPI.h"
-
-/*******************************************************************************
-* CLASS: Framework
-*
-* DESCRIPTION:
-* Responsible for tying in all the different managers and systems.  Also handles
-*  loading and parsing of the global definition file (gdf).
-*******************************************************************************/
 
 class Scheduler;
 class ChangeManager;
@@ -30,101 +23,162 @@ class UScene;
 class UObject;
 class Gdf;
 
+/**
+ * Framework.
+ * Responsible for tying in all the different managers and systems.  Also handles
+ * loading and parsing of the global definition file (gdf).
+ * 
+ * @sa  IService::ISystemAccess
+ * @sa  IService::ISystemAccess
+ */
 class Framework : public IService::ISystemAccess {
     public:
 
-        //
-        // Constructor.
-        //
+        /**
+         * Default constructor.
+         */
         Framework(void) throw(...);
 
-        //
-        // Destructor.
-        //
+        /**
+         * Destructor.
+         */
         ~Framework(void);
 
+        /**
+         * Initializes this :.
+         *
+         * @return  Error status.
+         */
         Error Initialize(void);
 
+        /**
+         * Shuts down this : and frees any resources it is using.
+         */
         void Shutdown(void);
 
-        //
-        // Executes the framework.
-        //   returns - an error code.
-        //
+        /**
+         * Executes the framework..
+         *
+         * @return An error code.
+         */
         Error Execute(void) throw(...);
 
 
     protected:
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        // IService::ISystemAccess Implementations.
-
-        /// <summary cref="IService::ISystemAccess::GetSystem(const char*)">
-        ///   Implementation of IService::ISystemAccess::GetSystem.
-        /// </summary>
+        /**
+         * Gets a system.
+         * Implementation of IService::ISystemAccess::GetSystem.
+         *
+         * @param   pszSystemName   Name of the system.
+         * @return  The system.
+         */
         virtual Handle GetSystem(const char* pszSystemName);
 
-        /// <summary>
-        ///   Implementation of IService::ISystemAccess::GetSystem.
-        /// </summary>
+        /**
+         * Implementation of IService::ISystemAccess::GetSystem.
+         *
+         * @param   Type    The type.
+         * @return  The system.
+         */
         virtual Handle GetSystem(System::Type Type);
 
-        /// <summary cref="IService::ISystemAccess::GetScene(const char*)">
-        ///   Implementation of IService::ISystemAccess::GetScene.
-        /// </summary>
+        /**
+         * Gets a scene.
+         * Implementation of IService::ISystemAccess::GetScene.
+         *
+         * @param   pszSystemName   Name of the system.
+         * @return  The scene.
+         */
         virtual Handle GetScene(const char* pszSystemName);
 
-        /// <summary>
-        ///   Implementation of IService::ISystemAccess::GetScene.
-        /// </summary>
+        /**
+         * Implementation of IService::ISystemAccess::GetScene.
+         *
+         * @param   Type    The type.
+         * @return  The scene.
+         */
         virtual Handle GetScene(System::Type Type);
 
-        /// <summary cref="IService::ISystemAccess::GetSystemObject(const cconst char* const char*)">
-        ///   Implementation of IService::ISystemAccess::GetSystemObject.
-        /// </summary>
+        /**
+         * Gets a system object.
+         * Implementation of IService::ISystemAccess::GetSystemObject.
+         *
+         * @param   pszSystemName   Name of the system.
+         * @param   pszName         The name.
+         * @return  The system object.
+         */
         virtual Handle GetSystemObject(const char* pszSystemName, const char* pszName);
 
-        /// <summary>
-        ///   Implementation of IService::ISystemAccess::GetSystemObject.
-        /// </summary>
+        /**
+         * Implementation of IService::ISystemAccess::GetSystemObject.
+         *
+         * @param   Type    The type.
+         * @param   pszName The name.
+         * @return  The system object.
+         */
         virtual Handle GetSystemObject(System::Type Type, const char* pszName);
 
-        /// <summary cref="IService::ISystemAccess::GetSystemProperty">
-        ///   Implementation of IService::ISystemAccess::GetSystemProperty.
-        /// </summary>
+        /**
+         * Gets a system property.
+         * Implementation of IService::ISystemAccess::GetSystemProperty.
+         *
+         * @param   hSystem             Handle of the system.
+         * @param [in,out]  Property    The property.
+         */
         virtual void GetSystemProperty(Handle hSystem, InOut Properties::Property& Property);
 
-        /// <summary cref="IService::ISystemAccess::SetSystemProperty">
-        ///   Implementation of IService::ISystemAccess::SetSystemProperty.
-        /// </summary>
+        /**
+         * Sets a system property.
+         * Implementation of IService::ISystemAccess::SetSystemProperty.
+         *
+         * @param   hSystem             Handle of the system.
+         * @param [in,out]  Property    The property.
+         */
         virtual void SetSystemProperty(Handle hSystem, In Properties::Property& Property);
 
-        /// <summary cref="IService::ISystemAccess::GetSceneProperty">
-        ///   Implementation of IService::ISystemAccess::GetSceneProperty.
-        /// </summary>
+        /**
+         * Gets a scene property.
+         * Implementation of IService::ISystemAccess::GetSceneProperty.
+         *
+         * @param   hScene              Handle of the scene.
+         * @param [in,out]  Property    The property.
+         */
         virtual void GetSceneProperty(Handle hScene, InOut Properties::Property& Property);
 
-        /// <summary cref="IService::ISystemAccess::SetSceneProperty">
-        ///   Implementation of IService::ISystemAccess::SetSceneProperty.
-        /// </summary>
+        /**
+         * Sets a scene property.
+         * Implementation of IService::ISystemAccess::SetSceneProperty.
+         *
+         * @param   hScene              Handle of the scene.
+         * @param [in,out]  Property    The property.
+         */
         virtual void SetSceneProperty(Handle hScene, In Properties::Property& Property);
 
-        /// <summary cref="IService::ISystemAccess::GetObjectProperty">
-        ///   Implementation of IService::ISystemAccess::GetObjectProperty.
-        /// </summary>
+        /**
+         * Gets an object property.
+         * Implementation of IService::ISystemAccess::GetObjectProperty.
+         *
+         * @param   hObject             Handle of the object.
+         * @param [in,out]  Property    The property.
+         */
         virtual void GetObjectProperty(Handle hObject, InOut Properties::Property& Property);
 
-        /// <summary cref="IService::ISystemAccess::SetObjectProperty">
-        ///   Implementation of IService::ISystemAccess::SetObjectProperty.
-        /// </summary>
+        /**
+         * Sets an object property.
+         * Implementation of IService::ISystemAccess::SetObjectProperty.
+         *
+         * @param   hObject             Handle of the object.
+         * @param [in,out]  Property    The property.
+         */
         virtual void SetObjectProperty(Handle hObject, In Properties::Property& Property);
 
-        /// <summary>
-        ///   Issues all the pending property changes.  This only occurs after the scheduler has
-        ///    executed all the waiting items.
-        /// </summary>
-        /// <param name="SystemTypes">The system types of the system that can accept property
-        ///  changes.</param>
+        /**
+         * Issues all the pending property changes.  This only occurs after the scheduler has
+         *  executed all the waiting items.
+         *
+         * @param   SystemTypes The system types of the system that can accept property changes.
+         */
         void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
 
 
@@ -159,45 +213,4 @@ class Framework : public IService::ISystemAccess {
 
         std::string                             m_sNextScene;
 
-        class GDFParser {
-            public:
-
-                GDFParser(UScene* pScene, std::string sGDF);
-
-                void ParseEnvironment(void);
-
-                void ParseSystems(void);
-
-                void ParseScene(std::string sScene);
-
-                std::string StartupScene(void);
-
-                GDFParser& operator=(const GDFParser&) { ASSERT(false); }
-
-            protected:
-
-                void ApplyProperties(
-                    ProtoPropertyList& PropertyList,
-                    Properties::Array& GetProperties,
-                    Properties::Array& SetProperties
-                ) const;
-
-
-            protected:
-
-                Proto::Gdf                                      m_Gdf;
-
-                UScene*                                         m_pScene;
-                ISystem*                                        m_pSystem;
-                ISystemScene*                                   m_pSystemScene;
-
-                UObject*                                        m_pUObject;
-                ISystemObject*                                  m_pSystemObject;
-
-                Properties::Array                               m_GetProperties;
-                Properties::Array                               m_SetProperties;
-
-                std::map<u32, Properties::Array>                 m_SetPropertiesMap;
-                std::map<UObject*, std::map<u32, Properties::Array>>  m_AllObjectProperties;
-        };
 };

@@ -1,13 +1,13 @@
 
-#include "Proto/GlobalDefinition.pb.h"
-#include "Proto/SceneDefinition.pb.h"
+#include "Proto/Definition/GlobalDefinition.pb.h"
+#include "Proto/Definition/SceneDefinition.pb.h"
 
-typedef google::protobuf::RepeatedPtrField<std::string>                 ProtoStringList;
-typedef google::protobuf::RepeatedPtrField<Proto::Property>             ProtoPropertyList;
-typedef google::protobuf::RepeatedPtrField<Proto::Gdf_System>           ProtoSystemList;
-typedef google::protobuf::RepeatedPtrField<Proto::Gdf_Scene>            ProtoSceneList;
-typedef google::protobuf::RepeatedPtrField<Proto::Sdf_Object>           ProtoObjectList;
-typedef google::protobuf::RepeatedPtrField<Proto::Sdf_Link>             ProtoLinksList;
+typedef google::protobuf::RepeatedPtrField<std::string>                         ProtoStringList;
+typedef google::protobuf::RepeatedPtrField<PropertyProto>                       ProtoPropertyList;
+typedef google::protobuf::RepeatedPtrField<SystemProto>                         ProtoSystemList;
+typedef google::protobuf::RepeatedPtrField<std::string>                ProtoSceneList;
+typedef google::protobuf::RepeatedPtrField<ObjectProto>                         ProtoObjectList;
+typedef google::protobuf::RepeatedPtrField<SceneDefinitionProto::LinkProto>     ProtoLinksList;
 
-typedef google::protobuf::RepeatedPtrField<Proto::Sdf_ObjectProperties> ProtoObjectPropertiesList;
-typedef google::protobuf::RepeatedPtrField<Proto::Sdf_SystemProperties> ProtoSystemPropertiesList;
+typedef google::protobuf::RepeatedPtrField<ObjectProto>                         ProtoObjectPropertiesList;
+typedef google::protobuf::RepeatedPtrField<ObjectProto::SystemObjectProto>      ProtoSystemPropertiesList;

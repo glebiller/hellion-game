@@ -1,9 +1,9 @@
 package fr.kissy.hellion.definition.encoder.main.utils;
 
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.definition.encoder.proto.ObjectProto;
-import fr.kissy.hellion.definition.encoder.proto.SystemProto;
-import fr.kissy.hellion.definition.encoder.proto.PropertyProto;
+import fr.kissy.hellion.definition.encoder.proto.ObjectDto;
+import fr.kissy.hellion.definition.encoder.proto.PropertyDto;
+import fr.kissy.hellion.definition.encoder.proto.SystemDto;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
@@ -26,8 +26,8 @@ public class ParseUtils {
      * @return The property builder created.
      * @throws javax.management.modelmbean.XMLParseException If the xml is not well formatted.
      */
-    public static PropertyProto.Property.Builder parseProperty(Element propertyElement) throws XMLParseException {
-        PropertyProto.Property.Builder propertyBuilder = PropertyProto.Property.newBuilder();
+    public static PropertyDto.PropertyProto.Builder parseProperty(Element propertyElement) throws XMLParseException {
+        PropertyDto.PropertyProto.Builder propertyBuilder = PropertyDto.PropertyProto.newBuilder();
         NamedNodeMap attributes = propertyElement.getAttributes();
         
         String name = propertyElement.getAttribute("Name");
@@ -53,11 +53,11 @@ public class ParseUtils {
      * @return The group properties created.
      * @throws javax.management.modelmbean.XMLParseException If the xml is not well formatted.
      */
-    public static SystemProto.System.Builder parseSystemProperties(Element propertiesElement) throws XMLParseException {
+    public static SystemDto.SystemProto.Builder parseSystemProperties(Element propertiesElement) throws XMLParseException {
         // System type
-        SystemProto.System.Builder systemProperties = SystemProto.System.newBuilder();
+        SystemDto.SystemProto.Builder systemProperties = SystemDto.SystemProto.newBuilder();
         String systemType = safeGetAttribute(propertiesElement, "SystemType");
-        systemProperties.setType(SystemProto.System.Type.valueOf(systemType));
+        systemProperties.setType(SystemDto.SystemProto.Type.valueOf(systemType));
 
         // System properties
         NodeList properties = propertiesElement.getElementsByTagName("Property");
@@ -75,12 +75,12 @@ public class ParseUtils {
      * @return The group properties created.
      * @throws javax.management.modelmbean.XMLParseException If the xml is not well formatted.
      */
-    public static ObjectProto.Object.SystemProperties.Builder parseObjectProperties(Element propertiesElement) throws XMLParseException {
+    public static ObjectDto.ObjectProto.SystemObjectProto.Builder parseObjectProperties(Element propertiesElement) throws XMLParseException {
         // System type
-        ObjectProto.Object.SystemProperties.Builder objectProperties = ObjectProto.Object.SystemProperties.newBuilder();
+        ObjectDto.ObjectProto.SystemObjectProto.Builder objectProperties = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
 
         String systemType = safeGetAttribute(propertiesElement, "SystemType");
-        objectProperties.setSystemType(SystemProto.System.Type.valueOf(systemType));
+        objectProperties.setSystemType(SystemDto.SystemProto.Type.valueOf(systemType));
         String objectType = propertiesElement.getAttribute("ObjectType");
         if (StringUtils.isNotEmpty(objectType)) {
             objectProperties.setType(objectType);

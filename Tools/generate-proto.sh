@@ -1,2 +1,2 @@
 #!/bin/sh
-protoc --cpp_out=../Core/BaseTypes/Source/Proto --java_out=./DFEncoder/src/main/java ../Assets/Definitions/*.proto
+./protoc --proto_path=../Assets/Proto/ --cpp_out=../Core/BaseTypes/Source/Proto --java_out=./definition-encoder/src/main/java ../Assets/Proto/Common/*.proto ../Assets/Proto/Definition/*.proto

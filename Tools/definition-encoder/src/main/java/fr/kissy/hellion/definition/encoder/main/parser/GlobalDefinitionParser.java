@@ -2,8 +2,8 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.definition.encoder.proto.GlobalDefinitionProto;
-import fr.kissy.hellion.definition.encoder.proto.SystemProto;
+import fr.kissy.hellion.definition.encoder.proto.GlobalDefinitionDto;
+import fr.kissy.hellion.definition.encoder.proto.SystemDto;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class GlobalDefinitionParser extends AbstractParser {
     
-    private List<SystemProto.System.Type> systems = new ArrayList<SystemProto.System.Type>();
+    private List<SystemDto.SystemProto.Type> systems = new ArrayList<SystemDto.SystemProto.Type>();
 
     /**
      * @inheritDoc
@@ -36,7 +36,7 @@ public class GlobalDefinitionParser extends AbstractParser {
         try {
             System.out.println("Parsing GDF File " + xmlFile.getPath());
 
-            builder = GlobalDefinitionProto.GlobalDefinition.newBuilder();
+            builder = GlobalDefinitionDto.GlobalDefinitionProto.newBuilder();
 
             Element documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .parse(xmlFile).getDocumentElement();
@@ -95,11 +95,11 @@ public class GlobalDefinitionParser extends AbstractParser {
 
         NodeList systemList = systemsElement.getElementsByTagName("System");
         for (int i = 0; i < systemList.getLength(); i++) {
-            SystemProto.System.Builder systemBuilder = SystemProto.System.newBuilder();
+            SystemDto.SystemProto.Builder systemBuilder = SystemDto.SystemProto.newBuilder();
             Element systemElement = (Element) systemList.item(i);
 
             String type = ParseUtils.safeGetAttribute(systemElement, "Type");
-            systemBuilder.setType(SystemProto.System.Type.valueOf(type));
+            systemBuilder.setType(SystemDto.SystemProto.Type.valueOf(type));
 
             NodeList properties = systemElement.getElementsByTagName("Property");
             for (int j = 0; j < properties.getLength(); j++) {
@@ -137,8 +137,8 @@ public class GlobalDefinitionParser extends AbstractParser {
      *
      * @return The GDF Builder.
      */
-    public GlobalDefinitionProto.GlobalDefinition.Builder getGlobalDefinitionBuilder() {
-        return (GlobalDefinitionProto.GlobalDefinition.Builder) builder;
+    public GlobalDefinitionDto.GlobalDefinitionProto.Builder getGlobalDefinitionBuilder() {
+        return (GlobalDefinitionDto.GlobalDefinitionProto.Builder) builder;
     }
 
     /**
@@ -146,7 +146,7 @@ public class GlobalDefinitionParser extends AbstractParser {
      *
      * @return The system list.
      */
-    public List<SystemProto.System.Type> getSystems() {
+    public List<SystemDto.SystemProto.Type> getSystems() {
         return systems;
     }
 }

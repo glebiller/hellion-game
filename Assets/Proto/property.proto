@@ -1,8 +1,0 @@
-option java_package = "fr.kissy.hellion.definition.encoder.proto";
-option java_outer_classname = "PropertyProto";
-option java_generic_services = false;
-
-message Property {
-    required string name = 1;
-    repeated bytes value = 2;
-}

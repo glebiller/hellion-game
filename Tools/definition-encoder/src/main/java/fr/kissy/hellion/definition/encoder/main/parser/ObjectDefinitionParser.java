@@ -2,7 +2,7 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.definition.encoder.proto.ObjectProto;
+import fr.kissy.hellion.definition.encoder.proto.ObjectDto;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -21,7 +21,7 @@ public class ObjectDefinitionParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public ObjectDefinitionParser(String xmlPath, String outputPath, ObjectProto.Object.Builder builder) throws XMLParseException {
+    public ObjectDefinitionParser(String xmlPath, String outputPath, ObjectDto.ObjectProto.Builder builder) throws XMLParseException {
         super(xmlPath, outputPath);
         this.builder = builder;
     }
@@ -70,7 +70,7 @@ public class ObjectDefinitionParser extends AbstractParser {
         System.out.println("\t- Parsing Properties");
 
         // Object properties
-        getObjectBuilder().addSystemProperties(ParseUtils.parseObjectProperties(propertiesElement));
+        getObjectBuilder().addSystemObjects(ParseUtils.parseObjectProperties(propertiesElement));
     }
 
     /**
@@ -78,8 +78,8 @@ public class ObjectDefinitionParser extends AbstractParser {
      *
      * @return The ODF Builder.
      */
-    public ObjectProto.Object.Builder getObjectBuilder() {
-        return (ObjectProto.Object.Builder) builder;
+    public ObjectDto.ObjectProto.Builder getObjectBuilder() {
+        return (ObjectDto.ObjectProto.Builder) builder;
     }
 
     /**
