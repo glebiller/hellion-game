@@ -2,9 +2,9 @@ option java_package = "fr.kissy.hellion.definition.encoder.proto";
 option java_outer_classname = "SceneDefinitionDto";
 option java_generic_services = false;
 
-import "Common/System.proto";
-import "Common/Object.proto";
-import "Common/Property.proto";
+import "Proto/Common/System.proto";
+import "Proto/Common/Object.proto";
+import "Proto/Common/Property.proto";
 
 message SceneDefinitionProto {
     message LinkProto {

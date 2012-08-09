@@ -2,8 +2,8 @@ option java_package = "fr.kissy.hellion.definition.encoder.proto";
 option java_outer_classname = "ObjectDto";
 option java_generic_services = false;
 
-import "Common/System.proto";
-import "Common/Property.proto";
+import "Proto/Common/System.proto";
+import "Proto/Common/Property.proto";
 
 message ObjectProto {
     message SystemObjectProto {

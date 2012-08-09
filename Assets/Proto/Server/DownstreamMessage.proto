@@ -1,0 +1,11 @@
+option java_package = "fr.kissy.hellion.proto";
+option java_outer_classname = "DownstreamMessageDto";
+option java_generic_services = false;
+
+message DownstreamMessageProto {
+	enum Type {
+		PING = 1;
+	}
+	required Type type = 1;
+	optional bytes data = 2;
+}

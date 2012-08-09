@@ -2,7 +2,7 @@ option java_package = "fr.kissy.hellion.definition.encoder.proto";
 option java_outer_classname = "SystemDto";
 option java_generic_services = false;
 
-import "Common/Property.proto";
+import "Proto/Common/Property.proto";
 
 message SystemProto {
     enum Type {
