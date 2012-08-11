@@ -19,6 +19,18 @@
     <Filter Include="Fichiers sources\Proto">
       <UniqueIdentifier>{47319ee9-919e-487a-80fa-560736345966}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Proto\Common">
+      <UniqueIdentifier>{b601c27d-d81e-4ec1-84d2-c1fc061ba26f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Proto\Definition">
+      <UniqueIdentifier>{9f31c87d-40fe-48c8-a6fa-72e875724476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Proto\Common">
+      <UniqueIdentifier>{e47227a2-ac7d-4587-9f0d-61aad047e973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Proto\Definition">
+      <UniqueIdentifier>{4e129841-1a48-4056-81db-8a1988853dfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BaseTypes.h">
@@ -54,20 +66,20 @@
     <ClInclude Include="Source\Assert.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\GlobalDefinition.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    <ClInclude Include="Source\Proto\Common\System.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\Object.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    <ClInclude Include="Source\Proto\Common\Object.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\Property.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    <ClInclude Include="Source\Proto\Common\Property.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\SceneDefinition.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    <ClInclude Include="Source\Proto\Definition\GlobalDefinition.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto\Definition</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Proto\System.pb.h">
-      <Filter>Fichiers d%27en-tête\Proto</Filter>
+    <ClInclude Include="Source\Proto\Definition\SceneDefinition.pb.h">
+      <Filter>Fichiers d%27en-tête\Proto\Definition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,20 +92,20 @@
     <ClCompile Include="Source\Singleton.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\Object.pb.cc">
-      <Filter>Fichiers sources\Proto</Filter>
+    <ClCompile Include="Source\Proto\Common\System.pb.cc">
+      <Filter>Fichiers sources\Proto\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\Property.pb.cc">
-      <Filter>Fichiers sources\Proto</Filter>
+    <ClCompile Include="Source\Proto\Common\Property.pb.cc">
+      <Filter>Fichiers sources\Proto\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\SceneDefinition.pb.cc">
-      <Filter>Fichiers sources\Proto</Filter>
+    <ClCompile Include="Source\Proto\Common\Object.pb.cc">
+      <Filter>Fichiers sources\Proto\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\System.pb.cc">
-      <Filter>Fichiers sources\Proto</Filter>
+    <ClCompile Include="Source\Proto\Definition\SceneDefinition.pb.cc">
+      <Filter>Fichiers sources\Proto\Definition</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\GlobalDefinition.pb.cc">
-      <Filter>Fichiers sources\Proto</Filter>
+    <ClCompile Include="Source\Proto\Definition\GlobalDefinition.pb.cc">
+      <Filter>Fichiers sources\Proto\Definition</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

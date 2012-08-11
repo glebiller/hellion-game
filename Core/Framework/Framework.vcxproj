@@ -21,6 +21,7 @@
     <ClCompile Include="Source\Manager\ServiceManager.cpp" />
     <ClCompile Include="Source\Manager\SystemManager.cpp" />
     <ClCompile Include="Source\Manager\TaskManager.cpp" />
+    <ClCompile Include="Source\Parser\DefinitionParser.cpp" />
     <ClCompile Include="Source\Scheduler.cpp" />
     <ClCompile Include="Source\ThreadPool.cpp" />
     <ClCompile Include="Source\Universal.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Source\Manager\ServiceManager.h" />
     <ClInclude Include="Source\Manager\SystemManager.h" />
     <ClInclude Include="Source\Manager\TaskManager.h" />
+    <ClInclude Include="Source\Parser\DefinitionParser.h" />
     <ClInclude Include="Source\Scheduler.h" />
     <ClInclude Include="Source\ThreadPool.h" />
     <ClInclude Include="Source\Universal.h" />

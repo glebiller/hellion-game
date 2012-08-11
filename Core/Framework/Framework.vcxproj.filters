@@ -19,6 +19,12 @@
     <Filter Include="Fichiers sources\Manager">
       <UniqueIdentifier>{e42442c0-5c86-4b95-a863-85291c8a116c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Parser">
+      <UniqueIdentifier>{66a68647-26a5-4773-9717-7ce8936a28c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Parser">
+      <UniqueIdentifier>{97305505-4898-42c7-bd7c-a587cb54b083}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\DebugWindow.cpp">
@@ -59,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
       <Filter>Fichiers sources\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Parser\DefinitionParser.cpp">
+      <Filter>Fichiers sources\Parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Source\Manager\TaskManager.h">
       <Filter>Fichiers d%27en-tête\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Parser\DefinitionParser.h">
+      <Filter>Fichiers d%27en-tête\Parser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
