@@ -96,6 +96,9 @@
     <ClCompile Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.cpp">
       <Filter>Fichiers sources\Object\GUI\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\GUI\ObjectLoginWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Source\Object\GUI\Debug\ObjectChart.h">
       <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\ObjectLoginWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

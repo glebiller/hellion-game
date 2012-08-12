@@ -22,6 +22,9 @@
 #include "OgreWindowEventUtilities.h"
 #pragma warning( pop )
 
+#include "CEGUI.h"
+#include "RendererModules/Ogre/CEGUIOgreRenderer.h"
+
 //
 // Core includes
 //
@@ -245,6 +248,31 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
     // Note: Commented because the createRenderWindow() call is now called directly through m_pRoot rather than initialised manually
     // m_pMaterialManager = Ogre::MaterialManager::getSingletonPtr();
     // m_pMaterialManager->initialise();
+    
+    //
+    // GUI renderer
+    // 
+    
+    m_pGUIRenderer = &CEGUI::OgreRenderer::bootstrapSystem(*m_pRenderWindow);
+    // TODO properties
+    CEGUI::Imageset::setDefaultResourceGroup("Imagesets");
+    CEGUI::Font::setDefaultResourceGroup("Fonts");
+    CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+    CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+    CEGUI::SchemeManager::getSingleton().create("TaharezLook.scheme");
+    CEGUI::System::getSingleton().setDefaultMouseCursor("TaharezLook", "MouseArrow");
+    CEGUI::MouseCursor::getSingleton().setImage( CEGUI::System::getSingleton().getDefaultMouseCursor());
+    CEGUI::WindowManager &wmgr = CEGUI::WindowManager::getSingleton();
+    CEGUI::Window *sheet = wmgr.createWindow("DefaultWindow", "CEGUIDemo/Sheet");
+    CEGUI::System::getSingleton().setGUISheet(sheet);
+    // END TODO properties
+    // 
+    CEGUI::Window *quit = wmgr.createWindow("TaharezLook/Button", "CEGUIDemo/QuitButton");
+    quit->setText("Quit");
+    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+    sheet->addChildWindow(quit);
+
     //
     // Set as initialized.
     //

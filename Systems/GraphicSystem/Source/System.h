@@ -16,6 +16,7 @@
 #pragma once
 
 #include "OgreWindowEventUtilities.h"
+#include "CEGUIRenderer.h"
 
 #include "Errors.h"
 #include "System.h"
@@ -24,13 +25,13 @@
 class OGREGraphicsScene;
 class OGREGraphicsTask;
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Implementation of the ISystem interface for graphics.
-///   See Interfaces\System.h for a definition of the class and its functions.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implementation of the ISystem interface for graphics. See Interfaces\System.h for a
+ * definition of the class and its functions.
+ * 
+ * @sa  ISystem
+ * @sa  Ogre::WindowEventListener
+ */
 class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
         friend OGREGraphicsScene;
 
@@ -161,6 +162,8 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
 
         Ogre::RenderSystem*                 m_pRenderSystem;
         Ogre::RenderWindow*                 m_pRenderWindow;
+
+        CEGUI::Renderer*                    m_pGUIRenderer;
 
         u16                                 m_uShadowTextureCount;
         u16                                 m_uShadowTextureSize;

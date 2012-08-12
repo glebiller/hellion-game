@@ -38,6 +38,7 @@
 #include "Object/ObjectLight.h"
 #include "Object/ObjectMesh.h"
 #include "Object/GUI/ObjectWindow.h"
+#include "Object/GUI/ObjectLoginWindow.h"
 #include "Object/GUI/Debug/ObjectChart.h"
 #include "Object/GUI/Debug/ObjectStatWindow.h"
 #include "Object/GUI/Debug/ObjectWorkloadWindow.h"

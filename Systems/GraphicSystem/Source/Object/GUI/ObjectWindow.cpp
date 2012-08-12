@@ -105,9 +105,7 @@ GraphicObjectWindow::~GraphicObjectWindow(void) {
 // text area element to the panel element.
 //
 //-----------------------------------------------------------------------------
-Error GraphicObjectWindow::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+Error GraphicObjectWindow::Initialize(std::vector<Properties::Property> Properties) {
     Error Err;
     ASSERT(!m_bInitialized);
     Err = Errors::Failure;
