@@ -14,10 +14,9 @@
 
 #pragma once
 
-#include "Proto/Common/System.pb.h"
-
 #include "Errors.h"
 #include "Singleton.h"
+#include "Universal.h"
 #include "System.h"
 
 class ISystem;
@@ -53,7 +52,7 @@ class SystemManager : public Singleton {
          * @param   SystemType  The system type to remove.
          * @return  An error code.
          */
-        Error Remove(const SystemProto::Type SystemType);
+        Error Remove(const System::Type SystemType);
 
         /**
          * Gets a specific system from the collection based on its type.
@@ -62,6 +61,14 @@ class SystemManager : public Singleton {
          * @return  A pointer to the system.
          */
         ISystem* Get(const SystemProto::Type SystemType);
+
+        /**
+         * Gets a specific system from the collection based on its type.
+         *
+         * @param   SystemType  The type of system to get.
+         * @return  A pointer to the system.
+         */
+        ISystem* Get(const System::Type SystemType);
 
         /**
          * Gets a specific system from the collection base on its name.
@@ -82,8 +89,8 @@ class SystemManager : public Singleton {
 
     protected:
 
-        std::map<SystemProto::Type, ISystem*>              m_Systems;
-        std::map<SystemProto::Type, ISystem*>::iterator    m_SystemIt;
+        UScene::Systems                     m_Systems;
+        UScene::SystemsIt                   m_SystemIt;
 
 };
 

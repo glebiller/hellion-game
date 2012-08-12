@@ -50,9 +50,9 @@ class HavokPhysicsSystem : public ISystem {
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
         ///   Gets the system type for this system.
         /// </summary>
-        /// <returns>SystemProto::Type - The type of the system.</returns>
+        /// <returns>System::Type - The type of the system.</returns>
         /// <seealso cref="ISystem::GetSystemType"/>
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         /// <summary cref="HavokPhysicsSystem::Initialize">
         ///   Implementation of the <c>ISystem::Initialize</c> function.

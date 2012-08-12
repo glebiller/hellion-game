@@ -233,8 +233,8 @@ HavokPhysicsScene::~HavokPhysicsScene(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetSystemType - Returns System type for this Scene
-SystemProto::Type HavokPhysicsScene::GetSystemType(void) {
-    return SystemProto::Physic;
+System::Type HavokPhysicsScene::GetSystemType(void) {
+    return System::Types::Physic;
 }
 
 

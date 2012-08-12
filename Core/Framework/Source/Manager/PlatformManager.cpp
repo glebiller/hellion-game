@@ -90,10 +90,7 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  IS
         //
         // Get the system initialization function.
         //
-        InitializeSystemLibFunction fnInitSystemLib =
-            reinterpret_cast<InitializeSystemLibFunction>(
-                GetProcAddress(hLib, "InitializeSystemLib")
-            );
+        InitializeSystemLibFunction fnInitSystemLib = reinterpret_cast<InitializeSystemLibFunction>(GetProcAddress(hLib, "InitializeSystemLib"));
 
         if (fnInitSystemLib != NULL) {
             ManagerInterfaces Managers;
@@ -119,7 +116,7 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  IS
                 //
                 // Verify that there's no duplicate system type.
                 //
-                SystemProto::Type SystemType = pSystem->GetSystemType();
+                System::Type SystemType = pSystem->GetSystemType();
                 ISystem* pCurrSystem = Singletons::SystemManager.Get(SystemType);
 
                 if (pCurrSystem == NULL) {
@@ -133,6 +130,8 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  IS
                 }
             }
         }
+    } else {
+        ASSERTMSG1(false, "Failed to load system %s", libraryName);
     }
 
     return Err;

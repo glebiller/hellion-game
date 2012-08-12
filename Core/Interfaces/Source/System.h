@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Proto/Common/System.pb.h"
 #include "Defines.h"
 #include "Debug.h"
 
@@ -42,35 +43,8 @@ namespace System {
     enum Components {
         System, Scene, Object, Task
     };
-
-    /**
-     * An int enum, used to index the types of systems. Custom systems do not have predefined types.
-     * Their types are made with System::Types::MakeCustom(), so they're not listed here.
-     * @sa  System::Types::MakeCustom() .
-     */
-    enum TypeIndices {
-        // Standard types
-        NotUsed = 0,
-        Generic,
-        Audio,
-        Geometry,
-        Graphic,
-        Input,
-        Network,
-        Physic,
-
-        /*
-        AI,
-        Animation,
-        Scripting,
-        Explosion,
-        Water,
-        */
-
-        // Custom indices are not fixed, so do not belong here.
-
-        MaxIndex
-    };
+    
+    typedef u32 Type;
 
     /**
      * The Types namespace contains specifics about the system types.
@@ -87,20 +61,20 @@ namespace System {
         // the upper 16-bits, and can use the MakeCustom() function to make a custom
         // type ID.
         static const u32 Null                   = 0;
-        static const u32 Generic                = (1 << System::TypeIndices::Generic);
-        static const u32 Audio                  = (1 << System::TypeIndices::Audio);
-        static const u32 Geometry               = (1 << System::TypeIndices::Geometry);
-        static const u32 Graphic                = (1 << System::TypeIndices::Graphic);
-        static const u32 Input                  = (1 << System::TypeIndices::Input);
-        static const u32 Network                = (1 << System::TypeIndices::Network);
-        static const u32 Physic                 = (1 << System::TypeIndices::Physic);
+        static const u32 Generic                = (1 << SystemProto::Generic);
+        static const u32 AI                     = (1 << SystemProto::AI);
+        static const u32 Animation              = (1 << SystemProto::Animation);
+        static const u32 Audio                  = (1 << SystemProto::Audio);
+        static const u32 Geometry               = (1 << SystemProto::Geometry);
+        static const u32 Graphic                = (1 << SystemProto::Graphic);
+        static const u32 Input                  = (1 << SystemProto::Input);
+        static const u32 Network                = (1 << SystemProto::Network);
+        static const u32 Physic                 = (1 << SystemProto::Physic);
 
         /*
-        static const u32 AI                     = (1 << System::TypeIndices::AI);
-        static const u32 Animation              = (1 << System::TypeIndices::Animation);
-        static const u32 Scripting              = (1 << System::TypeIndices::Scripting);
-        static const u32 Explosion              = (1 << System::TypeIndices::Explosion);
-        static const u32 Water                  = (1 << System::TypeIndices::Water);
+        static const u32 Scripting              = (1 << SystemProto::Scripting);
+        static const u32 Explosion              = (1 << SystemProto::Explosion);
+        static const u32 Water                  = (1 << SystemProto::Water);
         */
 
         // If you extend this list to add a new system, also update the rest of the type-related
@@ -117,10 +91,10 @@ namespace System {
          * Get the index of the system with the given type ID.  Useful for looking up indexed properties.
          * This function works on both predefined and custom system type IDs.
          *
-         * @param   SystemType  u32 - The type ID of a system.
+         * @param   SystemType  Type - The type ID of a system.
          * @return  u32 - Index of this system.
          */
-        __forceinline u32 GetIndex(u32 SystemType) {
+        __forceinline u32 GetIndex(const System::Type SystemType) {
             u32 Index = All;
 #if defined( MSC_COMPILER )
             _BitScanForward((unsigned long*)&Index, SystemType);
@@ -130,29 +104,20 @@ namespace System {
             return Index;
         };
 
+        /**
+         * Gets a type from an index.
+         *
+         * @param   SystemType  Type of the system.
+         * @return  The type.
+         */
+        __forceinline u32 GetType(const SystemProto::Type SystemType) {
+            return (1 << SystemType);
+        }
+
         typedef u32 BitMask;
     }
-    //typedef u32 Type;
 
-    /**
-     * Plaintext names for the predefined systems, useful while debugging.
-     */
-    namespace Names {
-        static const char* Audio                      = "Audio";
-        static const char* Geometry                   = "Geometry";
-        static const char* Graphic                    = "Graphic";
-        static const char* Input                      = "Input";
-        static const char* Network                    = "Network";
-        static const char* Physic                     = "Physic";
-
-        /*
-        static const char* AI                         = "AI";
-        static const char* Animation                  = "Animation";
-        static const char* Scripting                  = "Scripting";
-        static const char* Explosion                  = "Explosion";
-        static const char* Water                      = "Water";
-        */
-    }
+    typedef u32 Change;
 
     /**
      * Defines the different changes as a bit mask that the systems can request
@@ -230,7 +195,6 @@ namespace System {
 
         typedef u32 BitMask;
     }
-    typedef u32 Change;
 
 }
 

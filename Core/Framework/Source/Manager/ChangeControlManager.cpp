@@ -82,13 +82,7 @@ ChangeManager::~ChangeManager(
 
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
-Error
-ChangeManager::Register(
-    ISubject* pInSubject,
-    System::Changes::BitMask observerIntrestBits,
-    IObserver* pInObserver,
-    System::Types::BitMask observerIdBits
-) {
+Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
     Error curError = Errors::Failure;
 
     if (pInSubject && pInObserver) {
@@ -359,10 +353,7 @@ ChangeManager::DistributionCallback(
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeRange - Process queued notifications for the given range
 void
-ChangeManager::DistributeRange(
-    u32 begin,
-    u32 end
-) {
+ChangeManager::DistributeRange(u32 begin, u32 end) {
     // Loop through all the noticatiosn in the given range
     for (size_t i = begin; i < end; ++i) {
         // Get the notification and the subject

@@ -94,7 +94,7 @@ class ISystemObject : public CSubject, public IObserver {
          *
          * ### remarks  This is a shortcut to getting the system type w/o having to go the system first.
          */
-        virtual SystemProto::Type GetSystemType(void) = 0;
+        virtual System::Type GetSystemType(void) = 0;
 
         /**
          * Gets the name of the object.

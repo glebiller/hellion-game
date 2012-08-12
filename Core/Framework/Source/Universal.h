@@ -32,18 +32,18 @@ class UObject;
 class UScene : public IObserver {
     public:
 
-        typedef std::map<SystemProto::Type, ISystem*>                       Systems;
+        // TODO move
+        typedef std::map<System::Type, ISystem*>                            Systems;
         typedef Systems::iterator                                           SystemsIt;
         typedef Systems::const_iterator                                     SystemsConstIt;
 
-        typedef std::map<SystemProto::Type, ISystemScene*>                  SystemScenes;
+        typedef std::map<System::Type, ISystemScene*>                       SystemScenes;
         typedef SystemScenes::iterator                                      SystemScenesIt;
         typedef SystemScenes::const_iterator                                SystemScenesConstIt;
 
         typedef std::list<UObject*>                                         Objects;
         typedef Objects::iterator                                           ObjectsIt;
         typedef Objects::const_iterator                                     ObjectsConstIt;
-
 
     public:
 
@@ -161,7 +161,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
 
     public:
 
-        typedef std::map<SystemProto::Type, ISystemObject*>      SystemObjects;
+        typedef std::map<System::Type, ISystemObject*>      SystemObjects;
         typedef SystemObjects::iterator                     SystemObjectsIt;
         typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
@@ -211,13 +211,12 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         //  System - the system type of the object.
         //   return - this UOBject's system object for the specified type.
         //
-        ISystemObject* GetExtension(SystemProto::Type System);
+        ISystemObject* GetExtension(System::Type System);
 
         /// <summary cref="IObserver::ChangeOccurred">
         ///   Implementation of the IObserver ChangeOccurred function.
         /// </summary>
-        virtual Error ChangeOccurred(ISubject* pSubject,
-                                     System::Changes::BitMask SystemChanges);
+        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
 
         /// <summary cref="ISubject::GetPotentialSystemChanges">
         ///   Implementation of the ISubject GetPotentialSystemChanges function.

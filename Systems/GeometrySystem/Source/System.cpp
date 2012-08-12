@@ -36,13 +36,8 @@ GeometrySystem::~GeometrySystem(void) {
 }
 
 
-const char* GeometrySystem::GetName(void) {
-    return System::Names::Geometry;
-}
-
-
-SystemProto::Type GeometrySystem::GetSystemType(void) {
-    return SystemProto::Geometry;
+System::Type GeometrySystem::GetSystemType(void) {
+    return System::Types::Geometry;
 }
 
 

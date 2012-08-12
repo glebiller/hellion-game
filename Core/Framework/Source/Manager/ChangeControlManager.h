@@ -65,11 +65,7 @@ class ChangeManager : public IChangeManager {
         /// </summary>
         class ObserverRequest {
             public:
-                ObserverRequest(
-                    IObserver* pObserver = NULL,
-                    u32 Interests = 0,
-                    u32 idBits = System::Changes::All
-                )
+                ObserverRequest(IObserver* pObserver = NULL, u32 Interests = 0, u32 idBits = System::Changes::All)
                     : m_pObserver(pObserver)
                     , m_interestBits(Interests)
                     , m_observerIdBits(idBits) {

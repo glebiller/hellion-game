@@ -76,11 +76,11 @@ InputObject::~InputObject(
 }
 
 
-SystemProto::Type
+System::Type
 InputObject::GetSystemType(
     void
 ) {
-    return SystemProto::Input;
+    return System::Types::Input;
 }
 
 

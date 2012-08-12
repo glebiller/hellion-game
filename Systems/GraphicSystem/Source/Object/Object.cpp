@@ -59,8 +59,8 @@ void GraphicObject::Update(f32 DeltaTime) {
 }
 
 
-SystemProto::Type GraphicObject::GetSystemType(void) {
-    return SystemProto::Graphic;
+System::Type GraphicObject::GetSystemType(void) {
+    return System::Types::Graphic;
 }
 
 

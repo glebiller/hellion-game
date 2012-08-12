@@ -59,9 +59,9 @@ class HavokObject : public ISystemObject, public IGeometryObject {
         ///   Lets this object know when a registered aspects of interest has changed
         ///   (this function will be called when other systems make changes this object should know about).
         /// </summary>
-        /// <returns>SystemProto::Type - Type of this system.</returns>
+        /// <returns>System::Type - Type of this system.</returns>
         /// <seealso cref="ISystemObject::GetSystemType"/>
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         /// <summary cref="HavokObject::Update">
         /// Called by the task to have the object update itself.

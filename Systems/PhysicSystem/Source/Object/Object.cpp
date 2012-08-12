@@ -47,8 +47,8 @@ HavokObject::~HavokObject(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetSystemType - Returns System type for this Object
-SystemProto::Type HavokObject::GetSystemType(void) {
-    return SystemProto::Physic;
+System::Type HavokObject::GetSystemType(void) {
+    return System::Types::Physic;
 }
 
 

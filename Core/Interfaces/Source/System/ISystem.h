@@ -46,7 +46,7 @@ class ISystem {
          *
          * @return  The type of the system.
          */
-        virtual SystemProto::Type GetSystemType(void) = 0;
+        virtual System::Type GetSystemType(void) = 0;
 
         /**
          * One time initialization function for the system.

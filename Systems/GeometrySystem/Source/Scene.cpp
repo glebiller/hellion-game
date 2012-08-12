@@ -50,8 +50,8 @@ GeometryScene::~GeometryScene(
 }
 
 
-SystemProto::Type GeometryScene::GetSystemType(void) {
-    return SystemProto::Geometry;
+System::Type GeometryScene::GetSystemType(void) {
+    return System::Types::Geometry;
 }
 
 

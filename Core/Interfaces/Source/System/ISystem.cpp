@@ -23,7 +23,8 @@ ISystem::ISystem(void)
 }
 
 const char* ISystem::GetName(void) {
-    return SystemProto::Type_Name(GetSystemType()).c_str();
+    SystemProto::Type systemType = static_cast<SystemProto::Type>(System::Types::GetIndex(GetSystemType()));
+    return SystemProto::Type_Name(systemType).c_str();
 }
 
 /**

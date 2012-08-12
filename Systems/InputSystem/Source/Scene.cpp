@@ -69,12 +69,8 @@ InputScene::~InputScene(
     SAFE_DELETE(m_pInputTask);
 }
 
-
-SystemProto::Type
-InputScene::GetSystemType(
-    void
-) {
-    return SystemProto::Input;
+System::Type InputScene::GetSystemType(void) {
+    return System::Types::Input;
 }
 
 

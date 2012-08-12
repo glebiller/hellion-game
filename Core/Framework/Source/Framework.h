@@ -81,7 +81,7 @@ class Framework : public IService::ISystemAccess {
          * @param   Type    The type.
          * @return  The system.
          */
-        virtual Handle GetSystem(SystemProto::Type Type);
+        virtual Handle GetSystem(System::Type Type);
 
         /**
          * Gets a scene.
@@ -98,7 +98,7 @@ class Framework : public IService::ISystemAccess {
          * @param   Type    The type.
          * @return  The scene.
          */
-        virtual Handle GetScene(SystemProto::Type Type);
+        virtual Handle GetScene(System::Type Type);
 
         /**
          * Gets a system object.
@@ -117,7 +117,7 @@ class Framework : public IService::ISystemAccess {
          * @param   pszName The name.
          * @return  The system object.
          */
-        virtual Handle GetSystemObject(SystemProto::Type Type, const char* pszName);
+        virtual Handle GetSystemObject(System::Type Type, const char* pszName);
 
         /**
          * Gets a system property.
@@ -186,7 +186,7 @@ class Framework : public IService::ISystemAccess {
 
         struct PropertyIssue {
             System::Components      SystemComponent;
-            SystemProto::Type            SystemType;
+            System::Type            SystemType;
             Handle                  hItem;
             Properties::Property    Property;
         };

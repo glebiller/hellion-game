@@ -92,11 +92,11 @@ void DefinitionParser::ParseScene(std::string sScene) {
             //
             for (ProtoSystemPropertiesList::const_iterator systemPropertiesIt = sceneDefinitionProto.systems().begin(); systemPropertiesIt != sceneDefinitionProto.systems().end(); systemPropertiesIt++) {
                 m_pSystem = Singletons::SystemManager.Get(systemPropertiesIt->type());
-                ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", systemPropertiesIt->type());
+                ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
 
                 if (m_pSystem != NULL) {
                     UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-                    ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", systemPropertiesIt->type());
+                    ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
                     m_pSystemScene = it->second;
                     ASSERT(m_pSystemScene != NULL);
                     // Initialize system scene properties

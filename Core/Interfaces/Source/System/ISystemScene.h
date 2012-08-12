@@ -58,7 +58,7 @@ class ISystemScene : public CSubject, public IObserver {
          *
          * @return  The type of the system.
          */
-        virtual SystemProto::Type GetSystemType(void) = 0;
+        virtual System::Type GetSystemType(void) = 0;
 
         /**
          * Enumeration for informing the ISystemScene on what is occuring.

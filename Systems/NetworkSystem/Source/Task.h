@@ -37,9 +37,9 @@ class NetworkTask : public ISystemTask {
         ///   Implementation of the <c>ISystemTask::GetSystemType</c> function.
         ///   Gets the system type for this system task.
         /// </summary>
-        /// <returns>SystemProto::Type - The type of the system.</returns>
+        /// <returns>System::Type - The type of the system.</returns>
         /// <seealso cref="ISystemTask::GetSystemType"/>
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         /// <summary cref="NetworkTask::Update">
         ///   Implementation of the <c>ISystemTask::Update</c> function.

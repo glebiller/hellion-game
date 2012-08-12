@@ -128,12 +128,13 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
          * be appended.
          *
          * @param   jobType         u32 - The type of the job that has just completed; a member of 
-         * 							SystemProto::Type.
+         * 							System::Type.
          * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
          *                          during this frame.
          */
         void CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) {
-            if (jobType < SystemProto::Type_MAX) {
+            u32 jobIndex = System::Types::GetIndex(jobType);
+            if (jobIndex < SystemProto::Type_MAX) {
                 //******************************
                 // GDC - LAB 4 - Activity 3
                 //
@@ -143,7 +144,7 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
                 // Can get compiler warnings about loss of precision; only really using low 32 bits of i64 value.
 #pragma warning ( push )
 #pragma warning ( disable : 4244 )
-                m_pAccumulatingFrameTicks[jobType] += (LONG)jobCounterTicks;
+                m_pAccumulatingFrameTicks[jobIndex] += (LONG)jobCounterTicks;
 #pragma warning ( pop )
                 //
                 //******************************

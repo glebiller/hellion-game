@@ -77,9 +77,9 @@ class GraphicObject : public ISystemObject {
         ///   Lets this object know when a registered aspects of interest has changed
         ///   (this function will be called when other systems make changes this object should know about).
         /// </summary>
-        /// <returns>SystemProto::Type - Type of this system.</returns>
+        /// <returns>System::Type - Type of this system.</returns>
         /// <seealso cref="ISystemObject::GetSystemType"/>
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         /// <summary cref="GraphicObject::Initialize">
         ///   Implementation of the <c>ISystem::Initialize</c> function.

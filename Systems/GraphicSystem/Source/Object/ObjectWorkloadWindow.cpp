@@ -117,7 +117,7 @@ WindowData* GraphicObjectWorkloadWindow::GetWindowDataUpdate() {
     // Get instrumentation updates.
     IService::IInstrumentation& inst = g_Managers.pService->Instrumentation();
     // Get access to Audio system for audio data
-    ISystem* pAudioSystem = (ISystem*) g_Managers.pService->SystemAccess().GetSystem(SystemProto::Audio);
+    ISystem* pAudioSystem = (ISystem*) g_Managers.pService->SystemAccess().GetSystem(System::Types::Audio);
     // Format the start of the stream.
     std::stringstream outputStream;
     i32 cpuCount = inst.getCPUCount();
@@ -133,11 +133,11 @@ WindowData* GraphicObjectWorkloadWindow::GetWindowDataUpdate() {
     inst.getJobRatios(jobRatios);
 
     for (int i = SystemProto::Type_MIN; i < jobCount; i++) {
-        SystemProto::Type systemType = static_cast<SystemProto::Type>(i);
+        SystemProto::Type systemIndex = static_cast<SystemProto::Type>(i);
         // Do not display None type & Generic Type
-        if (SystemProto::Type_IsValid(systemType) && systemType != SystemProto::None && systemType != SystemProto::Generic) {
+        if (SystemProto::Type_IsValid(systemIndex) && systemIndex != SystemProto::None && systemIndex != SystemProto::Generic) {
             // Display name
-            outputStream << "\n " << SystemProto::Type_Name(systemType) << ": ";
+            outputStream << "\n " << SystemProto::Type_Name(systemIndex) << ": ";
 
             // Job ratios show the amount of one available core that a job is using, so they're a kind
             // of utilization number.  On a 4 core machine, they can vary between 0 and 4.

@@ -14,6 +14,10 @@
 
 #pragma once
 
+#include "Errors.h"
+#include "System.h"
+#include "Property.h"
+#include "System/ISystem.h"
 
 class InputSystem : public ISystem {
     public:
@@ -28,7 +32,7 @@ class InputSystem : public ISystem {
         /// ISystem overrides
         /////////////////////////////////
 
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         virtual Error Initialize(Properties::Array Properties);
 

@@ -28,14 +28,14 @@ SystemManager::~SystemManager(void) {
 
 
 Error SystemManager::Add(ISystem* pSystem) {
-    SystemProto::Type SystemType = pSystem->GetSystemType();
+    System::Type SystemType = pSystem->GetSystemType();
     _ASSERT(m_Systems.find(SystemType) == m_Systems.end());
     m_Systems[ SystemType ] = pSystem;
     return Errors::Success;
 }
 
 
-Error SystemManager::Remove(const SystemProto::Type SystemType) {
+Error SystemManager::Remove(const System::Type SystemType) {
     Error   Err = Errors::Success;
     UScene::SystemsIt it = m_Systems.find(SystemType);
 
@@ -48,6 +48,12 @@ Error SystemManager::Remove(const SystemProto::Type SystemType) {
 
 
 ISystem* SystemManager::Get(const SystemProto::Type SystemType) {
+    System::Type systemType = System::Types::GetType(SystemType);
+    return Get(systemType);
+}
+
+
+ISystem* SystemManager::Get(const System::Type SystemType) {
     ISystem* pSystem = NULL;
     UScene::SystemsIt it = m_Systems.find(SystemType);
 

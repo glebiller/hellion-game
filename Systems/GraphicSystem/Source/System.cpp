@@ -138,8 +138,8 @@ GraphicSystem::windowClosed(
 }
 
 
-SystemProto::Type GraphicSystem::GetSystemType(void) {
-    return SystemProto::Graphic;
+System::Type GraphicSystem::GetSystemType(void) {
+    return System::Types::Graphic;
 }
 
 

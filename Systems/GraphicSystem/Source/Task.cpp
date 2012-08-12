@@ -61,8 +61,8 @@ OGREGraphicsTask::~OGREGraphicsTask(void) {
 }
 
 
-SystemProto::Type OGREGraphicsTask::GetSystemType(void) {
-    return SystemProto::Graphic;
+System::Type OGREGraphicsTask::GetSystemType(void) {
+    return System::Types::Graphic;
 }
 
 

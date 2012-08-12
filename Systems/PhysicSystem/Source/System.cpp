@@ -95,8 +95,8 @@ HavokPhysicsSystem::~HavokPhysicsSystem(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetSystemType - Returns System type for this System
-SystemProto::Type HavokPhysicsSystem::GetSystemType(void) {
-    return SystemProto::Physic;
+System::Type HavokPhysicsSystem::GetSystemType(void) {
+    return System::Types::Physic;
 }
 
 

@@ -15,6 +15,12 @@
 
 #pragma once
 
+#include "OgreWindowEventUtilities.h"
+
+#include "Errors.h"
+#include "System.h"
+#include "System/ISystem.h"
+
 class OGREGraphicsScene;
 class OGREGraphicsTask;
 
@@ -69,11 +75,11 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
          * Implementation of the <c>ISystem::GetSystemType</c> function. Gets the system type for this
          * system.
          *
-         * @return  SystemProto::Type - The type of the system.
+         * @return  System::Type - The type of the system.
          *
          * @sa   ISystem::GetSystemType  .
          */
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         /**
          * Initializes this :.

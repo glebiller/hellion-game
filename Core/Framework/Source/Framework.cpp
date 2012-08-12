@@ -277,10 +277,7 @@ Framework::Execute(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // IService::ISystemAccess Implementations.
 
-Handle
-Framework::GetSystem(
-    const char* pszSystemName
-) {
+Handle Framework::GetSystem(const char* pszSystemName) {
     //
     // Get the pointer to the system from the system manager.  Handle is just a void* so it will
     //  convert with any problems.  If you're one of those guys that will think of just casting
@@ -291,10 +288,7 @@ Framework::GetSystem(
 }
 
 
-Handle
-Framework::GetSystem(
-    SystemProto::Type Type
-) {
+Handle Framework::GetSystem(System::Type Type) {
     //
     // Get the pointer to the system from the system manager.  Handle is just a void* so it will
     //  convert with any problems.  If you're one of those guys that will think of just casting
@@ -326,10 +320,7 @@ Framework::GetScene(
 }
 
 
-Handle
-Framework::GetScene(
-    SystemProto::Type Type
-) {
+Handle Framework::GetScene(System::Type Type) {
     Handle hScene = NULL;
     //
     // Find the scene extension in the universal scene.
@@ -363,11 +354,7 @@ Framework::GetSystemObject(
 }
 
 
-Handle
-Framework::GetSystemObject(
-    SystemProto::Type Type,
-    const char* pszName
-) {
+Handle Framework::GetSystemObject(System::Type Type, const char* pszName) {
     Handle hObject = NULL;
     //
     // Find the universal object in the scene.
@@ -418,11 +405,7 @@ Framework::GetSystemProperty(
 }
 
 
-void
-Framework::SetSystemProperty(
-    Handle hSystem,
-    In Properties::Property& Property
-) {
+void Framework::SetSystemProperty(Handle hSystem, In Properties::Property& Property) {
     ASSERT(hSystem != NULL);
     ISystem* pSystem = reinterpret_cast<ISystem*>(hSystem);
 #ifdef DEBUG_BUILD

@@ -70,11 +70,11 @@ NetworkObject::~NetworkObject(
 }
 
 
-SystemProto::Type
+System::Type
 NetworkObject::GetSystemType(
     void
 ) {
-    return SystemProto::Network;
+    return System::Types::Network;
 }
 
 
@@ -190,8 +190,7 @@ System::Changes::BitMask
 NetworkObject::GetPotentialSystemChanges(
     void
 ) {
-    return System::Changes::Network::Firehose |
-           System::Changes::Geometry::Position |
+    return System::Changes::Geometry::Position |
            System::Changes::Geometry::Orientation |
            System::Changes::Graphics::GUI;
 }

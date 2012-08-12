@@ -41,7 +41,7 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
         /// ISystemScene overrides
         /////////////////////////////////
 
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         virtual void GlobalSceneStatusChanged(GlobalSceneStatus Status);
 

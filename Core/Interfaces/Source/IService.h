@@ -53,7 +53,7 @@ class IService {
                  * @param   Type    The type of the system to get.
                  * @return  A handle to the system or null if the system doesn't exist.
                  */
-                virtual Handle GetSystem(SystemProto::Type Type) = 0;
+                virtual Handle GetSystem(System::Type Type) = 0;
 
                 /**
                  * Gets a system scene by its system name.
@@ -69,7 +69,7 @@ class IService {
                  * @param   Type    The type of the system scene to get.
                  * @return  A handle to the system scene or null if it doesn't exist.
                  */
-                virtual Handle GetScene(SystemProto::Type Type) = 0;
+                virtual Handle GetScene(System::Type Type) = 0;
 
                 /**
                  * Gets a system object by its system name.
@@ -87,7 +87,7 @@ class IService {
                  * @param   pszName Name of the object.
                  * @return  A handle to the system object or null if it doesn't exist.
                  */
-                virtual Handle GetSystemObject(SystemProto::Type Type, const char* pszName) = 0;
+                virtual Handle GetSystemObject(System::Type Type, const char* pszName) = 0;
 
                 /**
                  * Gets a single system property.

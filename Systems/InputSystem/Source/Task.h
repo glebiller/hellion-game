@@ -14,9 +14,9 @@
 
 #pragma once
 
+#include "System/ISystemTask.h"
 
 class InputScene;
-
 
 class InputTask : public ISystemTask {
         friend class InputScene;
@@ -30,7 +30,7 @@ class InputTask : public ISystemTask {
         /// ISystemTask overrides
         /////////////////////////////////
 
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         virtual void Update(f32 DeltaTime);
 

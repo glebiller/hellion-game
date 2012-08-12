@@ -39,16 +39,11 @@ class GeometrySystem : public ISystem {
         virtual ~GeometrySystem(void);
 
     protected:
-
-        /**
-         * @inheritDoc
-         */
-        virtual const char* GetName(void);
         
         /**
          * @inheritDoc
          */
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
         
         /**
          * @inheritDoc

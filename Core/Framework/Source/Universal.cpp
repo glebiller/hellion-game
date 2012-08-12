@@ -83,7 +83,7 @@ UScene::Extend(
     //
     // Get the system's type.
     //
-    SystemProto::Type SystemType = pSystem->GetSystemType();
+    System::Type SystemType = pSystem->GetSystemType();
     ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
     //
@@ -107,10 +107,7 @@ UScene::Extend(
 }
 
 
-Error
-UScene::Unextend(
-    ISystemScene* pScene
-) {
+Error UScene::Unextend(ISystemScene* pScene) {
     ASSERT(pScene != NULL);
     //
     // Get the system.
@@ -120,7 +117,7 @@ UScene::Unextend(
     //
     // Get the system's type.
     //
-    SystemProto::Type SystemType = pSystem->GetSystemType();
+    System::Type SystemType = pSystem->GetSystemType();
     //
     // Find the system scene in the collection and remove it.
     //
@@ -262,7 +259,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
 
                     for (u32 i = 0; i < System::Types::MAX; i++) {
                         if (it->Types & Type) {
-                            SystemScenesIt ssIt = m_SystemScenes.find(SystemProto::Generic);
+                            SystemScenesIt ssIt = m_SystemScenes.find(System::Types::Generic);
 
                             if (ssIt != m_SystemScenes.end()) {
                                 pObject->Extend(ssIt->second, NULL);
@@ -411,7 +408,7 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         //
         System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
 
-        for (std::map<SystemProto::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
+        for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
                 it != m_ObjectExtensions.end(); it++) {
             ISystemObject* pObj = it->second;
 
@@ -427,7 +424,7 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         //
         // Add the system object to the list.
         //
-        SystemProto::Type SystemType = pSystemObject->GetSystemType();
+        System::Type SystemType = pSystemObject->GetSystemType();
         m_ObjectExtensions[ SystemType ] = pSystemObject;
 
         //
@@ -455,7 +452,7 @@ UObject::Unextend(
     //
     // Get the iterator for the object.
     //
-    SystemProto::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
+    System::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
     SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(),
               "The object to delete doesn't exist in the scene.");
@@ -465,7 +462,7 @@ UObject::Unextend(
     // Go through all the other systems and unregister them with this as subject and observer.
     //  The CCM should know if the objects are registered or not, and if not won't do anything.
     //
-    for (std::map<SystemProto::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
+    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
             it != m_ObjectExtensions.end(); it++) {
         ISystemObject* pObj = it->second;
 
@@ -515,9 +512,7 @@ UObject::GetExtensions(
 
 
 ISystemObject*
-UObject::GetExtension(
-    SystemProto::Type SystemType
-) {
+UObject::GetExtension(System::Type SystemType) {
     ISystemObject* pSystemObject = NULL;
     SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
 

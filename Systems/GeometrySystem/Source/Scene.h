@@ -35,7 +35,7 @@ class GeometryScene : public ISystemScene {
         /// ISystemScene overrides
         /////////////////////////////////
 
-        virtual SystemProto::Type GetSystemType(void);
+        virtual System::Type GetSystemType(void);
 
         virtual Error Initialize(std::vector<Properties::Property> Properties);
 
