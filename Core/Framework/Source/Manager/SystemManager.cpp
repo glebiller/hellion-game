@@ -15,40 +15,29 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
+#include "Universal.h"
 #include "SystemManager.h"
-
-
-typedef std::map<Id, ISystem*>::iterator SystemMapIter;
-typedef std::map<Id, ISystem*>::const_iterator SystemMapConstIter;
 
 
 SystemManager::SystemManager(void) {
 }
 
 
-SystemManager::~SystemManager(
-    void
-) {
+SystemManager::~SystemManager(void) {
 }
 
 
-Error
-SystemManager::Add(
-    ISystem* pSystem
-) {
-    System::Type SystemType = pSystem->GetSystemType();
+Error SystemManager::Add(ISystem* pSystem) {
+    SystemProto::Type SystemType = pSystem->GetSystemType();
     _ASSERT(m_Systems.find(SystemType) == m_Systems.end());
     m_Systems[ SystemType ] = pSystem;
     return Errors::Success;
 }
 
 
-Error
-SystemManager::Remove(
-    const System::Type SystemType
-) {
+Error SystemManager::Remove(const SystemProto::Type SystemType) {
     Error   Err = Errors::Success;
-    SystemMapIter it = m_Systems.find(SystemType);
+    UScene::SystemsIt it = m_Systems.find(SystemType);
 
     if (it != m_Systems.end()) {
         m_Systems.erase(it);
@@ -58,12 +47,9 @@ SystemManager::Remove(
 }
 
 
-ISystem*
-SystemManager::Get(
-    const System::Type SystemType
-) {
+ISystem* SystemManager::Get(const SystemProto::Type SystemType) {
     ISystem* pSystem = NULL;
-    SystemMapConstIter it = m_Systems.find(SystemType);
+    UScene::SystemsIt it = m_Systems.find(SystemType);
 
     if (it != m_Systems.end()) {
         pSystem = (*it).second;
@@ -73,14 +59,10 @@ SystemManager::Get(
 }
 
 
-ISystem*
-SystemManager::Get(
-    const char* pszName
-) {
+ISystem* SystemManager::Get(const char* pszName) {
     ISystem* pSystem = NULL;
 
-    for (SystemMapConstIter it = m_Systems.begin();
-            it != m_Systems.end(); it++) {
+    for (UScene::SystemsConstIt it = m_Systems.begin(); it != m_Systems.end(); it++) {
         if (strcmp(pszName, it->second->GetName()) == 0) {
             pSystem = it->second;
             break;

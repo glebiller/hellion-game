@@ -55,32 +55,44 @@ public final class SystemDto {
     
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
-      AI(0, 0),
-      AUDIO(1, 1),
-      GEOMETRY(2, 2),
-      GRAPHIC(3, 3),
-      INPUT(4, 4),
-      PHYSIC(5, 5),
+      None(0, 0),
+      Generic(1, 1),
+      AI(2, 2),
+      Animation(3, 3),
+      Audio(4, 4),
+      Geometry(5, 5),
+      Graphic(6, 6),
+      Input(7, 7),
+      Network(8, 8),
+      Physic(9, 9),
       ;
       
-      public static final int AI_VALUE = 0;
-      public static final int AUDIO_VALUE = 1;
-      public static final int GEOMETRY_VALUE = 2;
-      public static final int GRAPHIC_VALUE = 3;
-      public static final int INPUT_VALUE = 4;
-      public static final int PHYSIC_VALUE = 5;
+      public static final int None_VALUE = 0;
+      public static final int Generic_VALUE = 1;
+      public static final int AI_VALUE = 2;
+      public static final int Animation_VALUE = 3;
+      public static final int Audio_VALUE = 4;
+      public static final int Geometry_VALUE = 5;
+      public static final int Graphic_VALUE = 6;
+      public static final int Input_VALUE = 7;
+      public static final int Network_VALUE = 8;
+      public static final int Physic_VALUE = 9;
       
       
       public final int getNumber() { return value; }
       
       public static Type valueOf(int value) {
         switch (value) {
-          case 0: return AI;
-          case 1: return AUDIO;
-          case 2: return GEOMETRY;
-          case 3: return GRAPHIC;
-          case 4: return INPUT;
-          case 5: return PHYSIC;
+          case 0: return None;
+          case 1: return Generic;
+          case 2: return AI;
+          case 3: return Animation;
+          case 4: return Audio;
+          case 5: return Geometry;
+          case 6: return Graphic;
+          case 7: return Input;
+          case 8: return Network;
+          case 9: return Physic;
           default: return null;
         }
       }
@@ -111,7 +123,7 @@ public final class SystemDto {
       }
       
       private static final Type[] VALUES = {
-        AI, AUDIO, GEOMETRY, GRAPHIC, INPUT, PHYSIC, 
+        None, Generic, AI, Animation, Audio, Geometry, Graphic, Input, Network, Physic, 
       };
       
       public static Type valueOf(
@@ -167,7 +179,7 @@ public final class SystemDto {
     }
     
     private void initFields() {
-      type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+      type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
       properties_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -340,7 +352,7 @@ public final class SystemDto {
       
       public Builder clear() {
         super.clear();
-        type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         bitField0_ = (bitField0_ & ~0x00000001);
         if (propertiesBuilder_ == null) {
           properties_ = java.util.Collections.emptyList();
@@ -509,7 +521,7 @@ public final class SystemDto {
       private int bitField0_;
       
       // required .SystemProto.Type type = 1;
-      private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+      private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
@@ -527,7 +539,7 @@ public final class SystemDto {
       }
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        type_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         onChanged();
         return this;
       }
@@ -744,12 +756,14 @@ public final class SystemDto {
   static {
     java.lang.String[] descriptorData = {
       "\n\031Proto/Common/System.proto\032\033Proto/Commo" +
-      "n/Property.proto\"\237\001\n\013SystemProto\022\037\n\004type" +
+      "n/Property.proto\"\322\001\n\013SystemProto\022\037\n\004type" +
       "\030\001 \002(\0162\021.SystemProto.Type\022\"\n\nproperties\030" +
-      "\002 \003(\0132\016.PropertyProto\"K\n\004Type\022\006\n\002AI\020\000\022\t\n" +
-      "\005AUDIO\020\001\022\014\n\010GEOMETRY\020\002\022\013\n\007GRAPHIC\020\003\022\t\n\005I" +
-      "NPUT\020\004\022\n\n\006PHYSIC\020\005B9\n)fr.kissy.hellion.d" +
-      "efinition.encoder.protoB\tSystemDto\210\001\000"
+      "\002 \003(\0132\016.PropertyProto\"~\n\004Type\022\010\n\004None\020\000\022" +
+      "\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005A" +
+      "udio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\t\n\005Inp" +
+      "ut\020\007\022\013\n\007Network\020\010\022\n\n\006Physic\020\tB9\n)fr.kiss" +
+      "y.hellion.definition.encoder.protoB\tSyst" +
+      "emDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

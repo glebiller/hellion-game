@@ -132,7 +132,7 @@ namespace System {
 
         typedef u32 BitMask;
     }
-    typedef u32 Type;
+    //typedef u32 Type;
 
     /**
      * Plaintext names for the predefined systems, useful while debugging.

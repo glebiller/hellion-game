@@ -65,11 +65,8 @@ GeometryObject::~GeometryObject(
 }
 
 
-System::Type
-GeometryObject::GetSystemType(
-    void
-) {
-    return System::Types::Geometry;
+SystemProto::Type GeometryObject::GetSystemType(void) {
+    return SystemProto::Geometry;
 }
 
 

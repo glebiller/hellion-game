@@ -14,12 +14,21 @@
 
 #pragma once
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   A singleton for getting and setting information about the environment.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <cstring>
+#include <vector>
 
+#include "Defines.h"
+#include "DataTypes.h"
+#include "IEnvironment.h"
+#include "Singleton.h"
+
+/**
+ * A singleton for getting and setting information about the environment.
+ * 
+ * @sa  IEnvironment
+ * @sa  IEnvironment::IRuntime
+ * @sa  Singleton
+ */
 class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, public Singleton {
     public:
 

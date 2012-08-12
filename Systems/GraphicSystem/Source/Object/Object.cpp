@@ -43,42 +43,28 @@ const char* GraphicObject::sm_kapszTypeNames[] = {
 };
 
 
-GraphicObject::GraphicObject(
-    ISystemScene* pSystemScene,
-    const char* pszName
-)
+GraphicObject::GraphicObject(ISystemScene* pSystemScene, const char* pszName)
     : ISystemObject(pSystemScene, pszName) {
     m_pszName = pszName;
 }
 
 
-GraphicObject::~GraphicObject(
-    void
-) {
+GraphicObject::~GraphicObject(void) {
     POGREROOTNODE->removeChild(m_pNode);
 }
 
-void
-GraphicObject::Update(
-    f32 DeltaTime
-) {
+void GraphicObject::Update(f32 DeltaTime) {
     UNREFERENCED_PARAM(DeltaTime);
     return;
 }
 
 
-System::Type
-GraphicObject::GetSystemType(
-    void
-) {
-    return System::Types::Graphic;
+SystemProto::Type GraphicObject::GetSystemType(void) {
+    return SystemProto::Graphic;
 }
 
 
-Error
-GraphicObject::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+Error GraphicObject::Initialize(std::vector<Properties::Property> Properties) {
     ASSERT(!m_bInitialized);
     //
     // Create the scene node for this object.
@@ -89,10 +75,7 @@ GraphicObject::Initialize(
 }
 
 
-System::Types::BitMask
-GraphicObject::GetDesiredSystemChanges(
-    void
-) {
+System::Types::BitMask GraphicObject::GetDesiredSystemChanges(void) {
     return System::Changes::Geometry::Position |
            System::Changes::Geometry::Orientation |
            System::Changes::Geometry::Scale |
@@ -124,8 +107,7 @@ namespace {
 } // anonymous namespace
 
 
-inline
-void UpdateGeometry(Ogre::SceneNode* pNode, System::Changes::BitMask ChangeType, IGeometryObject* pGeometryObject) {
+inline void UpdateGeometry(Ogre::SceneNode* pNode, System::Changes::BitMask ChangeType, IGeometryObject* pGeometryObject) {
     if (ChangeType & System::Changes::Geometry::Position) {
         const Math::Vector3& Position = *pGeometryObject->GetPosition();
         pNode->setPosition(Position.x, Position.y, Position.z);
@@ -143,11 +125,7 @@ void UpdateGeometry(Ogre::SceneNode* pNode, System::Changes::BitMask ChangeType,
 }
 
 
-Error
-GraphicObject::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+Error GraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
     if (!m_pNode) {
@@ -174,10 +152,7 @@ GraphicObject::ChangeOccurred(
 }
 
 
-System::Changes::BitMask
-GraphicObject::GetPotentialSystemChanges(
-    void
-) {
+System::Changes::BitMask GraphicObject::GetPotentialSystemChanges(void) {
     return System::Changes::None;
 }
 

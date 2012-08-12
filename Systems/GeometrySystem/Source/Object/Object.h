@@ -33,7 +33,7 @@ class GeometryObject : public ISystemObject, public IGeometryObject {
         /// ISystemObject overrides
         /////////////////////////////////
 
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         virtual Error Initialize(std::vector<Properties::Property> Properties);
 

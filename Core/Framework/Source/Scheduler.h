@@ -65,7 +65,7 @@ class Scheduler {
 
         bool                            m_bBenchmarkingEnabled;
 
-        typedef std::map<System::Type, ISystemScene*>   SceneExecs;
+        typedef std::map<SystemProto::Type, ISystemScene*>   SceneExecs;
         typedef SceneExecs::iterator                    SceneExecsIt;
 
         SceneExecs                      m_SceneExecs;

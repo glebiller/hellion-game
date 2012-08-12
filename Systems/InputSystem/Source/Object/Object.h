@@ -34,7 +34,7 @@ class InputObject : public ISystemObject {
 
         virtual ~InputObject(void);
 
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         virtual Error Initialize(std::vector<Properties::Property> Properties);
 

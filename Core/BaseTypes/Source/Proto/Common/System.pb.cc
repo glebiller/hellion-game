@@ -78,12 +78,14 @@ void protobuf_AddDesc_Proto_2fCommon_2fSystem_2eproto() {
   ::protobuf_AddDesc_Proto_2fCommon_2fProperty_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\031Proto/Common/System.proto\032\033Proto/Commo"
-    "n/Property.proto\"\237\001\n\013SystemProto\022\037\n\004type"
+    "n/Property.proto\"\322\001\n\013SystemProto\022\037\n\004type"
     "\030\001 \002(\0162\021.SystemProto.Type\022\"\n\nproperties\030"
-    "\002 \003(\0132\016.PropertyProto\"K\n\004Type\022\006\n\002AI\020\000\022\t\n"
-    "\005AUDIO\020\001\022\014\n\010GEOMETRY\020\002\022\013\n\007GRAPHIC\020\003\022\t\n\005I"
-    "NPUT\020\004\022\n\n\006PHYSIC\020\005B9\n)fr.kissy.hellion.d"
-    "efinition.encoder.protoB\tSystemDto\210\001\000", 277);
+    "\002 \003(\0132\016.PropertyProto\"~\n\004Type\022\010\n\004None\020\000\022"
+    "\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005A"
+    "udio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\t\n\005Inp"
+    "ut\020\007\022\013\n\007Network\020\010\022\n\n\006Physic\020\tB9\n)fr.kiss"
+    "y.hellion.definition.encoder.protoB\tSyst"
+    "emDto\210\001\000", 328);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Common/System.proto", &protobuf_RegisterTypes);
   SystemProto::default_instance_ = new SystemProto();
@@ -113,6 +115,10 @@ bool SystemProto_Type_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
       return true;
     default:
       return false;
@@ -120,12 +126,16 @@ bool SystemProto_Type_IsValid(int value) {
 }
 
 #ifndef _MSC_VER
+const SystemProto_Type SystemProto::None;
+const SystemProto_Type SystemProto::Generic;
 const SystemProto_Type SystemProto::AI;
-const SystemProto_Type SystemProto::AUDIO;
-const SystemProto_Type SystemProto::GEOMETRY;
-const SystemProto_Type SystemProto::GRAPHIC;
-const SystemProto_Type SystemProto::INPUT;
-const SystemProto_Type SystemProto::PHYSIC;
+const SystemProto_Type SystemProto::Animation;
+const SystemProto_Type SystemProto::Audio;
+const SystemProto_Type SystemProto::Geometry;
+const SystemProto_Type SystemProto::Graphic;
+const SystemProto_Type SystemProto::Input;
+const SystemProto_Type SystemProto::Network;
+const SystemProto_Type SystemProto::Physic;
 const SystemProto_Type SystemProto::Type_MIN;
 const SystemProto_Type SystemProto::Type_MAX;
 const int SystemProto::Type_ARRAYSIZE;

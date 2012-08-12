@@ -14,91 +14,102 @@
 
 #pragma once
 
-#include <google/protobuf/message.h>
+#include <vector>
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Abstraction class for OS specific functionality.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "google/protobuf/message.h"
+#include "Proto/Common/System.pb.h"
 
+#include "Defines.h"
+#include "DataTypes.h"
+#include "Errors.h"
+#include "IPlatform.h"
+#include "Singleton.h"
+
+class ISystem;
+
+/**
+ * Abstraction class for OS specific functionality.
+ * 
+ * @sa  IPlatform
+ * @sa  Singleton
+ */
 class PlatformManager : public IPlatform, public Singleton {
     public:
 
-        /// <summary>
-        ///   Constructor.
-        /// </summary>
+        /**
+         * Constructor.
+         */
         PlatformManager(void);
 
-        /// <summary>
-        ///   Destructor.
-        /// </summary>
+        /**
+         * Destructor.
+         */
         ~PlatformManager(void);
-
 
     public:
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   Provides OS file system functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Provides OS file system functionality.
+         */
         class FileSystem {
                 friend class PlatformManager;
 
             protected:
 
-                /// <summary>
-                ///   Constructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Constructor.
+                 *
+                 * ### remarks  Only accessible via the PlatformMananger.
+                 */
                 FileSystem(void);
 
-                /// <summary>
-                ///   Destructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Destructor.
+                 *
+                 * ### remarks  Only accessible via the PlatformMananger.
+                 */
                 ~FileSystem(void);
-
 
             public:
 
-                /// <summary>
-                ///   Loads a system library and returns pointers to the system.
-                /// </summary>
-                /// <param name="pszSysLib">Filename of the system library to load.</param>
-                /// <param name="ppSystem">Returned pointer to the ISystem implementation.
-                ///   Remains untouched on failure.</param>
-                /// <returns>An error code.</returns>
-                Error LoadSystemLibrary(const char* pszSysLib, ISystem** ppSystem);
+                /**
+                 * Loads a system library and returns pointers to the system.
+                 *
+                 * @param   type        The system type to load.
+                 * @param   ppSystem    Returned pointer to the ISystem implementation. Remains untouched on
+                 *                      failure.
+                 * @return  An error code.
+                 */
+                Error LoadSystemLibrary(SystemProto::Type type, ISystem** ppSystem);
 
-                /// <summary>
-                ///   Loads a Proto file and create a Proto object.
-                /// </summary>
-                /// <param name="pszSysLib">Filename of the Proto file to load.</param>
-                /// <param name="ppSystem">Return the pointer to the Proto implementation object.
-                ///   Remains untouched on failure.</param>
-                /// <returns>An error code.</returns>
+                /**
+                 * Loads a Proto file and create a Proto object.
+                 *
+                 * @param   pszFile         Filename of the Proto file to load.
+                 * @param [in,out]  proto   Return the pointer to the Proto implementation object. Remains
+                 *                          untouched on failure.
+                 * @return  An error code.
+                 */
                 Error LoadProto(const char* pszFile, google::protobuf::Message* proto);
 
-                /// <summary>
-                ///   Verfies the existence of a file for read access.
-                /// </summary>
-                /// <param name="pszFileName">The file name to look for.</param>
-                /// <returns>true if successful, otherwise false.</returns>
+                /**
+                 * Verfies the existence of a file for read access.
+                 *
+                 * @param   pszFileName The file name to look for.
+                 * @return  true if successful, otherwise false.
+                 */
                 bool FileExists(In char* pszFileName);
 
-                /// <summary>
-                ///   Sets the current directory to the location of a file.
-                /// </summary>
-                /// <param name="pszFileName">The file name to look for.</param>
-                /// <param name="apszLocations">A null terminated array of relative search directories.</param>
-                /// <param name="pszCurrentDir">Location to store the new current directory or NULL.</param>
-                /// <param name="BufferSize">The size of <c>pszCurrentDir</c>.</param>
-                /// <returns>true if successful, otherwise false.</returns>
-                bool SetCurrentDirToFileLocation(In char* pszFileName, In char* apszLocations[],
-                                                 Out char* pszCurrentDir = NULL, u32 BufferSize = 0);
+                /**
+                 * Sets the current directory to the location of a file.
+                 *
+                 * @param   pszFileName     The file name to look for.
+                 * @param   apszLocations   A null terminated array of relative search directories.
+                 * @param   pszCurrentDir   Location to store the new current directory or NULL.
+                 * @param   BufferSize      The size of <c>pszCurrentDir</c>.
+                 * @return  true if successful, otherwise false.
+                 */
+                bool SetCurrentDirToFileLocation(In char* pszFileName, In char* apszLocations[], Out char* pszCurrentDir = NULL, u32 BufferSize = 0);
 
 
             protected:
@@ -110,40 +121,41 @@ class PlatformManager : public IPlatform, public Singleton {
                 std::vector<SystemLib>                  m_SystemLibs;
         };
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   Provides OS window system functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Provides OS window system functionality.
+         * 
+         * @sa  IPlatform::IWindow
+         */
         class WindowSystem : public IPlatform::IWindow {
                 friend class PlatformManager;
 
             protected:
 
-                /// <summary>
-                ///   Constructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Constructor.
+                 * Only accessible via the PlatformMananger.
+                 */
                 WindowSystem(void);
-
 
             public:
 
-                /// <summary>
-                ///   Processes any waiting window messages.
-                /// </summary>
+                /**
+                 * Processes any waiting window messages.
+                 */
                 void ProcessMessages(void);
 
-                /// <summary>
-                ///   Set the windows handle.
-                /// </summary>
+                /**
+                 * Set the windows handle.
+                 *
+                 * @param   windowHnd   Handle of the window.
+                 */
                 void SetHandle(size_t windowHnd);
 
-                /// <summary>
-                ///   Get the windows handle.
-                /// </summary>
+                /**
+                 * Get the windows handle.
+                 *
+                 * @return  The handle.
+                 */
                 size_t GetHandle();
 
             private:
@@ -152,113 +164,113 @@ class PlatformManager : public IPlatform, public Singleton {
 
         };
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   Provides OS timer functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Provides OS timer functionality.
+         */
         class Timers {
                 friend class PlatformManager;
 
             protected:
 
-                /// <summary>
-                ///   Constructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Constructor.
+                 * Only accessible via the PlatformMananger.
+                 */
                 Timers(void);
-
 
             public:
 
-                /// <summary>
-                ///   Get the granularity of the timer in seconds.
-                /// </summary>
-                /// <returns>The timer granularity.</returns>
+                /**
+                 * Get the granularity of the timer in seconds.
+                 *
+                 * @return  The timer granularity.
+                 */
                 f32 GetGranularity(void);
 
-                /// <summary>
-                ///   Creates a timer object.
-                /// </summary>
-                /// <param name="Interval">The interval that the timer object signals.</param>
-                /// <returns>A handle to the timer object.</returns>
+                /**
+                 * Creates a timer object.
+                 *
+                 * @param   Interval    The interval that the timer object signals.
+                 * @return  A handle to the timer object.
+                 */
                 Handle Create(f32 Interval);
 
-                /// <summary>
-                ///   Destroys a timer object.
-                /// </summary>
-                /// <param name="hTimer">A handle to the timer object.</param>
+                /**
+                 * Destroys a timer object.
+                 *
+                 * @param   hTimer  A handle to the timer object.
+                 */
                 void Destroy(Handle hTimer);
 
-                /// <summary>
-                ///   Waits for the timer object to signal.
-                /// </summary>
-                /// <param name="hTimer">A handle to the timer object.</param>
-                /// <param name="bWait">Should the call wait for the timer or calculate time immediately. (default = true)</param>
-                /// <returns>The time elapsed in seconds from the previous signal.</returns>
+                /**
+                 * Waits for the timer object to signal.
+                 *
+                 * @param   hTimer  A handle to the timer object.
+                 * @param   bWait   Should the call wait for the timer or calculate time immediately. (default =
+                 *                  true)
+                 * @return  The time elapsed in seconds from the previous signal.
+                 */
                 f32 Wait(Handle hTimer, bool bWait = true);
         };
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   Provides OS debugging functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Provides OS debugging functionality.
+         */
         class Debugging {
                 friend class PlatformManager;
 
             protected:
 
-                /// <summary>
-                ///   Constructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Constructor.
+                 * Only accessible via the PlatformMananger.
+                 */
                 Debugging(void);
-
 
             public:
 
-                /// <summary>
-                ///   Outputs a message to the debugger.
-                /// </summary>
-                /// <param name="pszMessage">The message to output.</param>
+                /**
+                 * Outputs a message to the debugger.
+                 *
+                 * @param   pszMessage  The message to output.
+                 */
                 void OutputMessage(const char* pszMessage);
+
         };
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>
-        ///   Provides OS file system functionality.
-        /// </summary>
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /**
+         * Provides OS file system functionality.
+         * @sa  IPlatform::IProcessor
+         * @sa  IPlatform::IProcessor
+         */
         class Processor : public IPlatform::IProcessor {
                 friend class PlatformManager;
 
             protected:
 
-                /// <summary>
-                ///   Constructor.
-                /// </summary>
-                /// <remarks>Only accessible via the PlatformMananger.</remarks>
+                /**
+                 * Constructor.
+                 * Only accessible via the PlatformMananger.
+                 */
                 Processor(void);
 
-
             public:
-                /// <summary cref="IPlatform::IProcessor::GetNumProcessors">
-                ///   Implementation of IPlatform::IProcessor::GetNumProcessors.
-                /// </summary>
+
+                /**
+                 * Gets the number processors.
+                 * Implementation of IPlatform::IProcessor::GetNumProcessors.
+                 *
+                 * @return  The number processors.
+                 */
                 virtual u32 GetNumProcessors(void);
 
-                /// <summary cref="IPlatform::IProcessor::AffinitizeThreadToProcessor">
-                ///   Implementation of IPlatform::IProcessor::AffinitizeThreadToProcessor.
-                /// </summary>
+                /**
+                 * Affinitize thread to processor.
+                 * Implementation of IPlatform::IProcessor::AffinitizeThreadToProcessor.
+                 *
+                 * @param   ProcessorNumber The processor number.
+                 */
                 virtual void AffinitizeThreadToProcessor(u32 ProcessorNumber);
-
 
             protected:
 
@@ -278,51 +290,62 @@ class PlatformManager : public IPlatform, public Singleton {
 
     public:
 
-        /// <summary>
-        ///   Gets a reference to the FileSystem class.
-        /// </summary>
-        /// <returns>A reference to the FileSystem class.</returns>
+        /**
+         * Gets a reference to the FileSystem class.
+         *
+         * @return  A reference to the FileSystem class.
+         */
         FileSystem& FileSystem(void) {
             return m_FileSystem;
         }
 
-        /// <summary>
-        ///   Gets a reference to the WindowSystem class.
-        /// </summary>
-        /// <returns>A reference to the WindowSystem class.</returns>
+        /**
+         * Gets a reference to the WindowSystem class.
+         *
+         * @return  A reference to the WindowSystem class.
+         */
         WindowSystem& WindowSystem(void) {
             return m_WindowSystem;
         }
 
-        /// <summary>
-        ///   Gets a reference to the Timers class.
-        /// </summary>
-        /// <returns>A reference to the Timers class.</returns>
+        /**
+         * Gets a reference to the Timers class.
+         *
+         * @return  A reference to the Timers class.
+         */
         Timers& Timers(void) {
             return m_Timers;
         }
 
-        /// <summary>
-        ///   Gets a reference to the Debugging class.
-        /// </summary>
-        /// <returns>A reference to the Debugging class.</returns>
+        /**
+         * Gets a reference to the Debugging class.
+         *
+         * @return  A reference to the Debugging class.
+         */
         Debugging& Debugging(void) {
             return m_Debugging;
         }
 
-        /// <summary cref="IPlatform::Processor">
-        ///   Implementation of IPlatform::IProcessor::Processor.
-        /// </summary>
+        /**
+         * Gets the processor.
+         * Implementation of IPlatform::IProcessor::Processor.
+         *
+         * @return  .
+         */
         virtual IProcessor& Processor(void) {
             return m_Processor;
         }
 
-        /// <summary cref="IPlatform::Processor">
-        ///   Implementation of IPlatform::IWindow::Window.
-        /// </summary>
+        /**
+         * Gets the window.
+         * Implementation of IPlatform::IWindow::Window.
+         *
+         * @return  .
+         */
         virtual IWindow& Window(void) {
             return m_WindowSystem;
         }
+
 };
 
 

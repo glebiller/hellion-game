@@ -137,9 +137,9 @@ class OGREGraphicsScene : public ISystemScene {
         /// <summary cref="OGREGraphicsScene::GetSystemType">
         ///   Implementation of the <c>ISystemScene::GetSystemType</c> function.
         /// </summary>
-        /// <returns>System::Type - Type of this system.</returns>
+        /// <returns>SystemProto::Type - Type of this system.</returns>
         /// <seealso cref="ISystemScene::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="OGREGraphicsScene::GlobalSceneStatusChanged">
         ///   Called from the framework to inform the scene extension of the overall scene status.

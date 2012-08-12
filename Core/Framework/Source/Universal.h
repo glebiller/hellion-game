@@ -14,6 +14,12 @@
 
 #pragma once
 
+#include "Observer/IObserver.h"
+#include "System/ISystemScene.h"
+
+#include "Object/Geometry.h"
+#include "Object/Graphic.h"
+
 class UObject;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +32,11 @@ class UObject;
 class UScene : public IObserver {
     public:
 
-        typedef std::map<System::Type, ISystemScene*>                       SystemScenes;
+        typedef std::map<SystemProto::Type, ISystem*>                       Systems;
+        typedef Systems::iterator                                           SystemsIt;
+        typedef Systems::const_iterator                                     SystemsConstIt;
+
+        typedef std::map<SystemProto::Type, ISystemScene*>                  SystemScenes;
         typedef SystemScenes::iterator                                      SystemScenesIt;
         typedef SystemScenes::const_iterator                                SystemScenesConstIt;
 
@@ -151,7 +161,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
 
     public:
 
-        typedef std::map<System::Type, ISystemObject*>      SystemObjects;
+        typedef std::map<SystemProto::Type, ISystemObject*>      SystemObjects;
         typedef SystemObjects::iterator                     SystemObjectsIt;
         typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
@@ -201,7 +211,7 @@ class UObject : public IObserver, public CSubject, public IGeometryObject, publi
         //  System - the system type of the object.
         //   return - this UOBject's system object for the specified type.
         //
-        ISystemObject* GetExtension(System::Type System);
+        ISystemObject* GetExtension(SystemProto::Type System);
 
         /// <summary cref="IObserver::ChangeOccurred">
         ///   Implementation of the IObserver ChangeOccurred function.

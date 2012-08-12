@@ -56,7 +56,7 @@ class ISystemTask {
          * ### remarks  This is a shortcut to getting the system type without having to go the system
          *              first.
          */
-        virtual System::Type GetSystemType(void) = 0;
+        virtual SystemProto::Type GetSystemType(void) = 0;
 
         /**
          * Updates the given DeltaTime.

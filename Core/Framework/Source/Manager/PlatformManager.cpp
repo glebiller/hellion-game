@@ -78,16 +78,13 @@ PlatformManager::FileSystem::~FileSystem(
 }
 
 
-Error
-PlatformManager::FileSystem::LoadSystemLibrary(
-    const char* pszSysLib,
-    ISystem** ppSystem
-) {
-    Error   Err = Errors::Failure;
+Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  ISystem** ppSystem) {
+    Error Err = Errors::Failure;
     //
     // Load the dll.
     //
-    HMODULE hLib = LoadLibraryA(pszSysLib);
+    std::string libraryName = SystemProto::Type_Name(type) + "System";
+    HMODULE hLib = LoadLibraryA(libraryName.c_str());
 
     if (hLib != NULL) {
         //
@@ -110,10 +107,7 @@ PlatformManager::FileSystem::LoadSystemLibrary(
         //
         // Get the system creation function.
         //
-        CreateSystemFunction fnCreateSystem =
-            reinterpret_cast<CreateSystemFunction>(
-                GetProcAddress(hLib, "CreateSystem")
-            );
+        CreateSystemFunction fnCreateSystem = reinterpret_cast<CreateSystemFunction>(GetProcAddress(hLib, "CreateSystem"));
 
         if (fnCreateSystem != NULL) {
             //
@@ -125,9 +119,8 @@ PlatformManager::FileSystem::LoadSystemLibrary(
                 //
                 // Verify that there's no duplicate system type.
                 //
-                System::Type SystemType = pSystem->GetSystemType();
-                ISystem* pCurrSystem =
-                    Singletons::SystemManager.Get(SystemType);
+                SystemProto::Type SystemType = pSystem->GetSystemType();
+                ISystem* pCurrSystem = Singletons::SystemManager.Get(SystemType);
 
                 if (pCurrSystem == NULL) {
                     //

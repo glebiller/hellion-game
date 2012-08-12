@@ -12,6 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Convertor.h"
+#include "Manager/PlatformManager.h"
+#include "Manager/EnvironmentManager.h"
+#include "Manager/SystemManager.h"
 #include "DefinitionParser.h"
 
 /**
@@ -44,14 +48,16 @@ void DefinitionParser::ParseSystems(void) {
 
     const ProtoSystemList& systems = m_gdProto.systems();
     for (ProtoSystemList::const_iterator systemsIt = systems.begin(); systemsIt != systems.end(); systemsIt++) {
-        Singletons::PlatformManager.FileSystem().LoadSystemLibrary(systemsIt->lib().c_str(), &m_pSystem);
+        Singletons::PlatformManager.FileSystem().LoadSystemLibrary(systemsIt->type(), &m_pSystem);
+        ASSERT(m_pSystem != NULL);
+
         // Get the default properties from system, then Initialize it
         m_pSystem->GetProperties(m_GetProperties);
         ApplyProperties(static_cast<ProtoPropertyList>(systemsIt->properties()), m_GetProperties, m_SetProperties);
         m_pSystem->Initialize(m_SetProperties);
         m_GetProperties.clear();
         m_SetProperties.clear();
-        ASSERTMSG1(strcmp(systemsIt->type().c_str(), m_pSystem->GetName()) == 0,
+        ASSERTMSG1(strcmp(SystemProto::Type_Name(systemsIt->type()).c_str(), m_pSystem->GetName()) == 0,
                    "Parser identified an incorrect system type. It should be %s.", m_pSystem->GetName());
     }
 }
@@ -62,7 +68,7 @@ void DefinitionParser::ParseSystems(void) {
 void DefinitionParser::ParseScene(std::string sScene) {
     const ProtoSceneList& scenes = m_gdProto.scenes();
     for (ProtoSceneList::const_iterator scenesIt = scenes.begin(); scenesIt != scenes.end(); scenesIt++) {
-        if (scenesIt->it .compare(sScene) == 0) {
+        if ((*scenesIt).compare(sScene) == 0) {
             //
             // Create the initial scene for each system.
             //
@@ -76,25 +82,21 @@ void DefinitionParser::ParseScene(std::string sScene) {
             //
             // Parse the SDF file
             //
-            Proto::Sdf sdf;
-            std::string sceneProtoFile = scenesIt->sdf() + ".sdf.bin";
-            Error result = Singletons::PlatformManager.FileSystem().LoadProto(sceneProtoFile.c_str(), &sdf);
+            SceneDefinitionProto sceneDefinitionProto;
+            std::string sceneProtoFile = *scenesIt + ".sdf.bin";
+            Error result = Singletons::PlatformManager.FileSystem().LoadProto(sceneProtoFile.c_str(), &sceneDefinitionProto);
             ASSERT(result == Errors::Success);
 
             //
             // Initialize the System scenes.
             //
-            for (ProtoSystemPropertiesList::const_iterator systemPropertiesIt = sdf.systemproperties().begin();
-                    systemPropertiesIt != sdf.systemproperties().end();
-                    systemPropertiesIt++) {
-                m_pSystem = Singletons::SystemManager.Get(systemPropertiesIt->systemtype().c_str());
-                ASSERTMSG1(m_pSystem != NULL,
-                           "Parser was unable to get system %s.", systemPropertiesIt->systemtype().c_str());
+            for (ProtoSystemPropertiesList::const_iterator systemPropertiesIt = sceneDefinitionProto.systems().begin(); systemPropertiesIt != sceneDefinitionProto.systems().end(); systemPropertiesIt++) {
+                m_pSystem = Singletons::SystemManager.Get(systemPropertiesIt->type());
+                ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", systemPropertiesIt->type());
 
                 if (m_pSystem != NULL) {
                     UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-                    ASSERTMSG1(it != m_pScene->GetSystemScenes().end(),
-                               "Parser was unable to find a scene for system %s.", systemPropertiesIt->systemtype().c_str());
+                    ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", systemPropertiesIt->type());
                     m_pSystemScene = it->second;
                     ASSERT(m_pSystemScene != NULL);
                     // Initialize system scene properties
@@ -109,9 +111,7 @@ void DefinitionParser::ParseScene(std::string sScene) {
             //
             // Initialize the scene objects.
             //
-            for (ProtoObjectList::const_iterator objectsIt = sdf.objects().begin();
-                    objectsIt != sdf.objects().end();
-                    objectsIt++) {
+            for (ProtoObjectList::const_iterator objectsIt = sceneDefinitionProto.objects().begin(); objectsIt != sceneDefinitionProto.objects().end(); objectsIt++) {
                 //
                 // Create the object.
                 //
@@ -122,11 +122,9 @@ void DefinitionParser::ParseScene(std::string sScene) {
                 //
                 // Added systems extension.
                 //
-                for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectsIt->objectproperties().begin();
-                        objectPropertiesIt != objectsIt->objectproperties().end();
-                        objectPropertiesIt++) {
-                    m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype().c_str());
-                    ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype().c_str());
+                for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectsIt->systemobjects().begin(); objectPropertiesIt != objectsIt->systemobjects().end(); objectPropertiesIt++) {
+                    m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
+                    ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
 
                     if (m_pSystem != NULL) {
                         UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
@@ -135,7 +133,7 @@ void DefinitionParser::ParseScene(std::string sScene) {
                         //
                         // Create object.
                         //
-                        m_pSystemObject = m_pUObject->Extend(it->second, objectPropertiesIt->objecttype().c_str());
+                        m_pSystemObject = m_pUObject->Extend(it->second, objectPropertiesIt->type().c_str());
                         ASSERT(m_pSystemObject != NULL);
 
                         if (m_pSystemObject != NULL) {
@@ -155,21 +153,17 @@ void DefinitionParser::ParseScene(std::string sScene) {
             const UScene::SystemScenes Scenes = m_pScene->GetSystemScenes();
 
             for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
-                it->second->GlobalSceneStatusChanged(
-                    ISystemScene::GlobalSceneStatus::PostLoadingObjects
-                );
+                it->second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
             }
 
             //
             // Initialize the links.
             //
-            for (ProtoLinksList::const_iterator linksIt = sdf.links().begin();
-                    linksIt != sdf.links().end();
-                    linksIt++) {
+            for (ProtoLinksList::const_iterator linksIt = sceneDefinitionProto.links().begin(); linksIt != sceneDefinitionProto.links().end(); linksIt++) {
                 UObject* pSubject = m_pScene->FindObject(linksIt->subject().c_str());
                 UObject* pObserver = m_pScene->FindObject(linksIt->observer().c_str());;
-                std::string sSystemSubject = linksIt->subjectsystem();
-                std::string sSystemObserver = linksIt->observersystem();
+                std::string sSystemSubject = SystemProto::Type_Name(linksIt->subjectsystemtype());
+                std::string sSystemObserver = SystemProto::Type_Name(linksIt->observersystemtype());
                 ISystemObject* pSystemSubject = NULL;
                 ISystemObject* pSystemObserver = NULL;
                 ISystem* pSystem;
@@ -203,15 +197,11 @@ void DefinitionParser::ParseScene(std::string sScene) {
     }
 }
 
-std::string
-DefinitionParser::StartupScene(
-    void
-) {
-    return m_Gdf.startupscene();
+std::string DefinitionParser::StartupScene(void) {
+    return m_gdProto.startupscene();
 }
 
-void
-DefinitionParser::ApplyProperties(
+void DefinitionParser::ApplyProperties(
     ProtoPropertyList& propertyList,
     Properties::Array& getProperties,
     Properties::Array& setProperties

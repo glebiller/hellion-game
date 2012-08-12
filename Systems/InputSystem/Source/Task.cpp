@@ -41,8 +41,8 @@ InputTask::~InputTask(void) {
 }
 
 
-System::Type InputTask::GetSystemType(void) {
-    return System::Types::Input;
+SystemProto::Type InputTask::GetSystemType(void) {
+    return SystemProto::Input;
 }
 
 

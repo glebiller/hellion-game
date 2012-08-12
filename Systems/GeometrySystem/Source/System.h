@@ -48,7 +48,7 @@ class GeometrySystem : public ISystem {
         /**
          * @inheritDoc
          */
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
         
         /**
          * @inheritDoc

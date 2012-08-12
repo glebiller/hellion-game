@@ -118,11 +118,8 @@ HavokPhysicsTask::~HavokPhysicsTask(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetSystemType - Returns System type for this Task
-System::Type
-HavokPhysicsTask::GetSystemType(
-    void
-) {
-    return System::Types::Physic;
+SystemProto::Type HavokPhysicsTask::GetSystemType(void) {
+    return SystemProto::Physic;
 }
 
 

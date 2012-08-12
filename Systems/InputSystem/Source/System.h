@@ -28,9 +28,7 @@ class InputSystem : public ISystem {
         /// ISystem overrides
         /////////////////////////////////
 
-        virtual const char* GetName(void);
-
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         virtual Error Initialize(Properties::Array Properties);
 

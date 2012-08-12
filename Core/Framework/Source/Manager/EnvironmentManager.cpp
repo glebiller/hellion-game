@@ -106,8 +106,8 @@ EnvironmentManager::Variables::GetAsBool(
     const char* pszValue;
 
     if (GetValue(pszName, pszValue)) {
-        ASSERT(!_stricmp(pszValue, "true") || !_stricmp(pszValue, "false"));
-        bValue = _stricmp(pszValue, "true") == 0;
+        ASSERT(!_stricmp(pszValue, "1") || !_stricmp(pszValue, "0"));
+        bValue = _stricmp(pszValue, "1") == 0;
     }
 
     return bValue;

@@ -167,7 +167,7 @@ public final class ObjectDto {
       }
       
       private void initFields() {
-        systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         properties_ = java.util.Collections.emptyList();
         type_ = "";
       }
@@ -348,7 +348,7 @@ public final class ObjectDto {
         
         public Builder clear() {
           super.clear();
-          systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           bitField0_ = (bitField0_ & ~0x00000001);
           if (propertiesBuilder_ == null) {
             properties_ = java.util.Collections.emptyList();
@@ -531,7 +531,7 @@ public final class ObjectDto {
         private int bitField0_;
         
         // required .SystemProto.Type systemType = 10;
-        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         public boolean hasSystemType() {
           return ((bitField0_ & 0x00000001) == 0x00000001);
         }
@@ -549,7 +549,7 @@ public final class ObjectDto {
         }
         public Builder clearSystemType() {
           bitField0_ = (bitField0_ & ~0x00000001);
-          systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          systemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           onChanged();
           return this;
         }

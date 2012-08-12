@@ -16,8 +16,7 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
-#include <Proto.h>
-
+#include "Proto.h"
 #include "Universal.h"
 #include "DebugWindow.h"
 #include "Manager/MemoryManager.h"
@@ -27,6 +26,7 @@
 #include "Manager/EnvironmentManager.h"
 #include "Manager/ServiceManager.h"
 #include "Manager/TaskManager.h"
+#include "Parser/DefinitionParser.h"
 #include "Scheduler.h"
 #include "Instrumentation.h"
 #include "Framework.h"
@@ -111,7 +111,7 @@ Error Framework::Initialize(void) {
     //
     // Instantiate the parser, parse the environment variables in the GDF.
     //
-    GDFParser Parser(m_pScene, apszFile);
+    DefinitionParser Parser(m_pScene, apszFile);
     Parser.ParseEnvironment();
     //
     // Register the framework as the system access provider.  The system access provider gives the
@@ -293,7 +293,7 @@ Framework::GetSystem(
 
 Handle
 Framework::GetSystem(
-    System::Type Type
+    SystemProto::Type Type
 ) {
     //
     // Get the pointer to the system from the system manager.  Handle is just a void* so it will
@@ -328,7 +328,7 @@ Framework::GetScene(
 
 Handle
 Framework::GetScene(
-    System::Type Type
+    SystemProto::Type Type
 ) {
     Handle hScene = NULL;
     //
@@ -365,7 +365,7 @@ Framework::GetSystemObject(
 
 Handle
 Framework::GetSystemObject(
-    System::Type Type,
+    SystemProto::Type Type,
     const char* pszName
 ) {
     Handle hObject = NULL;

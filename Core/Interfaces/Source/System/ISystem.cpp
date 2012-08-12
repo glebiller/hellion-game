@@ -22,6 +22,10 @@ ISystem::ISystem(void)
     : m_bInitialized(false) {
 }
 
+const char* ISystem::GetName(void) {
+    return SystemProto::Type_Name(GetSystemType()).c_str();
+}
+
 /**
  * @inheritDoc
  */

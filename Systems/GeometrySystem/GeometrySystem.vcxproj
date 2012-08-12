@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GEOMETRYSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(OGRE_HOME)\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Externs\ProtocolBuffers\Source;$(OGRE_HOME)\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -101,6 +101,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Interfaces\Interfaces.vcxproj">
       <Project>{65c52d2e-b29f-4915-a712-235218f72850}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Externs\ProtocolBuffers\ProtocolBuffers.vcxproj">
+      <Project>{f41dfba4-70e7-4a5f-ad3b-4331b28efbae}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

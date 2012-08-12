@@ -34,16 +34,20 @@ void protobuf_ShutdownFile_Proto_2fCommon_2fSystem_2eproto();
 class SystemProto;
 
 enum SystemProto_Type {
-  SystemProto_Type_AI = 0,
-  SystemProto_Type_AUDIO = 1,
-  SystemProto_Type_GEOMETRY = 2,
-  SystemProto_Type_GRAPHIC = 3,
-  SystemProto_Type_INPUT = 4,
-  SystemProto_Type_PHYSIC = 5
+  SystemProto_Type_None = 0,
+  SystemProto_Type_Generic = 1,
+  SystemProto_Type_AI = 2,
+  SystemProto_Type_Animation = 3,
+  SystemProto_Type_Audio = 4,
+  SystemProto_Type_Geometry = 5,
+  SystemProto_Type_Graphic = 6,
+  SystemProto_Type_Input = 7,
+  SystemProto_Type_Network = 8,
+  SystemProto_Type_Physic = 9
 };
 bool SystemProto_Type_IsValid(int value);
-const SystemProto_Type SystemProto_Type_Type_MIN = SystemProto_Type_AI;
-const SystemProto_Type SystemProto_Type_Type_MAX = SystemProto_Type_PHYSIC;
+const SystemProto_Type SystemProto_Type_Type_MIN = SystemProto_Type_None;
+const SystemProto_Type SystemProto_Type_Type_MAX = SystemProto_Type_Physic;
 const int SystemProto_Type_Type_ARRAYSIZE = SystemProto_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* SystemProto_Type_descriptor();
@@ -111,12 +115,16 @@ class SystemProto : public ::google::protobuf::Message {
   // nested types ----------------------------------------------------
   
   typedef SystemProto_Type Type;
+  static const Type None = SystemProto_Type_None;
+  static const Type Generic = SystemProto_Type_Generic;
   static const Type AI = SystemProto_Type_AI;
-  static const Type AUDIO = SystemProto_Type_AUDIO;
-  static const Type GEOMETRY = SystemProto_Type_GEOMETRY;
-  static const Type GRAPHIC = SystemProto_Type_GRAPHIC;
-  static const Type INPUT = SystemProto_Type_INPUT;
-  static const Type PHYSIC = SystemProto_Type_PHYSIC;
+  static const Type Animation = SystemProto_Type_Animation;
+  static const Type Audio = SystemProto_Type_Audio;
+  static const Type Geometry = SystemProto_Type_Geometry;
+  static const Type Graphic = SystemProto_Type_Graphic;
+  static const Type Input = SystemProto_Type_Input;
+  static const Type Network = SystemProto_Type_Network;
+  static const Type Physic = SystemProto_Type_Physic;
   static inline bool Type_IsValid(int value) {
     return SystemProto_Type_IsValid(value);
   }

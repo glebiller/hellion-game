@@ -57,17 +57,12 @@ OGREGraphicsTask::OGREGraphicsTask(
 }
 
 
-OGREGraphicsTask::~OGREGraphicsTask(
-    void
-) {
+OGREGraphicsTask::~OGREGraphicsTask(void) {
 }
 
 
-System::Type
-OGREGraphicsTask::GetSystemType(
-    void
-) {
-    return System::Types::Graphic;
+SystemProto::Type OGREGraphicsTask::GetSystemType(void) {
+    return SystemProto::Graphic;
 }
 
 

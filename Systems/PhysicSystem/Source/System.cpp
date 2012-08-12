@@ -92,23 +92,11 @@ HavokPhysicsSystem::~HavokPhysicsSystem(
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// GetName - Returns the name of this System
-const char*
-HavokPhysicsSystem::GetName(
-    void
-) {
-    return System::Names::Physic;
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetSystemType - Returns System type for this System
-System::Type
-HavokPhysicsSystem::GetSystemType(
-    void
-) {
-    return System::Types::Physic;
+SystemProto::Type HavokPhysicsSystem::GetSystemType(void) {
+    return SystemProto::Physic;
 }
 
 

@@ -30,7 +30,7 @@ class InputTask : public ISystemTask {
         /// ISystemTask overrides
         /////////////////////////////////
 
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         virtual void Update(f32 DeltaTime);
 

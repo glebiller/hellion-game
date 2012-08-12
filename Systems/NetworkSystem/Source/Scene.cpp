@@ -282,7 +282,7 @@ NetworkScene::~NetworkScene(
 }
 
 
-System::Type
+SystemProto::Type
 NetworkScene::GetSystemType(
     void
 ) {

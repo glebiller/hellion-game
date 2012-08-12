@@ -46,21 +46,13 @@ class HavokPhysicsSystem : public ISystem {
 
     protected:
 
-        /// <summary cref="HavokPhysicsSystem::GetName">
-        ///   Implementation of the <c>ISystem::GetName</c> function.
-        ///   Gets the name of the system.  Only custom systems can return a custom name.
-        /// </summary>
-        /// <returns>const char* - The name of the system.</returns>
-        /// <seealso cref="ISystem::GetName"/>
-        virtual const char* GetName(void);
-
         /// <summary cref="HavokPhysicsSystem::GetSystemType">
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
         ///   Gets the system type for this system.
         /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
+        /// <returns>SystemProto::Type - The type of the system.</returns>
         /// <seealso cref="ISystem::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="HavokPhysicsSystem::Initialize">
         ///   Implementation of the <c>ISystem::Initialize</c> function.

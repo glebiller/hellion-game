@@ -290,11 +290,8 @@ void OGREGraphicsScene::Update(f32 DeltaTime) {
 
 
 
-System::Type
-OGREGraphicsScene::GetSystemType(
-    void
-) {
-    return System::Types::Graphic;
+SystemProto::Type OGREGraphicsScene::GetSystemType(void) {
+    return SystemProto::Graphic;
 }
 
 

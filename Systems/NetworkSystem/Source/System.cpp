@@ -197,7 +197,7 @@ NetworkSystem::GetName(
 }
 
 
-System::Type
+SystemProto::Type
 NetworkSystem::GetSystemType(
     void
 ) {

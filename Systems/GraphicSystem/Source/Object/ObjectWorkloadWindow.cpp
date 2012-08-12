@@ -94,10 +94,10 @@ void GraphicObjectWorkloadWindow::Update(f32 DeltaTime) {
     if (m_secondsSinceLastUpdate > m_secondsPerUpdate) {
         // Get whatever data we need for this window and apply it; do it again
         // to make sure the caption is shown, too.
-        /*WindowData* pWindowData = GetWindowDataUpdate();
+        WindowData* pWindowData = GetWindowDataUpdate();
         ApplyChanges( pWindowData );
         pWindowData->nFlags = WINDOW_CAPTION;
-        ApplyChanges( pWindowData );*/
+        ApplyChanges( pWindowData );
         // Start counting again toward the next update.
         m_secondsSinceLastUpdate = 0.0f;
         m_framesSinceLastUpdate = 0;
@@ -117,90 +117,28 @@ WindowData* GraphicObjectWorkloadWindow::GetWindowDataUpdate() {
     // Get instrumentation updates.
     IService::IInstrumentation& inst = g_Managers.pService->Instrumentation();
     // Get access to Audio system for audio data
-    ISystem* pAudioSystem = (ISystem*) g_Managers.pService->SystemAccess().GetSystem(System::Types::Audio);
+    ISystem* pAudioSystem = (ISystem*) g_Managers.pService->SystemAccess().GetSystem(SystemProto::Audio);
     // Format the start of the stream.
     std::stringstream outputStream;
     i32 cpuCount = inst.getCPUCount();
     i32 jobCount = inst.getJobCount();
     // Get the workload job ratios.
     f32* jobRatios = new f32[jobCount];
+    inst.getJobRatios(jobRatios);
 
     if (jobRatios == NULL) {
         return (NULL);
     }
 
     inst.getJobRatios(jobRatios);
-    // Hook up the display names.
-    bool indexUsed;
 
-    for (int i = 0; i < jobCount; i++) {
-        indexUsed = false;
+    for (int i = SystemProto::Type_MIN; i < jobCount; i++) {
+        SystemProto::Type systemType = static_cast<SystemProto::Type>(i);
+        // Do not display None type & Generic Type
+        if (SystemProto::Type_IsValid(systemType) && systemType != SystemProto::None && systemType != SystemProto::Generic) {
+            // Display name
+            outputStream << "\n " << SystemProto::Type_Name(systemType) << ": ";
 
-        switch (i) {
-            case System::TypeIndices::Audio:
-                outputStream << "\n " << System::Names::Audio << ": ";
-                indexUsed = true;
-                break;
-
-            case System::TypeIndices::Geometry:
-                outputStream << " " << System::Names::Geometry << ": ";
-                indexUsed = true;
-                break;
-
-            case System::TypeIndices::Graphic:
-                outputStream << "\n " << System::Names::Graphic << ": ";
-                indexUsed = true;
-                break;
-
-            case System::TypeIndices::Input:
-                outputStream << "\n " << System::Names::Input << ": ";
-                indexUsed = true;
-                break;
-
-            case System::TypeIndices::Network:
-                outputStream << "\n " << System::Names::Network << ": ";
-                indexUsed = true;
-                break;
-
-            case System::TypeIndices::Physic:
-                outputStream << "\n " << System::Names::Physic << ": ";
-                indexUsed = true;
-                break;
-
-                /*
-                case System::TypeIndices::AI:
-                    outputStream << "\n " << System::Names::AI << ": ";
-                    indexUsed = true;
-                    break;
-
-                case System::TypeIndices::Animation:
-                    outputStream << "\n " << System::Names::Animation << ": ";
-                    indexUsed = true;
-                    break;
-
-                case System::TypeIndices::Scripting:
-                    outputStream << "\n " << System::DisplayNames::Scripting << ": ";
-                    indexUsed = true;
-                    break;
-
-                case System::TypeIndices::Explosion:
-                    outputStream << "\n " << System::DisplayNames::Explosion << ": ";
-                    indexUsed = true;
-                    break;
-
-                case System::TypeIndices::Water:
-                    outputStream << "\n " << System::DisplayNames::Water << ": ";
-                    indexUsed = true;
-                    break;
-                */
-
-            default:
-                break;
-        }
-
-        // The job array has a few slots we don't use.  If we aren't keeping stats for this index,
-        // don't try to display it.
-        if (indexUsed) {
             // Job ratios show the amount of one available core that a job is using, so they're a kind
             // of utilization number.  On a 4 core machine, they can vary between 0 and 4.
             // Scale it here to a percent of the overall workload.
@@ -209,8 +147,9 @@ WindowData* GraphicObjectWorkloadWindow::GetWindowDataUpdate() {
             // Audio is a special case; it has its own internal thread not scheduled or tracked
             // through the job system, so we need to get stats differently (directly from the
             // audio system).
-            if (i == System::Types::Audio) {
-                rawPercent = pAudioSystem->GetCPUUsage();
+            if (i == SystemProto::Audio) {
+                //rawPercent = pAudioSystem->GetCPUUsage();
+                rawPercent = 0;
             } else {
                 rawPercent = ((jobRatios[i] * 100.0f) / (f32)cpuCount);
             }

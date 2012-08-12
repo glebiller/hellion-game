@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PHYSICSYSTEM_EXPORTS;__HAVOK_VDB__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)\Core\Interfaces\Source;$(SolutionDir)\Core\Framework\Source;$(HAVOK_HOME)\Source;$(TBB_HOME)\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Core\Framework\Source;$(SolutionDir)Externs\ProtocolBuffers\Source;$(HAVOK_HOME)\Source;$(TBB_HOME)\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,6 +118,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Interfaces\Interfaces.vcxproj">
       <Project>{65c52d2e-b29f-4915-a712-235218f72850}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Externs\ProtocolBuffers\ProtocolBuffers.vcxproj">
+      <Project>{f41dfba4-70e7-4a5f-ad3b-4331b28efbae}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

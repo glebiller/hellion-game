@@ -49,8 +49,7 @@ const char* GraphicSystem::sm_kapszPropertyNames[] = {
     "ResourceLocation",
     "WindowName",
     "Resolution",
-    "ShadowTextureCount",
-    "ShadowTextureSize",
+    "ShadowTexture",
     "FullScreen",
     "VerticalSync",
     "FSAntiAliasing",
@@ -74,14 +73,10 @@ const Properties::Property GraphicSystem::sm_kaDefaultProperties[] = {
     VALUE1x2(Properties::Values::Int32),
     Properties::Flags::Valid,
     1024, 768),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShadowTextureCount ],
-    VALUE1(Properties::Values::Int32),
+    Properties::Property(sm_kapszPropertyNames[ Property_ShadowTexture ],
+    VALUE1x2(Properties::Values::Int32),
     Properties::Flags::Valid,
-    1),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShadowTextureSize ],
-    VALUE1(Properties::Values::Int32),
-    Properties::Flags::Valid,
-    1024),
+    1, 1024),
     Properties::Property(sm_kapszPropertyNames[ Property_FullScreen ],
     VALUE1(Properties::Values::Int32),
     Properties::Flags::Valid,
@@ -143,19 +138,8 @@ GraphicSystem::windowClosed(
 }
 
 
-const char*
-GraphicSystem::GetName(
-    void
-) {
-    return System::Names::Graphic;
-}
-
-
-System::Type
-GraphicSystem::GetSystemType(
-    void
-) {
-    return System::Types::Graphic;
+SystemProto::Type GraphicSystem::GetSystemType(void) {
+    return SystemProto::Graphic;
 }
 
 
@@ -202,10 +186,9 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
             } else if (sName == sm_kapszPropertyNames[ Property_Resolution ]) {
                 Width  = static_cast<u32>(it->GetInt32(0));
                 Height  = static_cast<u32>(it->GetInt32(1));
-            } else if (sName == sm_kapszPropertyNames[ Property_ShadowTextureCount ]) {
+            } else if (sName == sm_kapszPropertyNames[ Property_ShadowTexture ]) {
                 m_uShadowTextureCount  = static_cast<u16>(it->GetInt32(0));
-            } else if (sName == sm_kapszPropertyNames[ Property_ShadowTextureSize ]) {
-                m_uShadowTextureSize  = static_cast<u16>(it->GetInt32(0));
+                m_uShadowTextureSize  = static_cast<u16>(it->GetInt32(1));
             } else if (sName == sm_kapszPropertyNames[ Property_FullScreen ]) {
                 bFullScreen = it->GetBool(0);
             } else if (sName == sm_kapszPropertyNames[ Property_VerticalSync ]) {

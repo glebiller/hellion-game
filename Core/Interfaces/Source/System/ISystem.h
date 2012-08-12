@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Proto/Common/System.pb.h"
 #include "Property.h"
 #include "System.h"
 
@@ -33,12 +34,11 @@ class ISystem {
         ISystem(void);
 
         /**
-         * Gets the name of the system.  Only custom systems can return a custom name.
-         * Non-custom system must return a pre-defined name in Systems::Names that matches with the type.
+         * Gets the name of the system.
          *
          * @return  The name of the system.
          */
-        virtual const char* GetName(void) = 0;
+        virtual const char* GetName(void);
 
         /**
          * Gets the system type for this system.
@@ -46,7 +46,7 @@ class ISystem {
          *
          * @return  The type of the system.
          */
-        virtual System::Type GetSystemType(void) = 0;
+        virtual SystemProto::Type GetSystemType(void) = 0;
 
         /**
          * One time initialization function for the system.
@@ -93,7 +93,6 @@ class ISystem {
          * @return  CPU Utilization (0-100f)
          */
         virtual f32 GetCPUUsage(void);
-
 
     protected:
 

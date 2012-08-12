@@ -83,7 +83,7 @@ UScene::Extend(
     //
     // Get the system's type.
     //
-    System::Type SystemType = pSystem->GetSystemType();
+    SystemProto::Type SystemType = pSystem->GetSystemType();
     ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
     //
@@ -120,7 +120,7 @@ UScene::Unextend(
     //
     // Get the system's type.
     //
-    System::Type SystemType = pSystem->GetSystemType();
+    SystemProto::Type SystemType = pSystem->GetSystemType();
     //
     // Find the system scene in the collection and remove it.
     //
@@ -245,19 +245,14 @@ UScene::CreateObjectLink(
 }
 
 
-Error
-UScene::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
             IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
             IGenericScene::CreateObjectDataArray aObjectsToCreate;
             pScene->GetCreateObjects(aObjectsToCreate);
 
-            for (IGenericScene::CreateObjectDataArrayConstIt it = aObjectsToCreate.begin();
-                    it != aObjectsToCreate.end(); it++) {
+            for (IGenericScene::CreateObjectDataArrayConstIt it = aObjectsToCreate.begin(); it != aObjectsToCreate.end(); it++) {
                 ASSERT(FindObject(it->pszName) == NULL);
                 UObject* pObject = CreateObject(it->pszName);
                 ASSERT(pObject != NULL);
@@ -267,7 +262,7 @@ UScene::ChangeOccurred(
 
                     for (u32 i = 0; i < System::Types::MAX; i++) {
                         if (it->Types & Type) {
-                            SystemScenesIt ssIt = m_SystemScenes.find(Type);
+                            SystemScenesIt ssIt = m_SystemScenes.find(SystemProto::Generic);
 
                             if (ssIt != m_SystemScenes.end()) {
                                 pObject->Extend(ssIt->second, NULL);
@@ -289,8 +284,7 @@ UScene::ChangeOccurred(
             IGenericScene::DestroyObjectDataArray aObjectsToDestroy;
             pScene->GetDestroyObjects(aObjectsToDestroy);
 
-            for (IGenericScene::DestroyObjectDataArrayConstIt it = aObjectsToDestroy.begin();
-                    it != aObjectsToDestroy.end(); it++) {
+            for (IGenericScene::DestroyObjectDataArrayConstIt it = aObjectsToDestroy.begin(); it != aObjectsToDestroy.end(); it++) {
                 UObject* pObject = FindObject(*it);
                 DestroyObject(pObject);
             }
@@ -303,8 +297,7 @@ UScene::ChangeOccurred(
             IGenericScene::ExtendObjectDataArray aObjectsToExtend;
             pScene->GetExtendObjects(aObjectsToExtend);
 
-            for (IGenericScene::ExtendObjectDataArrayConstIt it = aObjectsToExtend.begin();
-                    it != aObjectsToExtend.end(); it++) {
+            for (IGenericScene::ExtendObjectDataArrayConstIt it = aObjectsToExtend.begin(); it != aObjectsToExtend.end(); it++) {
                 UObject* pObject = FindObject(it->pszName);
 
                 if (pObject != NULL) {
@@ -320,8 +313,7 @@ UScene::ChangeOccurred(
             std::vector<const char*> aObjectsToUnextend;
             pScene->GetUnextendObjects(aObjectsToUnextend);
 
-            for (std::vector<const char*>::const_iterator it = aObjectsToUnextend.begin();
-                    it != aObjectsToUnextend.end(); it++) {
+            for (std::vector<const char*>::const_iterator it = aObjectsToUnextend.begin(); it != aObjectsToUnextend.end(); it++) {
                 UObject* pObject = FindObject(*it);
 
                 if (pObject != NULL) {
@@ -341,10 +333,7 @@ UScene::ChangeOccurred(
 // UObject
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-UObject::UObject(
-    UScene* pScene,
-    const char* pszName
-)
+UObject::UObject(UScene* pScene, const char* pszName)
     : m_pScene(pScene)
     , m_pGeometryObject(NULL)
     , m_pGraphicsObject(NULL) {
@@ -355,9 +344,7 @@ UObject::UObject(
 }
 
 
-UObject::~UObject(
-    void
-) {
+UObject::~UObject(void) {
     //
     // Remove all the extensions.
     //
@@ -371,11 +358,7 @@ UObject::~UObject(
 }
 
 
-ISystemObject*
-UObject::Extend(
-    ISystemScene* pSystemScene,
-    const char* pszSystemObjectType
-) {
+ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType) {
     ASSERT(pSystemScene != NULL);
     ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
     ISystemObject* pSystemObject = NULL;
@@ -389,10 +372,7 @@ UObject::Extend(
 }
 
 
-bool
-UObject::Extend(
-    ISystemObject* pSystemObject
-) {
+bool UObject::Extend(ISystemObject* pSystemObject) {
     bool bSuccess = false;
 
     if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) == m_ObjectExtensions.end()) {
@@ -403,20 +383,14 @@ UObject::Extend(
         //
         // Get the changes this object will make and is looking for.
         //
-        System::Changes::BitMask SysObjPotentialChanges =
-            pSystemObject->GetPotentialSystemChanges();
-        System::Changes::BitMask SysObjDesiredChanges =
-            pSystemObject->GetDesiredSystemChanges();;
+        System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
+        System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
 
-        if (SysObjPotentialChanges & (System::Changes::Geometry::All |
-                                      System::Changes::Graphics::AABB)) {
+        if (SysObjPotentialChanges & (System::Changes::Geometry::All | System::Changes::Graphics::AABB)) {
             //
             // Have the UObject watch for all the geometry and AABB changes this system makes.
             //
-            m_pObjectCCM->Register(
-                pSystemObject,
-                System::Changes::Geometry::All | System::Changes::Graphics::AABB,
-                this);
+            m_pObjectCCM->Register(pSystemObject, System::Changes::Geometry::All | System::Changes::Graphics::AABB, this);
         }
 
         //
@@ -437,7 +411,7 @@ UObject::Extend(
         //
         System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
 
-        for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
+        for (std::map<SystemProto::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
                 it != m_ObjectExtensions.end(); it++) {
             ISystemObject* pObj = it->second;
 
@@ -453,7 +427,7 @@ UObject::Extend(
         //
         // Add the system object to the list.
         //
-        System::Type SystemType = pSystemObject->GetSystemType();
+        SystemProto::Type SystemType = pSystemObject->GetSystemType();
         m_ObjectExtensions[ SystemType ] = pSystemObject;
 
         //
@@ -481,7 +455,7 @@ UObject::Unextend(
     //
     // Get the iterator for the object.
     //
-    System::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
+    SystemProto::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
     SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(),
               "The object to delete doesn't exist in the scene.");
@@ -491,7 +465,7 @@ UObject::Unextend(
     // Go through all the other systems and unregister them with this as subject and observer.
     //  The CCM should know if the objects are registered or not, and if not won't do anything.
     //
-    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
+    for (std::map<SystemProto::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
             it != m_ObjectExtensions.end(); it++) {
         ISystemObject* pObj = it->second;
 
@@ -542,7 +516,7 @@ UObject::GetExtensions(
 
 ISystemObject*
 UObject::GetExtension(
-    System::Type SystemType
+    SystemProto::Type SystemType
 ) {
     ISystemObject* pSystemObject = NULL;
     SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);

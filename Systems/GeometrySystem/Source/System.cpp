@@ -41,8 +41,8 @@ const char* GeometrySystem::GetName(void) {
 }
 
 
-System::Type GeometrySystem::GetSystemType(void) {
-    return System::Types::Geometry;
+SystemProto::Type GeometrySystem::GetSystemType(void) {
+    return SystemProto::Geometry;
 }
 
 

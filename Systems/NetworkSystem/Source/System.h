@@ -37,9 +37,9 @@ class NetworkSystem : public ISystem {
         ///   Implementation of the <c>ISystem::GetSystemType</c> function.
         ///   Gets the system type for this system.
         /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
+        /// <returns>SystemProto::Type - The type of the system.</returns>
         /// <seealso cref="ISystem::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="NetworkSystem::Initialize">
         ///   Implementation of the <c>ISystem::Initialize</c> function.

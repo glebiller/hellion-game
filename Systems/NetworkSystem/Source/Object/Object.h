@@ -42,9 +42,9 @@ class NetworkObject : public ISystemObject, public IGeometryObject, public IGUIO
         ///   Lets this object know when a registered aspects of interest has changed
         ///   (this function will be called when other systems make changes this object should know about).
         /// </summary>
-        /// <returns>System::Type - Type of this system.</returns>
+        /// <returns>SystemProto::Type - Type of this system.</returns>
         /// <seealso cref="ISystemObject::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="NetworkObject::Initialize">
         ///   Implementation of the <c>ISystem::Initialize</c> function.

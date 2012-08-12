@@ -48,7 +48,7 @@ NetworkTask::~NetworkTask(
 }
 
 
-System::Type
+SystemProto::Type
 NetworkTask::GetSystemType(
     void
 ) {

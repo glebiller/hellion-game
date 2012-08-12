@@ -39,9 +39,9 @@ class HavokPhysicsTask : public ISystemTask,
         ///   Implementation of the <c>ISystemTask::GetSystemType</c> function.
         ///   Gets the system type for this system task.
         /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
+        /// <returns>SystemProto::Type - The type of the system.</returns>
         /// <seealso cref="ISystemTask::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="HavokPhysicsTask::SetObjectActivation">
         ///   Add or removes the given object from actively tracked objects.

@@ -92,20 +92,11 @@ InputSystem::~InputSystem(
     delete OISB::System::getSingletonPtr();
 }
 
-
-const char*
-InputSystem::GetName(
-    void
-) {
-    return System::Names::Input;
-}
-
-
-System::Type
+SystemProto::Type
 InputSystem::GetSystemType(
     void
 ) {
-    return System::Types::Input;
+    return SystemProto::Input;
 }
 
 

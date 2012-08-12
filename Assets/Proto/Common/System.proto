@@ -6,12 +6,16 @@ import "Proto/Common/Property.proto";
 
 message SystemProto {
     enum Type {
-        AI = 0;
-        AUDIO = 1;
-        GEOMETRY = 2;
-        GRAPHIC = 3;
-        INPUT = 4;
-        PHYSIC = 5;
+        None = 0;
+        Generic = 1;
+        AI = 2;
+        Animation = 3;
+        Audio = 4;
+        Geometry = 5;
+        Graphic = 6;
+        Input = 7;
+        Network = 8; 
+        Physic = 9;
     }
     required Type type = 1;
     repeated PropertyProto properties = 2;

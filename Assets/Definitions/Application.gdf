@@ -9,7 +9,7 @@
 	</Properties>
 	<Systems>
 		<!--<System Type="AI"/>-->
-		<!--<System Type="AUDIO">
+		<!--<System Type="Audio">
 			<Properties>
 				<Property Name="ResourceLocation" Value1="../Media/Audio/" Value2="FileSystem" Value3="General" Value4="0"/>
 				<Property Name="MusicVol" Value1="1.0"/>
@@ -24,8 +24,8 @@
 				<Property Name="SpeakerMode" Value1="2"/>
 			</Properties>
 		</System>-->
-		<System Type="GEOMETRY"/>
-		<System Type="GRAPHIC">
+		<System Type="Geometry"/>
+		<System Type="Graphic">
 			<Properties>
                 <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/default" Value2="FileSystem" Value3="Default" Value4="0"/>
 				<Property Name="WindowName" Value1="Hellion Game"/>
@@ -45,7 +45,7 @@
 				<Property Name="FSAntiAliasing" Value1="4" Value2="0"/>
 			</Properties>
 		</System>
-		<System Type="INPUT">
+		<System Type="Input">
 			<Properties>
 				<Property Name="MoveForward" Value1="W" Value2="0"/>
 				<Property Name="MoveBack" Value1="S" Value2="0"/>
@@ -55,8 +55,8 @@
 				<Property Name="PolygonMode" Value1="P" Value2="1"/>
 			</Properties>
 		</System>
-		<!--<System Type="NETWORK"/>-->
-		<System Type="PHYSIC"/>
+		<!--<System Type="Network"/>-->
+		<System Type="Physic"/>
 	</Systems>
 	<Scenes Startup="Main">
 		<Scene Name="Main"/>

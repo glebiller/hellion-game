@@ -25,8 +25,8 @@ public class Main {
         
         // Test if gdf file exists and find the directory.
         String gdfPath = args[0];
-        File gdfFile = new File(gdfPath);
-        if (!gdfFile.exists() || !gdfFile.canRead()) {
+        File globalDefinitionFile = new File(gdfPath);
+        if (!globalDefinitionFile.exists() || !globalDefinitionFile.canRead()) {
             System.out.println("File " + gdfPath + " not found.");
             return;
         }
@@ -40,7 +40,7 @@ public class Main {
         }
 
         // Process the file
-        generateFile(gdfFile, outputFile);
+        generateFile(globalDefinitionFile, outputFile);
     }
 
     /**
@@ -53,11 +53,11 @@ public class Main {
      * @throws XMLParseException Exception.
      */
     private static void generateFile(File rawGdcFile, File outputFile) throws IOException, XMLParseException {
-        File gdfFile = rawGdcFile.getAbsoluteFile();
-        File gdfDirectoryFile = new File(gdfFile.getParent());
+        File globalDefinitionFile = rawGdcFile.getAbsoluteFile();
+        File gdfDirectoryFile = new File(globalDefinitionFile.getParent());
 
-        GlobalDefinitionParser globalDefinitionParser = new GlobalDefinitionParser(gdfFile.getAbsolutePath(), outputFile.getAbsolutePath());
-        File gdfProto = globalDefinitionParser.writeBuilder();
+        GlobalDefinitionParser globalDefinitionParser = new GlobalDefinitionParser(globalDefinitionFile.getAbsolutePath(), outputFile.getAbsolutePath());
+        File globalDefinitionOutput = globalDefinitionParser.writeBuilder();
 
         for (String scene : globalDefinitionParser.getGlobalDefinitionBuilder().getScenesList()) {
             SceneDefinitionParser sceneDefinitionParser = new SceneDefinitionParser(gdfDirectoryFile.getAbsolutePath() + "/" + scene + ".sdf",
@@ -67,7 +67,7 @@ public class Main {
 
         // Test generated files
         GlobalDefinitionDto.GlobalDefinitionProto.Builder gdfBuilder = GlobalDefinitionDto.GlobalDefinitionProto.newBuilder();
-        gdfBuilder.mergeFrom(new FileInputStream(gdfProto));
+        gdfBuilder.mergeFrom(new FileInputStream(globalDefinitionOutput));
         AssertUtils.makeTest(gdfBuilder.getSystemsCount() > 0);
     }
 

@@ -208,8 +208,8 @@ public final class SceneDefinitionDto {
       private void initFields() {
         subject_ = "";
         observer_ = "";
-        subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
-        observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
+        observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -404,9 +404,9 @@ public final class SceneDefinitionDto {
           bitField0_ = (bitField0_ & ~0x00000001);
           observer_ = "";
           bitField0_ = (bitField0_ & ~0x00000002);
-          subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           bitField0_ = (bitField0_ & ~0x00000004);
-          observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           bitField0_ = (bitField0_ & ~0x00000008);
           return this;
         }
@@ -648,7 +648,7 @@ public final class SceneDefinitionDto {
         }
         
         // required .SystemProto.Type subjectSystemType = 32;
-        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         public boolean hasSubjectSystemType() {
           return ((bitField0_ & 0x00000004) == 0x00000004);
         }
@@ -666,13 +666,13 @@ public final class SceneDefinitionDto {
         }
         public Builder clearSubjectSystemType() {
           bitField0_ = (bitField0_ & ~0x00000004);
-          subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          subjectSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           onChanged();
           return this;
         }
         
         // required .SystemProto.Type observerSystemType = 33;
-        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+        private fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
         public boolean hasObserverSystemType() {
           return ((bitField0_ & 0x00000008) == 0x00000008);
         }
@@ -690,7 +690,7 @@ public final class SceneDefinitionDto {
         }
         public Builder clearObserverSystemType() {
           bitField0_ = (bitField0_ & ~0x00000008);
-          observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.AI;
+          observerSystemType_ = fr.kissy.hellion.definition.encoder.proto.SystemDto.SystemProto.Type.None;
           onChanged();
           return this;
         }

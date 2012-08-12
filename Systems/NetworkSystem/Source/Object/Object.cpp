@@ -70,11 +70,11 @@ NetworkObject::~NetworkObject(
 }
 
 
-System::Type
+SystemProto::Type
 NetworkObject::GetSystemType(
     void
 ) {
-    return System::Types::Network;
+    return SystemProto::Network;
 }
 
 

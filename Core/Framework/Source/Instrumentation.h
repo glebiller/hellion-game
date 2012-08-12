@@ -127,15 +127,13 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
          * frame. There may be many jobs of one type passed in during a single frame; their results will
          * be appended.
          *
-         * @param   jobType         u32 - The type of the job that has just completed; a member of
-         *                          System::Types.
+         * @param   jobType         u32 - The type of the job that has just completed; a member of 
+         * 							SystemProto::Type.
          * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
          *                          during this frame.
          */
         void CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) {
-            u32 jobIndex = System::Types::GetIndex(jobType);
-
-            if (jobIndex < System::Types::MAX) {
+            if (jobType < SystemProto::Type_MAX) {
                 //******************************
                 // GDC - LAB 4 - Activity 3
                 //
@@ -145,7 +143,7 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
                 // Can get compiler warnings about loss of precision; only really using low 32 bits of i64 value.
 #pragma warning ( push )
 #pragma warning ( disable : 4244 )
-                m_pAccumulatingFrameTicks[jobIndex] += (LONG)jobCounterTicks;
+                m_pAccumulatingFrameTicks[jobType] += (LONG)jobCounterTicks;
 #pragma warning ( pop )
                 //
                 //******************************
@@ -159,7 +157,7 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
          * @return  i32 - Max number of job types.
          */
         i32 getJobCount() {
-            return (i32)System::Types::MAX;
+            return (i32) SystemProto::Type_MAX;
         }
 
         /**
@@ -170,7 +168,7 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
          *                      getJobCount.
          */
         void getJobRatios(f32* jobRatios) {
-            for (int i = 0; i < System::Types::MAX; i++) {
+            for (int i = SystemProto::Type_MIN; i < SystemProto::Type_MAX; i++) {
                 jobRatios[i] = m_pLastFrameRatio[i];
             }
         }

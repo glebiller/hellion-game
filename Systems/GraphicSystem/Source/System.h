@@ -33,86 +33,102 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
         GraphicSystem(void);
         virtual ~GraphicSystem(void);
 
-        /// <summary cref="GraphicSystem::GetOGRERoot">
-        ///   This function returns a pointer to the interanl Ogre root.
-        /// </summary>
-        /// <returns>Ogre::Root* - A pointer to the Ogre root.</returns>
+        /**
+         * Gets the ogre root.
+         * This function returns a pointer to the interanl Ogre root.
+         *
+         * @return  Ogre::Root* - A pointer to the Ogre root.
+         */
         Ogre::Root* GetOGRERoot(void) {
             return m_pRoot;
         }
 
-        /// <summary cref="GraphicSystem::GetOGRERenderWindow">
-        ///   This function returns a pointer to the interanl Ogre render window.
-        /// </summary>
-        /// <returns>Ogre::RenderWindow* - A pointer to the Ogre render window.</returns>
+        /**
+         * Gets the ogre render window.
+         * This function returns a pointer to the interanl Ogre render window.
+         *
+         * @return  Ogre::RenderWindow* - A pointer to the Ogre render window.
+         */
         Ogre::RenderWindow* GetOGRERenderWindow(void) {
             return m_pRenderWindow;
         }
 
-        /// <summary cref="GraphicSystem::windowClosed">
-        ///   This function is called when the app window is close (to signal that the app is shutting down).
-        /// </summary>
-        /// <param name="pRenderWindow">Ogre::RenderWindow* - A pointer to Ogre render window that closed.</param>
+        /**
+         * Window closed.
+         * This function is called when the app window is close (to signal that the app is shutting
+         * down).
+         *
+         * @param   pRenderWindow   Ogre::RenderWindow* - A pointer to Ogre render window that closed.
+         */
         void windowClosed(Ogre::RenderWindow* pRenderWindow);
 
     protected:
 
-        /// <summary cref="GraphicSystem::GetName">
-        ///   Implementation of the <c>ISystem::GetName</c> function.
-        ///   Gets the name of the system.  Only custom systems can return a custom name.
-        /// </summary>
-        /// <returns>const char* - The name of the system.</returns>
-        /// <seealso cref="ISystem::GetName"/>
-        virtual const char* GetName(void);
+        /**
+         * Gets the system type.
+         * Implementation of the <c>ISystem::GetSystemType</c> function. Gets the system type for this
+         * system.
+         *
+         * @return  SystemProto::Type - The type of the system.
+         *
+         * @sa   ISystem::GetSystemType  .
+         */
+        virtual SystemProto::Type GetSystemType(void);
 
-        /// <summary cref="GraphicSystem::GetSystemType">
-        ///   Implementation of the <c>ISystem::GetSystemType</c> function.
-        ///   Gets the system type for this system.
-        /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
-        /// <seealso cref="ISystem::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
-
-        /// <summary cref="GraphicSystem::Initialize">
-        ///   Implementation of the <c>ISystem::Initialize</c> function.
-        ///   One time initialization function for the system.
-        /// </summary>
-        /// <param name="Properties">Property structure array to initialize.</param>
-        /// <returns>Error - Any error codes.</returns>
-        /// <seealso cref="ISystem::Initialize"/>
+        /**
+         * Initializes this :.
+         * Implementation of the <c>ISystem::Initialize</c> function. One time initialization function
+         * for the system.
+         *
+         * @param   Properties  Property structure array to initialize.
+         * @return  Error - Any error codes.
+         *
+         * @sa   ISystem::Initialize .
+         */
         virtual Error Initialize(Properties::Array Properties);
 
-        /// <summary cref="GraphicSystem::GetProperties">
-        ///   Implementation of the <c>ISystem::GetProperties</c> function.
-        ///   Gets the properties of this system.
-        /// </summary>
-        /// <param name="Properties">Property structure array to fill</param>
-        /// <seealso cref="ISystem::GetProperties"/>
+        /**
+         * Gets the properties.
+         * Implementation of the <c>ISystem::GetProperties</c> function. Gets the properties of this
+         * system.
+         *
+         * @param   Properties  Property structure array to fill.
+         *
+         * @sa   ISystem::GetProperties  .
+         */
         virtual void GetProperties(Properties::Array& Properties);
 
-        /// <summary cref="GraphicSystem::SetProperties">
-        ///   Implementation of the <c>ISystem::SetProperties</c> function.
-        ///   Sets the properties for this system.
-        /// </summary>
-        /// <param name="Properties">Properties to set in the system.</param>
-        /// <seealso cref="ISystem::SetProperties"/>
+        /**
+         * Sets the properties.
+         * Implementation of the <c>ISystem::SetProperties</c> function. Sets the properties for this
+         * system.
+         *
+         * @param   Properties  Properties to set in the system.
+         *
+         * @sa   ISystem::SetProperties  .
+         */
         virtual void SetProperties(Properties::Array Properties);
 
-        /// <summary cref="GraphicSystem::CreateScene">
-        ///   Implementation of the <c>ISystem::CreateScene</c> function.
-        ///   Creates a system scene for containing system objects.
-        /// </summary>
-        /// <returns>ISystemScene* - The newly create system scene.</returns>
-        /// <seealso cref="ISystem::CreateScene"/>
+        /**
+         * Creates the scene.
+         * Implementation of the <c>ISystem::CreateScene</c> function. Creates a system scene for
+         * containing system objects.
+         *
+         * @return  ISystemScene* - The newly create system scene.
+         *
+         * @sa   ISystem::CreateScene    .
+         */
         virtual ISystemScene* CreateScene(void);
 
-        /// <summary cref="GraphicSystem::DestroyScene">
-        ///   Implementation of the <c>ISystem::DestroyScene</c> function.
-        ///   Destroys a system scene.
-        /// </summary>
-        /// <param name="pSystemScene">The scene to destroy. Any objects within are destroyed.</param>
-        /// <returns>Error - Any error codes.</returns>
-        /// <seealso cref="ISystem::DestroyScene"/>
+        /**
+         * Destroys the scene described by pSystemScene.
+         * Implementation of the <c>ISystem::DestroyScene</c> function. Destroys a system scene.
+         *
+         * @param   pSystemScene    The scene to destroy. Any objects within are destroyed.
+         * @return  Error - Any error codes.
+         *
+         * @sa   ISystem::DestroyScene   .
+         */
         virtual Error DestroyScene(ISystemScene* pSystemScene);
 
 
@@ -122,15 +138,14 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
             Property_ResourceLocation,
             Property_WindowName,
             Property_Resolution,
-            Property_ShadowTextureSize,
-            Property_ShadowTextureCount,
+            Property_ShadowTexture,
             Property_FullScreen,
             Property_VerticalSync,
             Property_FSAntiAliasing,
             Property_Count
         };
 
-        static const char*                        sm_kapszPropertyNames[];
+        static const char*                  sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Ogre::Root*                         m_pRoot;

@@ -70,11 +70,11 @@ InputScene::~InputScene(
 }
 
 
-System::Type
+SystemProto::Type
 InputScene::GetSystemType(
     void
 ) {
-    return System::Types::Input;
+    return SystemProto::Input;
 }
 
 

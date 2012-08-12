@@ -47,9 +47,9 @@ class NetworkScene : public ISystemScene {
         /// <summary cref="NetworkScene::GetSystemType">
         ///   Implementation of the <c>ISystemScene::GetSystemType</c> function.
         /// </summary>
-        /// <returns>System::Type - Type of this system.</returns>
+        /// <returns>SystemProto::Type - Type of this system.</returns>
         /// <seealso cref="ISystemScene::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        virtual SystemProto::Type GetSystemType(void);
 
         /// <summary cref="NetworkScene::NetworkUpdate">
         /// This function must be called every frame.  It updates the Network scene.

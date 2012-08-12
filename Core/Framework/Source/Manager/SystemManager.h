@@ -14,53 +14,61 @@
 
 #pragma once
 
+#include "Proto/Common/System.pb.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// Provides a single location for access to the different systems that are available for use.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "Errors.h"
+#include "Singleton.h"
+#include "System.h"
 
+class ISystem;
+
+/**
+ * Provides a single location for access to the different systems that are available for use.
+ * @sa  Singleton
+ */
 class SystemManager : public Singleton {
     public:
 
-        /// <summary>
-        ///   Constructor.
-        /// </summary>
+        /**
+         * Constructor.
+         */
         SystemManager(void);
 
-        /// <summary>
-        ///   Destructor.
-        /// </summary>
+        /**
+         * Destructor.
+         */
         ~SystemManager(void);
 
-        /// <summary>
-        ///   Adds a new system to the collection.  Called by the ISystem constructor.
-        /// </summary>
-        /// <param name="pSystem">A pointer to the system to add.</param>
-        /// <returns>An error code.</returns>
-        //
+        /**
+         * Adds a new system to the collection.  Called by the ISystem constructor.
+         *
+         * @param   pSystem A pointer to the system to add.
+         * @return  An error code.
+         */
         Error Add(ISystem* pSystem);
 
-        /// <summary>
-        ///   Removes a system from the collection.  Called by the ISystem destructor.
-        /// </summary>
-        /// <param name="SystemType">The system type to remove.</param>
-        /// <returns>An error code.</returns>
-        Error Remove(const System::Type SystemType);
+        /**
+         * Removes a system from the collection.  Called by the ISystem destructor.
+         *
+         * @param   SystemType  The system type to remove.
+         * @return  An error code.
+         */
+        Error Remove(const SystemProto::Type SystemType);
 
-        /// <summary>
-        ///   Gets a specific system from the collection based on its type.
-        /// </summary>
-        /// <param name="SystemType">The type of system to get.</param>
-        /// <returns>A pointer to the system.</returns>
-        ISystem* Get(const System::Type SystemType);
+        /**
+         * Gets a specific system from the collection based on its type.
+         *
+         * @param   SystemType  The type of system to get.
+         * @return  A pointer to the system.
+         */
+        ISystem* Get(const SystemProto::Type SystemType);
 
-        /// <summary>
-        ///   Gets a specific system from the collection base on its name.
-        /// </summary>
-        /// <param name="pszName">The name of system to get.</param>
-        /// <returns>A pointer to the system or <c>NULL</c> of failure.</returns>
+        /**
+         * Gets a specific system from the collection base on its name.
+         *
+         * @param   pszName The name of system to get.
+         * @return  A pointer to the system or <c>NULL</c> of failure.
+         */
         ISystem* Get(const char* pszName);
 
         //
@@ -74,8 +82,9 @@ class SystemManager : public Singleton {
 
     protected:
 
-        std::map<System::Type, ISystem*>              m_Systems;
-        std::map<System::Type, ISystem*>::iterator    m_SystemIt;
+        std::map<SystemProto::Type, ISystem*>              m_Systems;
+        std::map<SystemProto::Type, ISystem*>::iterator    m_SystemIt;
+
 };
 
 
