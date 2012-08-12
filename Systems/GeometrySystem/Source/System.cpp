@@ -41,44 +41,29 @@ System::Type GeometrySystem::GetSystemType(void) {
 }
 
 
-Error
-GeometrySystem::Initialize(
-    Properties::Array Properties
-) {
+Error GeometrySystem::Initialize(Properties::Array Properties) {
     ASSERT(!m_bInitialized);
     m_bInitialized = true;
     return Errors::Success;
 }
 
 
-void
-GeometrySystem::GetProperties(
-    Properties::Array& Properties
-) {
+void GeometrySystem::GetProperties(Properties::Array& Properties) {
     UNREFERENCED_PARAM(Properties);
 }
 
 
-void
-GeometrySystem::SetProperties(
-    Properties::Array Properties
-) {
+void GeometrySystem::SetProperties(Properties::Array Properties) {
     ASSERT(m_bInitialized);
 }
 
 
-ISystemScene*
-GeometrySystem::CreateScene(
-    void
-) {
+ISystemScene* GeometrySystem::CreateScene(void) {
     return new GeometryScene(this);
 }
 
 
-Error
-GeometrySystem::DestroyScene(
-    ISystemScene* pSystemScene
-) {
+Error GeometrySystem::DestroyScene(ISystemScene* pSystemScene) {
     ASSERT(pSystemScene != NULL);
     GeometryScene* pScene = reinterpret_cast<GeometryScene*>(pSystemScene);
     SAFE_DELETE(pScene);

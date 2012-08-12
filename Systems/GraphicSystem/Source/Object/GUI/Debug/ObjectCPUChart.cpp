@@ -31,10 +31,10 @@
 //
 #include "System.h"
 #include "Scene.h"
-#include "Object.h"
-#include "ObjectWindow.h"
-#include "ObjectChart.h"
-#include "ObjectCPUChart.h"
+#include "Object/Object.h"
+#include "Object/GUI/ObjectWindow.h"
+#include "Object/GUI/Debug/ObjectChart.h"
+#include "Object/Gui/Debug/ObjectCPUChart.h"
 
 extern ManagerInterfaces       g_Managers;
 

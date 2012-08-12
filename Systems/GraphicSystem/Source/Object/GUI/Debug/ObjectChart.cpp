@@ -31,9 +31,9 @@
 //
 #include "System.h"
 #include "Scene.h"
-#include "Object.h"
-#include "ObjectWindow.h"
-#include "ObjectChart.h"
+#include "Object/Object.h"
+#include "Object/Gui/ObjectWindow.h"
+#include "Object/Gui/Debug/ObjectChart.h"
 
 #define ASSERT_EXIST(x, y) if (!x){ASSERT(false); return y;}
 

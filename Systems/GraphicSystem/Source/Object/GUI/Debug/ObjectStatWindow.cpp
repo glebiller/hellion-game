@@ -38,9 +38,9 @@
 //
 #include "System.h"
 #include "Scene.h"
-#include "Object.h"
-#include "ObjectWindow.h"
-#include "ObjectStatWindow.h"
+#include "Object/Object.h"
+#include "Object/GUI/ObjectWindow.h"
+#include "Object/GUI/Debug/ObjectStatWindow.h"
 
 
 extern ManagerInterfaces       g_Managers;

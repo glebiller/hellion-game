@@ -40,8 +40,8 @@
 //
 #include "System.h"
 #include "Scene.h"
-#include "Object.h"
-#include "ObjectWindow.h"
+#include "Object/Object.h"
+#include "Object/GUI/ObjectWindow.h"
 
 
 #define PSCENE          (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene))

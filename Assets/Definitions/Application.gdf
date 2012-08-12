@@ -58,7 +58,8 @@
 		<!--<System Type="Network"/>-->
 		<System Type="Physic"/>
 	</Systems>
-	<Scenes Startup="Main">
+	<Scenes Startup="Login">
+		<Scene Name="Login"/>
 		<Scene Name="Main"/>
 	</Scenes>
 </GlobalDefinition>

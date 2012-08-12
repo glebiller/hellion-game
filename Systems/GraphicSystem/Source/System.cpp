@@ -257,10 +257,7 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
 }
 
 
-void
-GraphicSystem::GetProperties(
-    Properties::Array& Properties
-) {
+void GraphicSystem::GetProperties(Properties::Array& Properties) {
     //
     // Get the index of our first item.
     //

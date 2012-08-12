@@ -40,9 +40,9 @@
 //
 #include "System.h"
 #include "Scene.h"
-#include "Object.h"
-#include "ObjectWindow.h"
-#include "ObjectWorkloadWindow.h"
+#include "Object/Object.h"
+#include "Object/GUI/ObjectWindow.h"
+#include "Object/GUI/Debug/ObjectWorkloadWindow.h"
 
 extern ManagerInterfaces       g_Managers;
 

@@ -78,23 +78,23 @@
     <ClCompile Include="Source\MovableText\DynamicLines.cpp">
       <Filter>Fichiers sources\MovableText</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\ObjectChart.cpp">
-      <Filter>Fichiers sources\Object\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectWorkloadWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectStatWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\ObjectCPUChart.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NormalizedLines.cpp">
       <Filter>Fichiers sources\MovableText</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GUI\ObjectWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GUI\Debug\ObjectChart.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GUI\Debug\ObjectCPUChart.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GUI\Debug\ObjectStatWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.cpp">
+      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,23 +134,23 @@
     <ClInclude Include="Source\MovableText\MovableText.h">
       <Filter>Fichiers d%27en-tête\MovableText</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\ObjectWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectWorkloadWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectStatWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectCPUChart.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\ObjectChart.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\NormalizedLines.h">
       <Filter>Fichiers d%27en-tête\MovableText</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\ObjectWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\Debug\ObjectStatWindow.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\Debug\ObjectCPUChart.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\GUI\Debug\ObjectChart.h">
+      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
