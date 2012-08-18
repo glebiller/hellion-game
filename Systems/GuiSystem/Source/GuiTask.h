@@ -14,73 +14,51 @@
 
 #pragma once
 
-#include "System/ISystemTask.h"
 #include "System.h"
+#include "System/ISystemTask.h"
 
 class GuiScene;
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Implementation of the ISystemTask interface for OGRE graphics.
-///   See Interfaces\System.h for a definition of the class and its functions.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
+ * definition of the class and its functions.
+ * 
+ * @sa  ISystemTask
+ */
 class GuiTask : public ISystemTask {
         
-        friend GuiScene;
-
-    protected:
-
+    public:
+        
         /**
-         * Constructor.
-         *
-         * @param [in,out]  pScene  If non-null, the scene.
+         * @inheritDoc
          */
         GuiTask(GuiScene* pScene);
-
+        
         /**
-         * Destructor.
+         * @inheritDoc
          */
         ~GuiTask(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
 
         /**
-         * Gets the system type.
-         * Implementation of the <c>ISystemTask::GetSystemType</c> function. Gets the system type for
-         * this system task.
-         *
-         * @return  System::Type - The type of the system.
-         *
-         * @sa   ISystemTask::GetSystemType  .
+         * @inheritDoc
          */
-        virtual System::Type GetSystemType(void) {
+        bool IsPrimaryThreadOnly(void) {
+            return false;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
             return System::Types::Graphic;
         }
 
-        /**
-         * Updates the given DeltaTime.
-         * Implementation of the <c>ISystemTask::Update</c> function. Function informing the task to
-         * perform its updates.  This does all the work needed to update graphics for this frame.
-         *
-         * @param   DeltaTime   The time delta from the last call.
-         *
-         * @sa   ISystemTask::Update .
-         */
-        virtual void Update(f32 DeltaTime);
-
-        /**
-         * Query if this GuiTask is primary thread only.
-         * Implementation of the <c>ISystemTask::IsPrimaryThreadOnly</c> function.
-         *
-         * @return  bool - Returns if this system should only run on the primary thread.
-         *
-         * @sa   ISystemTask::IsPrimaryThreadOnly    .
-         */
-        virtual bool IsPrimaryThreadOnly(void) {
-            return false;
-        };
-
-    private:
+    protected:
 
         GuiScene*                  m_pScene;
 

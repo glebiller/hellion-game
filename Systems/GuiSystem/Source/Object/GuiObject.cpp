@@ -46,7 +46,7 @@ GuiObject::GuiObject(ISystemScene* pSystemScene, const char* pszName)
 
 
 GuiObject::~GuiObject(void) {
-    Debug::Print("test");
+
 }
 
 void GuiObject::Update(f32 DeltaTime) {

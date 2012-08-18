@@ -15,6 +15,7 @@
 #include "DataTypes.h"
 #include "Errors.h"
 #include "System/ISystem.h"
+#include "System/ISystemScene.h"
 
 /**
  * @inheritDoc
@@ -35,7 +36,8 @@ ISystem::~ISystem(void) {
  * @inheritDoc
  */
 const char* ISystem::GetName(void) {
-    SystemProto::Type systemType = static_cast<SystemProto::Type>(System::Types::GetIndex(GetSystemType()));
+    u32 index = System::Types::GetIndex(GetSystemType());
+    SystemProto::Type systemType = static_cast<SystemProto::Type>(index);
     return SystemProto::Type_Name(systemType).c_str();
 }
 
@@ -55,9 +57,3 @@ Error ISystem::DestroyScene(ISystemScene* pSystemScene) {
     return Errors::Success;
 }
 
-/**
- * @inheritDoc
- */
-f32 ISystem::GetCPUUsage(void) {
-    return 0;
-}

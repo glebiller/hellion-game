@@ -90,7 +90,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
         SCOPED_SPIN_LOCK(m_swUpdate);
         u32 uID = pInSubject->GetID(this);
 
-        if (uID != CSubject::InvalidID) {
+        if (uID != ISubject::InvalidID) {
             // Subject has already been registered. Add new observer to the list
             SubjectInfo& si = m_subjectsList[uID];
             si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
@@ -175,7 +175,7 @@ ChangeManager::RemoveSubject(
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
         u32 uID = pSubject->GetID(this);
-        ASSERT(uID != CSubject::InvalidID);
+        ASSERT(uID != ISubject::InvalidID);
         ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
 
         if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pSubject) {
@@ -272,9 +272,9 @@ ChangeManager::DistributeQueuedChanges(
                 Notification& notif = pList->at(i);
                 // Get subject for notification
                 u32 uID = notif.m_pSubject->GetID(this);
-                ASSERT(uID != CSubject::InvalidID);
+                ASSERT(uID != ISubject::InvalidID);
 
-                if (uID != CSubject::InvalidID) {
+                if (uID != ISubject::InvalidID) {
                     // Get the index for this subject
                     u32 index = m_indexList[uID];
 

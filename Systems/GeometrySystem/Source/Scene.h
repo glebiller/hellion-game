@@ -50,6 +50,13 @@ class GeometryScene : public ISystemScene {
         virtual Error DestroyObject(ISystemObject* pSystemObject);
 
         virtual ISystemTask* GetSystemTask(void);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
 
         virtual void Update(f32 DeltaTime);
 

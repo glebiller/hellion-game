@@ -30,39 +30,32 @@
 #include "GuiScene.h"
 #include "Object/GuiMouseObject.h"
 
+/**
+ * @inheritDoc
+ */
 GuiMouseObject::GuiMouseObject(ISystemScene* pSystemScene, const char* pszName)
     : GuiObject(pSystemScene, pszName) {
     m_pszName = pszName;
 }
 
 
+/**
+ * @inheritDoc
+ */
 GuiMouseObject::~GuiMouseObject(void) {
-    Debug::Print("test");
+
 }
 
+/**
+ * @inheritDoc
+ */
 void GuiMouseObject::Update(f32 DeltaTime) {
-
     return;
 }
 
-
-Error GuiMouseObject::Initialize(std::vector<Properties::Property> Properties) {
-    ASSERT(!m_bInitialized);
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-void GuiMouseObject::GetProperties(Properties::Array& Properties) {
-    
-}
-
-///////////////////////////////////////////////////////////////////////////////
-void GuiMouseObject::SetProperties(Properties::Array Properties) {
-    ASSERT(m_bInitialized);
-}
-
-
+/**
+ * @inheritDoc
+ */
 Error GuiMouseObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
     if (ChangeType & System::Changes::Input::Velocity) {
@@ -71,4 +64,28 @@ Error GuiMouseObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMas
     }
     return Errors::Success;
 }
+
+/**
+ * @inheritDoc
+ */
+Error GuiMouseObject::Initialize(std::vector<Properties::Property> Properties) {
+    ASSERT(!m_bInitialized);
+    m_bInitialized = true;
+    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+void GuiMouseObject::GetProperties(Properties::Array& Properties) {
+    
+}
+
+/**
+ * @inheritDoc
+ */
+void GuiMouseObject::SetProperties(Properties::Array Properties) {
+    ASSERT(m_bInitialized);
+}
+
 

@@ -81,8 +81,8 @@
   <ItemGroup>
     <ClCompile Include="Source\Observer\CSubject.cpp" />
     <ClCompile Include="Source\Property.cpp" />
-    <ClCompile Include="Source\System\ISystemSubject.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
+    <ClCompile Include="Source\System\ISystemSubject.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />
   </ItemGroup>
   <ItemGroup>

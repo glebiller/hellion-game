@@ -16,6 +16,8 @@
 
 #include "boost/function.hpp"
 #include "Proto/Common/System.pb.h"
+
+#include "Errors.h"
 #include "Property.h"
 #include "System.h"
 
@@ -27,6 +29,7 @@ class ISystemScene;
  *  physics, etc.
  */
 class ISystem {
+
     public:
 
         /**
@@ -39,13 +42,6 @@ class ISystem {
          * Interface have virtual destructors.
          */
         virtual ~ISystem(void);
-
-        /**
-         * Gets the name of the system.
-         *
-         * @return  The name of the system.
-         */
-        virtual const char* GetName(void);
 
         /**
          * Gets the system type for this system.
@@ -77,7 +73,7 @@ class ISystem {
          * @param   Properties  Property structure array to get values from.
          */
         virtual void SetProperties(Properties::Array Properties) = 0;
-
+        
         /**
          * Creates a system scene for containing system objects.
          *
@@ -92,14 +88,22 @@ class ISystem {
          * @return  An error code.
          */
         virtual Error DestroyScene(ISystemScene* pSystemScene);
+        
+        /**
+         * Gets the name of the system.
+         *
+         * @return  The name of the system.
+         */
+        const char* GetName(void);
 
         /**
-         * Gets the CPU usage.
-         * Returns the CPU Utilization of FMOD.
+         * Returns the CPU Utilization.
          *
          * @return  CPU Utilization (0-100f)
          */
-        virtual f32 GetCPUUsage(void);
+        virtual f32 GetCPUUsage(void) {
+            return 0;
+        }
 
     protected:
         

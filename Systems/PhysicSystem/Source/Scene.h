@@ -59,6 +59,13 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
 
         virtual ISystemTask* GetSystemTask(void);
 
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
+
         virtual void Update(f32 DeltaTime);
 
         /////////////////////////////////

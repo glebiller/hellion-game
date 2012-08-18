@@ -56,16 +56,13 @@ class CSubject : public ISubject {
 
     public :
 
-        static const u32 InvalidID = u32(-1);
-
         /**
          * Default constructor.
          */
         CSubject(void);
-
+        
         /**
-         * Destructor.
-         * Virtual destructor, CSubject is an abstract class.
+         * @inheritDoc
          */
         virtual ~CSubject(void);
 
@@ -97,8 +94,8 @@ class CSubject : public ISubject {
     protected:
         
         /**
-         * Pre destruct.
-         */
+            * @inheritDoc
+            */
         void PreDestruct(void);
 
         /**

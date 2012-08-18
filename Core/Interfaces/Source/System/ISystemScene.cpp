@@ -13,8 +13,10 @@
 // responsibility to update it.
 
 #include "Assert.h"
+#include "Errors.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
+#include "System/ISystemObject.h"
 
 /**
  * @inheritDoc
@@ -63,5 +65,14 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
         delete pSystemObject;
     }
 
+    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+    UNREFERENCED_PARAM(pSubject);
+    UNREFERENCED_PARAM(ChangeType);
     return Errors::Success;
 }

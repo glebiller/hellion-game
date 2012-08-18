@@ -76,29 +76,6 @@ GuiScene::~GuiScene(void) {
     SAFE_DELETE(m_pTask);
 }
 
-
-/**
- * @inheritDoc
- */
-void GuiScene::Update(f32 DeltaTime) {
-    ObjectsList Objects = m_pObjects;
-
-    //
-    // Cycle through all of our objects and apply the changes.
-    // Also post our change notifications to the CCM.
-    //
-    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        GuiObject* pObject = static_cast<GuiObject*>(*it);
-        pObject->Update(DeltaTime);
-    }
-}
-
-
-void GuiScene::GlobalSceneStatusChanged(GlobalSceneStatus Status) {
-    
-}
-
-
 Error GuiScene::Initialize(std::vector<Properties::Property> Properties) {
     ASSERT(!m_bInitialized);
 
@@ -132,22 +109,18 @@ void GuiScene::SetProperties(Properties::Array Properties) {
 }
 
 
-const char** GuiScene::GetObjectTypes(void) {
-    return GuiObject::sm_kapszTypeNames;
-}
+/**
+ * @inheritDoc
+ */
+void GuiScene::Update(f32 DeltaTime) {
+    ObjectsList Objects = m_pObjects;
 
-
-ISystemTask* GuiScene::GetSystemTask(void) {
-    return m_pTask;
-}
-
-
-System::Changes::BitMask GuiScene::GetPotentialSystemChanges(void) {
-    return System::Changes::None;
-}
-
-
-const void* GuiScene::GetSystemChangeData(System::Change SystemChange) {
-    UNREFERENCED_PARAM(SystemChange);
-    return NULL;
+    //
+    // Cycle through all of our objects and apply the changes.
+    // Also post our change notifications to the CCM.
+    //
+    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
+        GuiObject* pObject = static_cast<GuiObject*>(*it);
+        pObject->Update(DeltaTime);
+    }
 }

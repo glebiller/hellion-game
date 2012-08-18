@@ -27,15 +27,14 @@
 class ISystemSubject : public CSubject, public IObserver {
 
     public :
-
+        
         /**
-         * Default constructor.
+         * @inheritDoc
          */
         ISystemSubject(void);
-
+        
         /**
-         * Destructor.
-         * Virtual destructor, CSubject is an abstract class.
+         * @inheritDoc
          */
         virtual ~ISystemSubject(void);
         
@@ -45,9 +44,22 @@ class ISystemSubject : public CSubject, public IObserver {
          *
          * @return  The type of the system. 
          */
-        virtual System::Type GetSystemType(void) {
-            return System::Types::Null;
-        }
+        virtual System::Type GetSystemType(void) = 0;
+        
+        /**
+         * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
+         *  to inform the change control manager if this scene should be informed of the change.
+         *
+         * @return  A System::Changes::BitMask.
+         */
+        virtual System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
+
+        /**
+         * Update the system object.
+         *
+         * @param   DeltaTime   Time of the delta.
+         */
+        virtual void Update(f32 DeltaTime) = 0;
 
         /**
          * One time initialization function for the object.
@@ -70,33 +82,9 @@ class ISystemSubject : public CSubject, public IObserver {
          * @param   Properties  Property structure array to get values from.
          */
         virtual void SetProperties(std::vector<Properties::Property> Properties);
-        
-        /**
-         * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
-         *  to inform the change control manager if this scene should be informed of the change.
-         *
-         * @return  A System::Changes::BitMask.
-         */
-        virtual System::Changes::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        }
-
-        /**
-         * Update the system object.
-         *
-         * @param   DeltaTime   Time of the delta.
-         */
-        virtual void Update(f32 DeltaTime) {
-            
-        }
-
-        /**
-         * @inheritDoc
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-            return Errors::Success;    
-        };
 
     protected:
+
         bool            m_bInitialized;
+
 };

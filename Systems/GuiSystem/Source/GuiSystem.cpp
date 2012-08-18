@@ -94,10 +94,9 @@ GuiSystem::GuiSystem(void) : ISystem() {
     ASSERT(Property_Count == (sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]));
 
     //
-    // Init the SystemScene factory
+    // Init the Scene factory
     //
     m_SceneFactory = boost::factory<GuiScene*>();
-
 }
 
 

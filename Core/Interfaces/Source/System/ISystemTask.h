@@ -23,12 +23,10 @@ class ISystemScene;
  *  system's task and spawning off new tasks as need be.
  */
 class ISystemTask {
-        friend class ISystem;
 
     public:
 
         /**
-         * Constructor.
          * Constructor.
          *
          * @param [in,out]  pSystemScene    If non-null, the system scene.
@@ -38,25 +36,11 @@ class ISystemTask {
         }
 
         /**
-         * Gets the system scene.
-         * Gets the scene for this task.
-         *
-         * @return  The scene for this task.
+         * Destructor.
          */
-        ISystemScene* GetSystemScene(void) {
-            return m_pSystemScene;
-        }
+        virtual ~ISystemTask(void) {
 
-        /**
-         * Gets the system type.
-         * Gets the system type for this system task.
-         *
-         * @return  The type of the system.
-         *
-         * ### remarks  This is a shortcut to getting the system type without having to go the system
-         *              first.
-         */
-        virtual System::Type GetSystemType(void) = 0;
+        }
 
         /**
          * Updates the given DeltaTime.
@@ -75,6 +59,24 @@ class ISystemTask {
          * @return  true if primary thread only, false if not.
          */
         virtual bool IsPrimaryThreadOnly(void) = 0;
+
+        /**
+         * Gets the system type for this system task.
+         * This is a shortcut to getting the system type without having to go the system first.
+         *
+         * @return  The type of the system.
+         */
+        virtual System::Type GetSystemType(void) = 0;
+        
+        /**
+         * Gets the system scene.
+         * Gets the scene for this task.
+         *
+         * @return  The scene for this task.
+         */
+        ISystemScene* GetSystemScene(void) {
+            return m_pSystemScene;
+        }
 
     protected:
 

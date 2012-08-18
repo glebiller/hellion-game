@@ -35,8 +35,6 @@ class ISystemObject;
  */
 class ISystemScene : public ISystemSubject {
 
-        friend class ISystem;
-
     public:
 
         /**
@@ -45,20 +43,11 @@ class ISystemScene : public ISystemSubject {
          * @param   pSystem The system this scene belongs to.
          */
         ISystemScene(ISystem* pSystem);
-
+        
         /**
-         * Destructor.
+         * @inheritDoc
          */
         virtual ~ISystemScene(void);
-
-        /**
-         * Gets the system this object belongs to.
-         *
-         * @return  A pointer to the system.
-         */
-        ISystem* GetSystem(void) {
-            return m_pSystem;
-        }
 
         /**
          * Enumeration for informing the ISystemScene on what is occuring.
@@ -81,15 +70,6 @@ class ISystemScene : public ISystemSubject {
         };
 
         /**
-         * Get all the available object types as names.
-         *
-         * @return  A NULL terminated array of object type names.
-         */
-        virtual const char** GetObjectTypes(void) {
-            return NULL;   
-        };
-
-        /**
          * Creates a system object used to extend a UObject.
          *
          * @param   pszName The unique name for this object.
@@ -107,26 +87,25 @@ class ISystemScene : public ISystemSubject {
         virtual Error DestroyObject(ISystemObject* pSystemObject);
 
         /**
+         * @inheritDoc
+         */
+        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        
+        /**
+         * Gets the system this object belongs to.
+         *
+         * @return  A pointer to the system.
+         */
+        ISystem* GetSystem(void) {
+            return m_pSystem;
+        }
+
+        /**
          * Returns a pointer to the task that this scene needs to perform on its objects.
          *
          * @return  The task for this scene.
          */
-        virtual ISystemTask* GetSystemTask(void) {
-            return NULL;   
-        };
-
-        /**
-         * Change occurred.
-         *
-         * @param [in,out]  pSubject    If non-null, the subject.
-         * @param   ChangeType          Type of the change.
-         * @return  Error   If an error occured.
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-            UNREFERENCED_PARAM(pSubject);
-            UNREFERENCED_PARAM(ChangeType);
-            return Errors::Success;
-        }
+        virtual ISystemTask* GetSystemTask(void) = 0;
 
     protected:
 

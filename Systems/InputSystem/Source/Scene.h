@@ -104,6 +104,13 @@ class InputScene : public ISystemScene {
          * @return  null if it fails, else the system task.
          */
         virtual ISystemTask* GetSystemTask(void);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
 
         /**
          * Updates the given DeltaTime.

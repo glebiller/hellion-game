@@ -53,9 +53,9 @@ class ISystemObject : public ISystemSubject {
                 SetName(pszName);
             }
         }
-
+        
         /**
-         * Destructor.
+         * @inheritDoc
          */
         virtual ~ISystemObject(void) {
 

@@ -33,68 +33,39 @@ class GuiTask;
  */
 class GuiSystem : public ISystem {
 
-        friend GuiScene;
-
     public:
 
         /**
-         * Default constructor.
+         * @inheritDoc
          */
         GuiSystem(void);
-
+        
         /**
-         * Destructor.
+         * @inheritDoc
          */
         ~GuiSystem(void);
-
-    protected:
-
+        
         /**
-         * Gets the system type.
-         * Implementation of the <c>ISystem::GetSystemType</c> function. Gets the system type for this
-         * system.
-         *
-         * @return  System::Type - The type of the system.
-         *
-         * @sa   ISystem::GetSystemType  .
+         * @inheritDoc
          */
-        virtual System::Type GetSystemType(void){
+        System::Type GetSystemType(void) {
             return System::Types::Gui;
         }
 
         /**
-         * Initializes this :.
-         * Implementation of the <c>ISystem::Initialize</c> function. One time initialization function
-         * for the system.
-         *
-         * @param   Properties  Property structure array to initialize.
-         * @return  Error - Any error codes.
-         *
-         * @sa   ISystem::Initialize .
+         * @inheritDoc
          */
-        virtual Error Initialize(Properties::Array Properties);
-
+        Error Initialize(Properties::Array Properties);
+        
         /**
-         * Gets the properties.
-         * Implementation of the <c>ISystem::GetProperties</c> function. Gets the properties of this
-         * system.
-         *
-         * @param   Properties  Property structure array to fill.
-         *
-         * @sa   ISystem::GetProperties  .
+         * @inheritDoc
          */
-        virtual void GetProperties(Properties::Array& Properties);
-
+        void GetProperties(Properties::Array& Properties);
+        
         /**
-         * Sets the properties.
-         * Implementation of the <c>ISystem::SetProperties</c> function. Sets the properties for this
-         * system.
-         *
-         * @param   Properties  Properties to set in the system.
-         *
-         * @sa   ISystem::SetProperties  .
+         * @inheritDoc
          */
-        virtual void SetProperties(Properties::Array Properties);
+        void SetProperties(Properties::Array Properties);
 
     private:
 

@@ -30,6 +30,8 @@ class ISubject {
 
     public:
 
+        static const u32 InvalidID = u32(-1);
+
         /**
          * Destructor.
          * All interfaces must have virtual destructors
@@ -98,6 +100,8 @@ class ISubject {
          * @return  A bitmask of the possible system changes.
          */
         virtual System::Changes::BitMask GetPotentialSystemChanges(void) = 0;
+
+    protected:
 
         /**
          * Forces the Destruction.

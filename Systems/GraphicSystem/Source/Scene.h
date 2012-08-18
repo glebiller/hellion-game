@@ -56,12 +56,22 @@ class OGREGraphicsScene : public ISystemScene {
         DECLARE_STATIC_SPIN_MUTEX(m_mutex);
 
     public:
+        
+        /**
+         * @inheritDoc
+         */
+        virtual System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        }
 
-        /// <summary cref="OGREGraphicsScene::Update">
-        ///   This function must be called every frame.  It updates the graphics scene.
-        /// </summary>
-        /// <param name="DeltaTime">Elapsed time since the last frame.</param>
-        /// <seealso cref="ISystemTask::Update"/>
+        /**
+         * Updates the given DeltaTime.
+         * This function must be called every frame.  It updates the graphics scene.
+         *
+         * @param   DeltaTime   Elapsed time since the last frame.
+         *
+         * @sa   ISystemTask::Update .
+         */
         virtual void Update(f32 DeltaTime);
 
         /// <summary cref="OGREGraphicsScene::Update">

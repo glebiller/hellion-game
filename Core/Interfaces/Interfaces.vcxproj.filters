@@ -42,13 +42,13 @@
     <ClCompile Include="Source\Observer\CSubject.cpp">
       <Filter>Fichiers sources\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="Source\System\ISystem.cpp">
-      <Filter>Fichiers sources\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\System\ISystemScene.cpp">
       <Filter>Fichiers sources\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\System\ISystemSubject.cpp">
+      <Filter>Fichiers sources\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ISystem.cpp">
       <Filter>Fichiers sources\System</Filter>
     </ClCompile>
   </ItemGroup>
