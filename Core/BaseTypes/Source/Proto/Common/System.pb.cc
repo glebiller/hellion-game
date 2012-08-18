@@ -78,14 +78,14 @@ void protobuf_AddDesc_Proto_2fCommon_2fSystem_2eproto() {
   ::protobuf_AddDesc_Proto_2fCommon_2fProperty_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\031Proto/Common/System.proto\032\033Proto/Commo"
-    "n/Property.proto\"\322\001\n\013SystemProto\022\037\n\004type"
+    "n/Property.proto\"\334\001\n\013SystemProto\022\037\n\004type"
     "\030\001 \002(\0162\021.SystemProto.Type\022\"\n\nproperties\030"
-    "\002 \003(\0132\016.PropertyProto\"~\n\004Type\022\010\n\004None\020\000\022"
-    "\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005A"
-    "udio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\t\n\005Inp"
-    "ut\020\007\022\013\n\007Network\020\010\022\n\n\006Physic\020\tB9\n)fr.kiss"
-    "y.hellion.definition.encoder.protoB\tSyst"
-    "emDto\210\001\000", 328);
+    "\002 \003(\0132\016.PropertyProto\"\207\001\n\004Type\022\010\n\004None\020\000"
+    "\022\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005"
+    "Audio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\007\n\003Gu"
+    "i\020\007\022\t\n\005Input\020\010\022\013\n\007Network\020\t\022\n\n\006Physic\020\nB"
+    "9\n)fr.kissy.hellion.definition.encoder.p"
+    "rotoB\tSystemDto\210\001\000", 338);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Common/System.proto", &protobuf_RegisterTypes);
   SystemProto::default_instance_ = new SystemProto();
@@ -119,6 +119,7 @@ bool SystemProto_Type_IsValid(int value) {
     case 7:
     case 8:
     case 9:
+    case 10:
       return true;
     default:
       return false;
@@ -133,6 +134,7 @@ const SystemProto_Type SystemProto::Animation;
 const SystemProto_Type SystemProto::Audio;
 const SystemProto_Type SystemProto::Geometry;
 const SystemProto_Type SystemProto::Graphic;
+const SystemProto_Type SystemProto::Gui;
 const SystemProto_Type SystemProto::Input;
 const SystemProto_Type SystemProto::Network;
 const SystemProto_Type SystemProto::Physic;

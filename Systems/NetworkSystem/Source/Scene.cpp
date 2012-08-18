@@ -382,11 +382,7 @@ NetworkScene::GetObjectTypes(
 }
 
 
-ISystemObject*
-NetworkScene::CreateObject(
-    const char* pszName,
-    const char* pszType
-) {
+ISystemObject* NetworkScene::CreateObject(const char* pszName, const char* pszType) {
     ASSERT(m_bInitialized);
     //
     // Create the object and add it to the object list.

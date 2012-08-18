@@ -100,6 +100,9 @@
     <ProjectReference Include="..\..\Systems\GraphicSystem\GraphicSystem.vcxproj">
       <Project>{32d0e392-d21e-458b-8ef2-b19c1d29001c}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Systems\GuiSystem\GuiSystem.vcxproj">
+      <Project>{32d72349-6edf-458d-ab7c-43fbedf75dcf}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Systems\InputSystem\InputSystem.vcxproj">
       <Project>{31ebf6a8-0ecc-4afc-a03b-749b28f9afcf}</Project>
     </ProjectReference>

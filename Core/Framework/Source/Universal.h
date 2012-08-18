@@ -17,7 +17,7 @@
 #include "Observer/IObserver.h"
 #include "System/ISystemScene.h"
 
-#include "Object/Geometry.h"
+#include "Object/IGeometryObject.h"
 #include "Object/Graphic.h"
 
 class UObject;

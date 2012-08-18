@@ -32,6 +32,7 @@ class ISystemObject;
  * @sa  IObserver
  */
 class ISystemScene : public CSubject, public IObserver {
+
         friend class ISystem;
 
     public:

@@ -124,9 +124,14 @@ GraphicObjectCamera::Initialize(
     // Custom init function for the camera
     //
     //GraphicObject::Initialize( Properties );
-    Ogre::SceneNode* playerNode = POGRESCENEMGR->getSceneNode("Player_SceneNode");
-    ASSERT(playerNode != NULL);
-    m_pNode = playerNode->createChildSceneNode(std::string(m_pszName) + "_SceneNode");
+    Ogre::SceneNode* parentNode;
+    // TODO parameter this
+    if (POGRESCENEMGR->hasSceneNode("Player_SceneNode")) {
+        parentNode = POGRESCENEMGR->getSceneNode("Player_SceneNode");
+    } else {
+        parentNode = reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode();
+    }
+    m_pNode = parentNode->createChildSceneNode(std::string(m_pszName) + "_SceneNode");
     m_pNode->setPosition(0, 1.0f, 0);
     ASSERT(m_pNode != NULL);
     m_pCameraNode = m_pNode->createChildSceneNode(std::string(m_pszName) + "Camera_SceneNode");

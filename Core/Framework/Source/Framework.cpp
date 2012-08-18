@@ -62,7 +62,11 @@ ExecuteFramework(void) {
 }
 
 
-Framework::Framework(void) : m_bExecuteLoop(true), m_pScheduler(NULL), m_pSceneCCM(NULL), m_pObjectCCM(NULL)
+Framework::Framework(void) :
+    m_bExecuteLoop(true)
+    , m_pScheduler(NULL)
+    , m_pSceneCCM(NULL)
+    , m_pObjectCCM(NULL)
 #ifdef __ALLOW_DEBUG_WINDOW__
     , m_hDebugWindow(NULL)
 #endif
@@ -147,10 +151,7 @@ Error Framework::Initialize(void) {
 }
 
 
-void
-Framework::Shutdown(
-    void
-) {
+void Framework::Shutdown(void) {
     //
     // Get rid of the scene.
     //
@@ -186,10 +187,7 @@ Framework::Shutdown(
 }
 
 
-Error
-Framework::Execute(
-    void
-) {
+Error Framework::Execute(void) {
     //
     // Create the debug window.
     //
@@ -197,26 +195,23 @@ Framework::Execute(
     if (Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false)) {
         m_hDebugWindow = CreateDebugWindow();
     }
-
 #endif
+
     //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.  The link
     //  needs to be established before any other messages come through.
     //
-    m_pObjectCCM->DistributeQueuedChanges(
-        System::Types::All, System::Changes::Link | System::Changes::ParentLink
-    );
-    m_pSceneCCM->DistributeQueuedChanges(
-        System::Types::All, System::Changes::Link | System::Changes::ParentLink
-    );
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+
     //
     // Distribute changes for object and scene CCMs.  The UObject propagates some object messages
     //  up to the scene so it needs to go first.
     //
     m_pObjectCCM->DistributeQueuedChanges();
     m_pSceneCCM->DistributeQueuedChanges();
-#ifdef __ALLOW_DEBUG_WINDOW__
 
+#ifdef __ALLOW_DEBUG_WINDOW__
     if (m_hDebugWindow != NULL) {
         //
         // Initialize the debug window.
@@ -224,12 +219,13 @@ Framework::Execute(
         SetDebugWindowCCM(m_hDebugWindow, m_pSceneCCM, m_pObjectCCM);
         SetDebugWindowUScene(m_hDebugWindow, m_pScene);
     }
-
 #endif
+
     //
     // Set the runtime status to running.
     //
     Singletons::EnvironmentManager.Runtime().SetStatus(IEnvironment::IRuntime::Status::Running);
+
     //
     // Initialize resources necessary for parallel change distribution.
     //
@@ -261,8 +257,7 @@ Framework::Execute(
         //
         // Check with the environment manager if there is a change in the runtime status to quit.
         //
-        if (Singletons::EnvironmentManager.Runtime().GetStatus() ==
-                IEnvironment::IRuntime::Status::Quit) {
+        if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironment::IRuntime::Status::Quit) {
             //
             // Time to quit looping.
             //
@@ -299,10 +294,7 @@ Handle Framework::GetSystem(System::Type Type) {
 }
 
 
-Handle
-Framework::GetScene(
-    const char* pszSystemName
-) {
+Handle Framework::GetScene(const char* pszSystemName) {
     Handle hScene = NULL;
     //
     // Get the system from the system manager to get the type.
@@ -335,11 +327,7 @@ Handle Framework::GetScene(System::Type Type) {
 }
 
 
-Handle
-Framework::GetSystemObject(
-    const char* pszSystemName,
-    const char* pszName
-) {
+Handle Framework::GetSystemObject(const char* pszSystemName, const char* pszName) {
     Handle hObject = NULL;
     //
     // Get the system from the system manager to get the type.
@@ -376,11 +364,7 @@ Handle Framework::GetSystemObject(System::Type Type, const char* pszName) {
 }
 
 
-void
-Framework::GetSystemProperty(
-    Handle hSystem,
-    InOut Properties::Property& Property
-) {
+void Framework::GetSystemProperty(Handle hSystem, InOut Properties::Property& Property) {
     std::string sPropertyName = Property.GetName();
     //
     // Reinterpret the handle as an ISystem.
@@ -421,11 +405,7 @@ void Framework::SetSystemProperty(Handle hSystem, In Properties::Property& Prope
 }
 
 
-void
-Framework::GetSceneProperty(
-    Handle hScene,
-    InOut Properties::Property& Property
-) {
+void Framework::GetSceneProperty(Handle hScene, InOut Properties::Property& Property) {
     std::string sPropertyName = Property.GetName();
     //
     // Reinterpret the handle as an ISystemScene.
@@ -450,11 +430,7 @@ Framework::GetSceneProperty(
 }
 
 
-void
-Framework::SetSceneProperty(
-    Handle hScene,
-    In Properties::Property& Property
-) {
+void Framework::SetSceneProperty(Handle hScene, In Properties::Property& Property) {
     ASSERT(hScene != NULL);
     ISystemScene* pSystemScene = reinterpret_cast<ISystemScene*>(hScene);
 #ifdef DEBUG_BUILD
@@ -472,11 +448,7 @@ Framework::SetSceneProperty(
 }
 
 
-void
-Framework::GetObjectProperty(
-    Handle hObject,
-    InOut Properties::Property& Property
-) {
+void Framework::GetObjectProperty(Handle hObject, InOut Properties::Property& Property) {
     std::string sPropertyName = Property.GetName();
     //
     // Reinterpret the handle as an ISystemScene.
@@ -501,11 +473,7 @@ Framework::GetObjectProperty(
 }
 
 
-void
-Framework::SetObjectProperty(
-    Handle hObject,
-    In Properties::Property& Property
-) {
+void Framework::SetObjectProperty(Handle hObject, In Properties::Property& Property) {
     ASSERT(hObject != NULL);
     ISystemObject* pSystemObject = reinterpret_cast<ISystemObject*>(hObject);
 #ifdef DEBUG_BUILD
@@ -523,10 +491,7 @@ Framework::SetObjectProperty(
 }
 
 
-void
-Framework::IssuePendingSystemPropertyChanges(
-    System::Types::BitMask SystemTypes
-) {
+void Framework::IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes) {
     //
     // Create an array used for setting the property.
     //

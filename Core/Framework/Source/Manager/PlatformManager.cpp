@@ -261,19 +261,21 @@ PlatformManager::WindowSystem::ProcessMessages(
 }
 
 
-void
-PlatformManager::WindowSystem::SetHandle(
-    size_t windowHnd
-) {
+void PlatformManager::WindowSystem::SetHandle(size_t windowHnd) {
     m_WindowHnd = windowHnd;
 }
 
 
-size_t
-PlatformManager::WindowSystem::GetHandle(
-    void
-) {
+size_t PlatformManager::WindowSystem::GetHandle(void) {
     return m_WindowHnd;
+}
+
+void PlatformManager::WindowSystem::SetRenderWindow(Handle renderWindow) {
+    m_renderWindow = renderWindow;
+}
+
+Handle PlatformManager::WindowSystem::GetRenderWindow(void) {
+    return m_renderWindow;
 }
 
 
@@ -333,11 +335,7 @@ PlatformManager::Timers::Destroy(
 }
 
 
-f32
-PlatformManager::Timers::Wait(
-    Handle hTimer,
-    bool bWait
-) {
+f32 PlatformManager::Timers::Wait(Handle hTimer, bool bWait) {
     WindowsTimerData* pTimerData = reinterpret_cast<WindowsTimerData*>(hTimer);
 
     //

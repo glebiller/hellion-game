@@ -67,23 +67,20 @@ namespace OISB {
         Bindable* decrease;
         Bindable* increase;
         getBindables(binding, &decrease, &increase);
-
+        
         if (decrease->isActive()) {
-            // decrease is pressed
-            ret = ((-1.0f) * mDecreaseSpeed * delta) * mTarget->getSensitivity();
+            ret -= (mDecreaseSpeed * delta) * mTarget->getSensitivity();
         }
-
         if (increase->isActive()) {
-            // increase is pressed
-            ret = ((+1.0f) * mIncreaseSpeed * delta) * mTarget->getSensitivity();
+            ret += (mIncreaseSpeed * delta) * mTarget->getSensitivity();
         }
 
         if (mReturnEnabled && (!increase->isActive() && !decrease->isActive())) {
             // we have to do returning to the starting point there
             if (mReturnValue > mTarget->getAbsoluteValue()) {
-                ret = ((+1.0f) * mReturnIncreaseSpeed * delta) * mTarget->getSensitivity();
+                ret += (mReturnIncreaseSpeed * delta) * mTarget->getSensitivity();
             } else if (mReturnValue < mTarget->getAbsoluteValue()) {
-                ret = ((-1.0f) * mReturnDecreaseSpeed * delta) * mTarget->getSensitivity();
+                ret -= (mReturnDecreaseSpeed * delta) * mTarget->getSensitivity();
             }
         }
 

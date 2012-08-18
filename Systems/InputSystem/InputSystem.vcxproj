@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\InputSystem.cpp" />
+    <ClCompile Include="Source\Object\MouseObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Object\ObjectCamera.cpp" />
     <ClCompile Include="Source\Object\ObjectGui.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="Source\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Object\MouseObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Object\ObjectCamera.h" />
     <ClInclude Include="Source\Object\ObjectGui.h" />

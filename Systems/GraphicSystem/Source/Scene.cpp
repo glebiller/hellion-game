@@ -212,8 +212,7 @@ OGREGraphicsScene::~OGREGraphicsScene(
  * @inheritDoc
  */
 void OGREGraphicsScene::Update(f32 DeltaTime) {
-    bool bPaused = g_Managers.pEnvironment->Runtime().GetStatus() ==
-                   IEnvironment::IRuntime::Status::Paused;
+    bool bPaused = g_Managers.pEnvironment->Runtime().GetStatus() == IEnvironment::IRuntime::Status::Paused;
     m_bPause = bPaused;
     m_fDeltaTime = DeltaTime;
 

@@ -18,7 +18,7 @@
 /////////////////////////////////
 
 
-#include <OIS.h>
+#include "OIS.h"
 
 #include "BaseTypes.h"
 #include "Interface.h"

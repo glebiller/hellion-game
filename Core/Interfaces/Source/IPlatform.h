@@ -71,6 +71,20 @@ class IPlatform {
                  */
                 virtual size_t GetHandle(void) = 0;
 
+                /**
+                 * Sets a render window.
+                 *
+                 * @param   renderWindow    Handle of the render window.
+                 */
+                virtual void SetRenderWindow(Handle renderWindow) = 0;
+
+                /**
+                 * Gets the render window.
+                 *
+                 * @return  The render window.
+                 */
+                virtual Handle GetRenderWindow(void) = 0;
+
         };
 
         /**

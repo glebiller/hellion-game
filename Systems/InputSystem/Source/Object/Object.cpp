@@ -70,24 +70,16 @@ InputObject::InputObject(ISystemScene* pSystemScene, const char* pszName)
 }
 
 
-InputObject::~InputObject(
-    void
-) {
+InputObject::~InputObject(void) {
 }
 
 
-System::Type
-InputObject::GetSystemType(
-    void
-) {
+System::Type InputObject::GetSystemType(void) {
     return System::Types::Input;
 }
 
 
-Error
-InputObject::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+Error InputObject::Initialize(std::vector<Properties::Property> Properties) {
     //
     // Set this set as initialized.
     //
@@ -97,10 +89,7 @@ InputObject::Initialize(
 }
 
 
-void
-InputObject::GetProperties(
-    Properties::Array& Properties
-) {
+void InputObject::GetProperties(Properties::Array& Properties) {
     //
     // Get the index of our first item.
     //
@@ -116,10 +105,7 @@ InputObject::GetProperties(
 }
 
 
-void
-InputObject::SetProperties(
-    Properties::Array Properties
-) {
+void InputObject::SetProperties(Properties::Array Properties) {
     ASSERT(m_bInitialized);
 
     //
@@ -138,19 +124,12 @@ InputObject::SetProperties(
 }
 
 
-System::Types::BitMask
-InputObject::GetDesiredSystemChanges(
-    void
-) {
+System::Types::BitMask InputObject::GetDesiredSystemChanges(void) {
     return System::Changes::None;
 }
 
 
-Error
-InputObject::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+Error InputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
     return Errors::Success;
 }

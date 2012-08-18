@@ -29,35 +29,98 @@ class InputScene : public ISystemScene {
 
     protected:
 
+        /**
+         * Constructor.
+         *
+         * @param [in,out]  pSystem If non-null, the system.
+         */
         InputScene(ISystem* pSystem);
+
+        /**
+         * Destructor.
+         */
         ~InputScene(void);
 
         /////////////////////////////////
         /// ISystemScene overrides
         /////////////////////////////////
 
+        /**
+         * Gets the system type.
+         *
+         * @return  The system type.
+         */
         virtual System::Type GetSystemType(void);
 
+        /**
+         * Initializes this InputScene.
+         *
+         * @param   Properties  The properties.
+         * @return  .
+         */
         virtual Error Initialize(std::vector<Properties::Property> Properties);
 
+        /**
+         * Gets the properties.
+         *
+         * @param [in,out]  Properties  The properties.
+         */
         virtual void GetProperties(Properties::Array& Properties);
 
+        /**
+         * Sets the properties.
+         *
+         * @param   Properties  The properties.
+         */
         virtual void SetProperties(Properties::Array Properties);
 
+        /**
+         * Gets the object types.
+         *
+         * @return  null if it fails, else the object types.
+         */
         virtual const char** GetObjectTypes(void);
 
+        /**
+         * Creates an object.
+         *
+         * @param   pszName The name.
+         * @param   pszType The type.
+         * @return  The new object.
+         */
         virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
 
+        /**
+         * Destroys the object described by pSystemObject.
+         *
+         * @param [in,out]  pSystemObject   If non-null, the system object.
+         * @return  .
+         */
         virtual Error DestroyObject(ISystemObject* pSystemObject);
 
+        /**
+         * Gets the system task.
+         *
+         * @return  null if it fails, else the system task.
+         */
         virtual ISystemTask* GetSystemTask(void);
 
+        /**
+         * Updates the given DeltaTime.
+         *
+         * @param   DeltaTime   Time of the delta.
+         */
         virtual void Update(f32 DeltaTime);
 
         /////////////////////////////////
         /// ISubject overrides
         /////////////////////////////////
 
+        /**
+         * Gets the potential system changes.
+         *
+         * @return  The potential system changes.
+         */
         virtual System::Changes::BitMask GetPotentialSystemChanges(void);
 
     public:
@@ -77,6 +140,9 @@ class InputScene : public ISystemScene {
             
             OISB::AnalogAxisAction*         CameraRotateUpDown;
             OISB::AnalogAxisAction*         CameraRotateRightLeft;
+            
+            OISB::AnalogAxisAction*         MouseUpDown;
+            OISB::AnalogAxisAction*         MouseRightLeft;
         };
         InputActions                        m_InputActions;
 

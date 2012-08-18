@@ -28,6 +28,7 @@
 #include "Object/ObjectCamera.h"
 #include "Object/ObjectGui.h"
 #include "Object/ObjectPlayer.h"
+#include "Object/MouseObject.h"
 #include "Task.h"
 
 
@@ -44,17 +45,12 @@ extern ManagerInterfaces   g_Managers;
 /////////////////////////////////
 
 
-InputScene::InputScene(
-    ISystem* pSystem
-)
-    : ISystemScene(pSystem)
+InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pInputTask(NULL)
     , m_DefaultSchema(NULL) {
 }
 
-InputScene::~InputScene(
-    void
-) {
+InputScene::~InputScene(void) {
     //
     // Free all the remaining objects.
     //
@@ -74,10 +70,7 @@ System::Type InputScene::GetSystemType(void) {
 }
 
 
-Error
-InputScene::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+Error InputScene::Initialize(std::vector<Properties::Property> Properties) {
     ASSERT(!m_bInitialized);
     m_pInputTask = new InputTask(this);
     ASSERT(m_pInputTask != NULL);
@@ -115,14 +108,14 @@ InputScene::Initialize(
     // Jump
     m_InputActions.Jump = m_DefaultSchema->createAction<OISB::TriggerAction>("Jump");
     m_InputActions.Jump->bind("Keyboard/ESPACE");
-    
+
     // Camera Up / Down
     m_InputActions.CameraRotateUpDown = m_DefaultSchema->createAction<OISB::AnalogAxisAction>("CameraRotateUpDown");
     m_InputActions.CameraRotateUpDown->setProperty("UseCircularValues", true);
     m_InputActions.CameraRotateUpDown->setProperty("MinimumValue", 0.0f);
     m_InputActions.CameraRotateUpDown->setProperty("MaximumValue", 2.0f * Math::Angle::Pi);
     m_InputActions.CameraRotateUpDown->setProperty("EmulationSpeed", 2.0f);
-    m_InputActions.CameraRotateUpDown->setProperty("EmulationReturnSpeed", 0.0f);
+    m_InputActions.CameraRotateUpDown->setProperty("EmulationReturnEnabled", false);
     m_InputActions.CameraRotateUpDown->setProperty("Sensitivity", 0.001f);
     m_InputActions.CameraRotateUpDown->bind("Mouse/Y Axis");
     // Camera Right / Left
@@ -131,45 +124,42 @@ InputScene::Initialize(
     m_InputActions.CameraRotateRightLeft->setProperty("MinimumValue", 0.0f);
     m_InputActions.CameraRotateRightLeft->setProperty("MaximumValue", 2.0f * Math::Angle::Pi);
     m_InputActions.CameraRotateRightLeft->setProperty("EmulationSpeed", 2.0f);
-    m_InputActions.CameraRotateRightLeft->setProperty("EmulationReturnSpeed", 0.0f);
+    m_InputActions.CameraRotateRightLeft->setProperty("EmulationReturnEnabled", false);
     m_InputActions.CameraRotateRightLeft->setProperty("Sensitivity", 0.001f);
     m_InputActions.CameraRotateRightLeft->bind("Mouse/X Axis");
 
+    // Mouse Up / Down
+    m_InputActions.MouseUpDown = m_DefaultSchema->createAction<OISB::AnalogAxisAction>("MouseUpDown");
+    m_InputActions.MouseUpDown->setProperty("EmulationReturnEnabled", false);
+    m_InputActions.MouseUpDown->setProperty("Sensitivity", 1.0f);
+    m_InputActions.MouseUpDown->bind("Mouse/Y Axis");
+    // Mouse Right / Left
+    m_InputActions.MouseRightLeft = m_DefaultSchema->createAction<OISB::AnalogAxisAction>("MouseRightLeft");
+    m_InputActions.MouseRightLeft->setProperty("EmulationReturnEnabled", false);
+    m_InputActions.MouseRightLeft->setProperty("Sensitivity", 1.0f);
+    m_InputActions.MouseRightLeft->bind("Mouse/X Axis");
 
     m_bInitialized = true;
     return Errors::Success;
 }
 
 
-void
-InputScene::GetProperties(
-    Properties::Array& Properties
-) {
+void InputScene::GetProperties(Properties::Array& Properties) {
     UNREFERENCED_PARAM(Properties);
 }
 
 
-void
-InputScene::SetProperties(
-    Properties::Array Properties
-) {
+void InputScene::SetProperties(Properties::Array Properties) {
     ASSERT(m_bInitialized);
 }
 
 
-const char**
-InputScene::GetObjectTypes(
-    void
-) {
+const char** InputScene::GetObjectTypes(void) {
     return NULL;
 }
 
 
-ISystemObject*
-InputScene::CreateObject(
-    const char* pszName,
-    const char* pszType
-) {
+ISystemObject* InputScene::CreateObject(const char* pszName, const char* pszType) {
     ASSERT(m_bInitialized);
     //
     // Create the object and add it to the object list.
@@ -180,6 +170,8 @@ InputScene::CreateObject(
         pObject = new InputPlayerObject(this, pszName);
     } else if (strcmp(pszType, "Camera") == 0) {
         pObject = new InputCameraObject(this, pszName);
+    } else if (strcmp(pszType, "Mouse") == 0) {
+        pObject = new InputMouseObject(this, pszName);
     } else {
         pObject = new InputGuiObject(this, pszName);
     }
@@ -194,10 +186,7 @@ InputScene::CreateObject(
 }
 
 
-Error
-InputScene::DestroyObject(
-    ISystemObject* pSystemObject
-) {
+Error InputScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(m_bInitialized);
     ASSERT(pSystemObject != NULL);
     //
@@ -213,33 +202,27 @@ InputScene::DestroyObject(
 }
 
 
-ISystemTask*
-InputScene::GetSystemTask(
-    void
-) {
+ISystemTask* InputScene::GetSystemTask(void) {
     return m_pInputTask;
 }
 
 
-System::Changes::BitMask
-InputScene::GetPotentialSystemChanges(
-    void
-) {
-    return System::Changes::Graphics::GUI;
+System::Changes::BitMask InputScene::GetPotentialSystemChanges(void) {
+    return System::Changes::Input::Velocity;
 }
 
-void InputScene::Update(
-    f32 DeltaTime
-) {
+void InputScene::Update(f32 DeltaTime) {
     std::list<InputObject*>& Objects = m_Objects;
 
     // Global inputs
     if (m_InputActions.Exit->isActive()) {
         g_Managers.pEnvironment->Runtime().SetStatus(IEnvironment::IRuntime::Status::Quit);
+        return;
     }
 
     //
-    // Cycle through all of our objects and apply the changes. Also post our change notifications to the CCM.
+    // Cycle through all of our objects and apply the changes.
+    // Also post our change notifications to the CCM.
     //
     for (std::list<InputObject*>::iterator it = Objects.begin(); it != Objects.end(); it++) {
         InputObject* pObject = *it;

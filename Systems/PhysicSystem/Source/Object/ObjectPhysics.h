@@ -29,24 +29,12 @@ class HavokPhysicsTask;
 /// </summary>
 ///////////////////////////////////////////////////////////////////////////////
 
-class HavokPhysicsObject : public HavokObject, public IContactObject, public IIntersectionObject {
+class HavokPhysicsObject : public HavokObject {
         friend HavokPhysicsSystem;
         friend HavokPhysicsScene;
         friend HavokPhysicsTask;
 
     public:
-
-        /// <summary cref="HavokPhysicsObject::AddContact">
-        ///   Adds a new contact (this info might be interesting to other systems)
-        /// </summary>
-        /// <param name="ContactInfo">Info about the new contact</param>
-        void AddContact(const IContactObject::Info& ContactInfo);
-
-        /// <summary cref="HavokPhysicsObject::AddIntersection">
-        ///   Adds a new intersection (this info might be interesting to other systems)
-        /// </summary>
-        /// <param name="IntersectionInfo">Info about the new intersection</param>
-        void AddIntersection(const IIntersectionObject::Info& IntersectionInfo);
 
         /// <summary cref="HavokPhysicsObject::GetRigidBody">
         ///   Returns the hkpRigidBody for this Object
@@ -113,25 +101,6 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
         /// <seealso cref="ISubject::GetPotentialSystemChanges"/>
         virtual System::Changes::BitMask GetPotentialSystemChanges(void);
 
-        /////////////////////////////////
-        /// IContactObject implementation
-        /////////////////////////////////
-
-        /// <summary cref="IContactObject::GetContact">
-        ///   Implementation of the IContactObject GetContact function.
-        /// </summary>
-        virtual const IContactObject::Info* GetContact(void);
-
-        /// <summary cref="IContactObject::IsStatic">
-        ///   Implementation of the IContactObject IsStatic function.
-        /// </summary>
-        virtual const bool IsStatic(void);
-
-        /// <summary cref="IIntersectionObject::GetIntersections">
-        ///   Implementation of the IIntersectionObject GetIntersections function.
-        /// </summary>
-        virtual const IIntersectionObject::InfoArray& GetIntersections(void);
-
         /// <summary cref="HavokCharacterObject::Update">
         /// Called by the task to have the object update itself.
         /// </summary>
@@ -165,9 +134,6 @@ class HavokPhysicsObject : public HavokObject, public IContactObject, public IIn
 
         void*                               m_pShapeData1;
         void*                               m_pShapeData2;
-
-        IContactObject::Info                m_ContactInfo;
-        IIntersectionObject::InfoArray      m_aIntersectionInfo;
 
     private:
 

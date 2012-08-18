@@ -388,6 +388,5 @@ HavokPhysicsTask::entityDeactivatedCallback(
 ) {
     HavokPhysicsObject* pObject = reinterpret_cast<HavokPhysicsObject*>(pEntity->getUserData());
     ASSERT(pObject != NULL);
-    pObject->m_aIntersectionInfo.clear();
     m_ActiveObjects.remove(pObject);
 }

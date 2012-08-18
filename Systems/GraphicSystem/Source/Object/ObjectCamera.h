@@ -14,103 +14,150 @@
 
 #pragma once
 
+#include "Object/Object.h"
+#include "Object/IGeometryObject.h"
 
 class GraphicSystem;
 class OGREGraphicsScene;
+class OGREGraphicTask;
 
-
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Implementation of the IGraphicsObject interface.
-///   See Interfaces\Graphics.h and Interfaces\System.h for a definition of the
-///   class and its functions.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  GraphicObject
+ * @sa  IGeometryObject
+ */
 class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
+
         friend GraphicSystem;
         friend OGREGraphicsScene;
         friend OGREGraphicsTask;
 
     protected:
 
+        /**
+         * Constructor.
+         *
+         * @param [in,out]  pSystemScene    If non-null, the system scene.
+         * @param   pszName                 The name.
+         */
         GraphicObjectCamera(ISystemScene* pSystemScene, const char* pszName);
+
+        /**
+         * Destructor.
+         */
         ~GraphicObjectCamera(void);
 
-        /// <summary cref="GraphicObjectCamera::Initialize">
-        ///   Implementation of the <c>ISystem::Initialize</c> function.
-        /// </summary>
-        /// <param name="Properties">Initializes the object with the properties specified by <paramref name="Properties"/>.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="GraphicObject::Initialize"/>
+        /**
+         * Initializes this GraphicObjectCamera.
+         * Implementation of the <c>ISystem::Initialize</c> function.
+         *
+         * @param   Properties  Initializes the object with the properties specified by
+         *                      <paramref name="Properties"/>.
+         * @return  Error.
+         *
+         * @sa   GraphicObject::Initialize   .
+         */
         virtual Error Initialize(std::vector<Properties::Property> Properties);
 
-        /// <summary cref="GraphicObjectCamera::GetProperties">
-        ///   Implementation of the <c>ISystem::GetProperties</c> function.
-        /// </summary>
-        /// <param name="Properties">Gets the properties of the object</param>
-        /// <seealso cref="ISystem::GetProperties"/>
+        /**
+         * Gets the properties.
+         * Implementation of the <c>ISystem::GetProperties</c> function.
+         *
+         * @param   Properties  Gets the properties of the object.
+         *
+         * @sa   ISystem::GetProperties  .
+         */
         virtual void GetProperties(Properties::Array& Properties);
 
-        /// <summary cref="GraphicObjectCamera::SetProperties">
-        ///   Implementation of the <c>ISystem::SetProperties</c> function.
-        /// </summary>
-        /// <param name="Properties">Sets the properties of the object</param>
-        /// <seealso cref="ISystem::SetProperties"/>
+        /**
+         * Sets the properties.
+         * Implementation of the <c>ISystem::SetProperties</c> function.
+         *
+         * @param   Properties  Sets the properties of the object.
+         *
+         * @sa   ISystem::SetProperties  .
+         */
         virtual void SetProperties(Properties::Array Properties);
 
-        /// <summary cref="GraphicObjectCamera::GetDesiredSystemChanges">
-        ///   Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Types::BitMask - System changes desired by the object.</returns>
-        /// <seealso cref="GraphicObject::GetSystemType"/>
+        /**
+         * Gets the desired system changes.
+         * Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.
+         *
+         * @return  System::Types::BitMask - System changes desired by the object.
+         *
+         * @sa   GraphicObject::GetSystemType    .
+         */
         virtual System::Types::BitMask GetDesiredSystemChanges(void);
 
-        /// <summary cref="GraphicObjectCamera::ChangeOccurred">
-        ///   Implementation of the <c>IObserver::ChangeOccurred</c> function.
-        /// </summary>
-        /// <param name="pSubject">Subject of this notification.</param>
-        /// <param name="ChangeType">Type of notification for this object.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="GraphicObject::ChangeOccurred"/>
+        /**
+         * Change occurred.
+         * Implementation of the <c>IObserver::ChangeOccurred</c> function.
+         *
+         * @param   pSubject    Subject of this notification.
+         * @param   ChangeType  Type of notification for this object.
+         * @return  Error.
+         *
+         * @sa   GraphicObject::ChangeOccurred   .
+         */
         virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-        /// <summary cref="GraphicObjectCamera::UpdatePolygonMode">
-        ///   Updates the polygon mode based on m_PolygonMode.
-        /// </summary>
+        /**
+         * Updates the polygon mode based on m_PolygonMode.
+         */
         void UpdatePolygonMode(void);
 
-        /// <summary cref="GraphicObjectCamera::Update">
-        ///   Implementation of the <c>ISystemTask::Update</c> method.
-        /// </summary>
-        /// <param name="DeltaTime">Elapsed time since the last frame.</param>
-        /// <seealso cref="GraphicObject::Update"/>
+        /**
+         * Updates the given DeltaTime.
+         * Implementation of the <c>ISystemTask::Update</c> method.
+         *
+         * @param   DeltaTime   Elapsed time since the last frame.
+         *
+         * @sa   GraphicObject::Update   .
+         */
         void Update(f32 DeltaTime);
 
     public:
-        /// <summary cref="GraphicObjectCamera::GetPosition">
-        ///   Implementation of the IGeometryObject GetPosition function.
-        /// </summary>
-        /// <seealso cref="IGeometryObject::GetPosition"/>
+
+        /**
+         * Gets the position.
+         * Implementation of the IGeometryObject GetPosition function.
+         *
+         * @return  null if it fails, else the position.
+         *
+         * @sa   IGeometryObject::GetPosition    .
+         */
         virtual const Math::Vector3* GetPosition(void);
 
-        /// <summary cref="GraphicObjectCamera::GetOrientation">
-        ///   Implementation of the IGeometryObject GetOrientation function.
-        /// </summary>
-        /// <seealso cref="IGeometryObject::GetOrientation"/>
+        /**
+         * Gets the orientation.
+         * Implementation of the IGeometryObject GetOrientation function.
+         *
+         * @return  null if it fails, else the orientation.
+         *
+         * @sa   IGeometryObject::GetOrientation .
+         */
         virtual const Math::Quaternion* GetOrientation(void);
 
-        /// <summary cref="GraphicObjectCamera::GetScale">
-        ///   Implementation of the IGeometryObject GetScale function.
-        /// </summary>
-        /// <seealso cref="IGeometryObject::GetScale"/>
+        /**
+         * Gets the scale.
+         * Implementation of the IGeometryObject GetScale function.
+         *
+         * @return  null if it fails, else the scale.
+         *
+         * @sa   IGeometryObject::GetScale   .
+         */
         virtual const Math::Vector3* GetScale(void);
 
-        /// <summary cref="GraphicObjectCamera::GetPotentialSystemChanges">
-        ///   Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Changes::BitMask - Returns systems changes possible for this object.</returns>
-        /// <seealso cref="GraphicObject::GetPotentialSystemChanges"/>
+        /**
+         * Gets the potential system changes.
+         * Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
+         *
+         * @return  System::Changes::BitMask - Returns systems changes possible for this object.
+         *
+         * @sa   GraphicObject::GetPotentialSystemChanges    .
+         */
         virtual System::Changes::BitMask GetPotentialSystemChanges(void);
 
 
@@ -125,7 +172,7 @@ class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
             Property_Count
         };
 
-        static const const char*                  sm_kapszPropertyNames[];
+        static const const char*            sm_kapszPropertyNames[];
         static const Properties::Property   sm_kaDefaultProperties[];
 
         Ogre::Camera*                       m_pCamera;
@@ -144,7 +191,7 @@ class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
             PolygonMode_Count
         };
 
-        static const const char*                  sm_kapszPolygonModeEnumOptions[];
+        static const const char*            sm_kapszPolygonModeEnumOptions[];
         PolygonModes                        m_PolygonMode;
 
         Math::Vector3                       m_Position;     // Position of AI object

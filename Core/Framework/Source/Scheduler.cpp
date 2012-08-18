@@ -25,37 +25,30 @@
 
 const f32 Scheduler::sm_DefaultClockFrequency = 1.0f / 120.0f;      // Set the timer to 120Hz
 
-Scheduler::Scheduler(
-    TaskManager* pTaskManager)
+Scheduler::Scheduler(TaskManager* pTaskManager)
     : m_pTaskManager(pTaskManager)
     , m_ClockFrequency(sm_DefaultClockFrequency)
     , m_hExecutionTimer(NULL) {
     m_hExecutionTimer = Singletons::PlatformManager.Timers().Create(m_ClockFrequency);
-    m_bBenchmarkingEnabled =
-        Singletons::EnvironmentManager.Variables().GetAsBool("Scheduler::Benchmarking", false);
+    m_bBenchmarkingEnabled = Singletons::EnvironmentManager.Variables().GetAsBool("Scheduler::Benchmarking", false);
 }
 
 
-Scheduler::~Scheduler(
-    void
-) {
+Scheduler::~Scheduler(void) {
     Singletons::PlatformManager.Timers().Destroy(m_hExecutionTimer);
 }
 
 
-void
-Scheduler::SetScene(
-    const UScene* pScene
-) {
+void Scheduler::SetScene(const UScene* pScene) {
     //
     // Wait for any executing scenes to finish and clear out the list.
     //
-    ISystemTask* aScenesToWaitFor[ System::Types::MAX ];
+    ISystemTask* aScenesToWaitFor[ SystemProto::Type_MAX ];
     u32 cScenesToWaitFor = 0;
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ISystemScene* pSystemScene = it->second;
-        ASSERT(cScenesToWaitFor < System::Types::MAX);
+        ASSERT(cScenesToWaitFor < SystemProto::Type_MAX);
         aScenesToWaitFor[ cScenesToWaitFor++ ] = pSystemScene->GetSystemTask();
     }
 
@@ -70,8 +63,7 @@ Scheduler::SetScene(
     //
     const UScene::SystemScenes& SystemScenes = pScene->GetSystemScenes();
 
-    for (UScene::SystemScenesConstIt it = SystemScenes.begin();
-            it != SystemScenes.end(); it++) {
+    for (UScene::SystemScenesConstIt it = SystemScenes.begin(); it != SystemScenes.end(); it++) {
         //
         // Make sure the system has a task.
         //
@@ -88,14 +80,12 @@ Scheduler::SetScene(
 }
 
 
-void
-Scheduler::Execute(
-    void
-) {
+void Scheduler::Execute(void) {
     //
     // Get the delta time; seconds since last Execute call.
     //
     f32 DeltaTime = Singletons::PlatformManager.Timers().Wait(m_hExecutionTimer, !m_bBenchmarkingEnabled);
+
     //
     // Update instrumentation for this frame.
     // If we do this here, there's no thread sync to worry about since we're single-threaded here.
@@ -106,40 +96,27 @@ Scheduler::Execute(
     //
     // Check if the execution is paused, and set delta time to 0 if so.
     //
-    if (Singletons::EnvironmentManager.Runtime().GetStatus() ==
-            IEnvironment::IRuntime::Status::Paused) {
+    if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironment::IRuntime::Status::Paused) {
         DeltaTime = 0.0f;
     }
 
     //
     // Schedule the scenes that are ready for execution.
     //
-    ISystemTask* aScenesToExecute[ System::Types::MAX ];
+    ISystemTask* aScenesToExecute[ SystemProto::Type_MAX ];
     u32 cScenesToExecute = 0;
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToExecute < System::Types::MAX);
+        ASSERT(cScenesToExecute < SystemProto::Type_MAX);
         ISystemScene* pSystemScene = it->second;
         aScenesToExecute[ cScenesToExecute++ ] = pSystemScene->GetSystemTask();
     }
 
     m_pTaskManager->IssueJobsForSystemTasks(aScenesToExecute, cScenesToExecute, DeltaTime);
+
     //
     // Wait for the scenes that will be completing execution in this frame.
     //
     m_pTaskManager->WaitForSystemTasks(aScenesToExecute, cScenesToExecute);
-    /*
-    #if 0
-    ISystemTask* aScenesToWaitFor[ System::Types::MAX ];
-    u32 cScenesToWaitFor = 0;
 
-    for ( SceneExecsIt it=m_SceneExecs.begin(); it != m_SceneExecs.end(); it++ )
-    {
-        ASSERT( cScenesToWaitFor < System::Types::MAX );
-        ISystemScene* pSystemScene = it->second;
-        aScenesToWaitFor[ cScenesToWaitFor++ ] = pSystemScene->GetSystemTask();
-    }
-
-    m_pTaskManager->WaitForSystemTasks( aScenesToWaitFor, cScenesToWaitFor );
-    #endif /* 0 */
 }

@@ -289,8 +289,7 @@ GraphicObjectMesh::Initialize(
 
             if (sName == sm_kapszPropertyNames[ Property_Mesh ]) {
                 pszMeshName = it->GetStringPtr(0);
-                PostChanges(System::Changes::Graphics::AllMesh |
-                            System::Changes::Custom);
+                PostChanges(System::Changes::Graphics::AllMesh);
             } else if (sName == sm_kapszPropertyNames[ Property_ProceduralMesh ]) {
                 isProcedural = true;
             } else if (sName == sm_kapszPropertyNames[ Property_StaticGeom ]) {
@@ -410,8 +409,7 @@ System::Types::BitMask
 GraphicObjectMesh::GetDesiredSystemChanges(
     void
 ) {
-    return System::Changes::Custom |
-           System::Changes::Physics::Position |
+    return System::Changes::Physics::Position |
            System::Changes::Graphics::All |
            GraphicObject::GetDesiredSystemChanges();
 }

@@ -28,11 +28,11 @@
 		<System Type="Graphic">
 			<Properties>
                 <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/default" Value2="FileSystem" Value3="Default" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/imagesets" Value2="FileSystem" Value3="Imagesets" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/fonts" Value2="FileSystem" Value3="Fonts" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/schemes" Value2="FileSystem" Value3="Schemes" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/looknfeel" Value2="FileSystem" Value3="LookNFeel" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/layouts" Value2="FileSystem" Value3="Layouts" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Gui/imagesets" Value2="FileSystem" Value3="Imagesets" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Gui/fonts" Value2="FileSystem" Value3="Fonts" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Gui/schemes" Value2="FileSystem" Value3="Schemes" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Gui/looknfeel" Value2="FileSystem" Value3="LookNFeel" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Gui/layouts" Value2="FileSystem" Value3="Layouts" Value4="0"/>
 				<Property Name="WindowName" Value1="Hellion Game"/>
 				<Property Name="Resolution" Value1="1024" Value2="768"/>
 				<Property Name="ShadowTexture" Value1="1" Value2="1024"/>
@@ -50,6 +50,8 @@
 				<Property Name="FSAntiAliasing" Value1="4" Value2="0"/>
 			</Properties>
 		</System>
+		<System Type="Gui">
+		</System>
 		<System Type="Input">
 			<Properties>
 				<Property Name="MoveForward" Value1="W" Value2="0"/>
@@ -63,7 +65,8 @@
 		<!--<System Type="Network"/>-->
 		<System Type="Physic"/>
 	</Systems>
-	<Scenes Startup="Main">
+	<Scenes Startup="Login">
+		<Scene Name="Login"/>
 		<Scene Name="Main"/>
 	</Scenes>
 </GlobalDefinition>

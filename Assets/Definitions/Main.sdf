@@ -7,9 +7,10 @@
 	</Properties>-->
 	<Properties SystemType="Geometry" />
 	<Properties SystemType="Graphic">
-        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/skyx" Value2="FileSystem" Value3="SkyX" Value4="0"/>
-        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/bloodelffemale" Value2="FileSystem" Value3="BloodElfFemale" Value4="0"/>
-        <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/models" Value2="FileSystem" Value3="Models" Value4="0"/>
+		<Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/bloodelffemale" Value2="FileSystem" Value3="BloodElfFemale" Value4="0"/>
+		<Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/models" Value2="FileSystem" Value3="Models" Value4="0"/>
+		<Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/skyx" Value2="FileSystem" Value3="SkyX" Value4="0"/>
+		<Property Name="Font" Value1="../../Assets/Media/Font" Value2="bluebold.ttf"/>
 		<Property Name="AmbientLight" R="0.8" G="0.8" B="0.8"/>
 		<!-- Shadow Value1's:
 			 SHADOWTYPE_NONE             = 0
@@ -20,7 +21,8 @@
 		<Property Name="UseInstancedGeom" Value1="1"/>
 		<Property Name="FogColor" R="0.7" G="0.7" B="0.8"/>
 		<Property Name="Fog" Mode="3" Density="0" Start="10000.0" Stop="25000.0"/>
-		<Property Name="Font" Value1="../../Assets/Media/Font" Value2="bluebold.ttf"/>
+	</Properties>
+	<Properties SystemType="Gui">
 	</Properties>
 	<Properties SystemType="Input">
 	</Properties>
@@ -30,6 +32,12 @@
 		<Property Name="Gravity" Value1="0.0" Value2="-980.0" Value3="0.0"/>
 	</Properties>
 	<Objects>
+		<Object Name="Mouse">
+			<Properties SystemType="Input" ObjectType="Mouse">
+			</Properties>
+			<Properties SystemType="Gui" ObjectType="Mouse">
+			</Properties>
+		</Object>
 		<Object Name="Sun">
 			<Properties SystemType="Graphic" ObjectType="Light">
 				<Property Name="Type" Value1="Point"/>

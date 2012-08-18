@@ -90,11 +90,7 @@ GeometryScene::GetObjectTypes(
 }
 
 
-ISystemObject*
-GeometryScene::CreateObject(
-    const char* pszName,
-    const char* pszType
-) {
+ISystemObject* GeometryScene::CreateObject(const char* pszName, const char* pszType) {
     UNREFERENCED_PARAM(pszName);
     UNREFERENCED_PARAM(pszType);
     ASSERT(m_bInitialized);

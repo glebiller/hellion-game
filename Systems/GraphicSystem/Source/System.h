@@ -16,7 +16,6 @@
 #pragma once
 
 #include "OgreWindowEventUtilities.h"
-#include "CEGUIRenderer.h"
 
 #include "Errors.h"
 #include "System.h"
@@ -162,8 +161,6 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
 
         Ogre::RenderSystem*                 m_pRenderSystem;
         Ogre::RenderWindow*                 m_pRenderWindow;
-
-        CEGUI::Renderer*                    m_pGUIRenderer;
 
         u16                                 m_uShadowTextureCount;
         u16                                 m_uShadowTextureSize;

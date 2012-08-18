@@ -1,0 +1,25 @@
+<GUILayout>
+    <Window Name="VerticalLayoutContainer" Type="VerticalLayoutContainer">
+        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property Name="Text" Value="Login" />
+        <Window Name="VerticalLayoutContainer/Editbox" Type="OgreTray/Editbox">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,-50},{0,200},{0,-10}}" />
+            <Property Name="VerticalAlignment" Value="Centre" />
+            <Property Name="HorizontalAlignment" Value="Centre" />
+        </Window>
+        <Window Name="VerticalLayoutContainer/Editbox2" Type="OgreTray/Editbox">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,200},{0,40}}" />
+            <Property Name="MaskText" Value="True" />
+            <Property Name="VerticalAlignment" Value="Centre" />
+            <Property Name="HorizontalAlignment" Value="Centre" />
+        </Window>
+        <Window Name="VerticalLayoutContainer/Button" Type="OgreTray/Button">
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{0,50},{0,150},{0,90}}" />
+            <Property Name="Font" Value="DejaVuSans-10" />
+            <Property Name="Text" Value="Login" />
+            <Property Name="NormalTextColour" Value="FF444444" />
+            <Property Name="VerticalAlignment" Value="Centre" />
+            <Property Name="HorizontalAlignment" Value="Centre" />
+        </Window>
+    </Window>
+</GUILayout>

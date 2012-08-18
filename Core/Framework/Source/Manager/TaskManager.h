@@ -36,83 +36,119 @@
 // of statistics tracking may become noticeable.
 #define STATISTICS_BY_JOB_TYPE
 
-/// <summary>
-/// This class uses Intel Threading Building Blocks to run tasks.
-/// </summary>
+/**
+ * This class uses Intel Threading Building Blocks to run tasks.
+ * 
+ * @sa  ITaskManager
+ */
 class TaskManager: public ITaskManager {
+
     public:
-        /// <summary cref="TaskManager::Init">
-        /// Call this from the primary thread before calling any other <c>TaskManager</c> methods.
-        /// </summary>
+
+        /**
+         * Initialises this TaskManager.
+         * Call this from the primary thread before calling any other <c>TaskManager</c> methods.
+         */
         void Init(void);
 
-        /// <summary cref="TaskManager::Shutdown">
-        /// Call this from the primary thread as the last <c>TaskManager</c> call.
-        /// </summary>
+        /**
+         * Shuts down this TaskManager and frees any resources it is using.
+         * Call this from the primary thread as the last <c>TaskManager</c> call.
+         */
         void Shutdown(void);
 
-        /// <summary cref="TaskManager::IssueJobsForSystemTasks">
-        /// Call this from the primary thread to schedule system work.
-        /// </summary>
-        /// <param name="pTasks">an array of <c>ISystemTask</c> objects which should have their
-        /// <c>Update()</c> methods called asynchronously</param>
-        /// <param name="uCount">the size of the <paramref name="pTasks"/> array</param>
-        /// <param name="fDeltaTime">amount of time to be passed to each system's <c>Update</c> method</param>
-        /// <seealso cref="TaskManager::WaitForSystemTasks"/>
-        /// <seealso cref="ISystemTask::Update"/>
+        /**
+         * Issue jobs for system tasks.
+         * Call this from the primary thread to schedule system work.
+         *
+         * @param   pTasks      an array of <c>ISystemTask</c> objects which should have their
+         *                      <c>Update()</c> methods called asynchronously.
+         * @param   uCount      the size of the <paramref name="pTasks"/> array.
+         * @param   fDeltaTime  amount of time to be passed to each system's <c>Update</c> method.
+         *
+         * @sa   TaskManager::WaitForSystemTasks .
+         * @sa  ISystemTask::Update                 .
+         */
         void IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uCount, f32 fDeltaTime);
 
-        /// <summary cref="TaskManager::NonStandardPerThreadCallback">
-        /// This method triggers a synchronized callback to be called once by each thread used by the <c>TaskManager</c>.
-        /// This method waits until all callbacks have executed.
-        /// </summary>
-        /// <remarks>Unlike the general contract for this method, this method can be safely called at any time,
-        /// as long as the call is made from the primary thread.</remarks>
-        /// <param name="pfnCallback">the function callback to execute</param>
-        /// <param name="pData">a pointer to data that is passed to the callback</param>
+        /**
+         * Callback, called when the non standard per thread.
+         * This method triggers a synchronized callback to be called once by each thread used by the
+         * <c>TaskManager</c>. This method waits until all callbacks have executed.
+         * Unlike the general contract for this method, this method can be safely called at
+         * any time, as long as the call is made from the primary thread.
+         *
+         * @param   pfnCallback the function callback to execute.
+         * @param   pData       a pointer to data that is passed to the callback.
+         */
         virtual void NonStandardPerThreadCallback(JobFunction pfnCallback, void* pData);
 
-        /// <summary cref="TaskManager::GetRecommendedJobCount">
-        /// Call this method to determine the ideal number of tasks to submit to the <c>TaskManager</c>
-        /// for maximum performance.
-        /// </summary>
-        /// <remarks><paramref name="Hints"/> is ignored and the number of active threads is always returned.</remarks>
-        /// <param name="Hints">guidance on the type of work done in the jobs about to be submitted</param>
-        /// <returns>the number of jobs which is optimal for the type of work specified by <paramref name="Hints"/>
-        /// </returns>
+        /**
+         * Gets a recommended job count.
+         * Call this method to determine the ideal number of tasks to submit to the <c>TaskManager</c>
+         * for maximum performance.
+         * <paramref name="Hints"/> is ignored and the number of active threads is always returned.
+         *
+         * @param   Hints   guidance on the type of work done in the jobs about to be submitted.
+         * @return  the number of jobs which is optimal for the type of work specified by
+         *          <paramref name="Hints"/>
+         */
         virtual u32 GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints);
 
         virtual void ParallelFor(ISystemTask* pSystemTask,
                                  ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize = 1);
 
-        /// <summary cref="TaskManager::WaitForSystemTasks">
-        /// Call this from the primary thread to wait until specified tasks spawned with <c>IssueJobsForSystemTasks</c>
-        /// and all of their subtasks are complete.
-        /// </summary>
-        /// <param name="pTasks">an array of <c>ISystemTask</c> objects</param>
-        /// <param name="uCount">the length of the <paramref name="pTasks"/> array</param>
-        /// <seealso cref="TaskManager::IssueJobsForSystemTasks"/>
+        /**
+         * Wait for system tasks.
+         * Call this from the primary thread to wait until specified tasks spawned with
+         * <c>IssueJobsForSystemTasks</c>
+         * and all of their subtasks are complete.
+         *
+         * @param   pTasks  an array of <c>ISystemTask</c> objects.
+         * @param   uCount  the length of the <paramref name="pTasks"/> array.
+         *
+         * @sa   TaskManager::IssueJobsForSystemTasks    .
+         */
         void WaitForSystemTasks(ISystemTask** pTasks, u32 uCount);
 
-        /// <summary cref="TaskManager::GetNumberOfThreads">
-        /// Call this method to get the number of threads in the thread pool which are active for running work.
-        /// </summary>
-        /// <returns>the number of threads being used</returns>
+        /**
+         * Gets the number of threads.
+         * Call this method to get the number of threads in the thread pool which are active for running
+         * work.
+         *
+         * @return  the number of threads being used.
+         */
         u32 GetNumberOfThreads(void);
 
-        /// <summary cref="TaskManager::SetNumberOfThreads">
-        /// This method constrains the number of threads used by the <c>TaskManager</c>.
-        /// </summary>
-        /// <param name="uNumberOfThreads">the limit of the number of threads to use</param>
+        /**
+         * Sets a number of threads.
+         * This method constrains the number of threads used by the <c>TaskManager</c>.
+         *
+         * @param   uNumberOfThreads    the limit of the number of threads to use.
+         */
         void SetNumberOfThreads(u32 uNumberOfThreads);
 
+        /**
+         * Query if this TaskManager is primary thread.
+         *
+         * @return  true if primary thread, false if not.
+         */
         bool IsPrimaryThread(void);
 
+        /**
+         * Adds stall task.
+         */
         void AddStallTask(void);
 
+        /**
+         * Callback, called when the system task.
+         *
+         * @param [in,out]  pData   If non-null, the data.
+         */
         static void SystemTaskCallback(void* pData);
 
     private:
+
         tbb::tbb_thread::id         m_uPrimaryThreadID;
 
         Handle                      m_hStallPoolSemaphore;
@@ -198,19 +234,26 @@ class TaskManager: public ITaskManager {
         SystemTaskSupport& GetSupportForSystemTask(ISystemTask* pTask);
 #endif /* USE_THREAD_PROFILER */
 
-        /// <summary cref="TaskManager::IsTBBThread">
-        /// This method is used to determine if the calling thread is an Intel Threading Building Blocks thread.
-        /// </summary>
-        /// <remarks>Due to the difficulty using the Intel Threading Building Blocks API to determine this, and
-        /// since no thread local storage is used as a workaround, this method always returns true.</remarks>
-        /// <returns>true if the calling thread is managed by Intel Theading Building Blocks, false otherwise</returns>
+        /**
+         * Query if this TaskManager is tbb thread.
+         * This method is used to determine if the calling thread is an Intel Threading Building Blocks
+         * thread.
+         * Due to the difficulty using the Intel Threading Building Blocks API to determine
+         * this, and since no thread local storage is used as a workaround, this method
+         * always returns true.
+         *
+         * @return  true if the calling thread is managed by Intel Theading Building Blocks, false
+         *          otherwise.
+         */
         static bool IsTBBThread(void);
 
-        /// <summary cref="TaskManager::UpdateThreadPoolSize">
-        /// This method is called within <c>IssueJobsForSystemTasks</c> to update the size of TBB thread pool
-        /// if necessary.  The thread pool is resized by a call to <c>SetNumberOfThreads</c>.
-        /// </summary>
-        /// <seealso cref="TaskManager::SetNumberOfThreads"/>
-        /// <seealso cref="TaskManager::IssueJobsForSystemTasks"/>
+        /**
+         * Updates the thread pool size.
+         * This method is called within <c>IssueJobsForSystemTasks</c> to update the size of TBB thread
+         * pool if necessary.  The thread pool is resized by a call to <c>SetNumberOfThreads</c>.
+         *
+         * @sa  TaskManager::SetNumberOfThreads     .
+         * @sa  TaskManager::IssueJobsForSystemTasks    .
+         */
         void UpdateThreadPoolSize(void);
 };

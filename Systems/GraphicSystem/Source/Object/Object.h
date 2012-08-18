@@ -116,9 +116,9 @@ class GraphicObject : public ISystemObject {
     protected:
 
         Types                               m_Type;
-        static const char*                        sm_kapszTypeNames[];
+        static const char*                  sm_kapszTypeNames[];
 
-        const char*                               m_pszName;
+        const char*                         m_pszName;
 
         Ogre::SceneNode*                    m_pNode;
 

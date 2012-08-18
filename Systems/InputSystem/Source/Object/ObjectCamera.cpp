@@ -112,20 +112,10 @@ InputCameraObject::GetProperties(
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void
-InputCameraObject::SetProperties(
-    Properties::Array Properties
-) {
+void InputCameraObject::SetProperties(Properties::Array Properties) {
     ASSERT(m_bInitialized);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-System::Types::BitMask
-InputCameraObject::GetDesiredSystemChanges(
-    void
-) {
-    return System::Changes::Geometry::Orientation;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 void InputCameraObject::Update(f32 DeltaTime) {
@@ -140,59 +130,10 @@ void InputCameraObject::Update(f32 DeltaTime) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Error
-InputCameraObject::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+Error InputCameraObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
     return Errors::Success;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-System::Changes::BitMask
-InputCameraObject::GetPotentialSystemChanges(
-    void
-) {
-    return System::Changes::Geometry::Orientation;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputCameraObject::GetVelocity(
-    void
-) {
-    return &m_Velocity;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputCameraObject::GetPosition(
-    void
-) {
-    ASSERT(false);
-    return NULL;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Quaternion*
-InputCameraObject::GetOrientation(
-    void
-) {
-    return &m_Orientation;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputCameraObject::GetScale(
-    void
-) {
-    ASSERT(false);
-    return NULL;
-}
-
 
 
 

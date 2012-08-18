@@ -135,23 +135,25 @@ InputPlayerObject::Update(
     u32 mModified = 0;
     InputScene* pScene = static_cast<InputScene*>(m_pSystemScene);
 
-    if (pScene->m_InputActions.MoveForward->hasChanged()) {
-        m_Velocity.z = pScene->m_InputActions.MoveForward->isActive() ? 1.0f : 0.0f;
+    if (pScene->m_InputActions.MoveForward->hasChanged() || pScene->m_InputActions.MoveBackward->hasChanged()) {
+        m_Velocity.z = 0;
+        if (pScene->m_InputActions.MoveForward->isActive()) {
+            m_Velocity.z += 1.0;
+        }
+        if (pScene->m_InputActions.MoveBackward->isActive()) {
+            m_Velocity.z -= 1.0;
+        }
         mModified |= System::Changes::Input::Velocity;
     }
-
-    if (pScene->m_InputActions.MoveBackward->hasChanged()) {
-        m_Velocity.z = pScene->m_InputActions.MoveBackward->isActive() ? -1.0f : 0.0f;
-        mModified |= System::Changes::Input::Velocity;
-    }
-
-    if (pScene->m_InputActions.StrafeLeft->hasChanged()) {
-        m_Velocity.x = pScene->m_InputActions.StrafeLeft->isActive() ? 1.0f : 0.0f;
-        mModified |= System::Changes::Input::Velocity;
-    }
-
-    if (pScene->m_InputActions.StrafeRight->hasChanged()) {
-        m_Velocity.x = pScene->m_InputActions.StrafeRight->isActive() ? -1.0f : 0.0f;
+    
+    if (pScene->m_InputActions.StrafeLeft->hasChanged() || pScene->m_InputActions.StrafeRight->hasChanged()) {
+        m_Velocity.x = 0;
+        if (pScene->m_InputActions.StrafeLeft->isActive()) {
+            m_Velocity.x += 1.0;
+        }
+        if (pScene->m_InputActions.StrafeRight->isActive()) {
+            m_Velocity.x -= 1.0;
+        }
         mModified |= System::Changes::Input::Velocity;
     }
 
@@ -162,6 +164,7 @@ InputPlayerObject::Update(
 
     m_Orientation.Set(Math::Vector3::UnitY, pScene->m_InputActions.RotateRightLeft->getAbsoluteValue());
     mModified |= System::Changes::Geometry::Orientation;
+
     PostChanges(mModified);
 }
 

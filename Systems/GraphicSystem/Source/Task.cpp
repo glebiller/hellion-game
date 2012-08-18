@@ -42,7 +42,7 @@ extern ManagerInterfaces   g_Managers;
 #include "MovableText/DynamicLines.h"
 #include "NormalizedLines.h"
 
-#include <IttNotify.h>
+#include "IttNotify.h"
 
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 

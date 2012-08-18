@@ -158,9 +158,24 @@ class PlatformManager : public IPlatform, public Singleton {
                  */
                 size_t GetHandle();
 
+                /**
+                 * Sets a render window.
+                 *
+                 * @param   renderWindow    Handle of the render window.
+                 */
+                void SetRenderWindow(Handle renderWindow);
+
+                /**
+                 * Gets the render window.
+                 *
+                 * @return  The render window.
+                 */
+                Handle GetRenderWindow(void);
+
             private:
 
                 size_t          m_WindowHnd;
+                Handle          m_renderWindow;
 
         };
 

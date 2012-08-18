@@ -45,6 +45,9 @@
     <ClCompile Include="Source\Object\Object.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\MouseObject.cpp">
+      <Filter>Fichiers sources\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -66,6 +69,9 @@
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\ObjectPlayer.h">
+      <Filter>Fichiers d%27en-tête\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\MouseObject.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
   </ItemGroup>

@@ -41,9 +41,10 @@ enum SystemProto_Type {
   SystemProto_Type_Audio = 4,
   SystemProto_Type_Geometry = 5,
   SystemProto_Type_Graphic = 6,
-  SystemProto_Type_Input = 7,
-  SystemProto_Type_Network = 8,
-  SystemProto_Type_Physic = 9
+  SystemProto_Type_Gui = 7,
+  SystemProto_Type_Input = 8,
+  SystemProto_Type_Network = 9,
+  SystemProto_Type_Physic = 10
 };
 bool SystemProto_Type_IsValid(int value);
 const SystemProto_Type SystemProto_Type_Type_MIN = SystemProto_Type_None;
@@ -122,6 +123,7 @@ class SystemProto : public ::google::protobuf::Message {
   static const Type Audio = SystemProto_Type_Audio;
   static const Type Geometry = SystemProto_Type_Geometry;
   static const Type Graphic = SystemProto_Type_Graphic;
+  static const Type Gui = SystemProto_Type_Gui;
   static const Type Input = SystemProto_Type_Input;
   static const Type Network = SystemProto_Type_Network;
   static const Type Physic = SystemProto_Type_Physic;

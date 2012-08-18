@@ -318,8 +318,7 @@ enum PerformanceHint {
     Task_MAX
 };
 
-inline
-PerformanceHint GetPerformanceHint(ISystemTask* pTask) {
+inline PerformanceHint GetPerformanceHint(ISystemTask* pTask) {
     // The indices of this array need to match System::TypeIndices.
     // Custom type indices are added here for convenience, but they are not guaranteed
     // to match (they're created in code with System::Types::MakeCustom()).
@@ -365,12 +364,7 @@ PerformanceHint GetPerformanceHint(ISystemTask* pTask) {
     return hints[jobType];
 }
 
-void
-TaskManager::IssueJobsForSystemTasks(
-    ISystemTask** pTasks,
-    u32 uTaskCount,
-    f32 fDeltaTime
-) {
+void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, f32 fDeltaTime) {
     // Call this from the primary thread to schedule system work.
     ASSERT(IsPrimaryThread());
     __ITT_EVENT_START(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
@@ -384,9 +378,9 @@ TaskManager::IssueJobsForSystemTasks(
     // now schedule the tasks, based upon their PerformanceHint order
     tbb::task_list tTaskList;
     u32 uAffinityCount = (u32)m_affinityIDs.size();
+
     u32 h = 0;
     u32 i = 0;
-
     for (h = 0; h < Task_MAX; h++) {
         for (i = 0; i < uTaskCount; i++) {
             if (pTasks[i]->IsPrimaryThreadOnly()) {
@@ -400,10 +394,7 @@ TaskManager::IssueJobsForSystemTasks(
                 if (GetPerformanceHint(pTasks[i]) == (PerformanceHint)h) {
                     // this task can be run on an arbitrary thread -- allocate it
                     SystemTask* pSystemTask = new(m_pSystemTasksRoot->allocate_additional_child_of(*m_pSystemTasksRoot))
-                    SystemTask(SystemTaskCallback, pTasks[i]
-                               PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(),
-                                                          GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask)
-                              );
+                    SystemTask(SystemTaskCallback, pTasks[i] PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
                     // affinity will increase the chances that each SystemTask will be assigned
                     // to a unique thread, regardless of PerformanceHint
                     ASSERT(pSystemTask != NULL);
@@ -528,11 +519,7 @@ TaskManager::ParallelFor(
 }
 
 
-void
-TaskManager::WaitForSystemTasks(
-    ISystemTask** pTasks,
-    u32 uTaskCount
-) {
+void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
     // Call this from the primary thread to wait until specified tasks spawned with IssueJobsForSystemTasks
     // and all of their subtasks are complete.
     ASSERT(IsPrimaryThread());

@@ -855,12 +855,6 @@ HavokPhysicsObject::CreateBody(
     RigidBodyCInfo.m_shape->removeReference();
 
     //
-    // Set this object as a listener to the body.
-    //
-    if (!m_bStatic) {
-    }
-
-    //
     // Set the material for this body.
     //
     //if ( m_MaterialId != -1 )
@@ -881,10 +875,7 @@ HavokPhysicsObject::CreateBody(
 
 ///////////////////////////////////////////////////////////////////////////////
 // Update - Update this Object (should be called every frame)
-void
-HavokPhysicsObject::Update(
-    f32 DeltaTime
-) {
+void HavokPhysicsObject::Update(f32 DeltaTime) {
     UNREFERENCED_PARAM(DeltaTime);
     const hkVector4& Position = m_pBody->getCenterOfMassInWorld();
     const hkQuaternion& Orientation = m_pBody->getRotation();
@@ -894,60 +885,4 @@ HavokPhysicsObject::Update(
     m_Orientation.w = Orientation.getReal();
     LinearVelocity.store3((hkReal*)&m_LinearVelocity);
     PostChanges(System::Changes::Geometry::Position | System::Changes::Geometry::Orientation);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// AddContact - Adds a new contact
-// (this info might be interesting to other systems)
-void
-HavokPhysicsObject::AddContact(
-    const IContactObject::Info& ContactInfo
-) {
-    /*m_ContactInfo = ContactInfo;
-
-    PostChanges( System::Changes::POI::Contact );*/
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// AddIntersection - Adds a new intersection
-// (this info might be interesting to other systems)
-void
-HavokPhysicsObject::AddIntersection(
-    const IIntersectionObject::Info& IntersectionInfo
-) {
-    /*m_aIntersectionInfo.push_back( IntersectionInfo );
-
-    PostChanges( System::Changes::POI::Intersection );*/
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// GetContact - Get the list of contacts
-const IContactObject::Info*
-HavokPhysicsObject::GetContact(
-    void
-) {
-    return &m_ContactInfo;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// IsStatic - Return true if this is a static object (doesn't move)
-const bool
-HavokPhysicsObject::IsStatic(
-    void
-) {
-    return m_bStatic;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// GetIntersections - Get the list of intersections
-const IIntersectionObject::InfoArray&
-HavokPhysicsObject::GetIntersections(
-    void
-) {
-    return m_aIntersectionInfo;
 }

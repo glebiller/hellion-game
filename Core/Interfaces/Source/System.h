@@ -67,6 +67,7 @@ namespace System {
         static const u32 Audio                  = (1 << SystemProto::Audio);
         static const u32 Geometry               = (1 << SystemProto::Geometry);
         static const u32 Graphic                = (1 << SystemProto::Graphic);
+        static const u32 Gui                    = (1 << SystemProto::Gui);
         static const u32 Input                  = (1 << SystemProto::Input);
         static const u32 Network                = (1 << SystemProto::Network);
         static const u32 Physic                 = (1 << SystemProto::Physic);
@@ -134,14 +135,6 @@ namespace System {
             static const u32 All                = CreateObject | DeleteObject | ExtendObject | UnextendObject;
         }
 
-        /*
-        namespace AI
-        {
-            static const u32 Behavior           = (1 << 25);
-            static const u32 Velocity           = (1 << 26);
-        }
-        */
-
         namespace Audio {
 
         }
@@ -168,29 +161,20 @@ namespace System {
             static const u32 All                = AllMesh | AllParticles;
         }
 
+        namespace Gui {
+
+        }
+
         namespace Input {
-            static const u32 Velocity           = (1 << 16);
+            static const u32 Velocity           = (1 << 17);
         }
 
         namespace Physics {
-            static const u32 Position           = (1 << 17);
+            static const u32 Position           = (1 << 18);
         }
 
-        /*
-        namespace POI
-        {
-            static const u32 Area               = (1 << 21);
-            static const u32 Contact            = (1 << 22);
-            static const u32 Target             = (1 << 23);
-            static const u32 Intersection       = (1 << 24);
-        }
-
-        */
-
-        static const u32 Link                   = (1 << 18);
-        static const u32 ParentLink             = (1 << 19);
-        static const u32 Custom                 = (static_cast<u32>(1) << 20);
-
+        static const u32 Link                   = (1 << 30);
+        static const u32 ParentLink             = (1 << 31);
         static const u32 All                    = static_cast<u32>(-1);
 
         typedef u32 BitMask;

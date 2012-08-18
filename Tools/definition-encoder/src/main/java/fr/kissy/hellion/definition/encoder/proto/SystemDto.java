@@ -62,9 +62,10 @@ public final class SystemDto {
       Audio(4, 4),
       Geometry(5, 5),
       Graphic(6, 6),
-      Input(7, 7),
-      Network(8, 8),
-      Physic(9, 9),
+      Gui(7, 7),
+      Input(8, 8),
+      Network(9, 9),
+      Physic(10, 10),
       ;
       
       public static final int None_VALUE = 0;
@@ -74,9 +75,10 @@ public final class SystemDto {
       public static final int Audio_VALUE = 4;
       public static final int Geometry_VALUE = 5;
       public static final int Graphic_VALUE = 6;
-      public static final int Input_VALUE = 7;
-      public static final int Network_VALUE = 8;
-      public static final int Physic_VALUE = 9;
+      public static final int Gui_VALUE = 7;
+      public static final int Input_VALUE = 8;
+      public static final int Network_VALUE = 9;
+      public static final int Physic_VALUE = 10;
       
       
       public final int getNumber() { return value; }
@@ -90,9 +92,10 @@ public final class SystemDto {
           case 4: return Audio;
           case 5: return Geometry;
           case 6: return Graphic;
-          case 7: return Input;
-          case 8: return Network;
-          case 9: return Physic;
+          case 7: return Gui;
+          case 8: return Input;
+          case 9: return Network;
+          case 10: return Physic;
           default: return null;
         }
       }
@@ -123,7 +126,7 @@ public final class SystemDto {
       }
       
       private static final Type[] VALUES = {
-        None, Generic, AI, Animation, Audio, Geometry, Graphic, Input, Network, Physic, 
+        None, Generic, AI, Animation, Audio, Geometry, Graphic, Gui, Input, Network, Physic, 
       };
       
       public static Type valueOf(
@@ -756,14 +759,14 @@ public final class SystemDto {
   static {
     java.lang.String[] descriptorData = {
       "\n\031Proto/Common/System.proto\032\033Proto/Commo" +
-      "n/Property.proto\"\322\001\n\013SystemProto\022\037\n\004type" +
+      "n/Property.proto\"\334\001\n\013SystemProto\022\037\n\004type" +
       "\030\001 \002(\0162\021.SystemProto.Type\022\"\n\nproperties\030" +
-      "\002 \003(\0132\016.PropertyProto\"~\n\004Type\022\010\n\004None\020\000\022" +
-      "\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005A" +
-      "udio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\t\n\005Inp" +
-      "ut\020\007\022\013\n\007Network\020\010\022\n\n\006Physic\020\tB9\n)fr.kiss" +
-      "y.hellion.definition.encoder.protoB\tSyst" +
-      "emDto\210\001\000"
+      "\002 \003(\0132\016.PropertyProto\"\207\001\n\004Type\022\010\n\004None\020\000" +
+      "\022\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005" +
+      "Audio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\007\n\003Gu" +
+      "i\020\007\022\t\n\005Input\020\010\022\013\n\007Network\020\t\022\n\n\006Physic\020\nB" +
+      "9\n)fr.kissy.hellion.definition.encoder.p" +
+      "rotoB\tSystemDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
