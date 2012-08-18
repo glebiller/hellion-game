@@ -27,6 +27,7 @@ class IObserver;
  *     Publish/Subscribe pattern, or the Dependents pattern.
  */
 class ISubject {
+
     public:
 
         /**

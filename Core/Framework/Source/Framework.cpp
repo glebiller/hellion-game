@@ -198,15 +198,15 @@ Error Framework::Execute(void) {
 #endif
 
     //
-    // Process the link messages in the CCMs first, for both the object and scene CCMs.  The link
-    //  needs to be established before any other messages come through.
+    // Process the link messages in the CCMs first, for both the object and scene CCMs.
+    // The link needs to be established before any other messages come through.
     //
     m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
     m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
 
     //
-    // Distribute changes for object and scene CCMs.  The UObject propagates some object messages
-    //  up to the scene so it needs to go first.
+    // Distribute changes for object and scene CCMs.
+    // The UObject propagates some object messages up to the scene so it needs to go first.
     //
     m_pObjectCCM->DistributeQueuedChanges();
     m_pSceneCCM->DistributeQueuedChanges();

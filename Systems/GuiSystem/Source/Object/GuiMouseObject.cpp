@@ -30,7 +30,6 @@
 #include "GuiScene.h"
 #include "Object/GuiMouseObject.h"
 
-
 GuiMouseObject::GuiMouseObject(ISystemScene* pSystemScene, const char* pszName)
     : GuiObject(pSystemScene, pszName) {
     m_pszName = pszName;
@@ -38,7 +37,7 @@ GuiMouseObject::GuiMouseObject(ISystemScene* pSystemScene, const char* pszName)
 
 
 GuiMouseObject::~GuiMouseObject(void) {
-
+    Debug::Print("test");
 }
 
 void GuiMouseObject::Update(f32 DeltaTime) {

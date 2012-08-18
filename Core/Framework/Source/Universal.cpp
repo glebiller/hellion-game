@@ -22,7 +22,9 @@
 // UScene
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) : m_pSceneCCM(pSceneCCM), m_pObjectCCM(pObjectCCM) {
+UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) 
+    : m_pSceneCCM(pSceneCCM)
+    , m_pObjectCCM(pObjectCCM) {
 
 }
 

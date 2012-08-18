@@ -14,15 +14,15 @@
 
 #pragma once
 
-class IObserver;
-class IChangeManager;
-
 
 #include <list>
 
 #include "Errors.h"
 #include "System.h"
 #include "Observer/ISubject.h"
+
+class IObserver;
+class IChangeManager;
 
 
 // THREAD SAFETY NOTE
@@ -53,6 +53,7 @@ class IChangeManager;
  * @sa  ISubject
  */
 class CSubject : public ISubject {
+
     public :
 
         static const u32 InvalidID = u32(-1);
@@ -64,8 +65,9 @@ class CSubject : public ISubject {
 
         /**
          * Destructor.
+         * Virtual destructor, CSubject is an abstract class.
          */
-        ~CSubject(void);
+        virtual ~CSubject(void);
 
         /**
          * @inheritDoc
@@ -91,13 +93,13 @@ class CSubject : public ISubject {
          * @inheritDoc
          */
         virtual void PostChanges(System::Changes::BitMask changedBits);
-        
-        /**
-         * @inheritDoc
-         */
-        void PreDestruct(void);
 
     protected:
+        
+        /**
+         * Pre destruct.
+         */
+        void PreDestruct(void);
 
         /**
          * Defines a structure used by the subject to store information about observers for PostChanges

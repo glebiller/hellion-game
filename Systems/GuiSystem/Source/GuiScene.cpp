@@ -61,7 +61,14 @@ const char* GuiScene::sm_kapszPropertyNames[] = {
 
 GuiScene::GuiScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pTask(NULL) {
+    //
+    // Fill the object factories
+    // 
     m_ObjectFactories["Mouse"] = boost::factory<GuiMouseObject*>();
+
+    //
+    // Fill the properties default values
+    // 
 }
 
 
@@ -74,14 +81,14 @@ GuiScene::~GuiScene(void) {
  * @inheritDoc
  */
 void GuiScene::Update(f32 DeltaTime) {
-    ObjectsList Objects = m_Objects;
+    ObjectsList Objects = m_pObjects;
 
     //
     // Cycle through all of our objects and apply the changes.
     // Also post our change notifications to the CCM.
     //
     for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        GuiObject* pObject = *it;
+        GuiObject* pObject = static_cast<GuiObject*>(*it);
         pObject->Update(DeltaTime);
     }
 }
@@ -127,45 +134,6 @@ void GuiScene::SetProperties(Properties::Array Properties) {
 
 const char** GuiScene::GetObjectTypes(void) {
     return GuiObject::sm_kapszTypeNames;
-}
-
-
-ISystemObject* GuiScene::CreateObject(const char* pszName, const char* pszType) {
-    ASSERT(m_bInitialized);
-    GuiObject* pObject = NULL;
-
-    pObject = m_ObjectFactories[pszType](this, pszName);
-
-    //
-    //  Store the newly created object for future access
-    //
-    if (pObject != NULL) {
-        m_Objects.push_back(pObject);
-    } else {
-        ASSERT(false);
-    }
-
-    return pObject;
-}
-
-
-Error GuiScene::DestroyObject(ISystemObject* pSystemObject) {
-    ASSERT(m_bInitialized);
-    ASSERT(pSystemObject != NULL);
-    //
-    // Cast to a GraphicObject so that the correct destructor will be called.
-    //
-    GuiObject* pObject = reinterpret_cast<GuiObject*>(pSystemObject);
-
-    if (pObject != NULL) {
-        //
-        // Remove the object from the list and delete it.
-        //
-        m_Objects.erase(std::find(m_Objects.begin(), m_Objects.end(), pObject));
-        delete pObject;
-    }
-
-    return Errors::Success;
 }
 
 

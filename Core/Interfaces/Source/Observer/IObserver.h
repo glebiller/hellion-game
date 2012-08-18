@@ -30,6 +30,7 @@ class ISubject;
  * @sa  IChangeManager
  */
 class IObserver {
+
     public:
 
         /**

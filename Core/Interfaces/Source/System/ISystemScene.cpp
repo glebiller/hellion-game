@@ -16,12 +16,52 @@
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
 
+/**
+ * @inheritDoc
+ */
+ISystemScene::ISystemScene(ISystem* pSystem) : ISystemSubject()
+    , m_pSystem(pSystem) {
+    ASSERT(m_pSystem != NULL);
+}
 
 /**
  * @inheritDoc
  */
-ISystemScene::ISystemScene(ISystem* pSystem)
-    : m_pSystem(pSystem)
-    , m_bInitialized(false) {
-    ASSERT(m_pSystem != NULL);
+ISystemScene::~ISystemScene() {
+
+}
+
+/**
+ * @inheritDoc
+ */
+ISystemObject* ISystemScene::CreateObject(const char* pszName, const char* pszType) {
+    ASSERT(m_bInitialized);
+
+    ISystemObject* pObject = m_ObjectFactories[pszType](this, pszName);
+
+    if (pObject != NULL) {
+        m_pObjects.push_back(pObject);
+    } else {
+        ASSERTMSG1(false, "Impossible to find the object type %s", pszName);
+    }
+
+    return pObject;
+}
+
+/**
+ * @inheritDoc
+ */
+Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
+    ASSERT(m_bInitialized);
+    ASSERT(pSystemObject != NULL);
+
+    if (pSystemObject != NULL) {
+        //
+        // Remove the object from the list and delete it.
+        //
+        m_pObjects.erase(std::find(m_pObjects.begin(), m_pObjects.end(), pSystemObject));
+        delete pSystemObject;
+    }
+
+    return Errors::Success;
 }

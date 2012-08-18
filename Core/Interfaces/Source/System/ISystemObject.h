@@ -20,8 +20,7 @@
 #include "Errors.h"
 #include "Property.h"
 #include "System.h"
-#include "Observer/CSubject.h"
-#include "Observer/IObserver.h"
+#include "System/ISystemSubject.h"
 
 class ISystemScene;
 
@@ -32,10 +31,10 @@ class ISystemScene;
  * now be able to interact with the physics system.
  * 
  * @sa  CSubject
- * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public CSubject, public IObserver {
+class ISystemObject : public ISystemSubject {
+
         friend class ISystem;
         friend class ISystemScene;
 
@@ -43,18 +42,23 @@ class ISystemObject : public CSubject, public IObserver {
 
         /**
          * Constructor.
+         * Inlined for performance.
          *
          * @param   pSystemScene    The scene this object belongs to.
          * @param   pszName         Name of this GUI object.
-         *
-         * ### remarks  Inlined for performance.
          */
-        ISystemObject(ISystemScene* pSystemScene, const char* pszName)
-            : m_bInitialized(false),
-            m_pSystemScene(pSystemScene) {
+        ISystemObject(ISystemScene* pSystemScene, const char* pszName) : ISystemSubject()
+            , m_pSystemScene(pSystemScene) {
             if (pszName) {
                 SetName(pszName);
             }
+        }
+
+        /**
+         * Destructor.
+         */
+        virtual ~ISystemObject(void) {
+
         }
 
         /**
@@ -62,7 +66,7 @@ class ISystemObject : public CSubject, public IObserver {
          *
          * @return  A pointer to the system.
          */
-        ISystemScene* GetSystemScene(void) {
+        inline ISystemScene* GetSystemScene(void) {
             return m_pSystemScene;
         }
 
@@ -71,30 +75,21 @@ class ISystemObject : public CSubject, public IObserver {
          *
          * @return  A handle to the parent object.
          */
-        Handle GetParentObject(void) {
+        inline Handle GetParentObject(void) {
             return m_hParentObject;
         }
 
         /**
          * Set a handle to the parent object that this system object belongs to.
+         * This should only be called by the parent object.
          *
          * @param   hParentObject   Handle of the parent object.
          *
-         * ### remarks  This should only be called by the parent object.
-         * ### return   A handle to the parent object.
+         * @return   A handle to the parent object.
          */
-        void SetParentObject(Handle hParentObject) {
+        inline void SetParentObject(Handle hParentObject) {
             m_hParentObject = hParentObject;
         }
-
-        /**
-         * Gets the system type for this system object.
-         *
-         * @return  The type of the system.
-         *
-         * ### remarks  This is a shortcut to getting the system type w/o having to go the system first.
-         */
-        virtual System::Type GetSystemType(void) = 0;
 
         /**
          * Gets the name of the object.
@@ -114,56 +109,10 @@ class ISystemObject : public CSubject, public IObserver {
             m_sName = pszName;
         }
 
-        /**
-         * One time initialization function for the object.
-         *
-         * @param   Properties  Property structure array to fill in.
-         * @return  An error code.
-         */
-        virtual Error Initialize(std::vector<Properties::Property> Properties) = 0;
-
-        /**
-         * Gets the properties of this object.
-         *
-         * @param   Properties  The Property structure array to fill.
-         */
-        virtual void GetProperties(std::vector<Properties::Property>& Properties) = 0;
-
-        /**
-         * Sets the properties for this object.
-         *
-         * @param   Properties  Property structure array to get values from.
-         */
-        virtual void SetProperties(std::vector<Properties::Property> Properties) = 0;
-
-        /**
-         * Returns a bit mask of System Changes that this system wants to receive changes for.  Used
-         *  to inform the change control manager if this system's object should be informed of the
-         *  change.
-         *
-         * @return  A System::Changes::BitMask.
-         */
-        virtual System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
-
-        /**
-         * Update the system object.
-         *
-         * @param   DeltaTime   Time of the delta.
-         */
-        virtual void Update(f32 DeltaTime) = 0;
-
     protected:
-
-        /**
-         * The initialized.
-         */
-        bool                        m_bInitialized;
-        ISystemScene*               m_pSystemScene;
-
-        /**
-         * The parent object.
-         */
-        Handle                      m_hParentObject;
+        
         std::string                 m_sName;
+        ISystemScene*               m_pSystemScene;
+        Handle                      m_hParentObject;
 
 };

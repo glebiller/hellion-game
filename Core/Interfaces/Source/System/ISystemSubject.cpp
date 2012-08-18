@@ -12,52 +12,40 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "DataTypes.h"
 #include "Errors.h"
-#include "System/ISystem.h"
+#include "System/ISystemSubject.h"
 
 /**
  * @inheritDoc
  */
-ISystem::ISystem(void)
+ISystemSubject::ISystemSubject(void) 
     : m_bInitialized(false) {
+}
+
+/**
+ * @inheritDoc
+ */
+ISystemSubject::~ISystemSubject(void) {
 
 }
 
 /**
  * @inheritDoc
  */
-ISystem::~ISystem(void) {
-
-}
-
-/**
- * @inheritDoc
- */
-const char* ISystem::GetName(void) {
-    SystemProto::Type systemType = static_cast<SystemProto::Type>(System::Types::GetIndex(GetSystemType()));
-    return SystemProto::Type_Name(systemType).c_str();
-}
-
-/**
- * @inheritDoc
- */
-ISystemScene* ISystem::CreateScene(void) {
-    return m_SceneFactory(this);
-}
-
-/**
- * @inheritDoc
- */
-Error ISystem::DestroyScene(ISystemScene* pSystemScene) {
-    ASSERT(pSystemScene != NULL);
-    SAFE_DELETE(pSystemScene);
+Error ISystemSubject::Initialize(std::vector<Properties::Property> Properties) {
     return Errors::Success;
 }
 
 /**
  * @inheritDoc
  */
-f32 ISystem::GetCPUUsage(void) {
-    return 0;
+void ISystemSubject::GetProperties(std::vector<Properties::Property>& Properties) {
+
+}
+
+/**
+ * @inheritDoc
+ */
+void ISystemSubject::SetProperties(std::vector<Properties::Property> Properties) {
+
 }

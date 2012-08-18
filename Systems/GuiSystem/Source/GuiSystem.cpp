@@ -17,6 +17,7 @@
 //
 #include "CEGUI.h"
 #include "RendererModules/Ogre/CEGUIOgreRenderer.h"
+#include "boost/functional/factory.hpp"
 
 //
 // Core includes
@@ -91,6 +92,12 @@ const Properties::Property GuiSystem::sm_kaDefaultProperties[] = {
 GuiSystem::GuiSystem(void) : ISystem() {
     ASSERT(Property_Count == (sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]));
     ASSERT(Property_Count == (sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]));
+
+    //
+    // Init the SystemScene factory
+    //
+    m_SceneFactory = boost::factory<GuiScene*>();
+
 }
 
 
@@ -211,17 +218,3 @@ void GuiSystem::SetProperties(Properties::Array Properties) {
         }
     }
 }
-
-
-ISystemScene* GuiSystem::CreateScene(void) {
-    return new GuiScene(this);
-}
-
-
-Error GuiSystem::DestroyScene(ISystemScene* pSystemScene) {
-    ASSERT(pSystemScene != NULL);
-    GuiScene* pScene = reinterpret_cast<GuiScene*>(pSystemScene);
-    SAFE_DELETE(pScene);
-    return Errors::Success;
-}
-

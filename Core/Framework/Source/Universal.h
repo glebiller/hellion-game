@@ -141,9 +141,8 @@ class UScene : public IObserver {
 /// </summary>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class UObject : public IObserver, public CSubject, public IGeometryObject, public IGraphicsObject {
+class UObject : public CSubject, public IObserver, public IGeometryObject, public IGraphicsObject {
         friend class UScene;
-
 
     protected:
 

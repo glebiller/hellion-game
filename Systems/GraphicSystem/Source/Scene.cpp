@@ -198,9 +198,7 @@ OGREGraphicsScene::OGREGraphicsScene(
 }
 
 
-OGREGraphicsScene::~OGREGraphicsScene(
-    void
-) {
+OGREGraphicsScene::~OGREGraphicsScene(void) {
     SAFE_DELETE(m_pTask);
     SAFE_DELETE(m_pPagedGeometry);
     SAFE_DELETE(m_pGrassLoader);
@@ -524,10 +522,7 @@ float OGREGraphicsScene::getTerrainHeightScene(const float a, const float b, voi
     return y;
 }
 
-Error
-OGREGraphicsScene::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+Error OGREGraphicsScene::Initialize(std::vector<Properties::Property> Properties) {
     Error Err = Errors::Success;
     ASSERT(!m_bInitialized);
     //
@@ -815,19 +810,12 @@ void OGREGraphicsScene::SetProperties(Properties::Array Properties) {
 }
 
 
-const char**
-OGREGraphicsScene::GetObjectTypes(
-    void
-) {
+const char** OGREGraphicsScene::GetObjectTypes(void) {
     return GraphicObject::sm_kapszTypeNames;
 }
 
 
-ISystemObject*
-OGREGraphicsScene::CreateObject(
-    const char* pszName,
-    const char* pszType
-) {
+ISystemObject* OGREGraphicsScene::CreateObject(const char* pszName, const char* pszType) {
     ASSERT(m_bInitialized);
     GraphicObject* pObject = NULL;
 

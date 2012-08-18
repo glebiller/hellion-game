@@ -108,10 +108,7 @@ ISystemObject* GeometryScene::CreateObject(const char* pszName, const char* pszT
 }
 
 
-Error
-GeometryScene::DestroyObject(
-    ISystemObject* pSystemObject
-) {
+Error GeometryScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(m_bInitialized);
     ASSERT(pSystemObject != NULL);
     //

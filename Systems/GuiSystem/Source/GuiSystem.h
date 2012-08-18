@@ -45,7 +45,7 @@ class GuiSystem : public ISystem {
         /**
          * Destructor.
          */
-        virtual ~GuiSystem(void);
+        ~GuiSystem(void);
 
     protected:
 
@@ -95,28 +95,6 @@ class GuiSystem : public ISystem {
          * @sa   ISystem::SetProperties  .
          */
         virtual void SetProperties(Properties::Array Properties);
-
-        /**
-         * Creates the scene.
-         * Implementation of the <c>ISystem::CreateScene</c> function. Creates a system scene for
-         * containing system objects.
-         *
-         * @return  ISystemScene* - The newly create system scene.
-         *
-         * @sa   ISystem::CreateScene    .
-         */
-        virtual ISystemScene* CreateScene(void);
-
-        /**
-         * Destroys the scene described by pSystemScene.
-         * Implementation of the <c>ISystem::DestroyScene</c> function. Destroys a system scene.
-         *
-         * @param   pSystemScene    The scene to destroy. Any objects within are destroyed.
-         * @return  Error - Any error codes.
-         *
-         * @sa   ISystem::DestroyScene   .
-         */
-        virtual Error DestroyScene(ISystemScene* pSystemScene);
 
     private:
 

@@ -48,6 +48,9 @@
     <ClCompile Include="Source\System\ISystemScene.cpp">
       <Filter>Fichiers sources\System</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\ISystemSubject.cpp">
+      <Filter>Fichiers sources\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Object\Graphic.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Source\Object\IGeometryObject.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ISystemSubject.h">
+      <Filter>Fichiers d%27en-tête\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

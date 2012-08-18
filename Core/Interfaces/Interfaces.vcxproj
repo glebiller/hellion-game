@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Observer\CSubject.cpp" />
     <ClCompile Include="Source\Property.cpp" />
+    <ClCompile Include="Source\System\ISystemSubject.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />
   </ItemGroup>
@@ -102,6 +103,7 @@
     <ClInclude Include="Source\IService.h" />
     <ClInclude Include="Source\Service\CollisionAPI.h" />
     <ClInclude Include="Source\System.h" />
+    <ClInclude Include="Source\System\ISystemSubject.h" />
     <ClInclude Include="Source\System\IGenericScene.h" />
     <ClInclude Include="Source\System\ISystem.h" />
     <ClInclude Include="Source\System\ISystemObject.h" />

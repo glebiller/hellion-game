@@ -38,18 +38,6 @@ class GuiScene : public ISystemScene {
     public:
 
         /**
-         * Updates the given DeltaTime.
-         * This function must be called every frame.  It updates the graphics scene.
-         *
-         * @param   DeltaTime   Elapsed time since the last frame.
-         *
-         * @sa   ISystemTask::Update .
-         */
-        virtual void Update(f32 DeltaTime);
-
-    protected:
-
-        /**
          * Constructor.
          *
          * @param [in,out]  pSystem If non-null, the system.
@@ -69,7 +57,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::GetSystemType .
          */
-        virtual System::Type GetSystemType(void) {
+        System::Type GetSystemType(void) {
             return System::Types::Gui;
         }
 
@@ -79,7 +67,7 @@ class GuiScene : public ISystemScene {
          *
          * @param   Status  GlobalSceneStatus - The overall scene status.
          */
-        virtual void GlobalSceneStatusChanged(GlobalSceneStatus Status);
+        void GlobalSceneStatusChanged(GlobalSceneStatus Status);
 
         /**
          * Initializes this GuiScene.
@@ -92,7 +80,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::Initialize    .
          */
-        virtual Error Initialize(Properties::Array Properties);
+        Error Initialize(Properties::Array Properties);
 
         /**
          * Gets the properties.
@@ -103,7 +91,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::GetProperties .
          */
-        virtual void GetProperties(Properties::Array& Properties);
+        void GetProperties(Properties::Array& Properties);
 
         /**
          * Sets the properties.
@@ -114,7 +102,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystem::SetProperties  .
          */
-        virtual void SetProperties(Properties::Array Properties);
+        void SetProperties(Properties::Array Properties);
 
         /**
          * Gets the object types.
@@ -125,31 +113,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::GetObjectTypes    .
          */
-        virtual const char** GetObjectTypes(void);
-
-        /**
-         * Creates an object.
-         * Implementation of the <c>ISystemScene::CreateObject</c> function. Creates a system object
-         * used to extend a UObject.
-         *
-         * @param   pszName The unique name for this object.
-         * @param   pszType The object type to create.
-         * @return  ISystemObject* - The newly created system object.
-         *
-         * @sa   ISystemScene::CreateObject  .
-         */
-        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
-
-        /**
-         * Destroys the object described by pSystemObject.
-         * Implementation of the <c>ISystemScene::DestroyObject</c> function. Destroys a system object.
-         *
-         * @param   pSystemObject   The system object to destroy.
-         * @return  Error - Any error codes.
-         *
-         * @sa   ISystemScene::DestroyObject .
-         */
-        virtual Error DestroyObject(ISystemObject* pSystemObject);
+        const char** GetObjectTypes(void);
 
         /**
          * Gets the system task.
@@ -160,7 +124,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::GetSystemTask .
          */
-        virtual ISystemTask* GetSystemTask(void);
+        ISystemTask* GetSystemTask(void);
 
         /**
          * Gets the potential system changes.
@@ -171,7 +135,7 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISubject::GetPotentialSystemChanges .
          */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
+        System::Changes::BitMask GetPotentialSystemChanges(void);
 
         /**
          * Gets a system change data.
@@ -184,21 +148,23 @@ class GuiScene : public ISystemScene {
          *
          * @sa   ISystemScene::GetDesiredSystemChanges   .
          */
-        virtual const void* GetSystemChangeData(System::Change SystemChange);
+        const void* GetSystemChangeData(System::Change SystemChange);
+        
 
-    public:
-
-        typedef std::vector<GuiObject*>         ObjectsList;
-        typedef boost::function<GuiObject*(ISystemScene* 
-            pSystemScene, const char* pszName)> ObjectFactory;
+        /**
+         * Updates the given DeltaTime.
+         * This function must be called every frame.  It updates the graphics scene.
+         *
+         * @param   DeltaTime   Elapsed time since the last frame.
+         *
+         * @sa   ISystemTask::Update .
+         */
+        void Update(f32 DeltaTime);
 
     protected:
 
         static const char*                      sm_kapszPropertyNames[];
         static const Properties::Property       sm_kaDefaultProperties[];
-
-        std::map<std::string, ObjectFactory>    m_ObjectFactories;
-        ObjectsList                             m_Objects;
 
         GuiTask*                                m_pTask;
 

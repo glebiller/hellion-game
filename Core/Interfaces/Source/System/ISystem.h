@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "boost/function.hpp"
 #include "Proto/Common/System.pb.h"
 #include "Property.h"
 #include "System.h"
@@ -32,6 +33,12 @@ class ISystem {
          * Constructor.
          */
         ISystem(void);
+
+        /**
+         * Destructor.
+         * Interface have virtual destructors.
+         */
+        virtual ~ISystem(void);
 
         /**
          * Gets the name of the system.
@@ -76,7 +83,7 @@ class ISystem {
          *
          * @return  The newly create system scene.
          */
-        virtual ISystemScene* CreateScene(void) = 0;
+        virtual ISystemScene* CreateScene(void);
 
         /**
          * Destroys a system scene.
@@ -84,7 +91,7 @@ class ISystem {
          * @param   pSystemScene    The scene to destroy. Any objects within are destroyed.
          * @return  An error code.
          */
-        virtual Error DestroyScene(ISystemScene* pSystemScene) = 0;
+        virtual Error DestroyScene(ISystemScene* pSystemScene);
 
         /**
          * Gets the CPU usage.
@@ -95,7 +102,10 @@ class ISystem {
         virtual f32 GetCPUUsage(void);
 
     protected:
+        
+        typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
 
-        bool                        m_bInitialized;
+        SceneFactory                            m_SceneFactory;
+        bool                                    m_bInitialized;
 
 };
