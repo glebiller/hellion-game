@@ -19,7 +19,7 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "IEnvironment.h"
+#include "Service/IEnvironment.h"
 #include "Singleton.h"
 
 /**

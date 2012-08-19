@@ -18,8 +18,8 @@
 /**
  * @inheritDoc
  */
-ISystemSubject::ISystemSubject(void) 
-    : m_bInitialized(false) {
+ISystemSubject::ISystemSubject(void) : IProperty() {
+
 }
 
 /**

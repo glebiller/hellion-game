@@ -20,6 +20,7 @@
 #include "Errors.h"
 #include "Property.h"
 #include "System.h"
+#include "Property/IProperty.h"
 
 class ISystemScene;
 
@@ -28,7 +29,7 @@ class ISystemScene;
  *  framework.  By default the framework does not have functionality for things like graphics,
  *  physics, etc.
  */
-class ISystem {
+class ISystem : public IProperty {
 
     public:
 
@@ -57,7 +58,9 @@ class ISystem {
          * @param   Properties  Property structure array to fill in.
          * @return  An error code.
          */
-        virtual Error Initialize(Properties::Array Properties) = 0;
+        virtual Error Initialize(Properties::Array Properties) {
+            return Errors::Success;
+        };
 
         /**
          * Gets the properties of this system.
@@ -65,14 +68,14 @@ class ISystem {
          *
          * @param   Properties  Property structure array to fill.
          */
-        virtual void GetProperties(Properties::Array& Properties) = 0;
+        virtual void GetProperties(Properties::Array& Properties) {};
 
         /**
          * Sets the properties for this system.
          *
          * @param   Properties  Property structure array to get values from.
          */
-        virtual void SetProperties(Properties::Array Properties) = 0;
+        virtual void SetProperties(Properties::Array Properties) {};
         
         /**
          * Creates a system scene for containing system objects.
@@ -110,6 +113,5 @@ class ISystem {
         typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
 
         SceneFactory                            m_SceneFactory;
-        bool                                    m_bInitialized;
 
 };

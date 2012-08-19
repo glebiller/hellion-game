@@ -12,21 +12,12 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
 #include "CEGUI.h"
 #include "boost/functional/factory.hpp"
 
-//
-// Core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Graphics system includes
-//
 #include "GuiSystem.h"
 #include "GuiScene.h"
 #include "GuiTask.h"
@@ -51,14 +42,9 @@ void ProcessObjects(void* Data);
 
 static const u32   UpdateGrainSize = 120;
 
-const char* GuiScene::sm_kapszPropertyNames[] = {
-    "ResourceLocation", "DelResourceLocation",
-    "AmbientLight", "Shadows", "ShadowColor",
-    "DrawBoundingBox", "ShowNormals", "ShowTangents",
-    "UseStaticGeom", "UseInstancedGeom", "FogColor", "Fog", "Font",
-    "PagedGeometry", "PagedGeometryTerrain", "PagedGeometryTerrainOffset"
-};
-
+/**
+ * @inheritDoc
+ */
 GuiScene::GuiScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pTask(NULL) {
     //
@@ -71,12 +57,17 @@ GuiScene::GuiScene(ISystem* pSystem) : ISystemScene(pSystem)
     // 
 }
 
-
+/**
+ * @inheritDoc
+ */
 GuiScene::~GuiScene(void) {
     SAFE_DELETE(m_pTask);
 }
 
-Error GuiScene::Initialize(std::vector<Properties::Property> Properties) {
+/**
+ * @inheritDoc
+ */
+Error GuiScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
     m_pTask = new GuiTask(this);
@@ -86,28 +77,12 @@ Error GuiScene::Initialize(std::vector<Properties::Property> Properties) {
         return Errors::Failure;
     }
 
+    // TODO properties & move to object
     CEGUI::Window *newWindow = CEGUI::WindowManager::getSingleton().loadWindowLayout("LoginForm.layout");
     CEGUI::System::getSingleton().getGUISheet()->addChildWindow(newWindow);
 
-    m_bInitialized = true;
-    //
-    // Set the properties for this scene.
-    //
-    SetProperties(Properties);
-
     return Errors::Success;
 }
-
-
-void GuiScene::GetProperties(Properties::Array& Properties) {
-
-}
-
-
-void GuiScene::SetProperties(Properties::Array Properties) {
-    ASSERT(m_bInitialized);
-}
-
 
 /**
  * @inheritDoc

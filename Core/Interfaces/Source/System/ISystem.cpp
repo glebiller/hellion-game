@@ -20,8 +20,7 @@
 /**
  * @inheritDoc
  */
-ISystem::ISystem(void)
-    : m_bInitialized(false) {
+ISystem::ISystem(void) : IProperty() {
 
 }
 

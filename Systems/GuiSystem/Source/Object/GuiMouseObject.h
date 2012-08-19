@@ -45,41 +45,31 @@ class GuiMouseObject : public GuiObject {
         /**
          * @inheritDoc
          */
-        virtual void Update(f32 DeltaTime);
+        Error initialize(void);
         
         /**
          * @inheritDoc
          */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
             return System::Changes::None;
-        }
+        };
 
         /**
          * @inheritDoc
          */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Types::BitMask GetDesiredSystemChanges(void) {
             return System::Changes::Input::Velocity;
-        }
+        };
         
         /**
          * @inheritDoc
          */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual void GetProperties(Properties::Array& Properties);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual void SetProperties(Properties::Array Properties);
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
     private:
 

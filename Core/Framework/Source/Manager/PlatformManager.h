@@ -22,7 +22,7 @@
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Errors.h"
-#include "IPlatform.h"
+#include "Service/IPlatform.h"
 #include "Singleton.h"
 
 class ISystem;

@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Proto.h"
 #include "Convertor.h"
 #include "Manager/PlatformManager.h"
 #include "Manager/EnvironmentManager.h"
@@ -52,9 +53,12 @@ void DefinitionParser::ParseSystems(void) {
         ASSERT(m_pSystem != NULL);
 
         // Get the default properties from system, then Initialize it
+        // OLD
         m_pSystem->GetProperties(m_GetProperties);
         ApplyProperties(static_cast<ProtoPropertyList>(systemsIt->properties()), m_GetProperties, m_SetProperties);
         m_pSystem->Initialize(m_SetProperties);
+        // NEW
+        m_pSystem->setProperties(systemsIt->properties());
         m_GetProperties.clear();
         m_SetProperties.clear();
         ASSERTMSG1(strcmp(SystemProto::Type_Name(systemsIt->type()).c_str(), m_pSystem->GetName()) == 0,
@@ -100,9 +104,12 @@ void DefinitionParser::ParseScene(std::string sScene) {
                     m_pSystemScene = it->second;
                     ASSERT(m_pSystemScene != NULL);
                     // Initialize system scene properties
+                    // OLD
                     m_pSystemScene->GetProperties(m_GetProperties);
                     ApplyProperties(static_cast<ProtoPropertyList>(systemPropertiesIt->properties()), m_GetProperties, m_SetProperties);
                     m_pSystemScene->Initialize(m_SetProperties);
+                    // NEW
+                    m_pSystemScene->setProperties(systemPropertiesIt->properties());
                     m_GetProperties.clear();
                     m_SetProperties.clear();
                 }
@@ -140,9 +147,12 @@ void DefinitionParser::ParseScene(std::string sScene) {
                             //
                             // Initialize the extension.
                             //
+                            // OLD
                             m_pSystemObject->GetProperties(m_GetProperties);
                             ApplyProperties(static_cast<ProtoPropertyList>(objectPropertiesIt->properties()), m_GetProperties, m_SetProperties);
                             m_pSystemObject->Initialize(m_SetProperties);
+                            // NEW
+                            m_pSystemObject->setProperties(objectPropertiesIt->properties());
                             m_GetProperties.clear();
                             m_SetProperties.clear();
                         }
@@ -229,8 +239,11 @@ void DefinitionParser::ApplyProperties(
             }
         }
 
-        ASSERTMSG1(getPropIt != getProperties.end(),
-                   "Parser could not find the property named %s in the list given by the system.", prop->name());
+        if (getPropIt == getProperties.end()) {
+            ASSERTMSG1(getPropIt != getProperties.end(), "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
+            continue;
+        }
+
         i32 iValue = 0;
 
         for (ProtoStringList::const_iterator value = prop->value().begin();

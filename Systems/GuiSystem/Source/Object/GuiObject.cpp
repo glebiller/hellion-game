@@ -12,57 +12,25 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-//
-// extern includes
-//
-
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Ogre system includes
-//
 #include "GuiScene.h"
 #include "Object/GuiObject.h"
 
 #define POGREROOTNODE (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode())
 
+/**
+ * @inheritDoc
+ */
+GuiObject::GuiObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName){
 
-const char* GuiObject::sm_kapszTypeNames[] = {
-    "Light", "LightFire", "Camera", "Mesh", "MeshAnimated", "PointList", "Window", "StatWindow", "Chart", "CPUChart", "WorkloadWindow",
-    "ParticleSystem", "PagedGeometryLayer", "Terrain", "Sky",
-    NULL
-};
-
-
-GuiObject::GuiObject(ISystemScene* pSystemScene, const char* pszName)
-    : ISystemObject(pSystemScene, pszName) {
-    m_pszName = pszName;
 }
 
-
+/**
+ * @inheritDoc
+ */
 GuiObject::~GuiObject(void) {
 
-}
-
-void GuiObject::Update(f32 DeltaTime) {
-    UNREFERENCED_PARAM(DeltaTime);
-    return;
-}
-
-
-Error GuiObject::Initialize(std::vector<Properties::Property> Properties) {
-    ASSERT(!m_bInitialized);
-    return Errors::Success;
-}
-
-
-Error GuiObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
-    return Errors::Success;
 }
 

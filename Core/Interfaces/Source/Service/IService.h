@@ -22,7 +22,7 @@ class ISystemObject;
 #include "MathUtils.h"
 
 #include "Proto/Common/System.pb.h"
-#include "Service/CollisionAPI.h"
+#include "Service/API/Collision.h"
 #include "Property.h"
 #include "System.h"
 

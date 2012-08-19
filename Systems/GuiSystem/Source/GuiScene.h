@@ -47,24 +47,19 @@ class GuiScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        Error Initialize(Properties::Array Properties);
+        Error initialize(void);
         
         /**
          * @inheritDoc
          */
-        void GetProperties(Properties::Array& Properties);
-        
-        /**
-         * @inheritDoc
-         */
-        void SetProperties(Properties::Array Properties);
+        void Update(f32 DeltaTime);
         
         /**
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
             return System::Changes::None;
-        }
+        };
 
         /**
          * @inheritDoc
@@ -76,26 +71,18 @@ class GuiScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
         System::Type GetSystemType(void) {
             return System::Types::Gui;
-        }
+        };
         
         /**
          * @inheritDoc
          */
         ISystemTask* GetSystemTask(void) {
             return m_pTask;
-        }
+        };
 
     protected:
-
-        static const char*                      sm_kapszPropertyNames[];
-        static const Properties::Property       sm_kaDefaultProperties[];
 
         GuiTask*                                m_pTask;
 

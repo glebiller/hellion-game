@@ -82,17 +82,17 @@
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Object\GuiMouseObject.cpp" />
-    <ClCompile Include="Source\Object\GuiObject.cpp" />
     <ClCompile Include="Source\GuiScene.cpp" />
     <ClCompile Include="Source\GuiSystem.cpp" />
     <ClCompile Include="Source\GuiTask.cpp" />
+    <ClCompile Include="Source\Object\GuiObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Object\GuiMouseObject.h" />
-    <ClInclude Include="source\object\GuiObject.h" />
     <ClInclude Include="Source\GuiScene.h" />
     <ClInclude Include="Source\GuiSystem.h" />
     <ClInclude Include="Source\GuiTask.h" />
+    <ClInclude Include="Source\Object\GuiObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\BaseTypes\BaseTypes.vcxproj">

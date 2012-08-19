@@ -81,14 +81,14 @@
   <ItemGroup>
     <ClCompile Include="Source\Observer\CSubject.cpp" />
     <ClCompile Include="Source\Property.cpp" />
+    <ClCompile Include="Source\Property\IProperty.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
     <ClCompile Include="Source\System\ISystemSubject.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\IEnvironment.h" />
+    <ClInclude Include="Source\Generic\IGenericScene.h" />
     <ClInclude Include="Source\Interface.h" />
-    <ClInclude Include="Source\ITaskManager.h" />
     <ClInclude Include="Source\Object\IGeometryObject.h" />
     <ClInclude Include="Source\Object\Graphic.h" />
     <ClInclude Include="Source\Object\GUI.h" />
@@ -98,14 +98,16 @@
     <ClInclude Include="Source\Observer\IChangeManager.h" />
     <ClInclude Include="Source\Observer\IObserver.h" />
     <ClInclude Include="Source\Observer\ISubject.h" />
-    <ClInclude Include="Source\IPlatform.h" />
     <ClInclude Include="Source\Property.h" />
-    <ClInclude Include="Source\IService.h" />
-    <ClInclude Include="Source\Service\CollisionAPI.h" />
+    <ClInclude Include="Source\Property\IProperty.h" />
+    <ClInclude Include="Source\Service\API\Collision.h" />
+    <ClInclude Include="Source\Service\IEnvironment.h" />
+    <ClInclude Include="Source\Service\IPlatform.h" />
+    <ClInclude Include="Source\Service\IService.h" />
+    <ClInclude Include="Source\Service\ITaskManager.h" />
     <ClInclude Include="Source\System.h" />
-    <ClInclude Include="Source\System\ISystemSubject.h" />
-    <ClInclude Include="Source\System\IGenericScene.h" />
     <ClInclude Include="Source\System\ISystem.h" />
+    <ClInclude Include="Source\System\ISystemSubject.h" />
     <ClInclude Include="Source\System\ISystemObject.h" />
     <ClInclude Include="Source\System\ISystemScene.h" />
     <ClInclude Include="Source\System\ISystemTask.h" />

@@ -12,56 +12,52 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "CEGUI.h"
-
-#include "BaseTypes.h"
-#include "Interface.h"
-
-#include "GuiScene.h"
-#include "Object/GuiMouseObject.h"
+#include "Errors.h"
+#include "Property/IProperty.h"
 
 /**
  * @inheritDoc
  */
-GuiMouseObject::GuiMouseObject(ISystemScene* pSystemScene, const char* pszName) : GuiObject(pSystemScene, pszName) {
-
-}
-
-
-/**
- * @inheritDoc
- */
-GuiMouseObject::~GuiMouseObject(void) {
-
-}
+IProperty::IProperty(void)
+    : m_bInitialized(false) {
+    
+};
 
 /**
  * @inheritDoc
  */
-Error GuiMouseObject::initialize() {
-    ASSERT(!m_bInitialized);
-    return Errors::Success;
-}
-
+IProperty::~IProperty(void) {
+    
+};
 
 /**
  * @inheritDoc
  */
-void GuiMouseObject::Update(f32 DeltaTime) {
+Error IProperty::setProperties(const ProtoPropertyList &properties) {
+    for (ProtoPropertyList::const_iterator prop = properties.begin(); prop != properties.end(); prop++) {
+        PropertySetters::iterator propertySetterIterator = m_propertySetters.find(prop->name());
+        if (propertySetterIterator == m_propertySetters.end()) {
+            //ASSERTMSG1(false, "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
+            continue;
+        }
 
-}
-
-/**
- * @inheritDoc
- */
-Error GuiMouseObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
-    if (ChangeType & System::Changes::Input::Velocity) {
-        IMoveObject* pMoveObject = dynamic_cast<IMoveObject*>(pSubject);
-        CEGUI::System::getSingleton().injectMouseMove(pMoveObject->GetVelocity()->x, pMoveObject->GetVelocity()->y);
+        PropertySetter setter = m_propertySetters.find(prop->name())->second;
+        setter(prop->value());
     }
+
+    // Initialized not needed
+    if (m_bInitialized) {
+        return Errors::Success;
+    }
+    
+    Error status = initialize();
+    m_bInitialized = true;  
+    return status; 
+};
+
+/**
+ * @inheritDoc
+ */
+Error IProperty::initialize(void) {
     return Errors::Success;
-}
-
-
-
+};

@@ -16,6 +16,7 @@
 
 #include "Errors.h"
 #include "Property.h"
+#include "Property/IProperty.h"
 #include "Observer/CSubject.h"
 #include "Observer/IObserver.h"
 
@@ -24,7 +25,7 @@
  * 
  * @sa  ISubject
  */
-class ISystemSubject : public CSubject, public IObserver {
+class ISystemSubject : public CSubject, public IProperty, public IObserver {
 
     public :
         
@@ -82,9 +83,5 @@ class ISystemSubject : public CSubject, public IObserver {
          * @param   Properties  Property structure array to get values from.
          */
         virtual void SetProperties(std::vector<Properties::Property> Properties);
-
-    protected:
-
-        bool            m_bInitialized;
 
 };

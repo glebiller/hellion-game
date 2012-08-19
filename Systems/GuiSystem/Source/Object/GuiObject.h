@@ -15,8 +15,10 @@
 
 #pragma once
 
-#include "System/ISystemObject.h"
+#include <string>
+
 #include "System.h"
+#include "System/ISystemObject.h"
 
 class GuiSystem;
 class GuiScene;
@@ -48,30 +50,6 @@ class GuiObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        virtual void Update(f32 DeltaTime);
-
-        /**
-         * @inheritDoc
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void){
-            return System::Changes::None;
-        }
-
-        /**
-         * @inheritDoc
-         */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Input::Velocity;
-        }
-        
-        /**
-         * @inheritDoc
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-        
-        /**
-         * @inheritDoc
-         */
         System::Type GetSystemType(void) {
             return System::Types::Gui;
         }
@@ -85,19 +63,9 @@ class GuiObject : public ISystemObject {
         Types GetType(void) {
             return m_Type;
         }
-
-        /**
-         * @inheritDoc
-         */
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
         
     protected:
         
-        static const char*                  sm_kapszTypeNames[];
-        static const char*                  sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
-        
-        const char*                         m_pszName;
         Types                               m_Type;
 
 };

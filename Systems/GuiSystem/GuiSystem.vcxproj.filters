@@ -30,13 +30,13 @@
     <ClCompile Include="Source\GuiScene.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\GuiObject.cpp">
-      <Filter>Fichiers sources\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object\GuiMouseObject.cpp">
+      <Filter>Fichiers sources\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\GuiObject.cpp">
       <Filter>Fichiers sources\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +50,10 @@
     <ClInclude Include="Source\GuiScene.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="source\object\GuiObject.h">
+    <ClInclude Include="Source\Object\GuiMouseObject.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\GuiMouseObject.h">
+    <ClInclude Include="Source\Object\GuiObject.h">
       <Filter>Fichiers d%27en-tête\Object</Filter>
     </ClInclude>
   </ItemGroup>
