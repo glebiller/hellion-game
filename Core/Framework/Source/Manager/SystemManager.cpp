@@ -29,7 +29,7 @@ SystemManager::~SystemManager(void) {
 
 Error SystemManager::Add(ISystem* pSystem) {
     System::Type SystemType = pSystem->GetSystemType();
-    _ASSERT(m_Systems.find(SystemType) == m_Systems.end());
+    ASSERT(m_Systems.find(SystemType) == m_Systems.end());
     m_Systems[ SystemType ] = pSystem;
     return Errors::Success;
 }

@@ -16,15 +16,15 @@
 
 #pragma warning( push )
 #pragma warning( disable : 4100 4189 4244 4512 4634 )
-#include <tbb/task.h>
-#include <tbb/task_scheduler_init.h>
-#include <tbb/tbb_thread.h>
+#include "tbb/task.h"
+#include "tbb/task_scheduler_init.h"
+#include "tbb/tbb_thread.h"
 #pragma warning( pop )
 
 #include "BaseTypes.h"
 #include "Interface.h"
 
-#include <SpinMutex.h>
+#include "SpinMutex.h"
 
 #include "IttNotify.h"
 

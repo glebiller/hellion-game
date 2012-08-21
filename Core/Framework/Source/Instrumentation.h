@@ -14,8 +14,6 @@
 
 #pragma once
 
-#include <windows.h>
-
 #include "Singleton.h"
 
 /**
@@ -144,7 +142,7 @@ class Instrumentation : public IService::IInstrumentation, public Singleton {
                 // Can get compiler warnings about loss of precision; only really using low 32 bits of i64 value.
 #pragma warning ( push )
 #pragma warning ( disable : 4244 )
-                m_pAccumulatingFrameTicks[jobIndex] += (LONG)jobCounterTicks;
+                m_pAccumulatingFrameTicks[jobIndex] += (long)jobCounterTicks;
 #pragma warning ( pop )
                 //
                 //******************************

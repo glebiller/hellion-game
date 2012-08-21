@@ -228,7 +228,7 @@ extern "C"
     /**
      * Function definition for calling into a system library for initializing a system.
      */
-    void __attribute__((stdcall)) InitializeSystemLibFunction(
+    void __attribute__((__stdcall)) InitializeSystemLibFunction(
         ManagerInterfaces* pManagers
     );
 
@@ -237,7 +237,7 @@ extern "C"
      * 
      * @return   The newly created system.
      */
-    ISystem* __attribute__((stdcall)) CreateSystemFunction(
+    ISystem* __attribute__((__stdcall)) CreateSystemFunction(
         Debug::Debugger* p_Debugger
     );
 
@@ -246,7 +246,7 @@ extern "C"
      * 
      * @param    pSystem The system to destroy.
      */
-    void __attribute__((stdcall)) DestroySystemFunction(
+    void __attribute__((__stdcall)) DestroySystemFunction(
         ISystem* pSystem
     );    
 #endif

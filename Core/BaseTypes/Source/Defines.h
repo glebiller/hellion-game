@@ -49,7 +49,7 @@
 //
 // In Out InOut Inline
 //
-#ifdef _MSC_VER
+#ifdef MSC_COMPILER
 	#define In                              __in const
 	#define Out                             __out
 	#define InOut                           __inout
@@ -60,4 +60,9 @@
 	#define __forceinline                   inline __attribute__((always_inline))
 #endif
 
-
+//
+// stdcall
+//
+#ifndef MSC_COMPILER
+#define __stdcall
+#endif

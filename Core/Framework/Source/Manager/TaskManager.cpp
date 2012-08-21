@@ -13,15 +13,25 @@
 // responsibility to update it.
 
 #include "Defines.h"
-#include "TaskManager.h"
-#include "EnvironmentManager.h"
-#include "PlatformManager.h"
-#include "ServiceManager.h"
+#include "Manager/TaskManager.h"
+#include "Manager/EnvironmentManager.h"
+#include "Manager/PlatformManager.h"
+#include "Manager/ServiceManager.h"
 
 #include "Instrumentation.h"
 
-#include <process.h>
-#include <windows.h>
+#if defined(MSC_COMPILER)
+    #include <process.h>
+    #include <windows.h>
+#elif defined(GCC_COMPILER)
+    #include <cstdint>
+     
+    __inline__ u64 __rdtsc(void) {
+        u32 lo, hi;
+        __asm__ __volatile__("rdtscp" : "=a"(lo), "=d"(hi) :: "ecx" );
+        return (u64)hi << 32 | lo;
+    }
+#endif
 
 #pragma warning (push)
 #pragma warning (disable: 4100)
@@ -155,7 +165,9 @@ namespace local {
                     tbb::this_tbb_thread::sleep(tbb::tick_count::interval_t(0.1));
                 } else {
                     ASSERT(m_hWaitFor != NULL);
+#if defined(MSC_COMPILER)
                     WaitForSingleObject(m_hWaitFor, INFINITE);
+#endif
                 }
 
                 return NULL;
@@ -180,6 +192,7 @@ namespace local {
                 ASSERT(m_hAllCallbacksInvokedEvent != NULL);
                 m_fCallback(m_pCallbackParam);
 
+#if defined(MSC_COMPILER)
                 if (InterlockedDecrement(&m_lCallbacksCount) == 0) {
                     // set all of the SynchronizeTasks free
                     SetEvent(m_hAllCallbacksInvokedEvent);
@@ -187,6 +200,7 @@ namespace local {
                     // wait for somebody else to finish up
                     WaitForSingleObject(m_hAllCallbacksInvokedEvent, INFINITE);
                 }
+#endif
 
                 return NULL;
             }
@@ -199,7 +213,9 @@ namespace local {
                 m_fCallback = fFunc;
                 m_pCallbackParam = pParam;
                 m_lCallbacksCount = uCount;
+#if defined(MSC_COMPILER)
                 ResetEvent(m_hAllCallbacksInvokedEvent);
+#endif
             }
 
         protected:
@@ -266,8 +282,10 @@ TaskManager::Init(void) {
     m_uNumberOfThreads = 0;
     m_uTargetNumberOfThreads = 0;
     m_pStallPoolParent = NULL;
+#if defined(MSC_COMPILER)
     m_hStallPoolSemaphore = CreateSemaphore(NULL, 0, m_uRequestedNumberOfThreads, NULL);
     SynchronizeTask::m_hAllCallbacksInvokedEvent = CreateEvent(NULL, true, false, NULL);
+#endif
 #if defined(USE_THREAD_PROFILER)
     m_bTPEventsForTasks = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForTasks", false);
     m_bTPEventsForJobs = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForJobs", false);
@@ -296,13 +314,19 @@ TaskManager::Shutdown(void) {
     // get the callback thread to exit
     m_bTimeToQuit = true;
     // trigger the release of the stall pool
+#if defined(MSC_COMPILER)
     ReleaseSemaphore(m_hStallPoolSemaphore, m_uMaxNumberOfThreads, NULL);
+#endif
     m_pSystemTasksRoot->destroy(*m_pSystemTasksRoot);
     delete m_pTbbScheduler;
     // now get rid of all the events
+#if defined(MSC_COMPILER)
     CloseHandle(m_hStallPoolSemaphore);
+#endif
     m_hStallPoolSemaphore = NULL;
+#if defined(MSC_COMPILER)
     CloseHandle(SynchronizeTask::m_hAllCallbacksInvokedEvent);
+#endif
 #ifdef USE_THREAD_PROFILER
     m_SupportForSystemTasks.clear();
 #endif
@@ -529,7 +553,9 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
     // then execute them now
     // if we issued primary thread tasks that we're not waiting for this time,
     // then save them for the next time
+#if defined(MSC_COMPILER)
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+#endif
     SystemTasksList::iterator it = m_primaryThreadSystemTaskList.begin();
 
     for (; it != m_primaryThreadSystemTaskList.end(); ++it) {
@@ -545,7 +571,9 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
         }
     }
 
+#if defined(MSC_COMPILER)
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
+#endif
     m_primaryThreadSystemTaskList.clear();
     m_primaryThreadSystemTaskList.swap(m_tmpTaskList);
     // contribute to the parallel calculation, and when it completes, we're done
@@ -682,7 +710,9 @@ void TaskManager::UpdateThreadPoolSize(void) {
 
         // free up all the threads
         if (m_pStallPoolParent) {
+#if defined(MSC_COMPILER)
             ReleaseSemaphore(m_hStallPoolSemaphore, uNumThreadsToFree, NULL);
+#endif
             // Make sure there are no stall tasks from the previous cycle lingering
             // out there and competing for the semaphore
             m_pStallPoolParent->wait_for_all();

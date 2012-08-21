@@ -15,8 +15,8 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
-#include <Manager/EnvironmentManager.h>
-#include <Manager/ServiceManager.h>
+#include "Manager/EnvironmentManager.h"
+#include "Manager/ServiceManager.h"
 #include "Universal.h"
 #include "Manager/PlatformManager.h"
 #include "Manager/TaskManager.h"

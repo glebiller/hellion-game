@@ -118,6 +118,6 @@ class IEnvironment {
          *
          * @return  A reference to the runtime class.
          */
-        virtual IRuntime& Runtime(void) = 0;
+        virtual IEnvironment::IRuntime& Runtime(void) = 0;
 
 };

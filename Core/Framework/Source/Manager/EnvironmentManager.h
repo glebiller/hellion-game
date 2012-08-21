@@ -160,7 +160,7 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
         /// <summary cref="IEnvironment::Runtime">
         ///   Implementation of IEnvironment::Runtime.
         /// </summary>
-        virtual IRuntime& Runtime(void) {
+        virtual IEnvironment::IRuntime& Runtime(void) {
             return *this;
         }
 };

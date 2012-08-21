@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <windows.h>
-#include <string.h>
+#include <cstring>
+#include "boost/algorithm/string.hpp"
 
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -90,7 +90,7 @@ EnvironmentManager::Variables::IsString(
     GetValue(pszName, pszValue);
 
     if (pszValue != NULL) {
-        bValue = (_stricmp(pszValue, pszCompareValue) == 0);
+        bValue = boost::iequals(pszValue, pszCompareValue);
     }
 
     return bValue;
@@ -106,8 +106,8 @@ EnvironmentManager::Variables::GetAsBool(
     const char* pszValue;
 
     if (GetValue(pszName, pszValue)) {
-        ASSERT(!_stricmp(pszValue, "1") || !_stricmp(pszValue, "0"));
-        bValue = _stricmp(pszValue, "1") == 0;
+        ASSERT(!boost::iequals(pszValue, "1") || !boost::iequals(pszValue, "0"));
+        bValue = boost::iequals(pszValue, "1");
     }
 
     return bValue;
@@ -175,9 +175,8 @@ EnvironmentManager::GetStatus(
 }
 
 
-void
-EnvironmentManager::SetStatus(
-    IEnvironment::IRuntime::Status Status
-) {
-    ::InterlockedExchange((LONG*)&m_RuntimeStatus, Status);
+void EnvironmentManager::SetStatus(IEnvironment::IRuntime::Status Status) {
+#if defined(MSC_COMPILER)
+    ::InterlockedExchange((i32*)&m_RuntimeStatus, Status);
+#endif
 }

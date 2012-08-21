@@ -29,7 +29,7 @@ class Scheduler {
         ///   Constructor.
         /// </summary>
         /// <param name="pTaskManager">A pointer to the task manager.</param>
-        Scheduler(TaskManager* pTaskManager) throw (...);
+        Scheduler(TaskManager* pTaskManager);
 
         /// <summary>
         ///   Destructor.
