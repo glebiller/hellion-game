@@ -15,59 +15,70 @@
 
 #pragma once
 
+#include "System/ISystemScene.h"
 
 class GeometrySystem;
 class GeometryObject;
 
-
+/**
+ * Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
+ * class and its functions.
+ * 
+ * @sa  ISystemScene
+ */
 class GeometryScene : public ISystemScene {
-        friend GeometrySystem;
 
-    protected:
+    public:
 
+        /**
+         * @inheritDoc
+         */
         GeometryScene(ISystem* pSystem);
 
-        virtual ~GeometryScene(void);
-
-        virtual const void* GetSystemChangeData(System::Change SystemChange);
-
-        /////////////////////////////////
-        /// ISystemScene overrides
-        /////////////////////////////////
-
-        virtual System::Type GetSystemType(void);
-
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
-        virtual void GetProperties(Properties::Array& Properties);
-
-        virtual void SetProperties(Properties::Array Properties);
-
-        virtual const char** GetObjectTypes(void);
-
-        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
-
-        virtual Error DestroyObject(ISystemObject* pSystemObject);
-
-        virtual ISystemTask* GetSystemTask(void);
+        /**
+         * @inheritDoc
+         */
+        ~GeometryScene(void);
         
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;
+        };
+
         /**
          * @inheritDoc
          */
         System::Changes::BitMask GetDesiredSystemChanges(void) {
             return System::Changes::None;
         };
-
-        virtual void Update(f32 DeltaTime);
-
-        /////////////////////////////////
-        /// ISubject overrides
-        /////////////////////////////////
-
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Geometry;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        ISystemTask* GetSystemTask(void) {
+            return NULL;
+        };
 
     protected:
 
-        std::list<GeometryObject*>          m_Objects;
-
+        
 };

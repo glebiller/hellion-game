@@ -12,12 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-/////////////////////////////////
-/// Includes
-/////////////////////////////////
-
-
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -25,132 +19,45 @@
 #include "Object/Object.h"
 
 
-/////////////////////////////////
-/// Class Implementation
-/////////////////////////////////
-
-
-GeometryScene::GeometryScene(ISystem* pSystem)
-    : ISystemScene(pSystem) {
-}
-
-
-GeometryScene::~GeometryScene(
-    void
-) {
+/**
+ * @inheritDoc
+ */
+GeometryScene::GeometryScene(ISystem* pSystem) : ISystemScene(pSystem) {
     //
-    // Free all the remaining objects.
-    //
-    for (std::list<GeometryObject*>::iterator it = m_Objects.begin();
-            it != m_Objects.end(); it++) {
-        delete *it;
-    }
-
-    m_Objects.clear();
+    // Fill the properties default values
+    // 
 }
 
 
-System::Type GeometryScene::GetSystemType(void) {
-    return System::Types::Geometry;
+/**
+ * @inheritDoc
+ */
+GeometryScene::~GeometryScene(void) {
+
 }
 
 
-Error
-GeometryScene::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+/**
+ * @inheritDoc
+ */
+Error GeometryScene::initialize(void) {
     ASSERT(!m_bInitialized);
-    m_bInitialized = true;
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
+void GeometryScene::Update(f32 DeltaTime) {
+    /*ObjectsList Objects = m_pObjects;
 
-void
-GeometryScene::GetProperties(
-    Properties::Array& Properties
-) {
-    UNREFERENCED_PARAM(Properties);
-}
-
-
-void
-GeometryScene::SetProperties(
-    Properties::Array Properties
-) {
-    UNREFERENCED_PARAM(Properties);
-    ASSERT(m_bInitialized);
-}
-
-
-const char**
-GeometryScene::GetObjectTypes(
-    void
-) {
-    return NULL;
-}
-
-
-ISystemObject* GeometryScene::CreateObject(const char* pszName, const char* pszType) {
-    UNREFERENCED_PARAM(pszName);
-    UNREFERENCED_PARAM(pszType);
-    ASSERT(m_bInitialized);
-    ASSERT(pszType != NULL);
     //
-    // Create the object and add it to the object list.
+    // Cycle through all of our objects and apply the changes.
+    // Also post our change notifications to the CCM.
     //
-    GeometryObject* pObject = new GeometryObject(this);
-
-    if (pObject != NULL) {
-        m_Objects.push_back(pObject);
-    }
-
-    return pObject;
-}
-
-
-Error GeometryScene::DestroyObject(ISystemObject* pSystemObject) {
-    ASSERT(m_bInitialized);
-    ASSERT(pSystemObject != NULL);
-    //
-    // Cast to a GeometryObject so that the correct destructor will be called.
-    //
-    GeometryObject* pObject = reinterpret_cast<GeometryObject*>(pSystemObject);
-    //
-    // Remove the object from the list and delete it.
-    //
-    m_Objects.remove(pObject);
-    SAFE_DELETE(pSystemObject);
-    return Errors::Success;
-}
-
-
-ISystemTask*
-GeometryScene::GetSystemTask(
-    void
-) {
-    return NULL;
-}
-
-
-System::Changes::BitMask
-GeometryScene::GetPotentialSystemChanges(
-    void
-) {
-    return System::Changes::None;
-}
-
-
-const void*
-GeometryScene::GetSystemChangeData(
-    System::Change SystemChange
-) {
-    UNREFERENCED_PARAM(SystemChange);
-    return NULL;
-}
-
-void
-GeometryScene::Update(
-    f32 DeltaTime
-) {
+    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
+        GuiObject* pObject = static_cast<GuiObject*>(*it);
+        pObject->Update(DeltaTime);
+    }*/
     UNREFERENCED_PARAM(DeltaTime);
 }

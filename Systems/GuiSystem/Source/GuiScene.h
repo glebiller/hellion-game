@@ -15,7 +15,6 @@
 
 #pragma once
 
-#include "boost/function.hpp"
 #include "System/ISystemScene.h"
 #include "System/ISystem.h"
 #include "System.h"

@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include "Property.h"
+#include "Errors.h"
 #include "System.h"
 
 class ISystemScene;
@@ -26,6 +26,7 @@ class ISystemScene;
  * @sa  ISystem
  */
 class GeometrySystem : public ISystem {
+
     public:
         
         /**
@@ -36,38 +37,21 @@ class GeometrySystem : public ISystem {
         /**
          * Destructor.
          */
-        virtual ~GeometrySystem(void);
+        ~GeometrySystem(void);
+        
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Gui;
+        }
 
     protected:
-        
-        /**
-         * @inheritDoc
-         */
-        virtual System::Type GetSystemType(void);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual Error Initialize(Properties::Array Properties);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual void GetProperties(Properties::Array& Properties);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual void SetProperties(Properties::Array Properties);
 
-        /**
-         * @inheritDoc
-         */
-        virtual ISystemScene* CreateScene(void);
-
-        /**
-         * @inheritDoc
-         */
-        virtual Error DestroyScene(ISystemScene* pSystemScene);
 
 };

@@ -14,63 +14,91 @@
 
 #pragma once
 
+#include "Proto.h"
+#include "System.h"
+#include "System/ISystemObject.h"
 
 class GeometrySystem;
 class GeometryScene;
 
-
 class GeometryObject : public ISystemObject, public IGeometryObject {
-        friend GeometrySystem;
-        friend GeometryScene;
 
-    protected:
+    public:
 
+        /**
+         * @inheritDoc
+         */
         GeometryObject(ISystemScene* pSystemScene);
 
-        virtual ~GeometryObject(void);
+        /**
+         * @inheritDoc
+         */
+        ~GeometryObject(void);
 
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
 
-        virtual System::Type GetSystemType(void);
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Gui;
+        }
 
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::Geometry::All;
+        };
 
-        void GetProperties(Properties::Array& Properties);
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Physics::Position | System::Changes::Geometry::All
+        };
 
-        void SetProperties(Properties::Array Properties);
+        /**
+         * @inheritDoc
+         */
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
+        /**
+         * @inheritDoc
+         */
+        const Math::Vector3* GetPosition(void) {
+            return &m_Position;
+        }
 
-        virtual void Update(f32 DeltaTime);
+        /**
+         * @inheritDoc
+         */
+        const Math::Quaternion* GetOrientation(void) {
+            return &m_Orientation;
+        }
 
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
-
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-        /////////////////////////////////
-        /// IGeometryObject overrides
-        /////////////////////////////////
-
-        virtual const Math::Vector3* GetPosition(void);
-
-        virtual const Math::Quaternion* GetOrientation(void);
-
-        virtual const Math::Vector3* GetScale(void);
+        /**
+         * @inheritDoc
+         */
+        const Math::Vector3* GetScale(void) {
+            return &m_Scale;
+        }
 
     protected:
 
-        enum PropertyTypes {
-            Property_Position, Property_Orientation, Property_Scale,
-            Property_Count
-        };
-        static const char*                        sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
+        void setPosition(ProtoStringList values);
+
+        void setOrientation(ProtoStringList values);
+
+        void setScale(ProtoStringList values);
 
     private:
 

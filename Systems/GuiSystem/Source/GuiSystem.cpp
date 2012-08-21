@@ -45,7 +45,6 @@ GuiSystem::GuiSystem(void) : ISystem() {
 
 }
 
-
 /**
  * @inheritDoc
  */

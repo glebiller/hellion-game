@@ -12,60 +12,41 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// geometry system includes
-//
 #include "System.h"
 #include "Scene.h"
 #include "Object/Object.h"
 
 
-GeometrySystem::GeometrySystem(void)
-    : ISystem() {
+/**
+ * @inheritDoc
+ */
+GeometrySystem::GeometrySystem(void) : ISystem() {
+
+    //
+    // Init the Scene factory
+    //
+    m_SceneFactory = boost::factory<GeometryScene*>();
+
+    //
+    // Fill the properties default values
+    //
+    
 }
 
-
+/**
+ * @inheritDoc
+ */
 GeometrySystem::~GeometrySystem(void) {
+
 }
 
-
-System::Type GeometrySystem::GetSystemType(void) {
-    return System::Types::Geometry;
-}
-
-
-Error GeometrySystem::Initialize(Properties::Array Properties) {
+/**
+ * @inheritDoc
+ */
+Error GeometryScene::initialize(void) {
     ASSERT(!m_bInitialized);
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-
-void GeometrySystem::GetProperties(Properties::Array& Properties) {
-    UNREFERENCED_PARAM(Properties);
-}
-
-
-void GeometrySystem::SetProperties(Properties::Array Properties) {
-    ASSERT(m_bInitialized);
-}
-
-
-ISystemScene* GeometrySystem::CreateScene(void) {
-    return new GeometryScene(this);
-}
-
-
-Error GeometrySystem::DestroyScene(ISystemScene* pSystemScene) {
-    ASSERT(pSystemScene != NULL);
-    GeometryScene* pScene = reinterpret_cast<GeometryScene*>(pSystemScene);
-    SAFE_DELETE(pScene);
     return Errors::Success;
 }
