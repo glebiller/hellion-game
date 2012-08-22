@@ -22,33 +22,14 @@
 package fr.kissy.hellion.server;
 
 import fr.kissy.hellion.server.config.AppConfig;
-import fr.kissy.hellion.server.handler.ServerPipelineFactory;
+import fr.kissy.hellion.server.world.World;
 import org.apache.log4j.BasicConfigurator;
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
 
 public class Main {
 
     private static AnnotationConfigApplicationContext context;
-
-    private final int port;
-
-    public Main(int port) {
-        this.port = port;
-    }
-
-    public void run() {
-        ServerBootstrap bootstrap = new ServerBootstrap(
-                new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool())
-        );
-        bootstrap.setPipelineFactory(new ServerPipelineFactory());
-        bootstrap.bind(new InetSocketAddress(port));
-    }
 
 	public static void main(String[] args) {
         context = new AnnotationConfigApplicationContext();
@@ -57,7 +38,8 @@ public class Main {
         context.refresh();
         BasicConfigurator.configure();
 
-        new Main(8080).run();
+        // Run
+        World.init();
 	}
 
     /**

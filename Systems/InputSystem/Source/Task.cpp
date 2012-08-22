@@ -12,11 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-/////////////////////////////////
-/// Includes
-/////////////////////////////////
-
 #include "BaseTypes.h"
 #include "Interface.h"
 #include "OISB.h"
@@ -26,26 +21,22 @@
 #include "Object/Object.h"
 #include "Task.h"
 
-
-/////////////////////////////////
-/// Class implementation
-/////////////////////////////////
-
-
+/**
+ * @inheritDoc
+ */
 InputTask::InputTask(InputScene* pScene) : ISystemTask(pScene) {
     ASSERT(m_pSystemScene != NULL);
 }
 
-
+/**
+ * @inheritDoc
+ */
 InputTask::~InputTask(void) {
 }
 
-
-System::Type InputTask::GetSystemType(void) {
-    return System::Types::Input;
-}
-
-
+/**
+ * @inheritDoc
+ */
 void InputTask::Update(f32 DeltaTime) {
     OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);

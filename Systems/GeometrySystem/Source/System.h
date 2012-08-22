@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+cd // Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this

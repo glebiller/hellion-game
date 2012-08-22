@@ -18,8 +18,6 @@
 #include "GuiScene.h"
 #include "Object/GuiObject.h"
 
-#define POGREROOTNODE (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode())
-
 /**
  * @inheritDoc
  */

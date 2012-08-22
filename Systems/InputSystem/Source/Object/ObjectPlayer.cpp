@@ -12,12 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-/////////////////////////////////
-/// Includes
-/////////////////////////////////
-
-
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -25,113 +19,36 @@
 #include "Object/Object.h"
 #include "Object/ObjectPlayer.h"
 
-
-/////////////////////////////////
-/// Static elements
-/////////////////////////////////
-
-
 #define PINPUTSCENE         reinterpret_cast<InputScene*>(m_pSystemScene)
 
-const char* InputPlayerObject::sm_kapszCommonPropertyNames[] = {
-    "None"
-};
 
-const Properties::Property InputPlayerObject::sm_kaCommonDefaultProperties[] = {
-    Properties::Property(sm_kapszCommonPropertyNames[ Property_None ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid, false),
-};
-
-
-/////////////////////////////////
-/// Class implementation
-/////////////////////////////////
-
-
-InputPlayerObject::InputPlayerObject(
-    ISystemScene* pSystemScene,
-    const char* pszName
-)
-    : InputObject(pSystemScene, pszName)
+/**
+ * @inheritDoc
+ */
+InputPlayerObject::InputPlayerObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName)
     , m_Velocity(Math::Vector3::Zero) {
-    ASSERT(Property_Count == sizeof sm_kapszCommonPropertyNames / sizeof sm_kapszCommonPropertyNames[ 0 ]);
-    ASSERT(Property_Count == sizeof sm_kaCommonDefaultProperties / sizeof sm_kaCommonDefaultProperties[ 0 ]);
+
 }
 
-///////////////////////////////////////////////////////////////////////////////
-InputPlayerObject::~InputPlayerObject(
-    void
-) {
+/**
+ * @inheritDoc
+ */
+InputPlayerObject::~InputPlayerObject(void) {
+
 }
 
-///////////////////////////////////////////////////////////////////////////////
-Error
-InputPlayerObject::Initialize(
-    std::vector<Properties::Property> Properties
-) {
+/**
+ * @inheritDoc
+ */
+Error InputPlayerObject::initialize() {
     ASSERT(!m_bInitialized);
-
-    //
-    // Read in the properties.
-    //
-    for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
-        if (it->GetFlags() & Properties::Flags::Valid) {
-            std::string sName = it->GetName();
-        }
-    }
-
-    //
-    // Set this as initialized.
-    //
-    m_bInitialized = true;
-    //
-    // Set the properties for this object.
-    //
-    SetProperties(Properties);
     return Errors::Success;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-void
-InputPlayerObject::GetProperties(
-    Properties::Array& Properties
-) {
-    //
-    // Get the index of our first item.
-    //
-    i32 iProperty = static_cast<i32>(Properties.size());
-    //
-    // Add the common properties.
-    //
-    Properties.reserve(Properties.size() + Property_Count);
-
-    for (i32 i = 0; i < Property_Count; i++) {
-        Properties.push_back(sm_kaCommonDefaultProperties[ i ]);
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-void
-InputPlayerObject::SetProperties(
-    Properties::Array Properties
-) {
-    ASSERT(m_bInitialized);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-System::Types::BitMask
-InputPlayerObject::GetDesiredSystemChanges(
-    void
-) {
-    return System::Changes::Geometry::Orientation;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-void
-InputPlayerObject::Update(
-    f32 DeltaTime
-) {
+/**
+ * @inheritDoc
+ */
+void InputPlayerObject::Update(f32 DeltaTime) {
     u32 mModified = 0;
     InputScene* pScene = static_cast<InputScene*>(m_pSystemScene);
 
@@ -168,60 +85,10 @@ InputPlayerObject::Update(
     PostChanges(mModified);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-Error
-InputPlayerObject::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+/**
+ * @inheritDoc
+ */
+Error InputPlayerObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
     return Errors::Success;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-System::Changes::BitMask
-InputPlayerObject::GetPotentialSystemChanges(
-    void
-) {
-    return System::Changes::Input::Velocity | System::Changes::Geometry::Orientation;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputPlayerObject::GetVelocity(
-    void
-) {
-    return &m_Velocity;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputPlayerObject::GetPosition(
-    void
-) {
-    ASSERT(false);
-    return NULL;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Quaternion*
-InputPlayerObject::GetOrientation(
-    void
-) {
-    return &m_Orientation;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-const Math::Vector3*
-InputPlayerObject::GetScale(
-    void
-) {
-    ASSERT(false);
-    return NULL;
-}
-
-
-
-

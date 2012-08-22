@@ -25,109 +25,57 @@ class InputScene;
 class InputTask;
 
 /**
- * <c>InputCameraObject</c> Implementation of the ISystemObject interface. This is the Camera
- * object created objects.
+ * <c>InputCameraObject</c> Implementation of the ISystemObject interface.
+ * This is the Camera object created objects.
  * 
  * @sa  InputObject
  * @sa  IGeometryObject
- * @sa  IMoveObject
  */
-class InputCameraObject : public InputObject, public IGeometryObject, public IMoveObject {
+class InputCameraObject : public InputObject, public IGeometryObject {
 
-        friend InputSystem;
-        friend InputScene;
-        friend InputTask;
-
-    protected:
+    public:
 
         /**
-         * Constructor.
-         *
-         * @param [in,out]  pSystemScene    If non-null, the system scene.
-         * @param   pszName                 The name.
+         * @inheritDoc
          */
         InputCameraObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
-         * Destructor.
+         * @inheritDoc
          */
         ~InputCameraObject(void);
 
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
-
         /**
-         * Initializes this InputCameraObject.
-         *
-         * @param   Properties  The properties.
-         * @return  .
+         * @inheritDoc
          */
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
+        Error initialize(void);
+        
         /**
-         * Gets the properties.
-         *
-         * @param [in,out]  Properties  The properties.
+         * @inheritDoc
          */
-        virtual void GetProperties(Properties::Array& Properties);
-
+        void Update(f32 DeltaTime);
+        
         /**
-         * Sets the properties.
-         *
-         * @param   Properties  The properties.
+         * @inheritDoc
          */
-        virtual void SetProperties(Properties::Array Properties);
-
-        /**
-         * Gets the desired system changes.
-         *
-         * @return  The desired system changes.
-         */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
             return System::Changes::Geometry::Orientation;
-        }
+        };
 
         /**
-         * Updates the given DeltaTime.
-         *
-         * @param   DeltaTime   Time of the delta.
+         * @inheritDoc
          */
-        virtual void Update(f32 DeltaTime);
-
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
 
         /**
-         * Change occurred.
-         *
-         * @param [in,out]  pSubject    If non-null, the subject.
-         * @param   ChangeType          Type of the change.
-         * @return  .
+         * @inheritDoc
          */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
         /**
-         * Gets the potential system changes.
-         *
-         * @return  The potential system changes.
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void){
-            return System::Changes::Geometry::Orientation;
-        }
-
-        /////////////////////////////////
-        /// IGeometryObject overrides
-        /////////////////////////////////
-
-        /**
-         * Gets the position.
-         * Implementation of the <c>IGeometryObject::GetPosition</c> function.
-         *
-         * @return  Math::Vector3* - Returns the position for this object.
-         *
-         * @sa   IGeometryObject::GetPosition    .
+         * @inheritDoc
          */
         virtual const Math::Vector3* GetPosition(void) {
             ASSERT(false);
@@ -135,50 +83,19 @@ class InputCameraObject : public InputObject, public IGeometryObject, public IMo
         }
 
         /**
-         * Gets the orientation.
-         * Implementation of the <c>IGeometryObject::GetOrientation</c> function.
-         *
-         * @return  Math::Quaternion* - Returns the orientation quaternion for this object.
-         *
-         * @sa   IGeometryObject::GetOrientation .
+         * @inheritDoc
          */
         virtual const Math::Quaternion* GetOrientation(void) {
             return &m_Orientation;
         }
 
         /**
-         * Gets the scale.
-         * Implementation of the <c>IGeometryObject::GetScale</c> function.
-         *
-         * @return  Math::Vector3* - Returns the scale for this object.
-         *
-         * @sa   IGeometryObject::GetScale   .
+         * @inheritDoc
          */
         virtual const Math::Vector3* GetScale(void) {
             ASSERT(false);
             return NULL;
         }
-
-        /////////////////////////////////
-        /// IMoveObject overrides
-        /////////////////////////////////
-
-        /**
-         * Gets the velocity.
-         *
-         * @return  null if it fails, else the velocity.
-         */
-        virtual const Math::Vector3* GetVelocity(void) {
-            return &m_Velocity;
-        }
-
-    public:
-
-        enum CommonPropertyTypes {
-            Property_None, Property_Count
-        };
-        static const char*                        sm_kapszCommonPropertyNames[];
-        static const Properties::Property   sm_kaCommonDefaultProperties[];
 
     private:
 

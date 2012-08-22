@@ -23,11 +23,8 @@ class InputTask;
 
 
 class InputGuiObject : public InputObject {
-        friend InputSystem;
-        friend InputScene;
-        friend InputTask;
 
-    protected:
+    public:
 
         InputGuiObject(ISystemScene* pSystemScene, const char* pszName);
         ~InputGuiObject(void);

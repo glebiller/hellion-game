@@ -15,67 +15,57 @@
 
 #pragma once
 
+#include "Property.h"
+#include "System.h"
 
 class InputSystem;
 class InputScene;
 
 
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  GuiObject
+ */
 class InputObject : public ISystemObject {
-        friend class InputScene;
-        friend class InputTask;
+     
+    public:
 
-    protected:
+        enum Types {
+            Type_Controlled,
+            Type_GUI
+        };
 
+        /**
+         * @inheritDoc
+         */
         InputObject(ISystemScene* pSystemScene, const char* pszName);
 
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
-
+        /**
+         * @inheritDoc
+         */
         virtual ~InputObject(void);
 
-        virtual System::Type GetSystemType(void);
+        /**
+         * @inheritDoc
+         */
+        inline System::Type GetSystemType(void) {
+            return System::Types::Input;
+        }
 
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
-        void GetProperties(Properties::Array& Properties);
-
-        void SetProperties(Properties::Array Properties);
-
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
-        virtual void Update(f32 DeltaTime) = 0;
-
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
-
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) = 0;
+        /**
+         * Gets the type.
+         * Returns the type of graphics object.
+         *
+         * @return  GuiObject::Types - Type object.
+         */
+        inline Types GetType(void) {
+            return m_Type;
+        }
 
     protected:
-
-        /////////////////////////////////
-        /// Static elements
-        /////////////////////////////////
-        enum Types {
-            Type_Controlled, Type_GUI
-        };
-        static const char*                        sm_kapszTypeNames[];
-
-        enum PropertyTypes {
-            Property_FKey,
-            Property_Orientation,
-            Property_Count,
-            Property_Instrumentation
-        };
-        static const char*                        sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
-
-        /////////////////////////////////
-        /// Properties
-        /////////////////////////////////
+        
         Types                               m_Type;
 
 };

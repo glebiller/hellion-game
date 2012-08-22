@@ -12,11 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
-/////////////////////////////////
-/// Includes
-/////////////////////////////////
-
+#include "boost/functional/factory.hpp"
 
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -32,24 +28,31 @@
 #include "Task.h"
 
 
-/////////////////////////////////
-/// Static elements
-/////////////////////////////////
-
-
 extern ManagerInterfaces   g_Managers;
 
 
-/////////////////////////////////
-/// Class implementation
-/////////////////////////////////
-
-
+/**
+ * @inheritDoc
+ */
 InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pInputTask(NULL)
     , m_DefaultSchema(NULL) {
+    //
+    // Fill the object factories
+    // 
+    m_ObjectFactories["Player"] = boost::factory<InputPlayerObject*>();
+    m_ObjectFactories["Camera"] = boost::factory<InputCameraObject*>();
+    m_ObjectFactories["Mouse"] = boost::factory<InputMouseObject*>();
+    m_ObjectFactories["Gui"] = boost::factory<InputGuiObject*>();
+
+    //
+    // Fill the properties default values
+    // 
 }
 
+/**
+ * @inheritDoc
+ */
 InputScene::~InputScene(void) {
     //
     // Free all the remaining objects.
@@ -57,24 +60,22 @@ InputScene::~InputScene(void) {
     for (std::list<InputObject*>::iterator it = m_Objects.begin(); it != m_Objects.end(); it++) {
         delete *it;
     }
-
     m_Objects.clear();
+
     //
     // Delete the task object
     //
     SAFE_DELETE(m_pInputTask);
 }
 
-System::Type InputScene::GetSystemType(void) {
-    return System::Types::Input;
-}
-
-
-Error InputScene::Initialize(std::vector<Properties::Property> Properties) {
+/**
+ * @inheritDoc
+ */
+Error InputScene::initialize(void) {
     ASSERT(!m_bInitialized);
+
     m_pInputTask = new InputTask(this);
     ASSERT(m_pInputTask != NULL);
-
     if (m_pInputTask == NULL) {
         return Errors::Failure;
     }
@@ -139,78 +140,12 @@ Error InputScene::Initialize(std::vector<Properties::Property> Properties) {
     m_InputActions.MouseRightLeft->setProperty("Sensitivity", 1.0f);
     m_InputActions.MouseRightLeft->bind("Mouse/X Axis");
 
-    m_bInitialized = true;
     return Errors::Success;
 }
 
-
-void InputScene::GetProperties(Properties::Array& Properties) {
-    UNREFERENCED_PARAM(Properties);
-}
-
-
-void InputScene::SetProperties(Properties::Array Properties) {
-    ASSERT(m_bInitialized);
-}
-
-
-const char** InputScene::GetObjectTypes(void) {
-    return NULL;
-}
-
-
-ISystemObject* InputScene::CreateObject(const char* pszName, const char* pszType) {
-    ASSERT(m_bInitialized);
-    //
-    // Create the object and add it to the object list.
-    //
-    InputObject* pObject = NULL;
-
-    if (strcmp(pszType, "Player") == 0) {
-        pObject = new InputPlayerObject(this, pszName);
-    } else if (strcmp(pszType, "Camera") == 0) {
-        pObject = new InputCameraObject(this, pszName);
-    } else if (strcmp(pszType, "Mouse") == 0) {
-        pObject = new InputMouseObject(this, pszName);
-    } else {
-        pObject = new InputGuiObject(this, pszName);
-    }
-
-    ASSERT(pObject != NULL);
-
-    if (pObject != NULL) {
-        m_Objects.push_back(pObject);
-    }
-
-    return pObject;
-}
-
-
-Error InputScene::DestroyObject(ISystemObject* pSystemObject) {
-    ASSERT(m_bInitialized);
-    ASSERT(pSystemObject != NULL);
-    //
-    // Cast to a InputObject so that the correct destructor will be called.
-    //
-    InputObject* pObject = reinterpret_cast<InputObject*>(pSystemObject);
-    //
-    // Remove the object from the list and delete it.
-    //
-    m_Objects.remove(pObject);
-    SAFE_DELETE(pSystemObject);
-    return Errors::Success;
-}
-
-
-ISystemTask* InputScene::GetSystemTask(void) {
-    return m_pInputTask;
-}
-
-
-System::Changes::BitMask InputScene::GetPotentialSystemChanges(void) {
-    return System::Changes::Input::Velocity;
-}
-
+/**
+ * @inheritDoc
+ */
 void InputScene::Update(f32 DeltaTime) {
     std::list<InputObject*>& Objects = m_Objects;
 
@@ -230,11 +165,10 @@ void InputScene::Update(f32 DeltaTime) {
         //--------------------------------------------------------------------------
         // GUI Objects do not need to be modified.
         //
-        if (pObject->m_Type == pObject->Type_GUI) {
+        if (pObject->GetType() == pObject->Type_GUI) {
             continue;
         }
 
         pObject->Update(DeltaTime);
     }
 }
-

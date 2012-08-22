@@ -12,6 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "boost/lexical_cast.hpp"
+#include "boost/bind.hpp"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -78,9 +81,9 @@ Error GeometryObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMas
  */
 void GeometryObject::setPosition(ProtoStringList values) {
     ProtoStringList::const_iterator value = values.begin();
-    m_Position.x = *(value++);
-    m_Position.y = *(value++);
-    m_Position.z = *value;
+    m_Position.x = boost::lexical_cast<f32>(*(value++));
+    m_Position.y = boost::lexical_cast<f32>(*(value++));
+    m_Position.z = boost::lexical_cast<f32>(*value);
     PostChanges(System::Changes::Geometry::Position);
 }
 
@@ -89,10 +92,10 @@ void GeometryObject::setPosition(ProtoStringList values) {
  */
 void GeometryObject::setOrientation(ProtoStringList values) {
     ProtoStringList::const_iterator value = values.begin();
-    m_Orientation.x = *(value++);
-    m_Orientation.y = *(value++);
-    m_Orientation.z = *(value++);
-    m_Orientation.w = *value;
+    m_Orientation.x = boost::lexical_cast<f32>(*(value++));
+    m_Orientation.y = boost::lexical_cast<f32>(*(value++));
+    m_Orientation.z = boost::lexical_cast<f32>(*(value++));
+    m_Orientation.w = boost::lexical_cast<f32>(*value);
     PostChanges(System::Changes::Geometry::Orientation);
 }
 
@@ -101,8 +104,8 @@ void GeometryObject::setOrientation(ProtoStringList values) {
  */
 void GeometryObject::setScale(ProtoStringList values) {
     ProtoStringList::const_iterator value = values.begin();
-    m_Scale.x = *(value++);
-    m_Scale.y = *(value++);
-    m_Scale.z = *value;
+    m_Scale.x = boost::lexical_cast<f32>(*(value++));
+    m_Scale.y = boost::lexical_cast<f32>(*(value++));
+    m_Scale.z = boost::lexical_cast<f32>(*value);
     PostChanges(System::Changes::Geometry::Scale);
 }

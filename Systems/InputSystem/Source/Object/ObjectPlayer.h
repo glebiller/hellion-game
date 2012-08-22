@@ -15,88 +15,95 @@
 
 #pragma once
 
+#include "System.h"
+#include "Object/Object.h"
+#include "Object/IGeometryObject.h"
+#include "Object/IMoveObject.h"
+
 class InputObject;
 class InputSystem;
 class InputScene;
 class InputTask;
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>InputPlayerObject</c> Implementation of the ISystemObject interface.
-///   This is the Player object created objects.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * <c>InputMouseObject</c> Implementation of the ISystemObject interface.
+ * This is the Mouse object created objects.
+ * 
+ * @sa  InputObject
+ * @sa  IMoveObject
+ */
 class InputPlayerObject : public InputObject, public IGeometryObject, public IMoveObject {
-        friend InputSystem;
-        friend InputScene;
-        friend InputTask;
-
-    protected:
-
-        InputPlayerObject(ISystemScene* pSystemScene, const char* pszName);
-        ~InputPlayerObject(void);
-
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
-
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
-        virtual void GetProperties(Properties::Array& Properties);
-
-        virtual void SetProperties(Properties::Array Properties);
-
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
-        virtual void Update(f32 DeltaTime);
-
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
-
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-        /////////////////////////////////
-        /// IGeometryObject overrides
-        /////////////////////////////////
-
-        /// <summary cref="HavokObject::GetPosition">
-        ///   Implementation of the <c>IGeometryObject::GetPosition</c> function.
-        /// </summary>
-        /// <returns>Math::Vector3* - Returns the position for this object.</returns>
-        /// <seealso cref="IGeometryObject::GetPosition"/>
-        virtual const Math::Vector3* GetPosition(void);
-
-        /// <summary cref="HavokObject::GetOrientation">
-        ///   Implementation of the <c>IGeometryObject::GetOrientation</c> function.
-        /// </summary>
-        /// <returns>Math::Quaternion* - Returns the orientation quaternion for this object.</returns>
-        /// <seealso cref="IGeometryObject::GetOrientation"/>
-        virtual const Math::Quaternion* GetOrientation(void);
-
-        /// <summary cref="HavokObject::GetScale">
-        ///   Implementation of the <c>IGeometryObject::GetScale</c> function.
-        /// </summary>
-        /// <returns>Math::Vector3* - Returns the scale for this object.</returns>
-        /// <seealso cref="IGeometryObject::GetScale"/>
-        virtual const Math::Vector3* GetScale(void);
-
-        /////////////////////////////////
-        /// IMoveObject overrides
-        /////////////////////////////////
-
-        virtual const Math::Vector3* GetVelocity(void);
 
     public:
 
-        enum CommonPropertyTypes {
-            Property_None, Property_Count
+        /**
+         * @inheritDoc
+         */
+        InputPlayerObject(ISystemScene* pSystemScene, const char* pszName);
+
+        /**
+         * @inheritDoc
+         */
+        ~InputPlayerObject(void);
+        
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::Input::Velocity | System::Changes::Geometry::Orientation;
         };
-        static const char*                        sm_kapszCommonPropertyNames[];
-        static const Properties::Property   sm_kaCommonDefaultProperties[];
+
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Geometry::Orientation;
+        };
+
+        /**
+         * @inheritDoc
+         */
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+
+        /**
+         * @inheritDoc
+         */
+        virtual const Math::Vector3* GetPosition(void) {
+            ASSERT(false);
+            return NULL;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        virtual const Math::Quaternion* GetOrientation(void) {
+            return &m_Orientation;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        virtual const Math::Vector3* GetScale(void) {
+            ASSERT(false);
+            return NULL;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        virtual const Math::Vector3* GetVelocity(void) {
+            return &m_Velocity;
+        }
 
     private:
 

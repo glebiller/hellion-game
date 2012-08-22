@@ -19,54 +19,36 @@
 #include "Property.h"
 #include "System/ISystem.h"
 
+/**
+ * Input system.
+ * 
+ * @sa  ISystem
+ */
 class InputSystem : public ISystem {
+
     public:
 
+        /**
+         * @inheritDoc
+         */
         InputSystem(void);
 
-        virtual ~InputSystem(void);
+        /**
+         * @inheritDoc
+         */
+        ~InputSystem(void);
 
-    protected:
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
 
-        /////////////////////////////////
-        /// ISystem overrides
-        /////////////////////////////////
-
-        virtual System::Type GetSystemType(void);
-
-        virtual Error Initialize(Properties::Array Properties);
-
-        virtual void GetProperties(Properties::Array& Properties);
-
-        virtual void SetProperties(Properties::Array Properties);
-
-        virtual ISystemScene* CreateScene(void);
-
-        virtual Error DestroyScene(ISystemScene* pSystemScene);
-
-    public:
-
-        typedef struct _HotKey {
-            std::string psKey;
-            bool  bCtrl;
-        } HotKey;
-        std::map<const char*, HotKey*> m_aHotKeys;
-        typedef std::map<const char*, HotKey*>::iterator hotKeyIt;
-
-    protected:
-
-        enum HotKeyTypes {
-            HotKey_MoveForward,
-            HotKey_MoveBack,
-            HotKey_MoveLeft,
-            HotKey_MoveRight,
-            HotKey_Quit,
-            HotKey_PolygonMode,
-            HotKey_Count
-        };
-
-        static const char* sm_kapszPropertyNames[];
-        static const Properties::Property sm_kaDefaultProperties[];
-
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Input;
+        }
+        
 };
 

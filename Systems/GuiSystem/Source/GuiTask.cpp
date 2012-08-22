@@ -12,52 +12,41 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
-
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-// UPDATE: provides access to environment variables
-extern ManagerInterfaces   g_Managers;
-
-//
-// Gui system includes
-//
 #include "GuiScene.h"
 #include "GuiTask.h"
-
 
 #include "Object/GuiObject.h"
 
 #include "IttNotify.h"
 #include "CEGUI.h"
 
+// UPDATE: provides access to environment variables
+extern ManagerInterfaces   g_Managers;
+
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Gui: Rendering", 19);
 
+/**
+ * @inheritDoc
+ */
 GuiTask::GuiTask(GuiScene* pScene) : ISystemTask((ISystemScene*)pScene)
     , m_pScene(pScene) {
 
 }
 
-
+/**
+ * @inheritDoc
+ */
 GuiTask::~GuiTask(void) {
 
 }
 
-
+/**
+ * @inheritDoc
+ */
 void GuiTask::Update(f32 DeltaTime) {
-    //
-    // Update objects for next frame
-    //
     CEGUI::System::getSingleton().injectTimePulse(DeltaTime);
-
-    //
-    // Update objects for next frame
-    //
     m_pScene->Update(DeltaTime);
 }

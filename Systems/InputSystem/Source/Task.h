@@ -18,25 +18,44 @@
 
 class InputScene;
 
+/**
+ * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
+ * definition of the class and its functions.
+ * 
+ * @sa  ISystemTask
+ */
 class InputTask : public ISystemTask {
-        friend class InputScene;
+    
+    public:
 
-    protected:
-
+        /**
+         * @inheritDoc
+         */
         InputTask(InputScene* pScene);
+
+        /**
+         * @inheritDoc
+         */
         ~InputTask(void);
 
-        /////////////////////////////////
-        /// ISystemTask overrides
-        /////////////////////////////////
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
 
-        virtual System::Type GetSystemType(void);
-
-        virtual void Update(f32 DeltaTime);
-
-        virtual bool IsPrimaryThreadOnly(void) {
+        /**
+         * @inheritDoc
+         */
+        inline bool IsPrimaryThreadOnly(void) {
             return false;
         };
+        
+        /**
+         * @inheritDoc
+         */
+        inline System::Type GetSystemType(void) {
+            return System::Types::Input;
+        }
 
 };
 

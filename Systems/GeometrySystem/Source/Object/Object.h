@@ -63,7 +63,7 @@ class GeometryObject : public ISystemObject, public IGeometryObject {
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Physics::Position | System::Changes::Geometry::All
+            return System::Changes::Physics::Position | System::Changes::Geometry::All;
         };
 
         /**

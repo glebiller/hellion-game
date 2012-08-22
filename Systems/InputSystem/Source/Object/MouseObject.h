@@ -27,101 +27,54 @@ class InputScene;
 class InputTask;
 
 /**
- * <c>InputMouseObject</c> Implementation of the ISystemObject interface. This is the Camera
- * object created objects.
+ * <c>InputMouseObject</c> Implementation of the ISystemObject interface.
+ * This is the Mouse object created objects.
  * 
  * @sa  InputObject
- * @sa  IGeometryObject
  * @sa  IMoveObject
  */
 class InputMouseObject : public InputObject, public IMoveObject {
 
-        friend InputSystem;
-        friend InputScene;
-        friend InputTask;
-
-    protected:
+    public:
 
         /**
-         * Constructor.
-         *
-         * @param [in,out]  pSystemScene    If non-null, the system scene.
-         * @param   pszName                 The name.
+         * @inheritDoc
          */
         InputMouseObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
-         * Destructor.
+         * @inheritDoc
          */
         ~InputMouseObject(void);
-
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
-
+        
         /**
-         * Initializes this InputMouseObject.
-         *
-         * @param   Properties  The properties.
-         * @return  .
+         * @inheritDoc
          */
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
+        Error initialize(void);
+        
         /**
-         * Gets the properties.
-         *
-         * @param [in,out]  Properties  The properties.
+         * @inheritDoc
          */
-        virtual void GetProperties(Properties::Array& Properties);
-
+        void Update(f32 DeltaTime);
+        
         /**
-         * Sets the properties.
-         *
-         * @param   Properties  The properties.
+         * @inheritDoc
          */
-        virtual void SetProperties(Properties::Array Properties);
-
-        /**
-         * Gets the desired system changes.
-         *
-         * @return  The desired system changes.
-         */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        }
-
-        /**
-         * Updates the given DeltaTime.
-         *
-         * @param   DeltaTime   Time of the delta.
-         */
-        virtual void Update(f32 DeltaTime);
-
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
-
-        /**
-         * Change occurred.
-         *
-         * @param [in,out]  pSubject    If non-null, the subject.
-         * @param   ChangeType          Type of the change.
-         * @return  .
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        /**
-         * Gets the potential system changes.
-         *
-         * @return  The potential system changes.
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void){
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
             return System::Changes::Input::Velocity;
-        }
+        };
 
-        /////////////////////////////////
-        /// IMoveObject overrides
-        /////////////////////////////////
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
+
+        /**
+         * @inheritDoc
+         */
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
         /**
          * Gets the velocity.
@@ -131,14 +84,6 @@ class InputMouseObject : public InputObject, public IMoveObject {
         virtual const Math::Vector3* GetVelocity(void) {
             return &m_Velocity;
         }
-
-    public:
-
-        enum CommonPropertyTypes {
-            Property_None, Property_Count
-        };
-        static const char*                  sm_kapszCommonPropertyNames[];
-        static const Properties::Property   sm_kaCommonDefaultProperties[];
 
     private:
 
