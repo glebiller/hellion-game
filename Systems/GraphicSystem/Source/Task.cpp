@@ -115,27 +115,6 @@ void OGREGraphicsTask::Update(f32 DeltaTime) {
             if (GraphicObject::Type_Camera == pObject->GetType()) {
                 GraphicObjectCamera* pCamera = dynamic_cast<GraphicObjectCamera*>(pObject);
                 ASSERT(pCamera != NULL);
-
-                // polygon mode
-                switch (polygonMode) {
-                    case PolygonMode_Points:
-                    case PolygonMode_Points_NoTex:
-                        pCamera->m_pCamera->setPolygonMode(Ogre::PM_POINTS);
-                        break;
-
-                    case PolygonMode_WireFrame:
-                    case PolygonMode_WireFrame_NoTex:
-                        pCamera->m_pCamera->setPolygonMode(Ogre::PM_WIREFRAME);
-                        break;
-
-                    case PolygonMode_Solid:
-                    case PolygonMode_Solid_NoTex:
-                        pCamera->m_pCamera->setPolygonMode(Ogre::PM_SOLID);
-                        break;
-
-                    default:
-                        ASSERT(false);
-                }
             } else if ((GraphicObject::Type_Mesh == pObject->GetType()) ||
                        (GraphicObject::Type_MeshAnimated == pObject->GetType())) {
                 GraphicObjectMesh* pMesh = dynamic_cast<GraphicObjectMesh*>(pObject);

@@ -52,14 +52,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PHYSICSYSTEM_EXPORTS;__HAVOK_VDB__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Core\Framework\Source;$(SolutionDir)Externs\ProtocolBuffers\Source;$(HAVOK_HOME)\Source;$(TBB_HOME)\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source;$(SolutionDir)Core\BaseTypes\Source;$(SolutionDir)Core\Interfaces\Source;$(SolutionDir)Core\Framework\Source;$(SolutionDir)Externs\ProtocolBuffers\Source;$(HAVOK_HOME)\Source;$(TBB_HOME)\include;$(OGRE_HOME)\include\OGRE;$(BOOST_HOME)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>PhysicSystem.def</ModuleDefinitionFile>
       <AdditionalDependencies>OgreMain_d.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib;tbb_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib\debug;$(OGRE_HOME)\boost\lib;$(HAVOK_HOME)\Lib\win32_vs2010_noSimd\debug_multithreaded;$(TBB_HOME)\lib\ia32\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\lib\debug;$(BOOST_HOME)\stage\lib;$(HAVOK_HOME)\Lib\win32_vs2010_noSimd\debug_multithreaded;$(TBB_HOME)\lib\ia32\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <IgnoreSpecificDefaultLibraries>LIBCMTD</IgnoreSpecificDefaultLibraries>
     </Link>

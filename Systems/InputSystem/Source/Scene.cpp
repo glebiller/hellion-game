@@ -54,17 +54,6 @@ InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem)
  * @inheritDoc
  */
 InputScene::~InputScene(void) {
-    //
-    // Free all the remaining objects.
-    //
-    for (std::list<InputObject*>::iterator it = m_Objects.begin(); it != m_Objects.end(); it++) {
-        delete *it;
-    }
-    m_Objects.clear();
-
-    //
-    // Delete the task object
-    //
     SAFE_DELETE(m_pInputTask);
 }
 
@@ -147,7 +136,7 @@ Error InputScene::initialize(void) {
  * @inheritDoc
  */
 void InputScene::Update(f32 DeltaTime) {
-    std::list<InputObject*>& Objects = m_Objects;
+    ObjectsList Objects = m_pObjects;
 
     // Global inputs
     if (m_InputActions.Exit->isActive()) {
@@ -159,16 +148,8 @@ void InputScene::Update(f32 DeltaTime) {
     // Cycle through all of our objects and apply the changes.
     // Also post our change notifications to the CCM.
     //
-    for (std::list<InputObject*>::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        InputObject* pObject = *it;
-
-        //--------------------------------------------------------------------------
-        // GUI Objects do not need to be modified.
-        //
-        if (pObject->GetType() == pObject->Type_GUI) {
-            continue;
-        }
-
+    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
+        InputObject* pObject = static_cast<InputObject*>(*it);
         pObject->Update(DeltaTime);
     }
 }

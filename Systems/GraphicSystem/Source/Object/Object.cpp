@@ -64,7 +64,7 @@ System::Type GraphicObject::GetSystemType(void) {
 }
 
 
-Error GraphicObject::Initialize(std::vector<Properties::Property> Properties) {
+Error GraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
     //
     // Create the scene node for this object.

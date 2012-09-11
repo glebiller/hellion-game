@@ -28,10 +28,18 @@ class OGREGraphicsScene;
 /// </summary>
 ///////////////////////////////////////////////////////////////////////////////
 class GraphicObject : public ISystemObject {
-        friend OGREGraphicsScene;
-
-
+    
     public:
+        
+        /**
+         * @inheritDoc
+         */
+        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
+
+        /**
+         * @inheritDoc
+         */
+        ~GraphicObject(void);
 
         enum Types {
             Type_Light,             // Light source (i.e. point light)
@@ -52,25 +60,24 @@ class GraphicObject : public ISystemObject {
             Type_Count,
         };
 
-        /// <summary cref="GraphicObject::GetType">
-        ///   Returns the type of graphics object
-        /// </summary>
-        /// <returns>GraphicObject::Types - Type object</returns>
+        /**
+         * @inheritDoc
+         */
         Types GetType(void) {
             return m_Type;
         }
 
-        /// <summary cref="GraphicObject::Update">
-        ///   Implementation of the <c>ISystemTask::Update</c> method.
-        /// </summary>
-        /// <param name="DeltaTime">Elapsed time since the last frame.</param>
-        /// <seealso cref="ISystemTask::Update"/>
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
         virtual void Update(f32 DeltaTime);
 
     protected:
-
-        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
-        ~GraphicObject(void);
 
         /// <summary cref="GraphicObject::GetSystemType">
         ///   Implementation of the <c>ISystemObject::GetSystemType</c> function.
@@ -80,14 +87,7 @@ class GraphicObject : public ISystemObject {
         /// <returns>System::Type - Type of this system.</returns>
         /// <seealso cref="ISystemObject::GetSystemType"/>
         virtual System::Type GetSystemType(void);
-
-        /// <summary cref="GraphicObject::Initialize">
-        ///   Implementation of the <c>ISystem::Initialize</c> function.
-        /// </summary>
-        /// <param name="Properties">Initializes the object with the properties specified by <paramref name="Properties"/>.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="ISystem::Initialize"/>
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
+        
 
         /// <summary cref="GraphicObject::GetDesiredSystemChanges">
         ///   Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.

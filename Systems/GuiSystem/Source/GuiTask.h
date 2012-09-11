@@ -58,9 +58,5 @@ class GuiTask : public ISystemTask {
             return System::Types::Graphic;
         }
 
-    protected:
-
-        GuiScene*                  m_pScene;
-
 };
 

@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "boost/functional/factory.hpp"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -24,8 +26,14 @@
  */
 GeometryScene::GeometryScene(ISystem* pSystem) : ISystemScene(pSystem) {
     //
+    // Fill the object factories
+    // 
+    m_ObjectFactories["Default"] = boost::factory<GeometryObject*>();
+
+    //
     // Fill the properties default values
     // 
+    
 }
 
 

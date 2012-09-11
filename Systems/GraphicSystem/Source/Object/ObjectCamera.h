@@ -28,175 +28,74 @@ class OGREGraphicTask;
  * @sa  GraphicObject
  * @sa  IGeometryObject
  */
-class GraphicObjectCamera : public GraphicObject, public IGeometryObject {
+class GraphicObjectCamera : public GraphicObject {
 
-        friend GraphicSystem;
-        friend OGREGraphicsScene;
-        friend OGREGraphicsTask;
-
-    protected:
-
+    public:
+        
         /**
-         * Constructor.
-         *
-         * @param [in,out]  pSystemScene    If non-null, the system scene.
-         * @param   pszName                 The name.
+         * @inheritDoc
          */
         GraphicObjectCamera(ISystemScene* pSystemScene, const char* pszName);
-
+        
         /**
-         * Destructor.
+         * @inheritDoc
          */
         ~GraphicObjectCamera(void);
-
+        
         /**
-         * Initializes this GraphicObjectCamera.
-         * Implementation of the <c>ISystem::Initialize</c> function.
-         *
-         * @param   Properties  Initializes the object with the properties specified by
-         *                      <paramref name="Properties"/>.
-         * @return  Error.
-         *
-         * @sa   GraphicObject::Initialize   .
+         * @inheritDoc
          */
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
+        Error initialize(void);
+        
         /**
-         * Gets the properties.
-         * Implementation of the <c>ISystem::GetProperties</c> function.
-         *
-         * @param   Properties  Gets the properties of the object.
-         *
-         * @sa   ISystem::GetProperties  .
+         * @inheritDoc
          */
-        virtual void GetProperties(Properties::Array& Properties);
-
+        void Update(f32 DeltaTime);
+        
         /**
-         * Sets the properties.
-         * Implementation of the <c>ISystem::SetProperties</c> function.
-         *
-         * @param   Properties  Sets the properties of the object.
-         *
-         * @sa   ISystem::SetProperties  .
+         * @inheritDoc
          */
-        virtual void SetProperties(Properties::Array Properties);
-
+        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;    
+        }
+        
         /**
-         * Gets the desired system changes.
-         * Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.
-         *
-         * @return  System::Types::BitMask - System changes desired by the object.
-         *
-         * @sa   GraphicObject::GetSystemType    .
+         * @inheritDoc
          */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
+        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Physics::Position | GraphicObject::GetDesiredSystemChanges();
+        }
+        
         /**
-         * Change occurred.
-         * Implementation of the <c>IObserver::ChangeOccurred</c> function.
-         *
-         * @param   pSubject    Subject of this notification.
-         * @param   ChangeType  Type of notification for this object.
-         * @return  Error.
-         *
-         * @sa   GraphicObject::ChangeOccurred   .
+         * @inheritDoc
          */
         virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-        /**
-         * Updates the polygon mode based on m_PolygonMode.
-         */
-        void UpdatePolygonMode(void);
-
-        /**
-         * Updates the given DeltaTime.
-         * Implementation of the <c>ISystemTask::Update</c> method.
-         *
-         * @param   DeltaTime   Elapsed time since the last frame.
-         *
-         * @sa   GraphicObject::Update   .
-         */
-        void Update(f32 DeltaTime);
-
-    public:
-
-        /**
-         * Gets the position.
-         * Implementation of the IGeometryObject GetPosition function.
-         *
-         * @return  null if it fails, else the position.
-         *
-         * @sa   IGeometryObject::GetPosition    .
-         */
-        virtual const Math::Vector3* GetPosition(void);
-
-        /**
-         * Gets the orientation.
-         * Implementation of the IGeometryObject GetOrientation function.
-         *
-         * @return  null if it fails, else the orientation.
-         *
-         * @sa   IGeometryObject::GetOrientation .
-         */
-        virtual const Math::Quaternion* GetOrientation(void);
-
-        /**
-         * Gets the scale.
-         * Implementation of the IGeometryObject GetScale function.
-         *
-         * @return  null if it fails, else the scale.
-         *
-         * @sa   IGeometryObject::GetScale   .
-         */
-        virtual const Math::Vector3* GetScale(void);
-
-        /**
-         * Gets the potential system changes.
-         * Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
-         *
-         * @return  System::Changes::BitMask - Returns systems changes possible for this object.
-         *
-         * @sa   GraphicObject::GetPotentialSystemChanges    .
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-
     protected:
 
-        //
-        // Camera Graphics Object
-        //
-        enum PropertyTypes {
-            Property_FOVy, Property_ClipDistances, Property_LookAt,
-            Property_PolygonMode, Property_LockCamera, Property_PagedGeometry,
-            Property_Count
-        };
+        void setFOVy(ProtoStringList values);
 
-        static const const char*            sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
+        void setClipDistances(ProtoStringList values);
+
+        void setPolygonMode(ProtoStringList values);
+
+        void setPagedGeometry(ProtoStringList values);
+
+    private:
 
         Ogre::Camera*                       m_pCamera;
         Ogre::SceneNode*                    m_pCameraNode;
         Ogre::Viewport*                     m_pViewport;
 
-        bool                                m_bLocked;
-        Math::Vector3                       m_vLookAt;
-
-        System::Types::BitMask              m_Modified;
+        Ogre::Vector3                       m_vLookAt;
 
         enum PolygonModes {
             PolygonMode_Invalid = -1,
-
-            PolygonMode_Points, PolygonMode_WireFrame, PolygonMode_Solid,
+            PolygonMode_Points,
+            PolygonMode_WireFrame,
+            PolygonMode_Solid,
             PolygonMode_Count
         };
-
-        static const const char*            sm_kapszPolygonModeEnumOptions[];
-        PolygonModes                        m_PolygonMode;
-
-        Math::Vector3                       m_Position;     // Position of AI object
-        Math::Quaternion                    m_Orientation;  // Orientation of AI object
-        Math::Vector3                       m_Scale;        // Scale of AI object
 
 };
 

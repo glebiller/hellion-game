@@ -240,7 +240,7 @@ void DefinitionParser::ApplyProperties(
         }
 
         if (getPropIt == getProperties.end()) {
-            ASSERTMSG1(getPropIt != getProperties.end(), "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
+            //ASSERTMSG1(getPropIt != getProperties.end(), "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
             continue;
         }
 

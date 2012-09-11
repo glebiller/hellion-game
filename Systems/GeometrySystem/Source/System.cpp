@@ -48,7 +48,7 @@ GeometrySystem::~GeometrySystem(void) {
 /**
  * @inheritDoc
  */
-Error GeometryScene::initialize(void) {
+Error GeometrySystem::initialize(void) {
     ASSERT(!m_bInitialized);
     return Errors::Success;
 }

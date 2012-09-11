@@ -53,14 +53,14 @@
 		<System Type="Gui">
 		</System>
 		<System Type="Input">
-			<Properties>
+			<!--<Properties>
 				<Property Name="MoveForward" Value1="W" Value2="0"/>
 				<Property Name="MoveBack" Value1="S" Value2="0"/>
 				<Property Name="MoveLeft" Value1="A" Value2="0"/>
 				<Property Name="MoveRight" Value1="D" Value2="0"/>
 				<Property Name="Quit" Value1="ESCAPE" Value2="0"/>
 				<Property Name="PolygonMode" Value1="P" Value2="1"/>
-			</Properties>
+			</Properties>-->
 		</System>
 		<!--<System Type="Network"/>-->
 		<System Type="Physic"/>

@@ -57,7 +57,7 @@
 			<Properties SystemType="Input" ObjectType="Player">
 				<!--<Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0"/>-->
 			</Properties>
-			<Properties SystemType="Geometry">
+			<Properties SystemType="Geometry" ObjectType="Default">
 				<!--<Property Name="Position" Value1="510" Value2="10" Value3="510"/>-->
 				<Property Name="Position" Value1="510" Value2="10" Value3="-490"/>
 				<Property Name="Orientation" Value1="0" Value2="0" Value3="0" Value4="1"/>
@@ -79,7 +79,7 @@
 		<Object Name="MainCamera">
 			<Properties SystemType="Input" ObjectType="Camera">
 			</Properties>
-			<Properties SystemType="Geometry">
+			<Properties SystemType="Geometry" ObjectType="Default">
 				<Property Name="Position" Value1="10.0" Value2="5.0" Value3="0.0" />
 			</Properties>
 			<Properties SystemType="Graphic" ObjectType="Camera">
@@ -98,7 +98,7 @@
 		
 		<!-- DEBUG -->
 		<Object Name="MainUnit">
-			<Properties SystemType="Geometry">
+			<Properties SystemType="Geometry" ObjectType="Default">
 				<Property Name="Position" Value1="512" Value2="10" Value3="512"/>
 				<Property Name="Orientation" Value1="0" Value2="0" Value3="0" Value4="-1"/>
 				<Property Name="Scale" Value1="1" Value2="1" Value3="1"/>

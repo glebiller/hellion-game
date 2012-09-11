@@ -16,9 +16,11 @@
 
 #include "OISB.h"
 #include "System/ISystemScene.h"
+#include "System/ISystem.h"
+#include "System.h"
+#include "Task.h"
 
 class InputSystem;
-class InputTask;
 class InputObject;
 
 
@@ -77,7 +79,7 @@ class InputScene : public ISystemScene {
          * @inheritDoc
          */
         ISystemTask* GetSystemTask(void) {
-            return NULL;
+            return m_pInputTask;
         };
 
         struct InputActions {
@@ -104,7 +106,6 @@ class InputScene : public ISystemScene {
     protected:
 
         InputTask*                      m_pInputTask;
-        std::list<InputObject*>         m_Objects;
         OISB::ActionSchema*             m_DefaultSchema;
 
 };
