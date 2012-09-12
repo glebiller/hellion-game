@@ -52,12 +52,11 @@ void InputMouseObject::Update(f32 DeltaTime) {
     u32 mModified = 0;
     InputScene* pScene = static_cast<InputScene*>(m_pSystemScene);
     
-    //if (pScene->m_InputActions.MouseRightLeft->hasChanged()) {
-        m_Velocity.x = pScene->m_InputActions.MouseRightLeft->getRelativeValue();
-        m_Velocity.y = pScene->m_InputActions.MouseUpDown->getRelativeValue();
-        mModified |= System::Changes::Input::Velocity;
-        PostChanges(mModified);
-    //}
+    m_Velocity.x = pScene->m_InputActions.MouseRightLeft->getRelativeValue();
+    m_Velocity.y = pScene->m_InputActions.MouseUpDown->getRelativeValue();
+    mModified |= System::Changes::Input::Velocity;
+
+    PostChanges(mModified);
 }
 
 /**

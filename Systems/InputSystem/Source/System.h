@@ -49,6 +49,9 @@ class InputSystem : public ISystem {
         System::Type GetSystemType(void) {
             return System::Types::Input;
         }
+
+    protected:
+
         
 };
 

@@ -144,10 +144,6 @@ void InputScene::Update(f32 DeltaTime) {
         return;
     }
 
-    //
-    // Cycle through all of our objects and apply the changes.
-    // Also post our change notifications to the CCM.
-    //
     for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
         InputObject* pObject = static_cast<InputObject*>(*it);
         pObject->Update(DeltaTime);

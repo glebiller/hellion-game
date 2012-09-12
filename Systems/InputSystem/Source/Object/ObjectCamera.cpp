@@ -53,8 +53,8 @@ void InputCameraObject::Update(f32 DeltaTime) {
     
     m_Orientation.y = pScene->m_InputActions.CameraRotateUpDown->getAbsoluteValue();
     m_Orientation.x = pScene->m_InputActions.CameraRotateRightLeft->getAbsoluteValue();
-    
     mModified |= System::Changes::Geometry::Orientation;
+
     PostChanges(mModified);
 }
 

@@ -26,7 +26,6 @@
  * @inheritDoc
  */
 GeometrySystem::GeometrySystem(void) : ISystem() {
-
     //
     // Init the Scene factory
     //

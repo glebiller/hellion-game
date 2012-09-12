@@ -38,7 +38,7 @@ GuiMouseObject::~GuiMouseObject(void) {
 /**
  * @inheritDoc
  */
-Error GuiMouseObject::initialize() {
+Error GuiMouseObject::initialize(void) {
     ASSERT(!m_bInitialized);
     return Errors::Success;
 }

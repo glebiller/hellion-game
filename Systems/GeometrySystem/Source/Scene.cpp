@@ -57,15 +57,9 @@ Error GeometryScene::initialize(void) {
  * @inheritDoc
  */
 void GeometryScene::Update(f32 DeltaTime) {
-    /*ObjectsList Objects = m_pObjects;
-
-    //
-    // Cycle through all of our objects and apply the changes.
-    // Also post our change notifications to the CCM.
-    //
+    ObjectsList Objects = m_pObjects;
     for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        GuiObject* pObject = static_cast<GuiObject*>(*it);
+        GeometryObject* pObject = static_cast<GeometryObject*>(*it);
         pObject->Update(DeltaTime);
-    }*/
-    UNREFERENCED_PARAM(DeltaTime);
+    }
 }

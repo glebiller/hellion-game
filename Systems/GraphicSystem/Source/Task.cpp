@@ -273,10 +273,10 @@ void OGREGraphicsTask::Update(f32 DeltaTime) {
                             Ogre::SceneNode* capNode;
 
                             if (pMesh->m_pNode) {
-                                capNode = pMesh->m_pNode->createChildSceneNode(std::string(pMesh->m_pszName).append(sCaption));
+                                capNode = pMesh->m_pNode->createChildSceneNode(pMesh->m_sName.append(sCaption));
                             } else {
                                 capNode = m_pScene->m_pSceneManager->getRootSceneNode()->createChildSceneNode(
-                                              std::string(pMesh->m_pszName).append(sCaption),
+                                              pMesh->m_sName.append(sCaption),
                                               TOOGREVEC(pMesh->m_Position),
                                               TOOGREQUAT(pMesh->m_Orientation));
                             }
@@ -289,10 +289,10 @@ void OGREGraphicsTask::Update(f32 DeltaTime) {
                 } else {
                     if (pMesh->m_pCaption != NULL) {
                         if (pMesh->m_pNode) {
-                            pMesh->m_pNode->removeAndDestroyChild(std::string(pMesh->m_pszName).append(sCaption));
+                            pMesh->m_pNode->removeAndDestroyChild(pMesh->m_sName.append(sCaption));
                         } else {
                             m_pScene->m_pSceneManager->getRootSceneNode()->removeAndDestroyChild(
-                                std::string(pMesh->m_pszName).append(sCaption));
+                                pMesh->m_sName.append(sCaption));
                         }
 
                         pMesh->m_pCaption = NULL;

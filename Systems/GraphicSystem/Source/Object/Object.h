@@ -15,31 +15,22 @@
 
 #pragma once
 
+#include "System.h"
+#include "System/ISystemObject.h"
 #include "SpinMutex.h"
 
 class GraphicSystem;
 class OGREGraphicsScene;
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Implementation of the IGraphicsObject interface.
-///   See Interfaces\Graphics.h and Interfaces\System.h for a definition of the
-///   class and its functions.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  ISystemObject
+ */
 class GraphicObject : public ISystemObject {
     
     public:
-        
-        /**
-         * @inheritDoc
-         */
-        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
-
-        /**
-         * @inheritDoc
-         */
-        ~GraphicObject(void);
 
         enum Types {
             Type_Light,             // Light source (i.e. point light)
@@ -59,6 +50,50 @@ class GraphicObject : public ISystemObject {
             Type_Sky,               // The Sky
             Type_Count,
         };
+        
+        /**
+         * @inheritDoc
+         */
+        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
+
+        /**
+         * @inheritDoc
+         */
+        virtual ~GraphicObject(void);
+
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Graphic;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        virtual Error initialize(void);
+
+        /**
+         * @inheritDoc
+         */
+        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;
+        };
+
+        /**
+         * @inheritDoc
+         */
+        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Geometry::Position |
+                   System::Changes::Geometry::Orientation |
+                   System::Changes::Geometry::Scale |
+                   System::Changes::Graphics::GUI;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
         /**
          * @inheritDoc
@@ -67,61 +102,13 @@ class GraphicObject : public ISystemObject {
             return m_Type;
         }
 
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual void Update(f32 DeltaTime);
-
-    protected:
-
-        /// <summary cref="GraphicObject::GetSystemType">
-        ///   Implementation of the <c>ISystemObject::GetSystemType</c> function.
-        ///   Lets this object know when a registered aspects of interest has changed
-        ///   (this function will be called when other systems make changes this object should know about).
-        /// </summary>
-        /// <returns>System::Type - Type of this system.</returns>
-        /// <seealso cref="ISystemObject::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
-        
-
-        /// <summary cref="GraphicObject::GetDesiredSystemChanges">
-        ///   Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Types::BitMask - System changes desired by the object.</returns>
-        /// <seealso cref="ISystemObject::GetSystemType"/>
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
-        /// <summary cref="GraphicObject::ChangeOccurred">
-        ///   Implementation of the <c>IObserver::ChangeOccurred</c> function.
-        /// </summary>
-        /// <param name="pSubject">Subject of this notification.</param>
-        /// <param name="ChangeType">Type of notification for this object.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="IObserver::ChangeOccurred"/>
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        /// <summary cref="GraphicObject::GetPotentialSystemChanges">
-        ///   Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Changes::BitMask - Returns systems changes possible for this object.</returns>
-        /// <seealso cref="ISubject::GetPotentialSystemChanges"/>
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-
-    protected:
+    public:
 
         Types                               m_Type;
         static const char*                  sm_kapszTypeNames[];
 
-        const char*                         m_pszName;
-
         Ogre::SceneNode*                    m_pNode;
-
         DEFINE_SPIN_MUTEX(m_mutex);
+
 };
 
