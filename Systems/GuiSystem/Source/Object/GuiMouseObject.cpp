@@ -27,7 +27,6 @@ GuiMouseObject::GuiMouseObject(ISystemScene* pSystemScene, const char* pszName) 
 
 }
 
-
 /**
  * @inheritDoc
  */
@@ -42,7 +41,6 @@ Error GuiMouseObject::initialize(void) {
     ASSERT(!m_bInitialized);
     return Errors::Success;
 }
-
 
 /**
  * @inheritDoc

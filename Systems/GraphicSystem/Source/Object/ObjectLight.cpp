@@ -12,23 +12,15 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
+
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
 #pragma warning( pop )
 
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Ogre system includes
-//
 #include "Scene.h"
 #include "System.h"
 #include "Object.h"
@@ -37,213 +29,52 @@
 
 #define POGRESCENEMGR (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRESceneManager())
 
-
-const const char* GraphicObjectLight::sm_kapszLightTypeEnumOptions[] = {
-    "Point", "Spot", NULL
-};
-
-const char* GraphicObjectLight::sm_kapszPropertyNames[] = {
-    "Type", "Position", "Diffuse", "Specular",
-    "Direction", "Range", "Attenuation", // spotlight only
-};
-
-const Properties::Property GraphicObjectLight::sm_kaDefaultProperties[] = {
-    Properties::Property(sm_kapszPropertyNames[ Property_Type ],
-    VALUE1(Properties::Values::Enum),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    LightType_Point),
-    Properties::Property(sm_kapszPropertyNames[ Property_Position ],
-    Properties::Values::Vector3,
-    Properties::Flags::Valid,
-    Math::Vector3::Zero),
-    Properties::Property(sm_kapszPropertyNames[ Property_Diffuse ],
-    Properties::Values::Color3,
-    Properties::Flags::Valid,
-    Math::Color3::Black),
-    Properties::Property(sm_kapszPropertyNames[ Property_Specular ],
-    Properties::Values::Color3,
-    Properties::Flags::Valid,
-    Math::Color3::Black),
-    Properties::Property(sm_kapszPropertyNames[ Property_Direction ],
-    Properties::Values::Vector3,
-    Properties::Flags::Valid,
-    Math::Vector3::Zero),
-    Properties::Property(sm_kapszPropertyNames[ Property_Range ],
-    VALUE3(Properties::Values::Angle, Properties::Values::Angle, Properties::Values::Float32),
-    Properties::Flags::Valid,
-    Math::Vector3::Zero),
-    Properties::Property(sm_kapszPropertyNames[ Property_Attenuation ],
-    VALUE1x4(Properties::Values::Float32),
-    Properties::Flags::Valid,
-    Math::Vector3::Zero),
-};
-
-
-GraphicObjectLight::GraphicObjectLight(
-    ISystemScene* pSystemScene,
-    const char* pszName
-)
-    : GraphicObject(pSystemScene, pszName)
-    , m_LightType(LightType_Invalid)
+/**
+ * @inheritDoc
+ */
+GraphicObjectLight::GraphicObjectLight(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName)
     , m_pLight(NULL) {
-    ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
-    ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
     m_Type = GraphicObject::Type_Light;
 }
 
-
-GraphicObjectLight::~GraphicObjectLight(
-    void
-) {
+/**
+ * @inheritDoc
+ */
+GraphicObjectLight::~GraphicObjectLight(void) {
     if (m_pLight != NULL) {
         m_pNode->detachObject(m_pLight);
         POGRESCENEMGR->destroyLight(m_pLight);
     }
 }
 
-
-Error
-GraphicObjectLight::Initialize(
-    std::vector<Properties::Property> Properties
-) {
-    Error Err = Errors::Failure;
+/**
+ * @inheritDoc
+ */
+Error GraphicObjectLight::initialize(void) {
     ASSERT(!m_bInitialized);
-    //
-    // Call the base class.
-    //
-    GraphicObject::Initialize(Properties);
 
-    //
-    // Read in the initialization only properties.
-    //
-    for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
-        if (it->GetFlags() & Properties::Flags::Valid &&
-                it->GetFlags() & Properties::Flags::InitOnly) {
-            std::string sName = it->GetName();
+    GraphicObject::initialize();
+    m_pLight = POGRESCENEMGR->createLight(m_sName);
 
-            if (sName == sm_kapszPropertyNames[ Property_Type ]) {
-                //
-                // Get the light type.
-                //
-                m_LightType = static_cast<LightTypes>(it->GetInt32(0));
-                ASSERT(m_LightType > LightType_Invalid);
-                ASSERT(m_LightType < LightType_Count);
-                //
-                // Set this property to invalid since it's already been read.
-                //
-                it->ClearFlag(Properties::Flags::Valid);
-            }
-        }
-    }
-
-    ASSERT(m_LightType != LightType_Invalid);
-    //
-    // Create the light.
-    //
-    m_pLight = POGRESCENEMGR->createLight(m_pszName);
-
-    switch (m_LightType) {
-        case LightType_Point:
-            m_pLight->setType(Ogre::Light::LT_POINT);
-            break;
-
-        case LightType_Directional:
-            m_pLight->setType(Ogre::Light::LT_DIRECTIONAL);
-            break;
-
-        case LightType_Spot:
-            m_pLight->setType(Ogre::Light::LT_SPOTLIGHT);
-            break;
-
-        default:
-            ASSERT(false);
-    };
-
-    if (m_pLight != NULL) {
-        //
-        // Set this set as initialized.
-        //
-        m_bInitialized = true;
-        //
-        // Set the remaining properties for this object.
-        //
-        SetProperties(Properties);
-        Err = Errors::Success;
-    }
-
-    return Err;
+    return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
+void GraphicObjectLight::Update(f32 DeltaTime) {
 
-void
-GraphicObjectLight::GetProperties(
-    Properties::Array& Properties
-) {
-    //
-    // Get the index of our first item.
-    //
-    i32 iProperty = static_cast<i32>(Properties.size());
-    //
-    // Add all the properties.
-    //
-    Properties.reserve(Properties.size() + Property_Count);
-
-    for (i32 i = 0; i < Property_Count; i++) {
-        Properties.push_back(sm_kaDefaultProperties[ i ]);
-    }
-
-    //
-    // Set the enum options string array.
-    //
-    Properties[ iProperty + Property_Type ].SetEnumOptions(sm_kapszLightTypeEnumOptions);
-
-    //
-    // Modify the default values.
-    //
-    if (m_pLight != NULL) {
-        Properties[ iProperty + Property_Type ].SetValue(0, m_LightType);
-        Ogre::Vector3 OgrePos = m_pLight->getPosition();
-        Math::Vector3 Position(OgrePos.x, OgrePos.y, OgrePos.z);
-        Properties[ iProperty + Property_Position ].SetValue(Position);
-        const Ogre::ColourValue OgreDiffuseColor = m_pLight->getDiffuseColour();
-        Math::Color3 DiffuseColor = { OgreDiffuseColor.r, OgreDiffuseColor.g, OgreDiffuseColor.b };
-        Properties[ iProperty + Property_Diffuse ].SetValue(DiffuseColor);
-        const Ogre::ColourValue OgreSpecularColor = m_pLight->getSpecularColour();
-        Math::Color3 SpecularColor = { OgreSpecularColor.r, OgreSpecularColor.g,
-                                       OgreSpecularColor.b
-                                     };
-        Properties[ iProperty + Property_Diffuse ].SetValue(SpecularColor);
-
-        if (m_LightType == LightType_Spot) {
-            Ogre::Vector3 OgreDir = m_pLight->getDirection();
-            Math::Vector3 Direction(OgreDir.x, OgreDir.y, OgreDir.z);
-            Properties[ iProperty + Property_Direction ].SetValue(Direction);
-            Properties[ iProperty + Property_Range ].SetValue(
-                0, static_cast<f32>(m_pLight->getSpotlightInnerAngle().valueRadians())
-            );
-            Properties[ iProperty + Property_Range ].SetValue(
-                1, static_cast<f32>(m_pLight->getSpotlightOuterAngle().valueRadians())
-            );
-            Properties[ iProperty + Property_Range ].SetValue(
-                2, static_cast<f32>(m_pLight->getSpotlightFalloff())
-            );
-            Properties[ iProperty + Property_Attenuation ].SetValue(
-                0, static_cast<f32>(m_pLight->getAttenuationRange())
-            );
-            Properties[ iProperty + Property_Attenuation ].SetValue(
-                1, static_cast<f32>(m_pLight->getAttenuationConstant())
-            );
-            Properties[ iProperty + Property_Attenuation ].SetValue(
-                2, static_cast<f32>(m_pLight->getAttenuationLinear())
-            );
-            Properties[ iProperty + Property_Attenuation ].SetValue(
-                3, static_cast<f32>(m_pLight->getAttenuationQuadric())
-            );
-        }
-    }
 }
 
+/**
+ * @inheritDoc
+ */
+Error GraphicObjectLight::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+    ASSERT(m_bInitialized);
+    return Errors::Success;
+}
 
+/*
 void
 GraphicObjectLight::SetProperties(
     Properties::Array Properties
@@ -317,4 +148,4 @@ GraphicObjectLight::SetProperties(
         }
     }
 }
-
+*/
