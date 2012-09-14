@@ -20,6 +20,7 @@ import fr.kissy.hellion.proto.UpstreamMessageDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
@@ -48,6 +49,14 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
             return;
         }
         context.sendUpstream(event);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        SecurityUtils.getSubject().logout();
     }
 
     /**

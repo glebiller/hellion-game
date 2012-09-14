@@ -1,6 +1,7 @@
 package fr.kissy.hellion.server.world;
 
 import com.infomatiq.jsi.rtree.RTree;
+import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.ServerPipelineFactory;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
@@ -27,8 +28,17 @@ public class World {
     /**
      * Add player to world.
      */
-    public void addPlayer() {
+    public void addPlayer(Player player) {
+        players.add(player, player.getId());
+    }
 
+    /**
+     * Remove a player from world.
+     *
+     * @param player The player to remove.
+     */
+    public void removePlayer(Player player) {
+        players.delete(player, player.getId());
     }
 
     /**

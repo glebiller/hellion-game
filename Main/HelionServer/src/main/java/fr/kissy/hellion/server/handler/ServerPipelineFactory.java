@@ -29,6 +29,7 @@ public class ServerPipelineFactory implements ChannelPipelineFactory {
 
         pipeline.addLast("security", new SecurityServerHandler());
         pipeline.addLast("handler", new MessageServerHandler());
+
         return pipeline;
     }
 }

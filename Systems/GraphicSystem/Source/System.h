@@ -32,12 +32,30 @@ class OGREGraphicsTask;
  * @sa  Ogre::WindowEventListener
  */
 class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
-        friend OGREGraphicsScene;
 
     public:
 
+        /**
+         * @inheritDoc
+         */
         GraphicSystem(void);
-        virtual ~GraphicSystem(void);
+
+        /**
+         * @inheritDoc
+         */
+        ~GraphicSystem(void);
+
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Graphic;
+        }
 
         /**
          * Gets the ogre root.
@@ -71,98 +89,56 @@ class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
     protected:
 
         /**
-         * Gets the system type.
-         * Implementation of the <c>ISystem::GetSystemType</c> function. Gets the system type for this
-         * system.
+         * Sets the resources location.
          *
-         * @return  System::Type - The type of the system.
-         *
-         * @sa   ISystem::GetSystemType  .
+         * @param   values  The values.
          */
-        virtual System::Type GetSystemType(void);
+        void setResourceLocation(ProtoStringList values);
 
         /**
-         * Initializes this :.
-         * Implementation of the <c>ISystem::Initialize</c> function. One time initialization function
-         * for the system.
+         * Sets the window name.
          *
-         * @param   Properties  Property structure array to initialize.
-         * @return  Error - Any error codes.
-         *
-         * @sa   ISystem::Initialize .
+         * @param   values  The values.
          */
-        virtual Error Initialize(Properties::Array Properties);
+        void setWindowName(ProtoStringList values);
 
         /**
-         * Gets the properties.
-         * Implementation of the <c>ISystem::GetProperties</c> function. Gets the properties of this
-         * system.
+         * Sets the resolution.
          *
-         * @param   Properties  Property structure array to fill.
-         *
-         * @sa   ISystem::GetProperties  .
+         * @param   values  The values.
          */
-        virtual void GetProperties(Properties::Array& Properties);
+        void setResolution(ProtoStringList values);
 
         /**
-         * Sets the properties.
-         * Implementation of the <c>ISystem::SetProperties</c> function. Sets the properties for this
-         * system.
+         * Sets the fullscreen.
          *
-         * @param   Properties  Properties to set in the system.
-         *
-         * @sa   ISystem::SetProperties  .
+         * @param   values  The values.
          */
-        virtual void SetProperties(Properties::Array Properties);
+        void setFullScreen(ProtoStringList values);
 
         /**
-         * Creates the scene.
-         * Implementation of the <c>ISystem::CreateScene</c> function. Creates a system scene for
-         * containing system objects.
+         * Sets the vertical sync.
          *
-         * @return  ISystemScene* - The newly create system scene.
-         *
-         * @sa   ISystem::CreateScene    .
+         * @param   values  The values.
          */
-        virtual ISystemScene* CreateScene(void);
+        void setVerticalSync(ProtoStringList values);
 
         /**
-         * Destroys the scene described by pSystemScene.
-         * Implementation of the <c>ISystem::DestroyScene</c> function. Destroys a system scene.
+         * Sets the anti aliasing.
          *
-         * @param   pSystemScene    The scene to destroy. Any objects within are destroyed.
-         * @return  Error - Any error codes.
-         *
-         * @sa   ISystem::DestroyScene   .
+         * @param   values  The values.
          */
-        virtual Error DestroyScene(ISystemScene* pSystemScene);
+        void setAntiAliasing(ProtoStringList values);
 
-
-    protected:
-
-        enum PropertyTypes {
-            Property_ResourceLocation,
-            Property_WindowName,
-            Property_Resolution,
-            Property_ShadowTexture,
-            Property_FullScreen,
-            Property_VerticalSync,
-            Property_FSAntiAliasing,
-            Property_Count
-        };
-
-        static const char*                  sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
+    private:
 
         Ogre::Root*                         m_pRoot;
 
         Ogre::ResourceGroupManager*         m_pResourceGroupManager;
         Ogre::MaterialManager*              m_pMaterialManager;
-
         Ogre::RenderSystem*                 m_pRenderSystem;
-        Ogre::RenderWindow*                 m_pRenderWindow;
 
-        u16                                 m_uShadowTextureCount;
-        u16                                 m_uShadowTextureSize;
+        Ogre::RenderWindowDescription       m_RenderWindowDescription;
+        Ogre::RenderWindow*                 m_pRenderWindow;
 };
 

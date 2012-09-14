@@ -17,9 +17,14 @@ package fr.kissy.hellion.server.handler;
 
 import fr.kissy.hellion.proto.DownstreamMessageDto;
 import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.message.MessageHandler;
 import fr.kissy.hellion.server.handler.message.impl.AuthenticateMessageHandler;
+import fr.kissy.hellion.server.world.World;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
@@ -63,6 +68,20 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
         }
 
         event.getChannel().write(builder.build());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            Player player = (Player) subject.getSession().getAttribute(Player.class.getSimpleName());
+            if (player != null) {
+                World.getInstance().removePlayer(player);
+            }
+        }
     }
 
     /**

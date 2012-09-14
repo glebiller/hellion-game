@@ -21,7 +21,7 @@
 /**
  * @inheritDoc
  */
-GuiObject::GuiObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName){
+GuiObject::GuiObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
 
 }
 

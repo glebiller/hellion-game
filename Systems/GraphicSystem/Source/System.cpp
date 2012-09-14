@@ -12,9 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
@@ -22,98 +19,52 @@
 #include "OgreWindowEventUtilities.h"
 #pragma warning( pop )
 
-//
-// Core includes
-//
+#include "boost/lexical_cast.hpp"
+#include "boost/bind.hpp"
+
 #include "Defines.h"
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Graphic system includes
-//
 #include "System.h"
 #include "Scene.h"
 
 
-//
-// Global variables
-//
 extern HINSTANCE            g_hInstance;
 extern ManagerInterfaces    g_Managers;
 
-//
-// Static member variables
-//
-const char* GraphicSystem::sm_kapszPropertyNames[] = {
-    "ResourceLocation",
-    "WindowName",
-    "Resolution",
-    "ShadowTexture",
-    "FullScreen",
-    "VerticalSync",
-    "FSAntiAliasing",
-};
 
-const Properties::Property GraphicSystem::sm_kaDefaultProperties[] = {
-    Properties::Property(sm_kapszPropertyNames[ Property_ResourceLocation ],
-    VALUE4(Properties::Values::String,
-    Properties::Values::String,
-    Properties::Values::String,
-    Properties::Values::Boolean),
-    Properties::Flags::Valid | Properties::Flags::InitOnly |
-    Properties::Flags::Multiple,
-    "", "", "", 0),
-
-    Properties::Property(sm_kapszPropertyNames[ Property_WindowName ],
-    VALUE1(Properties::Values::String),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    ""),
-    Properties::Property(sm_kapszPropertyNames[ Property_Resolution ],
-    VALUE1x2(Properties::Values::Int32),
-    Properties::Flags::Valid,
-    1024, 768),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShadowTexture ],
-    VALUE1x2(Properties::Values::Int32),
-    Properties::Flags::Valid,
-    1, 1024),
-    Properties::Property(sm_kapszPropertyNames[ Property_FullScreen ],
-    VALUE1(Properties::Values::Int32),
-    Properties::Flags::Valid,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_VerticalSync ],
-    VALUE1(Properties::Values::Int32),
-    Properties::Flags::Valid,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_FSAntiAliasing ],
-    VALUE1x2(Properties::Values::String),
-    Properties::Flags::Valid,
-    "0" /* D3DMULTISAMPLE_NONE */,
-    "0" /* Default Quality level offered by driver */),
-};
-
-
-GraphicSystem::GraphicSystem(
-    void
-)
-    : ISystem()
+/**
+ * @inheritDoc
+ */
+GraphicSystem::GraphicSystem(void) : ISystem()
     , m_pRoot(NULL)
     , m_pRenderSystem(NULL)
     , m_pRenderWindow(NULL)
-    , m_uShadowTextureSize(0)
-    , m_uShadowTextureCount(0)
     , m_pResourceGroupManager(NULL)
     , m_pMaterialManager(NULL)
+    , m_uShadowTextureSize(0)
+    , m_uShadowTextureCount(0) {
+    //
+    // Init the Scene factory
+    //
+    m_SceneFactory = boost::factory<GraphicScene*>();
 
-{
-    ASSERT(Property_Count == (sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]));
-    ASSERT(Property_Count == (sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]));
+    //
+    // Fill the properties default values
+    //
+    m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
+    m_propertySetters["WindowName"] = boost::bind(&GraphicSystem::setWindowName, this, _1);
+    m_propertySetters["Resolution"] = boost::bind(&GraphicSystem::setResolution, this, _1);
+    m_propertySetters["FullScreen"] = boost::bind(&GraphicSystem::setFullScreen, this, _1);
+    m_propertySetters["VerticalSync"] = boost::bind(&GraphicSystem::setVerticalSync, this, _1);
+    m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);
 }
 
-
-GraphicSystem::~GraphicSystem(
-    void
-) {
+/**
+ * @inheritDoc
+ */
+GraphicSystem::~GraphicSystem(void) {
     // quit listening to the RenderWindow
     Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
     m_pResourceGroupManager->shutdownAll();
@@ -127,83 +78,25 @@ GraphicSystem::~GraphicSystem(
     SAFE_DELETE(m_pRoot);
 }
 
-
-void
-GraphicSystem::windowClosed(
-    Ogre::RenderWindow* pRenderWindow
-) {
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
     ASSERT(pRenderWindow == m_pRenderWindow);
     UNREFERENCED_PARAM(pRenderWindow);
     g_Managers.pEnvironment->Runtime().SetStatus(IEnvironment::IRuntime::Status::Quit);
 }
 
-
-System::Type GraphicSystem::GetSystemType(void) {
-    return System::Types::Graphic;
-}
-
-
-Error GraphicSystem::Initialize(Properties::Array Properties) {
+/**
+ * @inheritDoc
+ */
+Error GraphicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    //
-    // Create Ogre's root.
-    //
     m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
     ASSERT(m_pRoot != NULL);
-    //
-    // Get the resource manager.
-    //
+
     m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
-    //
-    // Read in the properties required to initialize Ogre.
-    //
-    char    szWindowName[ 256 ] = "Window";
-    u32     Width = 1024;
-    u32     Height = 768;
-    bool    bFullScreen = false;
-    bool    bVerticalSync = true;
-    std::string     dFSAAType    = "0";  //D3DMULTISAMPLE_NONE;
-    std::string     dFSAAQuality = "0";
-
-    for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
-        //
-        // Make sure this property is valid.
-        //
-        if (it->GetFlags() & Properties::Flags::Valid) {
-            std::string sName = it->GetName();
-
-            if (sName == sm_kapszPropertyNames[ Property_ResourceLocation ]) {
-                const char* pszName = it->GetStringPtr(0);
-                const char* pszLocationType = it->GetStringPtr(1);
-                const char* pszResourceGroup = it->GetStringPtr(2);
-                bool  bRecursive = it->GetBool(3);
-                m_pResourceGroupManager->addResourceLocation(pszName, pszLocationType, pszResourceGroup, (bRecursive == true));
-                m_pResourceGroupManager->initialiseResourceGroup(pszResourceGroup);
-                m_pResourceGroupManager->loadResourceGroup(pszResourceGroup);
-            } else if (sName == sm_kapszPropertyNames[ Property_WindowName ]) {
-                strcpy_s(szWindowName, sizeof szWindowName, it->GetStringPtr(0));
-            } else if (sName == sm_kapszPropertyNames[ Property_Resolution ]) {
-                Width  = static_cast<u32>(it->GetInt32(0));
-                Height  = static_cast<u32>(it->GetInt32(1));
-            } else if (sName == sm_kapszPropertyNames[ Property_ShadowTexture ]) {
-                m_uShadowTextureCount  = static_cast<u16>(it->GetInt32(0));
-                m_uShadowTextureSize  = static_cast<u16>(it->GetInt32(1));
-            } else if (sName == sm_kapszPropertyNames[ Property_FullScreen ]) {
-                bFullScreen = it->GetBool(0);
-            } else if (sName == sm_kapszPropertyNames[ Property_VerticalSync ]) {
-                bVerticalSync = it->GetBool(0);
-            } else if (sName == sm_kapszPropertyNames[ Property_FSAntiAliasing ]) {
-                dFSAAType    = it->GetString(0);
-                dFSAAQuality = it->GetString(1);
-            }
-
-            //
-            // Set this property to invalid since it's already been read.
-            //
-            it->ClearFlag(Properties::Flags::Valid);
-        }
-    }
 
     //
     // Intialize the render system and render window.
@@ -213,120 +106,115 @@ Error GraphicSystem::Initialize(Properties::Array Properties) {
 #else
     m_pRoot->loadPlugin("RenderSystem_Direct3D9");
 #endif
+
     Ogre::RenderSystemList pRenderList;
     pRenderList = m_pRoot->getAvailableRenderers();
     m_pRenderSystem = pRenderList.front();
     m_pRoot->setRenderSystem(m_pRenderSystem);
     m_pRoot->initialise(false);
+
     // Install the particle fx plugin
 #ifdef DEBUG_BUILD
     m_pRoot->loadPlugin("Plugin_ParticleFX_d");
 #else
     m_pRoot->loadPlugin("Plugin_ParticleFX");
 #endif
-    // Setup the Full-screen Anti-Aliasing mode
-    Ogre::NameValuePairList params;
-    params[ "FSAA" ]        = dFSAAType;
-    params[ "FSAAQuality" ] = dFSAAQuality;
+
     // Note: createRenderWindow() is now called directly so that a render winow is created.  The old calling steps
     // yielded a render system with no render window until after plugins load which causes assertions for CreateParticleSystem
     // which requires a render window at the time the billboard renderer loads.
-    m_pRenderWindow = m_pRoot->createRenderWindow(szWindowName, Width, Height, bFullScreen == true, &params);
+    m_pRenderWindow = m_pRoot->createRenderWindow(
+        m_RenderWindowDescription.name,
+        m_RenderWindowDescription.width,
+        m_RenderWindowDescription.height,
+        m_RenderWindowDescription.useFullScreen,
+        &m_RenderWindowDescription.miscParams
+    );
     ASSERT(m_pRenderWindow != NULL);
+
     // Save the window handle & render window
     size_t hWnd;
     m_pRenderWindow->getCustomAttribute("WINDOW", &hWnd);
     g_Managers.pPlatform->Window().SetHandle(hWnd);
     g_Managers.pPlatform->Window().SetRenderWindow(m_pRenderWindow);
+
     // listen to the RenderWindow
     Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWindow, this);
-    //
-    // Initialize the material manager.
-    //
-    // Note: Commented because the createRenderWindow() call is now called directly through m_pRoot rather than initialised manually
-    // m_pMaterialManager = Ogre::MaterialManager::getSingletonPtr();
-    // m_pMaterialManager->initialise();
 
-    //
-    // Set as initialized.
-    //
-    m_bInitialized = true;
-    //
-    // Set the remaining properties.
-    //
-    SetProperties(Properties);
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setResourceLocation(ProtoStringList values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values.begin();
 
-void GraphicSystem::GetProperties(Properties::Array& Properties) {
-    //
-    // Get the index of our first item.
-    //
-    i32 iProperty = static_cast<i32>(Properties.size());
-    //
-    // Add all the properties.
-    //
-    Properties.reserve(Properties.size() + Property_Count);
+    const std::string name = *(value++);
+    const std::string locationType = *(value++);
+    const std::string resourceGroup = *(value++);
+    bool recursive = boost::lexical_cast<bool>(*value);
 
-    for (i32 i = 0; i < Property_Count; i++) {
-        Properties.push_back(sm_kaDefaultProperties[ i ]);
-    }
-
-    //
-    // Modify the default values if initialized.
-    //
-    if (m_pRenderWindow != NULL) {
-        Properties[ iProperty + Property_WindowName ].SetValue(0, m_pRenderWindow->getName());
-        Properties[ iProperty + Property_Resolution ].SetValue(0, m_pRenderWindow->getWidth());
-        Properties[ iProperty + Property_Resolution ].SetValue(1, m_pRenderWindow->getHeight());
-        Properties[ iProperty + Property_FullScreen ].SetValue(0, m_pRenderWindow->isFullScreen());
-    }
+    m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
+    m_pResourceGroupManager->initialiseResourceGroup(resourceGroup);
+    m_pResourceGroupManager->loadResourceGroup(resourceGroup);
 }
 
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setWindowName(ProtoStringList values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values.begin();
 
-void
-GraphicSystem::SetProperties(
-    Properties::Array Properties
-) {
-    ASSERT(m_bInitialized);
+    m_RenderWindowDescription.name = *value;
+}
 
-    //
-    // Read in the properties.
-    //
-    for (Properties::Iterator it = Properties.begin(); it != Properties.end(); it++) {
-        if (it->GetFlags() & Properties::Flags::Valid) {
-            std::string sName = it->GetName();
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setResolution(ProtoStringList values) {
+    ProtoStringList::const_iterator value = values.begin();
 
-            if (sName == sm_kapszPropertyNames[ Property_Resolution ]) {
-                u32 Width  = static_cast<u32>(it->GetInt32(0));
-                u32 Height = static_cast<u32>(it->GetInt32(1));
-                m_pRenderWindow->resize(Width, Height);
-            } else {
-                ASSERT(false);
-            }
+    u32 width  = boost::lexical_cast<u32>(*(value++));
+    u32 height = boost::lexical_cast<u32>(*value);
 
-            //
-            // Set this property to invalid since it's already been read.
-            //
-            it->ClearFlag(Properties::Flags::Valid);
-        }
+    if (m_bInitialized) {
+        m_pRenderWindow->resize(width, height);
+    } else {
+        m_RenderWindowDescription.width = width;
+        m_RenderWindowDescription.height = height;
     }
 }
 
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setFullScreen(ProtoStringList values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values.begin();
 
-ISystemScene* GraphicSystem::CreateScene(void) {
-    return new OGREGraphicsScene(this);
+    m_RenderWindowDescription.useFullScreen = boost::lexical_cast<bool>(*value);
 }
 
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setVerticalSync(ProtoStringList values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values.begin();
 
-Error
-GraphicSystem::DestroyScene(
-    ISystemScene* pSystemScene
-) {
-    ASSERT(pSystemScene != NULL);
-    OGREGraphicsScene* pScene = reinterpret_cast<OGREGraphicsScene*>(pSystemScene);
-    SAFE_DELETE(pScene);
-    return Errors::Success;
+    m_RenderWindowDescription.miscParams['verticalSync'] = boost::lexical_cast<bool>(*value);
 }
 
+/**
+ * @inheritDoc
+ */
+void GuiSystem::setAntiAliasing(ProtoStringList values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values.begin();
+
+    m_RenderWindowDescription.miscParams['FSAA'] = *(value++);
+    m_RenderWindowDescription.miscParams['FSAAQuality'] = *value;
+}

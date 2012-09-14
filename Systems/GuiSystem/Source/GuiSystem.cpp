@@ -32,7 +32,6 @@ extern ManagerInterfaces    g_Managers;
  * @inheritDoc
  */
 GuiSystem::GuiSystem(void) : ISystem() {
-
     //
     // Init the Scene factory
     //
@@ -42,7 +41,6 @@ GuiSystem::GuiSystem(void) : ISystem() {
     // Fill the properties default values
     //
     m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
-
 }
 
 /**
