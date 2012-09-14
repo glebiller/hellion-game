@@ -24,11 +24,11 @@ class GeometryScene;
 class GeometryObject : public ISystemObject, public IGeometryObject {
 
     public:
-
+        
         /**
          * @inheritDoc
          */
-        GeometryObject(ISystemScene* pSystemScene);
+        GeometryObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
          * @inheritDoc
@@ -49,7 +49,7 @@ class GeometryObject : public ISystemObject, public IGeometryObject {
          * @inheritDoc
          */
         System::Type GetSystemType(void) {
-            return System::Types::Gui;
+            return System::Types::Geometry;
         }
 
         /**

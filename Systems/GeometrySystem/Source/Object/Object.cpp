@@ -23,7 +23,7 @@
 /**
  * @inheritDoc
  */
-GeometryObject::GeometryObject(ISystemScene* pSystemScene) : ISystemObject(pSystemScene, NULL)
+GeometryObject::GeometryObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName)
     , m_Position(Math::Vector3::Zero)
     , m_Orientation(Math::Quaternion::Zero)
     , m_Scale(Math::Vector3::One) {

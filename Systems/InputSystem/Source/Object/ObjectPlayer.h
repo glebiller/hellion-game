@@ -20,7 +20,6 @@
 #include "Object/IGeometryObject.h"
 #include "Object/IMoveObject.h"
 
-class InputObject;
 class InputSystem;
 class InputScene;
 class InputTask;

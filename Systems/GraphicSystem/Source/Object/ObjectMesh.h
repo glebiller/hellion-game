@@ -15,6 +15,8 @@
 
 #pragma once
 
+#include "Object/Object.h"
+#include "MovableText/MovableText.h"
 
 class GraphicSystem;
 class OGREGraphicsScene;
@@ -22,169 +24,64 @@ class OGREGraphicsTask;
 class DynamicLines;
 class NormalizedLines;
 
-#include "MovableText/MovableText.h"
 
-
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   A class that extends GraphicObject for mesh objects.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
-class GraphicObjectMesh : public GraphicObject, public IGraphicsObject {
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  GuiObject
+ */
+class GraphicObjectMesh : public GraphicObject {
         friend GraphicSystem;
         friend OGREGraphicsScene;
         friend OGREGraphicsTask;
 
-    protected:
-
+    public:
+        
+        /**
+         * @inheritDoc
+         */
         GraphicObjectMesh(ISystemScene* pSystemScene, const char* pszName);
+        
+        /**
+         * @inheritDoc
+         */
         ~GraphicObjectMesh(void);
 
-        /// <summary cref="GraphicObjectMesh::Initialize">
-        ///   Implementation of the <c>ISystem::Initialize</c> function.
-        /// </summary>
-        /// <param name="Properties">Initializes the object with the properties specified by <paramref name="Properties"/>.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="GraphicObject::Initialize"/>
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::Graphics::All | GraphicObject::GetPotentialSystemChanges();
+        };
 
-        /// <summary cref="GraphicObjectMesh::GetProperties">
-        ///   Implementation of the <c>ISystem::GetProperties</c> function.
-        /// </summary>
-        /// <param name="Properties">Gets the properties of the object</param>
-        /// <seealso cref="GraphicObject::GetProperties"/>
-        virtual void GetProperties(Properties::Array& Properties);
-
-        /// <summary cref="GraphicObjectMesh::SetProperties">
-        ///   Implementation of the <c>ISystem::SetProperties</c> function.
-        /// </summary>
-        /// <param name="Properties">Sets the properties of the object</param>
-        /// <seealso cref="GraphicObject::SetProperties"/>
-        virtual void SetProperties(Properties::Array Properties);
-
-        /// <summary cref="GraphicObjectMesh::GetDesiredSystemChanges">
-        ///   Implementation of the <c>IGeometryObject::GetDesiredSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Types::BitMask - System changes desired by the object.</returns>
-        /// <seealso cref="GraphicObject::GetSystemType"/>
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
-        /// <summary cref="GraphicObjectMesh::ChangeOccurred">
-        ///   Implementation of the <c>IObserver::ChangeOccurred</c> function.
-        /// </summary>
-        /// <param name="pSubject">Subject of this notification.</param>
-        /// <param name="ChangeType">Type of notification for this object.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="GraphicObject::ChangeOccurred"/>
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        /// <summary cref="GraphicObjectMesh::GetPotentialSystemChanges">
-        ///   Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
-        /// </summary>
-        /// <returns>System::Changes::BitMask - Returns systems changes possible for this object.</returns>
-        /// <seealso cref="GraphicObject::GetPotentialSystemChanges"/>
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-        /// <summary cref="GraphicObjectMesh::GetSubMeshCount">
-        ///   Implementation of the IGraphicsObject GetSubMeshCount function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetSubMeshCount"/>
-        virtual u32 GetSubMeshCount(void);
-
-        /// <summary cref="GraphicObjectMesh::GetIndexDeclaration">
-        ///   Implementation of the IGraphicsObject GetIndexDeclaration function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetIndexDeclaration"/>
-        virtual u32 GetIndexDeclaration(In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetVertexDeclarationCount">
-        ///   Implementation of the IGraphicsObject GetVertexDeclarationCount function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetVertexDeclarationCount"/>
-        virtual u32 GetVertexDeclarationCount(In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetVertexDeclaration">
-        ///   Implementation of the IGraphicsObject GetVertexDeclaration function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetVertexDeclaration"/>
-        virtual void GetVertexDeclaration(Out VertexDecl::Element* pVertexDecl,
-                                          In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetIndexCount">
-        ///   Implementation of the IGraphicsObject GetIndexCount function.
-        /// </summary>
-        /// <seealso cref="GraphicObjectMesh::GetIndexCount"/>
-        virtual u32 GetIndexCount(In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetVertexCount">
-        ///   Implementation of the IGraphicsObject GetVertexCount function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetVertexCount"/>
-        virtual u32 GetVertexCount(In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetIndices">
-        ///   Implementation of the IGraphicsObject GetIndices function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetIndices"/>
-        virtual void GetIndices(Out void* pIndices,
-                                In  u16 nSubMeshIndex = 0);
-
-        /// <summary cref="GraphicObjectMesh::GetVertices">
-        ///   Implementation of the IGraphicsObject GetVertices function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetVertices"/>
-        virtual void GetVertices(Out void* pVertices,
-                                 In  u16 nSubMeshIndex = 0,
-                                 In  u16 nStreamIndex = 0,
-                                 In  u32 nVertexDeclCount = 0,
-                                 In  VertexDecl::Element* pVertexDecl = NULL);
-
-        /// <summary cref="GraphicObjectMesh::GetStreamsChanged">
-        ///   Implementation of the IGraphicsObject GetStreamsChanged function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetStreamsChanged"/>
-        virtual u32 GetStreamsChanged(void);
-
-        /// <summary cref="GraphicObjectMesh::GetAABB">
-        ///   Implementation of the IGraphicsObject GetAABB function.
-        /// </summary>
-        /// <seealso cref="IGraphicsObject::GetAABB"/>
-        virtual void GetAABB(Out Math::Vector3& Min, Out Math::Vector3& Max);
-
-        /// <summary cref="GraphicObjectMesh::SetupNormalsAndTangentsDisplay">
-        ///   Generate data need to display normals and tangets for this mesh.
-        /// </summary>
-        void SetupNormalsAndTangentsDisplay(void);
-
-        /// <summary cref="GraphicObjectMesh::SetupCaptions">
-        ///   Generate data need to display caption (names) for this mesh.
-        /// </summary>
-        void SetupCaptions(void);
-
-    private:
-        template<class IdxType> void BuildNormalsTemplate(u32 nSubMesh);
-
-        /// <summary cref="GraphicObjectMesh::GeometryChanged">
-        ///   Process a geometry (position, scale, orientation) change (called from ChangeOccurred).
-        /// </summary>
-        /// <seealso cref="GraphicObjectMesh::ChangeOccurred"/>
-        void GeometryChanged(System::Changes::BitMask ChangeType, IGeometryObject* pGeometryObject);
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Physics::Position | System::Changes::Graphics::All | GraphicObject::GetDesiredSystemChanges();
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
     protected:
 
+        void setMeshName(ProtoStringList values);
+
         static u32                          sm_EntityId;
-
-        enum PropertyTypes {
-            Property_Mesh, Property_ProceduralMesh, Property_Material,
-            Property_CastShadows, Property_DrawBoundingBox,
-            Property_ShowNormals, Property_ShowTangents,
-            Property_StaticGeom, Property_Instance,
-            Property_Count
-        };
-
-        static const char*                        sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
 
         Math::Vector3                       m_Position;
         Math::Quaternion                    m_Orientation;

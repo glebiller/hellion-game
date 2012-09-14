@@ -55,12 +55,8 @@ class GuiTask : public ISystemTask {
          * @inheritDoc
          */
         System::Type GetSystemType(void) {
-            return System::Types::Graphic;
+            return System::Types::Gui;
         }
-
-    protected:
-
-        GuiScene*                  m_pScene;
 
 };
 

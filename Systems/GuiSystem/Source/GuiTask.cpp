@@ -31,8 +31,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Gui: Rendering", 19);
 /**
  * @inheritDoc
  */
-GuiTask::GuiTask(GuiScene* pScene) : ISystemTask((ISystemScene*)pScene)
-    , m_pScene(pScene) {
+GuiTask::GuiTask(GuiScene* pScene) : ISystemTask((ISystemScene*)pScene) {
 
 }
 
@@ -48,5 +47,5 @@ GuiTask::~GuiTask(void) {
  */
 void GuiTask::Update(f32 DeltaTime) {
     CEGUI::System::getSingleton().injectTimePulse(DeltaTime);
-    m_pScene->Update(DeltaTime);
+    m_pSystemScene->Update(DeltaTime);
 }

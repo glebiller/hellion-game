@@ -1,4 +1,4 @@
-cd // Copyright � 2008-2009 Intel Corporation
+// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -16,7 +16,7 @@ cd // Copyright � 2008-2009 Intel Corporation
 #pragma once
 
 #include "Errors.h"
-#include "System.h"
+#include "System/ISystem.h"
 
 class ISystemScene;
 
@@ -48,7 +48,7 @@ class GeometrySystem : public ISystem {
          * @inheritDoc
          */
         System::Type GetSystemType(void) {
-            return System::Types::Gui;
+            return System::Types::Geometry;
         }
 
     protected:

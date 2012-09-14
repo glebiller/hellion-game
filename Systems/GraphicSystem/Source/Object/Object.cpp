@@ -13,75 +13,45 @@
 // responsibility to update it.
 
 
-//
-// extern includes
-//
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
 #pragma warning( pop )
 
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Ogre system includes
-//
 #include "Scene.h"
 #include "Object.h"
 
 #define POGREROOTNODE (reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode())
 
 
-const char* GraphicObject::sm_kapszTypeNames[] = {
-    "Light", "LightFire", "Camera", "Mesh", "MeshAnimated", "PointList", "Window", "StatWindow", "Chart", "CPUChart", "WorkloadWindow",
-    "ParticleSystem", "PagedGeometryLayer", "Terrain", "Sky",
-    NULL
-};
-
-
-GraphicObject::GraphicObject(ISystemScene* pSystemScene, const char* pszName)
-    : ISystemObject(pSystemScene, pszName) {
-    m_pszName = pszName;
+/**
+ * @inheritDoc
+ */
+GraphicObject::GraphicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
+    
 }
 
-
+/**
+ * @inheritDoc
+ */
 GraphicObject::~GraphicObject(void) {
     POGREROOTNODE->removeChild(m_pNode);
 }
 
-void GraphicObject::Update(f32 DeltaTime) {
-    UNREFERENCED_PARAM(DeltaTime);
-    return;
-}
-
-
-System::Type GraphicObject::GetSystemType(void) {
-    return System::Types::Graphic;
-}
-
-
-Error GraphicObject::Initialize(std::vector<Properties::Property> Properties) {
+/**
+ * @inheritDoc
+ */
+Error GraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
-    //
-    // Create the scene node for this object.
-    //
-    m_pNode = POGREROOTNODE->createChildSceneNode(std::string(m_pszName) + "_SceneNode");
+
+    m_pNode = POGREROOTNODE->createChildSceneNode(m_sName + "_SceneNode");
     ASSERT(m_pNode != NULL);
+
     return Errors::Success;
 }
-
-
-System::Types::BitMask GraphicObject::GetDesiredSystemChanges(void) {
-    return System::Changes::Geometry::Position |
-           System::Changes::Geometry::Orientation |
-           System::Changes::Geometry::Scale |
-           System::Changes::Graphics::GUI;
-}
-
 
 namespace {
 
@@ -124,20 +94,17 @@ inline void UpdateGeometry(Ogre::SceneNode* pNode, System::Changes::BitMask Chan
     }
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error GraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
     if (!m_pNode) {
-        // StaticGeom and InstancedGeom objects are abstract groupings and
-        // are not globally attached to any scene node
         return Errors::Success;
     }
 
-    if (ChangeType & (System::Changes::Geometry::Position |
-                      System::Changes::Geometry::Orientation |
-                      System::Changes::Geometry::Scale)
-       ) {
+    if (ChangeType & System::Changes::Geometry::All) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
 
         if (NeedsLocking(m_pNode)) {
@@ -150,9 +117,3 @@ Error GraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask
 
     return Errors::Success;
 }
-
-
-System::Changes::BitMask GraphicObject::GetPotentialSystemChanges(void) {
-    return System::Changes::None;
-}
-

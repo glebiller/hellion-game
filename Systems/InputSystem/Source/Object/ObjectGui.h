@@ -15,49 +15,67 @@
 
 #pragma once
 
+#include "Error.h"
+#include "System.h"
+#include "System/ISystemScene.h"
+#include "Object/Object.h"
 
-class InputObject;
-class InputSystem;
 class InputScene;
 class InputTask;
 
 
+/**
+ * <c>InputMouseObject</c> Implementation of the ISystemObject interface.
+ * This is the Mouse object created objects.
+ * 
+ * @sa  InputObject
+ * @sa  IMoveObject
+ */
 class InputGuiObject : public InputObject {
 
     public:
-
+        
+        /**
+         * @inheritDoc
+         */
         InputGuiObject(ISystemScene* pSystemScene, const char* pszName);
+        
+        /**
+         * @inheritDoc
+         */
         ~InputGuiObject(void);
 
-        /////////////////////////////////
-        /// ISystemObject overrides
-        /////////////////////////////////
-
-        virtual Error Initialize(std::vector<Properties::Property> Properties);
-
-        virtual void GetProperties(Properties::Array& Properties);
-
-        virtual void SetProperties(Properties::Array Properties);
-
-        virtual System::Types::BitMask GetDesiredSystemChanges(void);
-
-        virtual void Update(f32 DeltaTime);
-
-        /////////////////////////////////
-        /// IObserver overrides
-        /////////////////////////////////
-
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-    public:
-
-        enum CommonPropertyTypes {
-            Property_None, Property_Count
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;
         };
-        static const char*                        sm_kapszCommonPropertyNames[];
-        static const Properties::Property   sm_kaCommonDefaultProperties[];
+
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
+
+        /**
+         * @inheritDoc
+         */
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+
+    private:
+
 
 };
 

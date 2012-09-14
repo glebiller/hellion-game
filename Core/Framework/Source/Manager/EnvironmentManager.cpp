@@ -20,6 +20,10 @@
 
 #include "EnvironmentManager.h"
 
+#if defined(MSC_COMPILER)
+#include <windows.h>
+#endif
+
 
 EnvironmentManager::EnvironmentManager(
     void
@@ -177,6 +181,6 @@ EnvironmentManager::GetStatus(
 
 void EnvironmentManager::SetStatus(IEnvironment::IRuntime::Status Status) {
 #if defined(MSC_COMPILER)
-    ::InterlockedExchange((i32*)&m_RuntimeStatus, Status);
+    ::InterlockedExchange((LONG*)&m_RuntimeStatus, Status);
 #endif
 }
