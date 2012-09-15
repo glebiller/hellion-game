@@ -36,34 +36,25 @@ class GraphicObject;
 #define MAX_NUM_JOBS 32
 
 struct ProcessData {
-    std::list<GraphicObject*> m_Objects;    // Objects to process
-    f32                            m_DeltaTime;  // Delta time (needed for Update calls)
+    std::list<GraphicObject*>   m_Objects;    // Objects to process
+    f32                         m_DeltaTime;  // Delta time (needed for Update calls)
 };
 
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Implementation of the ISystemScene interface.
-///   See Interfaces\System.h for a definition of the class and its functions.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
+ * class and its functions.
+ * 
+ * @sa  ISystemScene
+ */
 class OGREGraphicsScene : public ISystemScene {
         friend GraphicSystem;
         friend OGREGraphicsTask;
 
     public:
-        DECLARE_STATIC_SPIN_MUTEX(m_mutex);
 
     public:
         
-        /**
-         * @inheritDoc
-         */
-        virtual System::Changes::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        }
-
         /**
          * Updates the given DeltaTime.
          * This function must be called every frame.  It updates the graphics scene.
@@ -139,121 +130,61 @@ class OGREGraphicsScene : public ISystemScene {
         /// <returns>float - Height for the give params in scene units.</returns
         float getTerrainHeightScene(const float a, const float b, void* userData);
 
-    protected:
-
-        OGREGraphicsScene(ISystem* pSystem);
-        ~OGREGraphicsScene(void);
-
-        /// <summary cref="OGREGraphicsScene::GetSystemType">
-        ///   Implementation of the <c>ISystemScene::GetSystemType</c> function.
-        /// </summary>
-        /// <returns>System::Type - Type of this system.</returns>
-        /// <seealso cref="ISystemScene::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
-
-        /// <summary cref="OGREGraphicsScene::GlobalSceneStatusChanged">
-        ///   Called from the framework to inform the scene extension of the overall scene status.
-        /// </summary>
-        /// <param name="Status">GlobalSceneStatus - The overall scene status.</param>
-        virtual void GlobalSceneStatusChanged(GlobalSceneStatus Status);
-
-        /// <summary cref="OGREGraphicsScene::Initialize">
-        ///   Implementation of the <c>ISystemScene::Initialize</c> function.
-        ///   One time initialization function for the scene.
-        /// </summary>
-        /// <param name="Properties">Initializes the scene with the properties specified by <paramref name="Properties"/>.</param>
-        /// <returns>Error.</returns>
-        /// <seealso cref="ISystemScene::Initialize"/>
-        virtual Error Initialize(Properties::Array Properties);
-
-        /// <summary cref="OGREGraphicsScene::GetProperties">
-        ///   Implementation of the <c>ISystemScene::GetProperties</c> function.
-        ///   Gets the properties of this scene.
-        /// </summary>
-        /// <param name="Properties">Gets the properties of the scene</param>
-        /// <seealso cref="ISystemScene::GetProperties"/>
-        virtual void GetProperties(Properties::Array& Properties);
-
-        /// <summary cref="OGREGraphicsScene::SetProperties">
-        ///   Implementation of the <c>ISystemScene::SetProperties</c> function.
-        ///   Sets the properties for this scene.
-        /// </summary>
-        /// <param name="Properties">Sets the properties of the scene</param>
-        /// <seealso cref="ISystem::SetProperties"/>
-        virtual void SetProperties(Properties::Array Properties);
-
-        /// <summary cref="OGREGraphicsScene::GetObjectTypes">
-        ///   Implementation of the <c>ISystemScene::GetObjectTypes</c> function.
-        ///   Get all the available object types as names.
-        /// </summary>
-        /// <returns>const char** - A NULL terminated array of object type names.</returns>
-        /// <seealso cref="ISystemScene::GetObjectTypes"/>
-        virtual const char** GetObjectTypes(void);
-
-        /// <summary cref="OGREGraphicsScene::CreateObject">
-        ///   Implementation of the <c>ISystemScene::CreateObject</c> function.
-        ///   Creates a system object used to extend a UObject.
-        /// </summary>
-        /// <param name="pszName">The unique name for this object.</param>
-        /// <param name="pszType">The object type to create.</param>
-        /// <returns>ISystemObject* - The newly created system object.</returns>
-        /// <seealso cref="ISystemScene::CreateObject"/>
-        virtual ISystemObject* CreateObject(const char* pszName, const char* pszType);
-
-        /// <summary cref="OGREGraphicsScene::DestroyObject">
-        ///   Implementation of the <c>ISystemScene::DestroyObject</c> function.
-        ///   Destroys a system object.
-        /// </summary>
-        /// <param name="pSystemObject">The system object to destroy.</param>
-        /// <returns>Error - Any error codes.</returns>
-        /// <seealso cref="ISystemScene::DestroyObject"/>
-        virtual Error DestroyObject(ISystemObject* pSystemObject);
-
-        /// <summary cref="OGREGraphicsScene::GetSystemTask">
-        ///   Implementation of the <c>ISystemScene::GetSystemTask</c> function.
-        ///   Returns a pointer to the task that this scene needs to perform on its objects.
-        /// </summary>
-        /// <returns>ISystemTask* - The task for this scene.</returns>
-        /// <seealso cref="ISystemScene::GetSystemTask"/>
-        virtual ISystemTask* GetSystemTask(void);
-
-        /// <summary cref="OGREGraphicsScene::GetPotentialSystemChanges">
-        ///   Implementation of the <c>ISubject::GetPotentialSystemChanges</c> function.
-        ///   Identies the system changes that this subject could possibly make.
-        /// </summary>
-        /// <returns>System::Changes::BitMask - A bitmask of the possible system changes.</returns>
-        /// <seealso cref="ISubject::GetPotentialSystemChanges"/>
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void);
-
-        /// <summary cref="OGREGraphicsScene::GetDesiredSystemChanges">
-        ///   Implementation of the <c>ISystemScene::GetDesiredSystemChanges</c> function.
-        ///   Returns a bit mask of System Changes that this scene wants to receive changes for.
-        ///   Used to inform the change control manager if this scene should be informed of the
-        ///   change.
-        /// </summary>
-        /// <returns>System::Changes::BitMask - A bitmask of the desired system changes.</returns>
-        /// <seealso cref="ISystemScene::GetDesiredSystemChanges"/>
-        virtual const void* GetSystemChangeData(System::Change SystemChange);
-
     public:
-        typedef std::vector<GraphicObject*>    ObjectsList;
-
-    protected:
-
-        enum PropertyTypes {
-            Property_ResourceLocation, Property_DelResourceLocation,
-            Property_AmbientLight, Property_Shadows,
-            Property_ShadowColor, Property_DrawBoundingBox,
-            Property_ShowNormals, Property_ShowTangents,
-            Property_UseStaticGeom, Property_UseInstancedGeom,
-            Property_FogColor, Property_Fog, Property_Font,
-            Property_PagedGeometry, Property_PagedGeometryTerrain,
-            Property_PagedGeometryTerrainOffset,
-            Property_Count
+        
+        /**
+         * @inheritDoc
+         */
+        OGREGraphicsScene(ISystem* pSystem);
+        
+        /**
+         * @inheritDoc
+         */
+        ~OGREGraphicsScene(void);
+                
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;
         };
 
-        static const char*                        sm_kapszPropertyNames[];
-        static const Properties::Property   sm_kaDefaultProperties[];
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::None;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Graphic;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        ISystemTask* GetSystemTask(void) {
+            return m_pTask;
+        };
+
+        typedef std::vector<GraphicObject*>    ObjectsList;
+
+        DECLARE_STATIC_SPIN_MUTEX(m_mutex);
+
+    protected:
 
         ObjectsList                         m_Objects;
         std::map<std::string, Ogre::StaticGeometry*>    m_StaticGeoms;
@@ -307,5 +238,6 @@ class OGREGraphicsScene : public ISystemScene {
         ///   Updates the given range of fire objects.
         /// </summary>
         void ProcessRange(u32 begin, u32 end);
+
 };
 

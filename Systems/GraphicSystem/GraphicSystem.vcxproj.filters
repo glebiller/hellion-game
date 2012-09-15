@@ -25,18 +25,6 @@
     <Filter Include="Fichiers sources\MovableText">
       <UniqueIdentifier>{eea23af2-b7a2-4664-b286-061ca69edf95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\Object\GUI">
-      <UniqueIdentifier>{83c3c3ae-7bfa-4d18-b447-9f60750109d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Object\GUI">
-      <UniqueIdentifier>{43cefcff-044b-4977-8352-cc56b9876ad1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Object\GUI\Debug">
-      <UniqueIdentifier>{e23670a4-2ac5-4a60-9e3c-504c373f9667}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Object\GUI\Debug">
-      <UniqueIdentifier>{41dcf132-fec5-4814-86e5-69c563d7ee35}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Task.cpp">
@@ -81,24 +69,6 @@
     <ClCompile Include="Source\NormalizedLines.cpp">
       <Filter>Fichiers sources\MovableText</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\GUI\ObjectWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectChart.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectCPUChart.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectStatWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object\GUI\ObjectLoginWindow.cpp">
-      <Filter>Fichiers sources\Object\GUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -139,24 +109,6 @@
     </ClInclude>
     <ClInclude Include="Source\NormalizedLines.h">
       <Filter>Fichiers d%27en-tête\MovableText</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\ObjectWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectStatWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectCPUChart.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectChart.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object\GUI\ObjectLoginWindow.h">
-      <Filter>Fichiers d%27en-tête\Object\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

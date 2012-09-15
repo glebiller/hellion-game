@@ -77,16 +77,16 @@ Error GraphicObjectCamera::initialize(void) {
     } else {
         parentNode = reinterpret_cast<OGREGraphicsScene*>(m_pSystemScene)->GetOGRERootSceneNode();
     }
-    m_pNode = parentNode->createChildSceneNode(std::string(m_pszName) + "_SceneNode");
+    m_pNode = parentNode->createChildSceneNode(m_sName + "_SceneNode");
     m_pNode->setPosition(0, 1.0f, 0);
     ASSERT(m_pNode != NULL);
-    m_pCameraNode = m_pNode->createChildSceneNode(std::string(m_pszName) + "Camera_SceneNode");
+    m_pCameraNode = m_pNode->createChildSceneNode(m_sName + "Camera_SceneNode");
     ASSERT(m_pCameraNode != NULL);
 
     //
     // Create the camera.
     //
-    m_pCamera = POGRESCENEMGR->createCamera(m_pszName);
+    m_pCamera = POGRESCENEMGR->createCamera(m_sName);
     ASSERT(m_pCamera != NULL);
 
     if (m_pCamera != NULL) {

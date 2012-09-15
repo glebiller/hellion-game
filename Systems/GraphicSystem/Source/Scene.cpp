@@ -12,24 +12,16 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
+
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
 #include "OgreFontManager.h"
 #pragma warning( pop )
 
-//
-// Core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// Graphics system includes
-//
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
@@ -37,12 +29,6 @@
 #include "Object/ObjectCamera.h"
 #include "Object/ObjectLight.h"
 #include "Object/ObjectMesh.h"
-#include "Object/GUI/ObjectWindow.h"
-#include "Object/GUI/ObjectLoginWindow.h"
-#include "Object/GUI/Debug/ObjectChart.h"
-#include "Object/GUI/Debug/ObjectStatWindow.h"
-#include "Object/GUI/Debug/ObjectWorkloadWindow.h"
-#include "Object/GUI/Debug/ObjectCPUChart.h"
 #include "Object/ObjectTerrain.h"
 #include "Object/ObjectSky.h"
 
@@ -73,114 +59,10 @@ static const u32   UpdateGrainSize = 120;
 
 DEFINE_SPIN_MUTEX(OGREGraphicsScene::m_mutex);
 
-
-const char* OGREGraphicsScene::sm_kapszPropertyNames[] = {
-    "ResourceLocation", "DelResourceLocation",
-    "AmbientLight", "Shadows", "ShadowColor",
-    "DrawBoundingBox", "ShowNormals", "ShowTangents",
-    "UseStaticGeom", "UseInstancedGeom", "FogColor", "Fog", "Font",
-    "PagedGeometry", "PagedGeometryTerrain", "PagedGeometryTerrainOffset"
-};
-
-const Properties::Property OGREGraphicsScene::sm_kaDefaultProperties[] = {
-    Properties::Property(sm_kapszPropertyNames[ Property_ResourceLocation ],
-    VALUE4(Properties::Values::String,
-    Properties::Values::String,
-    Properties::Values::String,
-    Properties::Values::Boolean),
-    Properties::Flags::Valid | Properties::Flags::Multiple | Properties::Flags::InitOnly,
-    "Path", "Type", "Group", "Recursive",
-    "", "", "", 0),
-
-    Properties::Property(sm_kapszPropertyNames[ Property_DelResourceLocation ],
-    VALUE1x2(Properties::Values::String),
-    Properties::Flags::Valid | Properties::Flags::Multiple | Properties::Flags::InitOnly,
-    "Path", "Group", NULL, NULL,
-    "", ""),
-
-    Properties::Property(sm_kapszPropertyNames[ Property_AmbientLight ],
-    Properties::Values::Color3,
-    Properties::Flags::Valid,
-    "R", "G", "B", NULL,
-    Math::Color3::Black),
-    Properties::Property(sm_kapszPropertyNames[ Property_Shadows ],
-    VALUE1x2(Properties::Values::Boolean),
-    Properties::Flags::Valid,
-    NULL, NULL, NULL, NULL,
-    0, 0),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShadowColor ],
-    Properties::Values::Color3,
-    Properties::Flags::Valid,
-    "R", "G", "B", NULL,
-    Math::Color3::Black),
-    Properties::Property(sm_kapszPropertyNames[ Property_DrawBoundingBox ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid,
-    NULL, NULL, NULL, NULL,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShowNormals ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid,
-    NULL, NULL, NULL, NULL,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_ShowTangents ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid,
-    NULL, NULL, NULL, NULL,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_UseStaticGeom ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    NULL, NULL, NULL, NULL,
-    1),
-    Properties::Property(sm_kapszPropertyNames[ Property_UseInstancedGeom ],
-    Properties::Values::Boolean,
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    NULL, NULL, NULL, NULL,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_FogColor ],
-    Properties::Values::Color3,
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "R", "G", "B", NULL,
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_Fog ],
-    VALUE4(
-        Properties::Values::Int32,
-        Properties::Values::Float32,
-        Properties::Values::Float32,
-        Properties::Values::Float32),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "Mode", "Density", "Start", "Stop",
-    0),
-    Properties::Property(sm_kapszPropertyNames[ Property_Font ],
-    VALUE1x2(Properties::Values::String),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "FontPath", "FontName", NULL, NULL,
-    "", ""),
-    Properties::Property(sm_kapszPropertyNames[ Property_PagedGeometry ],
-    VALUE4(Properties::Values::String,
-    Properties::Values::String,
-    Properties::Values::Float32,
-    Properties::Values::Float32),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "Heightmap", "ResourceGroup", "Pagesize", "Drawdistance",
-    "", "", 100.0, 1000.0),
-    Properties::Property(sm_kapszPropertyNames[ Property_PagedGeometryTerrain ],
-    VALUE1x3(Properties::Values::Float32),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "Width", "Length", "Height", NULL,
-    100.0, 100.0, 100.0),
-    Properties::Property(sm_kapszPropertyNames[ Property_PagedGeometryTerrainOffset ],
-    VALUE1x3(Properties::Values::Float32),
-    Properties::Flags::Valid | Properties::Flags::InitOnly,
-    "Width", "Length", "Height", NULL,
-    0.0, 0.0, 0.0),
-};
-
-OGREGraphicsScene::OGREGraphicsScene(
-    ISystem* pSystem
-)
-    : ISystemScene(pSystem)
+/**
+ * @inheritDoc
+ */
+OGREGraphicsScene::OGREGraphicsScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pTask(NULL)
     , m_pSceneManager(NULL)
     , m_pRootNode(NULL)
@@ -193,11 +75,12 @@ OGREGraphicsScene::OGREGraphicsScene(
     , m_FogColor(1.0f, 1.0f, 1.0f, 1.0f)
     , m_pPagedGeometry(NULL)
     , m_pGrassLoader(NULL) {
-    ASSERT(Property_Count == sizeof sm_kapszPropertyNames / sizeof sm_kapszPropertyNames[ 0 ]);
-    ASSERT(Property_Count == sizeof sm_kaDefaultProperties / sizeof sm_kaDefaultProperties[ 0 ]);
+
 }
 
-
+/**
+ * @inheritDoc
+ */
 OGREGraphicsScene::~OGREGraphicsScene(void) {
     SAFE_DELETE(m_pTask);
     SAFE_DELETE(m_pPagedGeometry);
@@ -209,89 +92,33 @@ OGREGraphicsScene::~OGREGraphicsScene(void) {
 /**
  * @inheritDoc
  */
-void OGREGraphicsScene::Update(f32 DeltaTime) {
-    bool bPaused = g_Managers.pEnvironment->Runtime().GetStatus() == IEnvironment::IRuntime::Status::Paused;
-    m_bPause = bPaused;
-    m_fDeltaTime = DeltaTime;
+Error OGREGraphicsScene::initialize(void) {
+    ASSERT(!m_bInitialized);
 
-    if (m_bUseInstancedGeom) {
-        std::map< std::string, std::vector<Ogre::InstancedGeometry::InstancedObject**> > mapObjArray;
-        // Now build every Instanced Geometry group
-        std::map< std::string, std::vector<Ogre::InstancedGeometry*> >::iterator itMap = m_InstancedGeoms.begin();
+    m_pTask = new OGREGraphicsTask(this);
+    ASSERT(m_pTask != NULL);
 
-        for (itMap = m_InstancedGeoms.begin(); itMap != m_InstancedGeoms.end(); itMap++) {
-            for (u32 i = 0; i < itMap->second.size(); i++) {
-                Ogre::InstancedGeometry* pInstancedGeom = itMap->second[ i ];
-                Ogre::InstancedGeometry::BatchInstance* pBatchInst = pInstancedGeom->getBatchInstanceIterator().getNext();
-                Ogre::InstancedGeometry::InstancedObject** tempArr;
-                Ogre::InstancedGeometry::BatchInstance::InstancedObjectIterator it = pBatchInst->getObjectIterator();
-                int j = 0;
-
-                while (it.hasMoreElements()) {
-                    tempArr[j] = it.getNext();
-                    ++j;
-                }
-
-                mapObjArray[ itMap->first ].push_back(tempArr);
-            }
-        }
-
-        // Set Position for each entity
-        ObjectsList::iterator it = m_Objects.begin();
-
-        for (it = m_Objects.begin(); it != m_Objects.end(); it++) {
-            // Only look for Mesh type Objects
-            if (((*it)->GetType() != GraphicObject::Type_Mesh)) {
-                continue;
-            }
-
-            GraphicObjectMesh* pObjMesh = dynamic_cast<GraphicObjectMesh*>(*it);
-            std::string&            grpName  = pObjMesh->m_strStaticGrpName;
-
-            if (grpName.length() != 0) {
-                // This ref-count seems to be outdated. If it is replaced by bool
-                // everything works correctly.
-                if (pObjMesh->m_Dirty) {
-                    Ogre::InstancedGeometry::InstancedObject** objArr;
-                    objArr = mapObjArray[ grpName ][ pObjMesh->m_InstancedGeomIdx ];
-                    objArr[ pObjMesh->m_ObjectIdxinInstGeom ]->setPositionAndOrientation(
-                        TOOGREVEC(pObjMesh->m_Position),
-                        TOOGREQUAT(pObjMesh->m_Orientation));
-                    pObjMesh->m_Dirty = false;
-                }
-            }
-        }
-
-        //clean up
-        for (itMap = m_InstancedGeoms.begin(); itMap != m_InstancedGeoms.end(); itMap++) {
-            for (u32 i = 0; i < itMap->second.size(); i++) {
-                delete[] mapObjArray[ itMap->first ] [ i ];
-            }
-        }
+    if (m_pTask == NULL) {
+        return Errors::Failure;
     }
 
-    u32         size = (u32)m_Objects.size();
+    return Errors::Success;
+}
 
+/**
+ * @inheritDoc
+ */
+void OGREGraphicsScene::Update(f32 DeltaTime) {
+    m_bPause = g_Managers.pEnvironment->Runtime().GetStatus() == IEnvironment::IRuntime::Status::Paused;
+    m_fDeltaTime = DeltaTime;
+
+    u32 size = (u32)m_Objects.size();
     if (g_Managers.pTask != NULL && UpdateGrainSize < size) {
         g_Managers.pTask->ParallelFor(m_pTask, UpdateCallback, this, 0, size, UpdateGrainSize);
     } else {
         ProcessRange(0, size);
     }
-
-    //
-    // Paged Geometry needs to be updated every frame
-    //
-    if (m_pPagedGeometry) {
-        m_pPagedGeometry->update();
-    }
-} // OGREGraphicsScene::Update
-
-
-
-System::Type OGREGraphicsScene::GetSystemType(void) {
-    return System::Types::Graphic;
 }
-
 
 
 Ogre::String buildInstancedMaterial(const Ogre::String& originalMaterialName) {
@@ -809,12 +636,6 @@ void OGREGraphicsScene::SetProperties(Properties::Array Properties) {
     }
 }
 
-
-const char** OGREGraphicsScene::GetObjectTypes(void) {
-    return GraphicObject::sm_kapszTypeNames;
-}
-
-
 ISystemObject* OGREGraphicsScene::CreateObject(const char* pszName, const char* pszType) {
     ASSERT(m_bInitialized);
     GraphicObject* pObject = NULL;
@@ -837,36 +658,6 @@ ISystemObject* OGREGraphicsScene::CreateObject(const char* pszName, const char* 
         // Create and return the OGRE graphics object.
         //
         pObject = new GraphicObjectCamera(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Window ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectWindow(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_StatWindow ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectStatWindow(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Chart ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectChart(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_CPUChart ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectCPUChart(this, pszName);
-    } else if (strcmp(pszType,
-                      GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_WorkloadWindow ]) == 0) {
-        //
-        // Create and return the OGRE graphics object.
-        //
-        pObject = new GraphicObjectWorkloadWindow(this, pszName);
     } else if (strcmp(pszType,
                       GraphicObject::sm_kapszTypeNames[ GraphicObject::Type_Terrain ]) == 0) {
         //
