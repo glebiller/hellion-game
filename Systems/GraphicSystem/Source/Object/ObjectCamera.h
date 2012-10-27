@@ -79,8 +79,6 @@ class GraphicObjectCamera : public GraphicObject {
 
         void setPolygonMode(ProtoStringList values);
 
-        void setPagedGeometry(ProtoStringList values);
-
     private:
 
         Ogre::Camera*                       m_pCamera;

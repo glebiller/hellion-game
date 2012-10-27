@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "OISB.h"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -26,7 +28,8 @@
  * @inheritDoc
  */
 InputMouseObject::InputMouseObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName)
-    , m_Velocity(Math::Vector3::Zero) {
+    , m_Modified(0)
+    , m_MousePosition(Math::Vector3::Zero) {
 
 }
 
@@ -42,6 +45,9 @@ InputMouseObject::~InputMouseObject(void) {
  */
 Error InputMouseObject::initialize() {
     ASSERT(!m_bInitialized);
+
+    OISB::System::getSingleton().getOISMouse()->setEventCallback(this);
+
     return Errors::Success;
 }
 
@@ -49,14 +55,10 @@ Error InputMouseObject::initialize() {
  * @inheritDoc
  */
 void InputMouseObject::Update(f32 DeltaTime) {
-    u32 mModified = 0;
-    InputScene* pScene = static_cast<InputScene*>(m_pSystemScene);
-    
-    m_Velocity.x = pScene->m_InputActions.MouseRightLeft->getRelativeValue();
-    m_Velocity.y = pScene->m_InputActions.MouseUpDown->getRelativeValue();
-    mModified |= System::Changes::Input::Velocity;
-
-    PostChanges(mModified);
+    if (m_Modified != 0) {
+        PostChanges(m_Modified);
+        m_Modified = 0;
+    }
 }
 
 /**
@@ -65,4 +67,55 @@ void InputMouseObject::Update(f32 DeltaTime) {
 Error InputMouseObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
     return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+bool InputMouseObject::mouseMoved(const OIS::MouseEvent &arg) {
+    m_MousePosition.x = arg.state.X.rel * 1.0f;
+    m_MousePosition.y = arg.state.Y.rel * 1.0f;
+    m_MousePosition.z = arg.state.Z.rel / 120.0f;
+    m_Modified |= System::Changes::Input::Mouse;
+    return true;
+}
+
+/**
+ * @inheritDoc
+ */
+bool InputMouseObject::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    switch (id) {
+    case OIS::MouseButtonID::MB_Left:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::LEFT;
+        break;
+    case OIS::MouseButtonID::MB_Right:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::RIGHT;
+        break;
+    case OIS::MouseButtonID::MB_Middle:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::MIDDLE;
+        break;
+    }
+    m_MouseButtonData.state = IMouseObject::MouseButtonState::PRESSED;
+    m_Modified |= System::Changes::Input::Mouse;
+    return true;
+}
+
+/**
+ * @inheritDoc
+ */
+bool InputMouseObject::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    switch (id) {
+    case OIS::MouseButtonID::MB_Left:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::LEFT;
+        break;
+    case OIS::MouseButtonID::MB_Right:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::RIGHT;
+        break;
+    case OIS::MouseButtonID::MB_Middle:
+        m_MouseButtonData.id = IMouseObject::MouseButtonID::MIDDLE;
+        break;
+    }
+    m_MouseButtonData.state = IMouseObject::MouseButtonState::RELEASED;
+    m_Modified |= System::Changes::Input::Mouse;
+    return true;
 }

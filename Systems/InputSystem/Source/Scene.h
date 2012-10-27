@@ -97,9 +97,6 @@ class InputScene : public ISystemScene {
             
             OISB::AnalogAxisAction*         CameraRotateUpDown;
             OISB::AnalogAxisAction*         CameraRotateRightLeft;
-            
-            OISB::AnalogAxisAction*         MouseUpDown;
-            OISB::AnalogAxisAction*         MouseRightLeft;
         };
         InputActions                        m_InputActions;
 

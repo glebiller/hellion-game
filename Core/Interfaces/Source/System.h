@@ -167,10 +167,11 @@ namespace System {
 
         namespace Input {
             static const u32 Velocity           = (1 << 17);
+            static const u32 Mouse              = (1 << 18);
         }
 
         namespace Physics {
-            static const u32 Position           = (1 << 18);
+            static const u32 Position           = (1 << 19);
         }
 
         static const u32 Link                   = (1 << 30);

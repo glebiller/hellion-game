@@ -137,5 +137,11 @@
     <ClInclude Include="Source\Property\IProperty.h">
       <Filter>Fichiers d%27en-tête\Property</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Object\IMouseObject.h">
+      <Filter>Fichiers d%27en-tête\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\IKeyboardObject.h">
+      <Filter>Fichiers d%27en-tête\Object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -43,14 +43,14 @@ class IProperty {
          */
         Error setProperties(const ProtoPropertyList &properties);
 
+    protected:
+
         /**
          * One time initialization function for the system.
          * 
          * @return  An error code.
          */
         virtual Error initialize(void); 
-
-    protected:
 
         typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
         typedef std::map<std::string, PropertySetter> PropertySetters;

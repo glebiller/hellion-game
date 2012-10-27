@@ -118,17 +118,6 @@ Error InputScene::initialize(void) {
     m_InputActions.CameraRotateRightLeft->setProperty("Sensitivity", 0.001f);
     m_InputActions.CameraRotateRightLeft->bind("Mouse/X Axis");
 
-    // Mouse Up / Down
-    m_InputActions.MouseUpDown = m_DefaultSchema->createAction<OISB::AnalogAxisAction>("MouseUpDown");
-    m_InputActions.MouseUpDown->setProperty("EmulationReturnEnabled", false);
-    m_InputActions.MouseUpDown->setProperty("Sensitivity", 1.0f);
-    m_InputActions.MouseUpDown->bind("Mouse/Y Axis");
-    // Mouse Right / Left
-    m_InputActions.MouseRightLeft = m_DefaultSchema->createAction<OISB::AnalogAxisAction>("MouseRightLeft");
-    m_InputActions.MouseRightLeft->setProperty("EmulationReturnEnabled", false);
-    m_InputActions.MouseRightLeft->setProperty("Sensitivity", 1.0f);
-    m_InputActions.MouseRightLeft->bind("Mouse/X Axis");
-
     return Errors::Success;
 }
 

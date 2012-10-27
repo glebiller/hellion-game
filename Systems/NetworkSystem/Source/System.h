@@ -14,114 +14,48 @@
 
 #pragma once
 
+#include "Errors.h"
+#include "Proto.h"
+#include "System.h"
+#include "System/ISystem.h"
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>NetworkSystem</c> Implementation of the ISystem interface for generic
-///   Network functionality.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
+class NetworkScene;
+class NetworkTask;
 
+/**
+ * Implementation of the ISystem interface for graphics. See Interfaces\System.h for a
+ * definition of the class and its functions.
+ * 
+ * @sa  ISystem
+ */
 class NetworkSystem : public ISystem {
-    protected:
 
-        /// <summary cref="NetworkSystem::GetName">
-        ///   Implementation of the <c>ISystem::GetName</c> function.
-        ///   Gets the name of the system.  Only custom systems can return a custom name.
-        /// </summary>
-        /// <returns>const char* - The name of the system.</returns>
-        /// <seealso cref="ISystem::GetName"/>
-        virtual const char* GetName(void);
-
-        /// <summary cref="NetworkSystem::GetSystemType">
-        ///   Implementation of the <c>ISystem::GetSystemType</c> function.
-        ///   Gets the system type for this system.
-        /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
-        /// <seealso cref="ISystem::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
-
-        /// <summary cref="NetworkSystem::Initialize">
-        ///   Implementation of the <c>ISystem::Initialize</c> function.
-        ///   One time initialization function for the system.
-        /// </summary>
-        /// <param name="Properties">Property structure array to initialize.</param>
-        /// <returns>Error - Any error codes.</returns>
-        /// <seealso cref="ISystem::Initialize"/>
-        virtual Error Initialize(Properties::Array Properties);
-
-        /// <summary cref="NetworkSystem::GetProperties">
-        ///   Implementation of the <c>ISystem::GetProperties</c> function.
-        ///   Gets the properties of this system.
-        /// </summary>
-        /// <param name="Properties">Property structure array to fill</param>
-        /// <seealso cref="ISystem::GetProperties"/>
-        virtual void GetProperties(Properties::Array& Properties);
-
-        /// <summary cref="NetworkSystem::SetProperties">
-        ///   Implementation of the <c>ISystem::SetProperties</c> function.
-        ///   Sets the properties for this system.
-        /// </summary>
-        /// <param name="Properties">Properties to set in the system.</param>
-        /// <seealso cref="ISystem::SetProperties"/>
-        virtual void SetProperties(Properties::Array Properties);
-
-        /// <summary cref="NetworkSystem::CreateScene">
-        ///   Implementation of the <c>ISystem::CreateScene</c> function.
-        ///   Creates a system scene for containing system objects.
-        /// </summary>
-        /// <returns>ISystemScene* - The newly create system scene.</returns>
-        /// <seealso cref="ISystem::CreateScene"/>
-        virtual ISystemScene* CreateScene(void);
-
-        /// <summary cref="NetworkSystem::DestroyScene">
-        ///   Implementation of the <c>ISystem::DestroyScene</c> function.
-        ///   Destroys a system scene.
-        /// </summary>
-        /// <param name="pSystemScene">The scene to destroy. Any objects within are destroyed.</param>
-        /// <returns>Error - Any error codes.</returns>
-        /// <seealso cref="ISystem::DestroyScene"/>
-        virtual Error DestroyScene(ISystemScene* pSystemScene);
-
-        enum HotKeyTypes {
-            HotKey_MoveForward,
-            HotKey_MoveBack,
-            HotKey_MoveLeft,
-            HotKey_MoveRight,
-            HotKey_MoveUp,
-            HotKey_MoveDown,
-            HotKey_ResetView,
-            HotKey_Pause,
-            HotKey_Quit,
-            HotKey_PolygonMode,
-            HotKey_UseFireHose,
-            HotKey_ShowNormals,
-            HotKey_ShowTangents,
-            HotKey_ShowBoundingBox,
-            HotKey_ShowCaptions,
-            HotKey_SetThreadCountTo1,
-            HotKey_SetThreadCountTo2,
-            HotKey_SetThreadCountTo4,
-            HotKey_SetThreadCountToMax,
-            HotKey_ToggleOverlay1,
-            HotKey_ToggleOverlay2,
-            HotKey_ToggleOverlay3,
-            HotKey_ToggleOverlay4,
-            HotKey_ToggleOverlay5,
-            HotKey_Count
-        };
-
-        static const char* sm_kapszPropertyNames[];
-        static const Properties::Property sm_kaDefaultProperties[];
     public:
-        NetworkSystem(void);
-        virtual ~NetworkSystem(void);
 
-        typedef struct _HotKey {
-            std::string psKey;
-            bool  bCtrl;
-        } HotKey;
-        std::map<const char*, HotKey*> m_aHotKeys;
-        typedef std::map<const char*, HotKey*>::iterator hotKeyIt;
+        /**
+         * @inheritDoc
+         */
+        NetworkSystem(void);
+        
+        /**
+         * @inheritDoc
+         */
+        ~NetworkSystem(void);
+        
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Network;
+        }
+
+    private:
+
+
 };
 

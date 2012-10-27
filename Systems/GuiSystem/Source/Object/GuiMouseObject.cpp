@@ -16,6 +16,7 @@
 
 #include "BaseTypes.h"
 #include "Interface.h"
+#include "Object/IMouseObject.h"
 
 #include "GuiScene.h"
 #include "Object/GuiMouseObject.h"
@@ -54,9 +55,31 @@ void GuiMouseObject::Update(f32 DeltaTime) {
  */
 Error GuiMouseObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
-    if (ChangeType & System::Changes::Input::Velocity) {
-        IMoveObject* pMoveObject = dynamic_cast<IMoveObject*>(pSubject);
-        CEGUI::System::getSingleton().injectMouseMove(pMoveObject->GetVelocity()->x, pMoveObject->GetVelocity()->y);
+    if (ChangeType & System::Changes::Input::Mouse) {
+        IMouseObject* pMouseObject = dynamic_cast<IMouseObject*>(pSubject);
+        CEGUI::System::getSingleton().injectMouseMove(pMouseObject->GetMousePosition()->x, pMouseObject->GetMousePosition()->y);
+        CEGUI::System::getSingleton().injectMouseWheelChange(pMouseObject->GetMousePosition()->y);
+
+        CEGUI::MouseButton mouseButton = CEGUI::MouseButton::NoButton;
+        switch (pMouseObject->GetMouseButtonData().id) {
+        case IMouseObject::MouseButtonID::LEFT:
+            mouseButton = CEGUI::MouseButton::LeftButton;
+            break;
+        case IMouseObject::MouseButtonID::RIGHT:
+            mouseButton = CEGUI::MouseButton::RightButton;
+            break;
+        case IMouseObject::MouseButtonID::MIDDLE:
+            mouseButton = CEGUI::MouseButton::MiddleButton;
+            break;
+        }
+
+        if (mouseButton != CEGUI::MouseButton::NoButton) {
+            if (pMouseObject->GetMouseButtonData().state == IMouseObject::MouseButtonState::PRESSED) {
+                CEGUI::System::getSingleton().injectMouseButtonDown(mouseButton);
+            } else {
+                CEGUI::System::getSingleton().injectMouseButtonUp(mouseButton);
+            }
+        }
     }
     return Errors::Success;
 }

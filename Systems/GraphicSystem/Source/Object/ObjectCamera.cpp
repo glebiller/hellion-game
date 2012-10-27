@@ -209,11 +209,3 @@ void GraphicObjectCamera::setPolygonMode(ProtoStringList values) {
             break;
     }
 }
-
-/**
- * @inheritDoc
- */
-void GraphicObjectCamera::setPagedGeometry(ProtoStringList values) {
-    PSCENE->SetCamera(m_pCamera);
-    PSCENE->SetDetailLevel();
-}
