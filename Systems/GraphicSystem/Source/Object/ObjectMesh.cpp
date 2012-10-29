@@ -93,6 +93,13 @@ Error GraphicObjectMesh::initialize(void) {
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
+void GraphicObjectMesh::Update(f32 DeltaTime) {
+
+}
+
 /*
 void
 GraphicObjectMesh::SetProperties(

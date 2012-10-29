@@ -105,7 +105,6 @@ class GraphicObject : public ISystemObject {
     public:
 
         Types                               m_Type;
-        static const char*                  sm_kapszTypeNames[];
 
         Ogre::SceneNode*                    m_pNode;
         DEFINE_SPIN_MUTEX(m_mutex);

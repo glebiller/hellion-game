@@ -23,7 +23,6 @@
 #include "IttNotify.h"
 #include "CEGUI.h"
 
-// UPDATE: provides access to environment variables
 extern ManagerInterfaces   g_Managers;
 
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Gui: Rendering", 19);
@@ -31,7 +30,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Gui: Rendering", 19);
 /**
  * @inheritDoc
  */
-GuiTask::GuiTask(GuiScene* pScene) : ISystemTask((ISystemScene*)pScene) {
+GuiTask::GuiTask(GuiScene* pScene) : ISystemTask(pScene) {
 
 }
 

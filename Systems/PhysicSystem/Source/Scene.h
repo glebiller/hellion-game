@@ -31,7 +31,7 @@ class HavokPhysicsScene : public ISystemScene, public IGenericScene {
         friend HavokPhysicsTask;
 
 
-    protected:
+    public:
 
         HavokPhysicsScene(ISystem* pSystem);
 

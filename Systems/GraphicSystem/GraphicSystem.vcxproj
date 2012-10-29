@@ -20,12 +20,14 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -85,12 +87,6 @@
     <ClCompile Include="Source\MovableText\DynamicRenderable.cpp" />
     <ClCompile Include="Source\MovableText\MovableText.cpp" />
     <ClCompile Include="Source\NormalizedLines.cpp" />
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectChart.cpp" />
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectCPUChart.cpp" />
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectStatWindow.cpp" />
-    <ClCompile Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.cpp" />
-    <ClCompile Include="Source\Object\GUI\ObjectLoginWindow.cpp" />
-    <ClCompile Include="Source\Object\GUI\ObjectWindow.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Object\ObjectCamera.cpp" />
     <ClCompile Include="Source\Object\ObjectLight.cpp" />
@@ -106,12 +102,6 @@
     <ClInclude Include="Source\MovableText\DynamicRenderable.h" />
     <ClInclude Include="Source\MovableText\MovableText.h" />
     <ClInclude Include="Source\NormalizedLines.h" />
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectChart.h" />
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectCPUChart.h" />
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectStatWindow.h" />
-    <ClInclude Include="Source\Object\GUI\Debug\ObjectWorkloadWindow.h" />
-    <ClInclude Include="Source\Object\GUI\ObjectLoginWindow.h" />
-    <ClInclude Include="Source\Object\GUI\ObjectWindow.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Object\ObjectCamera.h" />
     <ClInclude Include="Source\Object\ObjectLight.h" />

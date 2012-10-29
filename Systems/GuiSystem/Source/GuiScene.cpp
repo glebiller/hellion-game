@@ -47,14 +47,8 @@ static const u32   UpdateGrainSize = 120;
  */
 GuiScene::GuiScene(ISystem* pSystem) : ISystemScene(pSystem)
     , m_pTask(NULL) {
-    //
-    // Fill the object factories
-    // 
     m_ObjectFactories["Mouse"] = boost::factory<GuiMouseObject*>();
 
-    //
-    // Fill the properties default values
-    // 
 }
 
 /**
@@ -78,10 +72,16 @@ Error GuiScene::initialize(void) {
     }
 
     // TODO properties & move to object
-    CEGUI::Window *newWindow = CEGUI::WindowManager::getSingleton().loadWindowLayout("LoginForm.layout");
+    CEGUI::Window* newWindow = CEGUI::WindowManager::getSingleton().loadWindowLayout("LoginForm.layout");
     CEGUI::System::getSingleton().getGUISheet()->addChildWindow(newWindow);
+    newWindow->getChild("LoginForm/Submit")->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(&GuiScene::Handle_TextSubmitted, this));
 
     return Errors::Success;
+}
+
+bool GuiScene::Handle_TextSubmitted(const CEGUI::EventArgs& e) {
+    CEGUI::System::getSingleton().getGUISheet()->getChild("LoginForm")->getChild("LoginForm/Login")->setText("test");
+    return true;
 }
 
 /**

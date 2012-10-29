@@ -32,14 +32,8 @@ extern ManagerInterfaces    g_Managers;
  * @inheritDoc
  */
 GuiSystem::GuiSystem(void) : ISystem() {
-    //
-    // Init the Scene factory
-    //
     m_SceneFactory = boost::factory<GuiScene*>();
 
-    //
-    // Fill the properties default values
-    //
     m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
 }
 
@@ -56,9 +50,13 @@ GuiSystem::~GuiSystem(void) {
  */
 Error GuiSystem::initialize(void) {
     ASSERT(!m_bInitialized);
-    
+
+    new CEGUI::DefaultLogger();
+    CEGUI::Logger::getSingleton().setLogFilename("logs\\gui.log");
+
     Ogre::RenderTarget* renderWindow = (Ogre::RenderTarget*) g_Managers.pPlatform->Window().GetRenderWindow();
     m_pRenderer = &CEGUI::OgreRenderer::bootstrapSystem(*renderWindow);
+
     // TODO properties
     CEGUI::Font::setDefaultResourceGroup("Fonts");
     CEGUI::Scheme::setDefaultResourceGroup("Schemes");

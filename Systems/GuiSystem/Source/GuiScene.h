@@ -12,8 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #pragma once
+
+#include "CEGUI.h"
 
 #include "System/ISystemScene.h"
 #include "System/ISystem.h"
@@ -80,6 +81,8 @@ class GuiScene : public ISystemScene {
         ISystemTask* GetSystemTask(void) {
             return m_pTask;
         };
+
+        bool Handle_TextSubmitted(const CEGUI::EventArgs &e);
 
     protected:
 

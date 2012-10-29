@@ -13,54 +13,32 @@
 // responsibility to update it.
 
 
-//
-// extern includes
-//
-#include <windows.h>
-
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// system includes
-//
 #include "Scene.h"
 #include "Object/Object.h"
 #include "Task.h"
 
 
-NetworkTask::NetworkTask(
-    NetworkScene* pScene
-)
-    : ISystemTask(pScene)
-    , m_pScene(pScene) {
-    ASSERT(m_pScene != NULL);
-    ASSERT(sizeof(LONG) == sizeof(i32));
+/**
+ * @inheritDoc
+ */
+NetworkTask::NetworkTask(NetworkScene* pScene) : ISystemTask(pScene) {
+
 }
 
+/**
+ * @inheritDoc
+ */
+NetworkTask::~NetworkTask(void) {
 
-NetworkTask::~NetworkTask(
-    void
-) {
 }
 
-
-System::Type
-NetworkTask::GetSystemType(
-    void
-) {
-    return System::Types::Network;
-}
-
-
-void
-NetworkTask::Update(
-    f32 DeltaTime
-) {
-    m_pScene->NetworkUpdate(DeltaTime);
-    return;
+/**
+ * @inheritDoc
+ */
+void NetworkTask::Update(f32 DeltaTime) {
+    m_pSystemScene->Update(DeltaTime);
 }
 

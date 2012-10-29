@@ -12,18 +12,11 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #include <windows.h>
 
-//
-// core includes
-//
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// system includes
-//
 #include "System.h"
 
 
@@ -31,11 +24,7 @@ ManagerInterfaces   g_Managers;
 
 
 BOOL APIENTRY
-DllMain(
-    HMODULE hModule,
-    DWORD Reason,
-    LPVOID pReserved
-) {
+DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     UNREFERENCED_PARAM(hModule);
     UNREFERENCED_PARAM(pReserved);
 
@@ -52,26 +41,18 @@ DllMain(
 
 
 extern "C" void __stdcall
-InitializeNetworkSystem(
-    ManagerInterfaces* pManagers
-) {
+InitializeNetworkSystem(ManagerInterfaces* pManagers) {
     g_Managers = *pManagers;
 }
 
-
 extern "C" ISystem* __stdcall
-CreateNetworkSystem(
-    Debug::Debugger* p_Debugger
-) {
+CreateNetworkSystem(Debug::Debugger* p_Debugger) {
     Debug::Init(p_Debugger);
     return new NetworkSystem();
 }
 
-
 extern "C" void __stdcall
-DestroyNetworkSystem(
-    ISystem* pSystem
-) {
+DestroyNetworkSystem(ISystem* pSystem) {
     delete reinterpret_cast<NetworkSystem*>(pSystem);
 }
 

@@ -44,14 +44,13 @@ Error IProperty::setProperties(const ProtoPropertyList &properties) {
         PropertySetter setter = m_propertySetters.find(prop->name())->second;
         setter(prop->value());
     }
-
-    // Initialized not needed
+    
     if (m_bInitialized) {
         return Errors::Success;
-    }
-    
+    } 
+
     Error status = initialize();
-    m_bInitialized = true;  
+    m_bInitialized = true; 
     return status; 
 };
 
@@ -59,5 +58,6 @@ Error IProperty::setProperties(const ProtoPropertyList &properties) {
  * @inheritDoc
  */
 Error IProperty::initialize(void) {
+    m_bInitialized = true; 
     return Errors::Success;
 };

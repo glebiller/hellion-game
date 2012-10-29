@@ -15,10 +15,13 @@
 
 #pragma once
 
+#include "OIS.h"
+
 #include "System.h"
 #include "System/ISystemScene.h"
 #include "Object/Object.h"
 #include "Object/IGeometryObject.h"
+#include "Object/IMouseObject.h"
 #include "Object/IMoveObject.h"
 
 class InputScene;
@@ -31,7 +34,7 @@ class InputTask;
  * @sa  InputObject
  * @sa  IMoveObject
  */
-class InputMouseObject : public InputObject, public IMoveObject {
+class InputMouseObject : public InputObject, public IMouseObject, public OIS::MouseListener {
 
     public:
 
@@ -59,7 +62,7 @@ class InputMouseObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+            return System::Changes::Input::Velocity | System::Changes::Input::Mouse;
         };
 
         /**
@@ -73,19 +76,41 @@ class InputMouseObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        
+        /**
+         * @inheritDoc
+         */
+        const MouseButtonData GetMouseButtonData(void) {
+            return m_MouseButtonData;
+        }
 
         /**
-         * Gets the velocity.
-         *
-         * @return  null if it fails, else the velocity.
+         * @inheritDoc
          */
-        virtual const Math::Vector3* GetVelocity(void) {
-            return &m_Velocity;
+        const Math::Vector3* GetMousePosition(void) {
+            return &m_MousePosition;
         }
+        
+        /**
+         * @inheritDoc
+         */
+        bool mouseMoved(const OIS::MouseEvent &arg);
+
+        /**
+         * @inheritDoc
+         */
+		bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+
+        /**
+         * @inheritDoc
+         */
+		bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
     private:
 
-        Math::Vector3                       m_Velocity;
+        u32                                 m_Modified;
+        MouseButtonData                     m_MouseButtonData;
+        Math::Vector3                       m_MousePosition;
 
 };
 

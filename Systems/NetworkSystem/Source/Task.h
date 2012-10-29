@@ -14,52 +14,49 @@
 
 #pragma once
 
+#include "System.h"
+#include "System/ISystemTask.h"
 
 class NetworkScene;
 
-
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>NetworkTask</c> Implementation of the ISystemTask interface for Network.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
+ * definition of the class and its functions.
+ * 
+ * @sa  ISystemTask
+ */
 class NetworkTask : public ISystemTask {
-        friend class NetworkScene;
 
-
-    protected:
-
+    public:
+        
+        /**
+         * @inheritDoc
+         */
         NetworkTask(NetworkScene* pScene);
+
+        /**
+         * @inheritDoc
+         */
         ~NetworkTask(void);
+        
+        /**
+         * @inheritDoc
+         */
+        void Update(f32 DeltaTime);
 
-        /// <summary cref="NetworkTask::GetSystemType">
-        ///   Implementation of the <c>ISystemTask::GetSystemType</c> function.
-        ///   Gets the system type for this system task.
-        /// </summary>
-        /// <returns>System::Type - The type of the system.</returns>
-        /// <seealso cref="ISystemTask::GetSystemType"/>
-        virtual System::Type GetSystemType(void);
+        /**
+         * @inheritDoc
+         */
+        bool IsPrimaryThreadOnly(void) {
+            return false;
+        };
+        
+        /**
+         * @inheritDoc
+         */
+        System::Type GetSystemType(void) {
+            return System::Types::Network;
+        }
 
-        /// <summary cref="NetworkTask::Update">
-        ///   Implementation of the <c>ISystemTask::Update</c> function.
-        ///   Function informing the task to perform its updates.  This does
-        ///   all the work needed to update Network objects for this frame.
-        /// </summary>
-        /// <param name="DeltaTime">The time delta from the last call.</param>
-        /// <seealso cref="ISystemTask::Update"/>
-        virtual void Update(f32 DeltaTime);
-
-        /// <summary cref="NetworkTask::IsPrimaryThreadOnly">
-        ///   Implementation of the <c>ISystemTask::IsPrimaryThreadOnly</c> function.
-        /// </summary>
-        /// <returns>bool - Returns true if this system should only run on the primary thread.</returns>
-        /// <seealso cref="ISystemTask::IsPrimaryThreadOnly"/>
-        virtual bool IsPrimaryThreadOnly(void) { return true; }
-
-
-    private:
-
-        NetworkScene*                     m_pScene;
 };
 

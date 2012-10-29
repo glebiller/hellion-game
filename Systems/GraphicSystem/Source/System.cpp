@@ -19,6 +19,7 @@
 #include "OgreWindowEventUtilities.h"
 #pragma warning( pop )
 
+#include "boost/functional/factory.hpp"
 #include "boost/lexical_cast.hpp"
 #include "boost/bind.hpp"
 
@@ -38,27 +39,21 @@ extern ManagerInterfaces    g_Managers;
  * @inheritDoc
  */
 GraphicSystem::GraphicSystem(void) : ISystem()
-    , m_pRoot(NULL)
     , m_pRenderSystem(NULL)
     , m_pRenderWindow(NULL)
-    , m_pResourceGroupManager(NULL)
-    , m_pMaterialManager(NULL)
-    , m_uShadowTextureSize(0)
-    , m_uShadowTextureCount(0) {
-    //
-    // Init the Scene factory
-    //
-    m_SceneFactory = boost::factory<GraphicScene*>();
+    , m_pMaterialManager(NULL) {
+    m_SceneFactory = boost::factory<OGREGraphicsScene*>();
 
-    //
-    // Fill the properties default values
-    //
     m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
     m_propertySetters["WindowName"] = boost::bind(&GraphicSystem::setWindowName, this, _1);
     m_propertySetters["Resolution"] = boost::bind(&GraphicSystem::setResolution, this, _1);
     m_propertySetters["FullScreen"] = boost::bind(&GraphicSystem::setFullScreen, this, _1);
     m_propertySetters["VerticalSync"] = boost::bind(&GraphicSystem::setVerticalSync, this, _1);
     m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);
+
+    // Special init
+    m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
+    m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
 }
 
 /**
@@ -66,14 +61,19 @@ GraphicSystem::GraphicSystem(void) : ISystem()
  */
 GraphicSystem::~GraphicSystem(void) {
     // quit listening to the RenderWindow
-    Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
-    m_pResourceGroupManager->shutdownAll();
-    // Note: it appears that attempting to unload or uninstall the ParticleFX plugin at all with Ogre1.9
-    // will cause heap corruption around the guard pages allocated by the NT memory manager.  Luckily it seems
-    // like this is not leaking appreciable resources as the app will soon exit.  This should eventually be revisited
-    // should a new version of the ParticleFX plugin and/or Ogre become available.
-    // m_pRoot->unloadPlugin("Plugin_ParticleFX");
-    // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
+    if (m_bInitialized) {
+        Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
+
+        m_pResourceGroupManager->shutdownAll();
+
+        // Note: it appears that attempting to unload or uninstall the ParticleFX plugin at all with Ogre1.9
+        // will cause heap corruption around the guard pages allocated by the NT memory manager.  Luckily it seems
+        // like this is not leaking appreciable resources as the app will soon exit.  This should eventually be revisited
+        // should a new version of the ParticleFX plugin and/or Ogre become available.
+        // m_pRoot->unloadPlugin("Plugin_ParticleFX");
+        // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
+    }
+
     m_pRoot->shutdown();
     SAFE_DELETE(m_pRoot);
 }
@@ -92,12 +92,6 @@ void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
  */
 Error GraphicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
-
-    m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
-    ASSERT(m_pRoot != NULL);
-
-    m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
-
     //
     // Intialize the render system and render window.
     //
@@ -147,7 +141,7 @@ Error GraphicSystem::initialize(void) {
 /**
  * @inheritDoc
  */
-void GuiSystem::setResourceLocation(ProtoStringList values) {
+void GraphicSystem::setResourceLocation(ProtoStringList values) {
     ASSERT(!m_bInitialized);
     ProtoStringList::const_iterator value = values.begin();
 
@@ -164,7 +158,7 @@ void GuiSystem::setResourceLocation(ProtoStringList values) {
 /**
  * @inheritDoc
  */
-void GuiSystem::setWindowName(ProtoStringList values) {
+void GraphicSystem::setWindowName(ProtoStringList values) {
     ASSERT(!m_bInitialized);
     ProtoStringList::const_iterator value = values.begin();
 
@@ -174,7 +168,7 @@ void GuiSystem::setWindowName(ProtoStringList values) {
 /**
  * @inheritDoc
  */
-void GuiSystem::setResolution(ProtoStringList values) {
+void GraphicSystem::setResolution(ProtoStringList values) {
     ProtoStringList::const_iterator value = values.begin();
 
     u32 width  = boost::lexical_cast<u32>(*(value++));
@@ -191,7 +185,7 @@ void GuiSystem::setResolution(ProtoStringList values) {
 /**
  * @inheritDoc
  */
-void GuiSystem::setFullScreen(ProtoStringList values) {
+void GraphicSystem::setFullScreen(ProtoStringList values) {
     ASSERT(!m_bInitialized);
     ProtoStringList::const_iterator value = values.begin();
 
@@ -201,20 +195,20 @@ void GuiSystem::setFullScreen(ProtoStringList values) {
 /**
  * @inheritDoc
  */
-void GuiSystem::setVerticalSync(ProtoStringList values) {
+void GraphicSystem::setVerticalSync(ProtoStringList values) {
     ASSERT(!m_bInitialized);
     ProtoStringList::const_iterator value = values.begin();
 
-    m_RenderWindowDescription.miscParams['verticalSync'] = boost::lexical_cast<bool>(*value);
+    m_RenderWindowDescription.miscParams["verticalSync"] = boost::lexical_cast<bool>(*value);
 }
 
 /**
  * @inheritDoc
  */
-void GuiSystem::setAntiAliasing(ProtoStringList values) {
+void GraphicSystem::setAntiAliasing(ProtoStringList values) {
     ASSERT(!m_bInitialized);
     ProtoStringList::const_iterator value = values.begin();
 
-    m_RenderWindowDescription.miscParams['FSAA'] = *(value++);
-    m_RenderWindowDescription.miscParams['FSAAQuality'] = *value;
+    m_RenderWindowDescription.miscParams["FSAA"] = *(value++);
+    m_RenderWindowDescription.miscParams["FSAAQuality"] = *value;
 }

@@ -12,9 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-//
-// extern includes
-//
 #pragma warning( push, 0 )
 #pragma warning( disable : 6031 6201 6323 6386 )
 #include <Common/Base/hkBase.h>
@@ -27,12 +24,7 @@
 #include <Physics/Collide/Dispatch/hkpAgentRegisterUtil.h>
 #include <Physics/Utilities/Destruction/BreakOffParts/hkpBreakOffPartsUtil.h>
 
-// Keycode
 #include <Common/Base/keycode.cxx>
-
-// This excludes libraries that are not going to be linked
-// from the project configuration, even if the keycodes are
-// present
 
 #undef HK_FEATURE_PRODUCT_AI
 #undef HK_FEATURE_PRODUCT_ANIMATION
@@ -47,18 +39,14 @@
 #define HK_EXCLUDE_LIBRARY_hkGeometryUtilities
 #include <Common/Base/Config/hkProductFeatures.cxx>
 
-
 #pragma warning( pop )
 
-//
-// core includes
-//
+#include "boost/functional/factory.hpp"
+#include "boost/bind.hpp"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
-//
-// system includes
-//
 #include "Collision.h"
 #include "System.h"
 #include "Scene.h"
@@ -66,71 +54,48 @@
 
 extern ManagerInterfaces    g_Managers;
 
-
 u32 HavokPhysicsSystem::s_idMainThread = 0;
 tbb::atomic<u32> HavokPhysicsSystem::s_threadNumberCount;
 WorkerMemoryRouterMap_t HavokPhysicsSystem::s_workerMemoryRouterMap;
 
+/**
+ * @inheritDoc
+ */
+HavokPhysicsSystem::HavokPhysicsSystem(void) : ISystem() {
+    m_SceneFactory = boost::factory<HavokPhysicsScene*>();
 
-///////////////////////////////////////////////////////////////////////////////
-// HavokPhysicsSystem - Constructor
-HavokPhysicsSystem::HavokPhysicsSystem(
-    void
-)
-    : ISystem() {
+    //m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// ~HavokPhysicsSystem - Destructor
-HavokPhysicsSystem::~HavokPhysicsSystem(
-    void
-) {
+/**
+ * @inheritDoc
+ */
+HavokPhysicsSystem::~HavokPhysicsSystem(void) {
     if (m_bInitialized) {
         hkBaseSystem::quit();
         hkMemoryInitUtil::quit();
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// GetSystemType - Returns System type for this System
-System::Type HavokPhysicsSystem::GetSystemType(void) {
-    return System::Types::Physic;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Initialize - Initializes this System with the given properties
-Error
-HavokPhysicsSystem::Initialize(
-    Properties::Array Properties
-) {
+/**
+ * @inheritDoc
+ */
+Error HavokPhysicsSystem::initialize(void) {
     ASSERT(!m_bInitialized);
-    //
-    // Save the main thread id
-    //
+
     s_idMainThread = ::GetCurrentThreadId();
-    //
-    // Base Havok init
-    //
+
     hkMemoryRouter* memoryRouter = hkMemoryInitUtil::initDefault(hkMallocAllocator::m_defaultMallocAllocator, hkMemorySystem::FrameInfo(1024 * 1024));
     hkBaseSystem::init(memoryRouter, ErrorReport, this);
-    //
-    // Init each worker threads.
-    //
+
     g_Managers.pTask->NonStandardPerThreadCallback(
         reinterpret_cast<ITaskManager::JobFunction>(AllocateThreadResources), this
     );
-    //
-    // Create the job queue
-    //
+
     hkJobQueueCinfo info;
     info.m_jobQueueHwSetup.m_numCpuThreads = g_Managers.pTask->GetRecommendedJobCount();
     m_jobQueue = new hkJobQueue(info);
-    //
-    // Hide some errors.
-    //
+
     hkError::getInstance().setEnabled(0x2a2cde91, false);
     hkError::getInstance().setEnabled(0x6e8d163b, false);
     hkError::getInstance().setEnabled(0xad345a23, false);
@@ -140,60 +105,14 @@ HavokPhysicsSystem::Initialize(
     hkError::getInstance().setEnabled(0x1293ADE8, false);
     hkError::getInstance().setEnabled(0x1293ADEF, false);
 #endif
-    m_bInitialized = true;
+
     return Errors::Success;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// GetProperties - Properties for this System are returned in Properties
-void
-HavokPhysicsSystem::GetProperties(
-    Properties::Array& Properties
-) {
-    UNREFERENCED_PARAM(Properties);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// SetProperties - Set properties for this System
-void
-HavokPhysicsSystem::SetProperties(
-    Properties::Array Properties
-) {
-    UNREFERENCED_PARAM(Properties);
-    ASSERT(m_bInitialized);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// CreateScene - Creates and returns a new Scene
-ISystemScene*
-HavokPhysicsSystem::CreateScene(
-    void
-) {
-    return new HavokPhysicsScene(this);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// DestroyScene - Destroys the given Scene, free all associated resources
-Error
-HavokPhysicsSystem::DestroyScene(
-    ISystemScene* pSystemScene
-) {
-    ASSERT(pSystemScene != NULL);
-    HavokPhysicsScene* pScene = reinterpret_cast<HavokPhysicsScene*>(pSystemScene);
-    SAFE_DELETE(pScene);
-    return Errors::Success;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// AllocateThreadResources - Allocate resources need to support multiple threads
-void
-HavokPhysicsSystem::AllocateThreadResources(
-    HavokPhysicsSystem* pSystem
-) {
+/**
+ * @inheritDoc
+ */
+void HavokPhysicsSystem::AllocateThreadResources(HavokPhysicsSystem* pSystem) {
     //
     // Do not initialize main thread.
     // Already done in mainInit
@@ -206,38 +125,32 @@ HavokPhysicsSystem::AllocateThreadResources(
     }
 
     HK_THREAD_LOCAL_SET(hkThreadNumber, pSystem->s_threadNumberCount.fetch_and_increment());
-    //
-    // Create thread memory for the thread.
-    //
+
     hkMemoryRouter* memoryRouter = new(malloc(sizeof(hkMemoryRouter))) hkMemoryRouter();
     hkMemorySystem::getInstance().threadInit(*memoryRouter, "PhysicSystemWorker");
     hkResult result = hkBaseSystem::initThread(memoryRouter);
     ASSERT(result == HK_SUCCESS);
+
     WorkerMemoryRouterMap_t::accessor a;
     s_workerMemoryRouterMap.insert(a, ::GetCurrentThreadId());
     a->second = memoryRouter;
     ASSERT(hkMemoryRouter::getInstancePtr() != NULL);
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// FreeThreadResources - Free resources allocated to support multiple threads
-void
-HavokPhysicsSystem::FreeThreadResources(
-    HavokPhysicsSystem* pSystem
-) {
+/**
+ * @inheritDoc
+ */
+void HavokPhysicsSystem::FreeThreadResources(HavokPhysicsSystem* pSystem) {
     //
     // If the main thread serves as a worker of the scheduler's thread pool,
     // do not deinitialize havok's data here, 'cause doing so crashes hkBaseSystem::quit()
     //
     u32 currentThreadId = ::GetCurrentThreadId();
 
-    if (currentThreadId == s_idMainThread)
-    { return; }
+    if (currentThreadId == s_idMainThread) {
+        return;
+    }
 
-    //
-    // Free up Havok resources and free the stack space.
-    //
     WorkerMemoryRouterMap_t::const_accessor a;
 
     if (s_workerMemoryRouterMap.find(a, ::GetCurrentThreadId())) {
@@ -248,15 +161,11 @@ HavokPhysicsSystem::FreeThreadResources(
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// ErrorReport - Callback for Havok to report an error
-void
-HavokPhysicsSystem::ErrorReport(
-    const char* pString,
-    void* pErrorOutputObject
-) {
+/**
+ * @inheritDoc
+ */
+void HavokPhysicsSystem::ErrorReport(const char* pString, void* pErrorOutputObject) {
     HavokPhysicsSystem* pSystem = reinterpret_cast<HavokPhysicsSystem*>(pErrorOutputObject);
     Debug::Print("[%s Error]: %s", pSystem->GetName(), pString);
-    //ASSERTMSG( false, pString );
+    ASSERTMSG2(false, "[%s Error]: %s", pSystem->GetName(), pString);
 }

@@ -20,12 +20,14 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -89,6 +91,8 @@
   <ItemGroup>
     <ClInclude Include="Source\Generic\IGenericScene.h" />
     <ClInclude Include="Source\Interface.h" />
+    <ClInclude Include="Source\Object\IKeyboardObject.h" />
+    <ClInclude Include="Source\Object\IMouseObject.h" />
     <ClInclude Include="Source\Object\IGeometryObject.h" />
     <ClInclude Include="Source\Object\Graphic.h" />
     <ClInclude Include="Source\Object\GUI.h" />

@@ -30,7 +30,6 @@ class GuiTask;
  * definition of the class and its functions.
  * 
  * @sa  ISystem
- * @sa  Ogre::WindowEventListener
  */
 class GuiSystem : public ISystem {
 
