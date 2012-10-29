@@ -80,6 +80,10 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
             Player player = (Player) subject.getSession().getAttribute(Player.class.getSimpleName());
             if (player != null) {
                 World.getInstance().removePlayer(player);
+
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.info("Removed player from World " + player.getId());
+                }
             }
         }
     }

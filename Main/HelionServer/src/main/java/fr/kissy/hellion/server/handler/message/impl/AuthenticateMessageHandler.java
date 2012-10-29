@@ -10,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -25,10 +26,6 @@ public class AuthenticateMessageHandler implements MessageHandler {
      */
     @Override
     public UpstreamMessageDto.UpstreamMessageProto.Builder process(DownstreamMessageDto.DownstreamMessageProto message) {
-        if (message.getType() != DownstreamMessageDto.DownstreamMessageProto.Type.AUTHENTICATE) {
-            return null;
-        }
-
         Subject user = SecurityUtils.getSubject();
         if (user.isAuthenticated()) {
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
@@ -52,6 +49,10 @@ public class AuthenticateMessageHandler implements MessageHandler {
         Player player = new Player();
         user.getSession().setAttribute(Player.class.getSimpleName(), player);
         World.getInstance().addPlayer(player);
+
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.info("Adding new player to World " + player.getId());
+        }
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);

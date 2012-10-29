@@ -55,7 +55,8 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
      * @inheritDoc
      */
     @Override
-    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+    public void channelDisconnected(ChannelHandlerContext context, ChannelStateEvent event) throws Exception {
+        context.sendUpstream(event);
         SecurityUtils.getSubject().logout();
     }
 
