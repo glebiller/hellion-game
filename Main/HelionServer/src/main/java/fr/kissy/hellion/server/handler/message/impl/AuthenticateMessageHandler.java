@@ -1,7 +1,7 @@
 package fr.kissy.hellion.server.handler.message.impl;
 
-import fr.kissy.hellion.proto.DownstreamMessageDto;
-import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.proto.server.DownstreamMessageDto;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.message.MessageHandler;
 import fr.kissy.hellion.server.world.World;
@@ -56,6 +56,7 @@ public class AuthenticateMessageHandler implements MessageHandler {
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);
+        builder.setData(player.getAuthenticatedData().build().toByteString());
         return builder;
     }
 }

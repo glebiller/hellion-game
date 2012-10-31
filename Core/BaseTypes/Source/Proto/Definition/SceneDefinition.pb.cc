@@ -114,9 +114,8 @@ void protobuf_AddDesc_Proto_2fDefinition_2fSceneDefinition_2eproto() {
     "kProto\022\017\n\007subject\030\036 \002(\t\022\020\n\010observer\030\037 \002("
     "\t\022,\n\021subjectSystemType\030  \002(\0162\021.SystemPro"
     "to.Type\022-\n\022observerSystemType\030! \002(\0162\021.Sy"
-    "stemProto.TypeBB\n)fr.kissy.hellion.defin"
-    "ition.encoder.protoB\022SceneDefinitionDto\210"
-    "\001\000", 482);
+    "stemProto.TypeB:\n!fr.kissy.hellion.proto"
+    ".definitionB\022SceneDefinitionDto\210\001\000", 474);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Definition/SceneDefinition.proto", &protobuf_RegisterTypes);
   SceneDefinitionProto::default_instance_ = new SceneDefinitionProto();

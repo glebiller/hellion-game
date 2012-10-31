@@ -106,9 +106,9 @@ void protobuf_AddDesc_Proto_2fCommon_2fObject_2eproto() {
     "temObjects\030\002 \003(\0132\036.ObjectProto.SystemObj"
     "ectProto\032l\n\021SystemObjectProto\022%\n\nsystemT"
     "ype\030\n \002(\0162\021.SystemProto.Type\022\"\n\nproperti"
-    "es\030\013 \003(\0132\016.PropertyProto\022\014\n\004type\030\014 \001(\tB9"
-    "\n)fr.kissy.hellion.definition.encoder.pr"
-    "otoB\tObjectDto\210\001\000", 337);
+    "es\030\013 \003(\0132\016.PropertyProto\022\014\n\004type\030\014 \001(\tB-"
+    "\n\035fr.kissy.hellion.proto.commonB\tObjectD"
+    "to\210\001\000", 325);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Common/Object.proto", &protobuf_RegisterTypes);
   ObjectProto::default_instance_ = new ObjectProto();

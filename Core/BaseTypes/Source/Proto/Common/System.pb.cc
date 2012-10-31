@@ -84,8 +84,8 @@ void protobuf_AddDesc_Proto_2fCommon_2fSystem_2eproto() {
     "\022\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\003\022\t\n\005"
     "Audio\020\004\022\014\n\010Geometry\020\005\022\013\n\007Graphic\020\006\022\007\n\003Gu"
     "i\020\007\022\t\n\005Input\020\010\022\013\n\007Network\020\t\022\n\n\006Physic\020\nB"
-    "9\n)fr.kissy.hellion.definition.encoder.p"
-    "rotoB\tSystemDto\210\001\000", 338);
+    "-\n\035fr.kissy.hellion.proto.commonB\tSystem"
+    "Dto\210\001\000", 326);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Common/System.proto", &protobuf_RegisterTypes);
   SystemProto::default_instance_ = new SystemProto();

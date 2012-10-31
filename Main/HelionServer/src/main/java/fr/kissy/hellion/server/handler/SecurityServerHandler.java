@@ -15,8 +15,8 @@
  */
 package fr.kissy.hellion.server.handler;
 
-import fr.kissy.hellion.proto.DownstreamMessageDto;
-import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.proto.server.DownstreamMessageDto;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jboss.netty.channel.ChannelHandlerContext;

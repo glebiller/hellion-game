@@ -2,7 +2,7 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.definition.encoder.proto.ObjectDto;
+import fr.kissy.hellion.proto.common.ObjectDto;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

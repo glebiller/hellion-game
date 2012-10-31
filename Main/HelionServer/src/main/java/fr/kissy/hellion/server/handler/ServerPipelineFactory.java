@@ -1,6 +1,6 @@
 package fr.kissy.hellion.server.handler;
 
-import fr.kissy.hellion.proto.DownstreamMessageDto;
+import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;

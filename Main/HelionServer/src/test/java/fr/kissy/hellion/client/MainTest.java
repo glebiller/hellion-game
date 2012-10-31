@@ -16,7 +16,7 @@
 package fr.kissy.hellion.client;
 
 import fr.kissy.hellion.client.handler.ClientHandlerTest;
-import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipeline;

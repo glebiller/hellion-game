@@ -1,7 +1,7 @@
 package fr.kissy.hellion.server.handler.message;
 
-import fr.kissy.hellion.proto.DownstreamMessageDto;
-import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.proto.server.DownstreamMessageDto;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>

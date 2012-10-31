@@ -3,7 +3,7 @@ package fr.kissy.hellion.definition.encoder.main;
 import fr.kissy.hellion.definition.encoder.main.parser.GlobalDefinitionParser;
 import fr.kissy.hellion.definition.encoder.main.parser.SceneDefinitionParser;
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
-import fr.kissy.hellion.definition.encoder.proto.GlobalDefinitionDto;
+import fr.kissy.hellion.proto.definition.GlobalDefinitionDto;
 
 import javax.management.modelmbean.XMLParseException;
 import java.io.File;

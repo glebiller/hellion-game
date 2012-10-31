@@ -80,8 +80,8 @@ void protobuf_AddDesc_Proto_2fServer_2fUpstreamMessage_2eproto() {
     "\024UpstreamMessageProto\022(\n\004type\030\001 \002(\0162\032.Up"
     "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"6\n"
     "\004Type\022\t\n\005ERROR\020\001\022\020\n\014UNAUTHORIZED\020\002\022\021\n\rAU"
-    "THENTICATED\020\003B/\n\026fr.kissy.hellion.protoB"
-    "\022UpstreamMessageDto\210\001\000", 222);
+    "THENTICATED\020\003B6\n\035fr.kissy.hellion.proto."
+    "serverB\022UpstreamMessageDto\210\001\000", 229);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Server/UpstreamMessage.proto", &protobuf_RegisterTypes);
   UpstreamMessageProto::default_instance_ = new UpstreamMessageProto();

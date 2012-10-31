@@ -1,9 +1,9 @@
 package fr.kissy.hellion.definition.encoder.main.utils;
 
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.definition.encoder.proto.ObjectDto;
-import fr.kissy.hellion.definition.encoder.proto.PropertyDto;
-import fr.kissy.hellion.definition.encoder.proto.SystemDto;
+import fr.kissy.hellion.proto.common.ObjectDto;
+import fr.kissy.hellion.proto.common.PropertyDto;
+import fr.kissy.hellion.proto.common.SystemDto;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
@@ -32,8 +32,7 @@ public class ParseUtils {
         
         String name = propertyElement.getAttribute("Name");
         if (StringUtils.isEmpty(name)) {
-            AssertUtils.makeTest(false,
-                    "Name attribute is required for Property element");
+            AssertUtils.makeTest(false, "Name attribute is required for Property element");
         }
         propertyBuilder.setName(name);
         

@@ -83,9 +83,9 @@ void protobuf_AddDesc_Proto_2fDefinition_2fGlobalDefinition_2eproto() {
     "on/Property.proto\"\200\001\n\025GlobalDefinitionPr"
     "oto\022\024\n\014startupScene\030\001 \002(\t\022\"\n\nproperties\030"
     "\002 \003(\0132\016.PropertyProto\022\035\n\007systems\030\003 \003(\0132\014"
-    ".SystemProto\022\016\n\006scenes\030\004 \003(\tBC\n)fr.kissy"
-    ".hellion.definition.encoder.protoB\023Globa"
-    "lDefinitionDto\210\001\000", 297);
+    ".SystemProto\022\016\n\006scenes\030\004 \003(\tB;\n!fr.kissy"
+    ".hellion.proto.definitionB\023GlobalDefinit"
+    "ionDto\210\001\000", 289);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Definition/GlobalDefinition.proto", &protobuf_RegisterTypes);
   GlobalDefinitionProto::default_instance_ = new GlobalDefinitionProto();

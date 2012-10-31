@@ -16,8 +16,8 @@
 package fr.kissy.hellion.client.handler;
 
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.proto.DownstreamMessageDto;
-import fr.kissy.hellion.proto.UpstreamMessageDto;
+import fr.kissy.hellion.proto.server.DownstreamMessageDto;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;

@@ -79,8 +79,9 @@ void protobuf_AddDesc_Proto_2fServer_2fDownstreamMessage_2eproto() {
     "\n$Proto/Server/DownstreamMessage.proto\"l"
     "\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162\034"
     ".DownstreamMessageProto.Type\022\014\n\004data\030\002 \001"
-    "(\014\"\030\n\004Type\022\020\n\014AUTHENTICATE\020\001B1\n\026fr.kissy"
-    ".hellion.protoB\024DownstreamMessageDto\210\001\000", 199);
+    "(\014\"\030\n\004Type\022\020\n\014AUTHENTICATE\020\001B8\n\035fr.kissy"
+    ".hellion.proto.serverB\024DownstreamMessage"
+    "Dto\210\001\000", 206);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Server/DownstreamMessage.proto", &protobuf_RegisterTypes);
   DownstreamMessageProto::default_instance_ = new DownstreamMessageProto();

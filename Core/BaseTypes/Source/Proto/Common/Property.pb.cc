@@ -75,9 +75,9 @@ void protobuf_AddDesc_Proto_2fCommon_2fProperty_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\033Proto/Common/Property.proto\",\n\rPropert"
-    "yProto\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \003(\014B;\n)f"
-    "r.kissy.hellion.definition.encoder.proto"
-    "B\013PropertyDto\210\001\000", 136);
+    "yProto\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \003(\014B/\n\035f"
+    "r.kissy.hellion.proto.commonB\013PropertyDt"
+    "o\210\001\000", 124);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Common/Property.proto", &protobuf_RegisterTypes);
   PropertyProto::default_instance_ = new PropertyProto();

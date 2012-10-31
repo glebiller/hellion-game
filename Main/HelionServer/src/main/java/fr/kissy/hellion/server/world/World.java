@@ -52,7 +52,7 @@ public class World {
                 new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool())
         );
         bootstrap.setPipelineFactory(new ServerPipelineFactory());
-        bootstrap.bind(new InetSocketAddress(8080));
+        bootstrap.bind(new InetSocketAddress(9999));
     }
 
     /**
