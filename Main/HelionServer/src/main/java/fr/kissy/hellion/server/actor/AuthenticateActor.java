@@ -1,62 +1,59 @@
-package fr.kissy.hellion.server.handler.message.impl;
+package fr.kissy.hellion.server.actor;
 
-import fr.kissy.hellion.proto.server.DownstreamMessageDto;
+import akka.actor.UntypedActor;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.handler.message.MessageHandler;
-import fr.kissy.hellion.server.world.World;
-import org.apache.shiro.SecurityUtils;
+import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
  * @version $Id$
  */
-public class AuthenticateMessageHandler implements MessageHandler {
+public class AuthenticateActor extends UntypedActor {
 
-    private static final Logger LOGGER = Logger.getLogger(AuthenticateMessageHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateActor.class);
 
-    /**
-     * @inheritDoc
-     */
     @Override
-    public UpstreamMessageDto.UpstreamMessageProto.Builder process(DownstreamMessageDto.DownstreamMessageProto message) {
-        Subject user = SecurityUtils.getSubject();
+    public void onReceive(Object o) throws Exception {
+        AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
+        Subject user = messageEvent.getSubject();
+
         if (user.isAuthenticated()) {
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
-            return builder;
+            messageEvent.getChannel().write(builder.build());
+            return;
         }
 
-        String username = new String(message.getData().toByteArray());
+        String username = new String(messageEvent.getMessage().getData().toByteArray());
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, "test");
-        LOGGER.fine("Authentication attempt for user " + usernamePasswordToken.toString());
+        LOGGER.debug("Authentication attempt for user {}", usernamePasswordToken.toString());
         try {
             user.login(usernamePasswordToken);
         } catch (AuthenticationException ignored) {
-            LOGGER.warning("Authentication failed for user " + usernamePasswordToken.toString());
+            LOGGER.warn("Authentication failed for user {}", usernamePasswordToken.toString());
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
-            return builder;
+            messageEvent.getChannel().write(builder.build());
+            return;
         }
 
         // Fetch player & add it to world
         Player player = new Player();
         user.getSession().setAttribute(Player.class.getSimpleName(), player);
-        World.getInstance().addPlayer(player);
+        //World.getInstance().addPlayer(player);
 
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info("Adding new player to World " + player.getId());
-        }
+        LOGGER.info("Adding new player to World {}", player.getId());
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);
         builder.setData(player.getAuthenticatedData().build().toByteString());
-        return builder;
+        messageEvent.getChannel().write(builder.build());
     }
 }

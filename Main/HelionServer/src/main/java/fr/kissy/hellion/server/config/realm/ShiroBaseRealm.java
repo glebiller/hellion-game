@@ -1,4 +1,4 @@
-package fr.kissy.hellion.server.realm;
+package fr.kissy.hellion.server.config.realm;
 
 import fr.kissy.hellion.server.domain.Account;
 import fr.kissy.hellion.server.repository.AccountRepository;

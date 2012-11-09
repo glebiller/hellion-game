@@ -22,10 +22,12 @@
 package fr.kissy.hellion.server;
 
 import fr.kissy.hellion.server.config.AppConfig;
-import fr.kissy.hellion.server.world.World;
 import org.apache.log4j.BasicConfigurator;
+import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.net.InetSocketAddress;
 
 public class Main {
 
@@ -38,8 +40,8 @@ public class Main {
         context.refresh();
         BasicConfigurator.configure();
 
-        // Run
-        World.init();
+        ServerBootstrap serverBootstrap = context.getBean(ServerBootstrap.class);
+        serverBootstrap.bind(context.getBean(InetSocketAddress.class));
 	}
 
     /**

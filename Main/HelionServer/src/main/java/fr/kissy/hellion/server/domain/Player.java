@@ -28,23 +28,6 @@ public class Player extends Rectangle {
     }
 
     @Transient
-    private ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
-        PropertyDto.PropertyProto.Builder positionBuilder = PropertyDto.PropertyProto.newBuilder();
-        positionBuilder.setName("Position");
-        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(getX())));
-        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(getY())));
-
-        ObjectDto.ObjectProto.SystemObjectProto.Builder propertiesProto = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
-        propertiesProto.setSystemType(SystemDto.SystemProto.Type.Geometry);
-        propertiesProto.addProperties(positionBuilder);
-
-        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
-        builder.setName(String.valueOf(id));
-        builder.addSystemObjects(propertiesProto);
-        return builder;
-    }
-
-    @Transient
     private float getX() {
         return (minX + maxX) / 2;
     }
@@ -58,6 +41,23 @@ public class Player extends Rectangle {
     public Authenticated.AuthenticatedProto.Builder getAuthenticatedData() {
         Authenticated.AuthenticatedProto.Builder builder = Authenticated.AuthenticatedProto.newBuilder();
         builder.setPlayer(toObjectProtoBuilder());
+        return builder;
+    }
+
+    @Transient
+    private ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
+        PropertyDto.PropertyProto.Builder positionBuilder = PropertyDto.PropertyProto.newBuilder();
+        positionBuilder.setName("Position");
+        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(getX())));
+        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(getY())));
+
+        ObjectDto.ObjectProto.SystemObjectProto.Builder propertiesProto = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
+        propertiesProto.setSystemType(SystemDto.SystemProto.Type.Geometry);
+        propertiesProto.addProperties(positionBuilder);
+
+        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
+        builder.setName(String.valueOf(id));
+        builder.addSystemObjects(propertiesProto);
         return builder;
     }
 }

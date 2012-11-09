@@ -17,6 +17,8 @@ package fr.kissy.hellion.server.handler;
 
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
+import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
+import fr.kissy.hellion.server.handler.event.AuthenticatedStateEvent;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -40,15 +42,15 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void messageReceived(ChannelHandlerContext context, MessageEvent event) {
-        DownstreamMessageDto.DownstreamMessageProto message = (DownstreamMessageDto.DownstreamMessageProto) event.getMessage();
         Subject subject = SecurityUtils.getSubject();
+        DownstreamMessageDto.DownstreamMessageProto message = (DownstreamMessageDto.DownstreamMessageProto) event.getMessage();
         if (!subject.isAuthenticated() && message.getType() != DownstreamMessageDto.DownstreamMessageProto.Type.AUTHENTICATE) {
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
             event.getChannel().write(builder.build());
             return;
         }
-        context.sendUpstream(event);
+        context.sendUpstream(new AuthenticatedMessageEvent(subject, event));
     }
 
     /**
@@ -56,8 +58,8 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void channelDisconnected(ChannelHandlerContext context, ChannelStateEvent event) throws Exception {
-        context.sendUpstream(event);
-        SecurityUtils.getSubject().logout();
+        Subject subject = SecurityUtils.getSubject();
+        context.sendUpstream(new AuthenticatedStateEvent(subject, event));
     }
 
     /**

@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 /**
  * Handler implementation for the echo client.  It initiates the ping-pong
- * traffic between the echo client and server by sending the first message to
+ * traffic between the echo client and server by sending the first event to
  * the server.
  */
 public class ClientHandlerTest extends SimpleChannelUpstreamHandler {

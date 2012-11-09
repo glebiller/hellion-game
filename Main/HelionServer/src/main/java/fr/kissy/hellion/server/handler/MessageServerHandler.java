@@ -15,77 +15,46 @@
  */
 package fr.kissy.hellion.server.handler;
 
-import fr.kissy.hellion.proto.server.DownstreamMessageDto;
-import fr.kissy.hellion.proto.server.UpstreamMessageDto;
-import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.handler.message.MessageHandler;
-import fr.kissy.hellion.server.handler.message.impl.AuthenticateMessageHandler;
-import fr.kissy.hellion.server.world.World;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import akka.actor.ActorSystem;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Handler implementation for the echo server.
+ * Handler implementation for client message.
  */
 public class MessageServerHandler extends SimpleChannelUpstreamHandler {
 
-    private static final Logger LOGGER = Logger.getLogger(MessageServerHandler.class.getName());
-    private static final Map<DownstreamMessageDto.DownstreamMessageProto.Type, MessageHandler> MESSAGE_HANDLERS
-            = new HashMap<DownstreamMessageDto.DownstreamMessageProto.Type, MessageHandler>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageServerHandler.class.getName());
 
-    public MessageServerHandler() {
-        MESSAGE_HANDLERS.put(DownstreamMessageDto.DownstreamMessageProto.Type.AUTHENTICATE, new AuthenticateMessageHandler());
-    }
-
+    @Autowired
+    private ActorSystem actorSystem;
 
     /**
      * @inheritDoc
      */
     @Override
     public void messageReceived(ChannelHandlerContext context, MessageEvent event) {
-        DownstreamMessageDto.DownstreamMessageProto message = (DownstreamMessageDto.DownstreamMessageProto) event.getMessage();
-
-        UpstreamMessageDto.UpstreamMessageProto.Builder builder = null;
-        if (MESSAGE_HANDLERS.containsKey(message.getType())) {
-            builder = MESSAGE_HANDLERS.get(message.getType()).process(message);
-        }
-
-        // If we are not able to process or the process is not good, then write an error message.
-        // If the process went right, then the process method should have returned an answer.
-        if (builder == null) {
-            builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
-            builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.ERROR);
-        }
-
-        event.getChannel().write(builder.build());
+        actorSystem.eventStream().publish(event);
     }
 
     /**
      * @inheritDoc
      */
     @Override
-    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            Player player = (Player) subject.getSession().getAttribute(Player.class.getSimpleName());
-            if (player != null) {
-                World.getInstance().removePlayer(player);
-
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.info("Removed player from World " + player.getId());
-                }
-            }
-        }
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent event) throws Exception {
+        actorSystem.eventStream().publish(event);
+        /*Player player = (Player) stateEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
+        if (player != null) {
+            //World.getInstance().removePlayer(player);
+            LOGGER.info("Removed player from World {}", player.getId());
+        }*/
+        //subject.logout();
     }
 
     /**
@@ -93,7 +62,7 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext context, ExceptionEvent event) {
-        LOGGER.log(Level.WARNING, "Unexpected exception from downstream.", event.getCause());
+        LOGGER.warn("Unexpected exception from downstream.", event.getCause());
         event.getChannel().close();
     }
 
