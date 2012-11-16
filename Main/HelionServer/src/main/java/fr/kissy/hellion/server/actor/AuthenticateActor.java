@@ -3,12 +3,14 @@ package fr.kissy.hellion.server.actor;
 import akka.actor.UntypedActor;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
+import fr.kissy.hellion.server.domain.World;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -18,6 +20,9 @@ import org.slf4j.LoggerFactory;
 public class AuthenticateActor extends UntypedActor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateActor.class);
+
+    @Autowired
+    private World world;
 
     @Override
     public void onReceive(Object o) throws Exception {
@@ -47,7 +52,7 @@ public class AuthenticateActor extends UntypedActor {
         // Fetch player & add it to world
         Player player = new Player();
         user.getSession().setAttribute(Player.class.getSimpleName(), player);
-        //World.getInstance().addPlayer(player);
+        world.addPlayer(player);
 
         LOGGER.info("Adding new player to World {}", player.getId());
 

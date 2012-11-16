@@ -29,7 +29,6 @@ import org.jboss.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import org.jboss.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.Executors;
 
 /**
  * Sends one event when a connection is open and echoes back any received
@@ -48,12 +47,7 @@ public class MainTest {
     }
 
     public void run() {
-        // Configure the client.
-        ClientBootstrap bootstrap = new ClientBootstrap(
-                new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool())
-        );
-
-        // Set up the pipeline factory.
+        ClientBootstrap bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory());
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
@@ -66,17 +60,12 @@ public class MainTest {
             }
         });
 
-        // Start the connection attempt.
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port));
-
-        // Wait until the connection is closed or the connection attempt fails.
         future.getChannel().getCloseFuture().awaitUninterruptibly();
-
-        // Shut down thread pools to exit.
         bootstrap.releaseExternalResources();
     }
 
     public static void main(String[] args) throws Exception {
-        new MainTest("127.0.0.1", 8080).run();
+        new MainTest("127.0.0.1", 9999).run();
     }
 }
