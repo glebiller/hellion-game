@@ -5,6 +5,7 @@ import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.domain.World;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
+import gnu.trove.TIntProcedure;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -29,5 +30,14 @@ public class SpawnActor extends UntypedActor {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
+        Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
+        TIntProcedure procedure = new TIntProcedure() {
+            @Override
+            public boolean execute(int i) {
+                LOGGER.info("Rectangle " + i);
+                return false;
+            }
+        };
+        world.getPlayers().nearest(player.centre(), procedure, 100f);
     }
 }

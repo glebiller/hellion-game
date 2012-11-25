@@ -28,6 +28,11 @@ public class Player extends Rectangle {
     }
 
     @Transient
+    public void setPosition(float x, float y) {
+        set(x, y, x, y);
+    }
+
+    @Transient
     private float getX() {
         return (minX + maxX) / 2;
     }

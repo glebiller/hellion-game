@@ -34,4 +34,12 @@ public class World {
         players.delete(player, player.getId());
     }
 
+    /**
+     * Get the tree of players.
+     *
+     * @return The tree of players.
+     */
+    public RTree getPlayers() {
+        return players;
+    }
 }
