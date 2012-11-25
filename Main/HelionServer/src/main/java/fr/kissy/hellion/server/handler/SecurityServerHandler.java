@@ -26,16 +26,15 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handler implementation for the echo server.
  */
 public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
 
-    private static final Logger logger = Logger.getLogger(SecurityServerHandler.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServerHandler.class.getName());
 
     /**
      * @inheritDoc
@@ -67,7 +66,7 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext context, ExceptionEvent event) {
-        logger.log(Level.WARNING, "Unexpected exception from upstream.", event.getCause());
+        logger.warn("Unexpected exception from upstream.", event);
         event.getChannel().close();
     }
 

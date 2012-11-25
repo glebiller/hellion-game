@@ -16,6 +16,8 @@
 package fr.kissy.hellion.server.handler;
 
 import akka.actor.ActorSystem;
+import fr.kissy.hellion.server.config.bus.MessageEventBus;
+import fr.kissy.hellion.server.config.bus.StateEventBus;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
@@ -33,14 +35,16 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageServerHandler.class.getName());
 
     @Autowired
-    private ActorSystem actorSystem;
+    private MessageEventBus messageEventBus;
+    @Autowired
+    private StateEventBus stateEventBus;
 
     /**
      * @inheritDoc
      */
     @Override
     public void messageReceived(ChannelHandlerContext context, MessageEvent event) {
-        actorSystem.eventStream().publish(event);
+        messageEventBus.publish(event);
     }
 
     /**
@@ -48,7 +52,7 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent event) throws Exception {
-        actorSystem.eventStream().publish(event);
+        stateEventBus.publish(event);
         /*Player player = (Player) stateEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
         if (player != null) {
             //World.getInstance().removePlayer(player);

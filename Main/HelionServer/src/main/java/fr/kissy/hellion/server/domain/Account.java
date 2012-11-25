@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Guillaume Le Biller <lebiller@ekino.com>
  * @version $Id: Account.java 45 2012-06-08 16:00:14Z kissy $
  */
-@Document
+@Document(collection = "accounts")
 public class Account {
 
     @Id

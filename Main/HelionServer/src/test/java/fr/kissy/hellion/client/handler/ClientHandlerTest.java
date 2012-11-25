@@ -16,6 +16,9 @@
 package fr.kissy.hellion.client.handler;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
+import fr.kissy.hellion.proto.common.ObjectDto;
+import fr.kissy.hellion.proto.message.Authenticated;
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -23,9 +26,8 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handler implementation for the echo client.  It initiates the ping-pong
@@ -34,7 +36,7 @@ import java.util.logging.Logger;
  */
 public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
 
-    private static final Logger LOGGER = Logger.getLogger(ClientHandlerTest.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandlerTest.class.getName());
 
     /**
      * Creates a client-side handler.
@@ -54,14 +56,26 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
     @Override
     public void messageReceived(ChannelHandlerContext context, MessageEvent event) {
         UpstreamMessageDto.UpstreamMessageProto message = (UpstreamMessageDto.UpstreamMessageProto) event.getMessage();
-        LOGGER.log(Level.WARNING, "client : " + message.getType() + " " + new String(message.getData().toByteArray()));
-        event.getChannel().close();
+        LOGGER.debug("client : {}", message.getType());
+
+        if (message.getType() == UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED) {
+            try {
+                Authenticated.AuthenticatedProto authenticated = Authenticated.AuthenticatedProto.parseFrom(message.getData());
+                LOGGER.debug("Received player {} \n{}", authenticated.getPlayer().getName(), authenticated.getPlayer().getSystemObjectsList());
+            } catch (InvalidProtocolBufferException e) {
+                LOGGER.error("Cannot parse proto", e);
+            }
+        }
+
+        DownstreamMessageDto.DownstreamMessageProto.Builder downstream = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
+        downstream.setType(DownstreamMessageDto.DownstreamMessageProto.Type.SPAWN);
+        event.getChannel().write(downstream.build());
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext context, ExceptionEvent event) {
         // Close the connection when an exception is raised.
-        LOGGER.log(Level.WARNING, "Unexpected exception from downstream.", event.getCause());
+        LOGGER.warn("Unexpected exception from downstream.", event);
         event.getChannel().close();
     }
 }

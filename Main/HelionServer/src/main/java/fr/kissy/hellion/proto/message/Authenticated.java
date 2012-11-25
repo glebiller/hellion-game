@@ -247,7 +247,7 @@ public final class Authenticated {
         return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable;
       }
       
-      // Construct using fr.kissy.hellion.proto.event.Authenticated.AuthenticatedProto.newBuilder()
+      // Construct using fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }

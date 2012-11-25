@@ -33,11 +33,12 @@ void protobuf_ShutdownFile_Proto_2fServer_2fDownstreamMessage_2eproto();
 class DownstreamMessageProto;
 
 enum DownstreamMessageProto_Type {
-  DownstreamMessageProto_Type_AUTHENTICATE = 1
+  DownstreamMessageProto_Type_AUTHENTICATE = 1,
+  DownstreamMessageProto_Type_SPAWN = 2
 };
 bool DownstreamMessageProto_Type_IsValid(int value);
 const DownstreamMessageProto_Type DownstreamMessageProto_Type_Type_MIN = DownstreamMessageProto_Type_AUTHENTICATE;
-const DownstreamMessageProto_Type DownstreamMessageProto_Type_Type_MAX = DownstreamMessageProto_Type_AUTHENTICATE;
+const DownstreamMessageProto_Type DownstreamMessageProto_Type_Type_MAX = DownstreamMessageProto_Type_SPAWN;
 const int DownstreamMessageProto_Type_Type_ARRAYSIZE = DownstreamMessageProto_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* DownstreamMessageProto_Type_descriptor();
@@ -106,6 +107,7 @@ class DownstreamMessageProto : public ::google::protobuf::Message {
   
   typedef DownstreamMessageProto_Type Type;
   static const Type AUTHENTICATE = DownstreamMessageProto_Type_AUTHENTICATE;
+  static const Type SPAWN = DownstreamMessageProto_Type_SPAWN;
   static inline bool Type_IsValid(int value) {
     return DownstreamMessageProto_Type_IsValid(value);
   }

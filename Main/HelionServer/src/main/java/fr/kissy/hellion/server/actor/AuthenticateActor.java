@@ -28,8 +28,10 @@ public class AuthenticateActor extends UntypedActor {
     public void onReceive(Object o) throws Exception {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
         Subject user = messageEvent.getSubject();
+        LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), user.getPrincipal());
 
         if (user.isAuthenticated()) {
+            LOGGER.error("User {} is already authenticated", user.getPrincipal());
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
             messageEvent.getChannel().write(builder.build());

@@ -50,9 +50,11 @@ public final class DownstreamMessageDto {
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
       AUTHENTICATE(0, 1),
+      SPAWN(1, 2),
       ;
       
       public static final int AUTHENTICATE_VALUE = 1;
+      public static final int SPAWN_VALUE = 2;
       
       
       public final int getNumber() { return value; }
@@ -60,6 +62,7 @@ public final class DownstreamMessageDto {
       public static Type valueOf(int value) {
         switch (value) {
           case 1: return AUTHENTICATE;
+          case 2: return SPAWN;
           default: return null;
         }
       }
@@ -90,7 +93,7 @@ public final class DownstreamMessageDto {
       }
       
       private static final Type[] VALUES = {
-        AUTHENTICATE, 
+        AUTHENTICATE, SPAWN, 
       };
       
       public static Type valueOf(
@@ -503,12 +506,12 @@ public final class DownstreamMessageDto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n$Proto/Server/DownstreamMessage.proto\"l" +
+      "\n$Proto/Server/DownstreamMessage.proto\"w" +
       "\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162\034" +
       ".DownstreamMessageProto.Type\022\014\n\004data\030\002 \001" +
-      "(\014\"\030\n\004Type\022\020\n\014AUTHENTICATE\020\001B8\n\035fr.kissy" +
-      ".hellion.proto.serverB\024DownstreamMessage" +
-      "Dto\210\001\000"
+      "(\014\"#\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\t\n\005SPAWN\020\002B" +
+      "8\n\035fr.kissy.hellion.proto.serverB\024Downst" +
+      "reamMessageDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
