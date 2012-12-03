@@ -1,7 +1,6 @@
 package fr.kissy.hellion.server.domain;
 
 import com.infomatiq.jsi.rtree.RTree;
-import fr.kissy.hellion.server.domain.Player;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
@@ -35,9 +34,9 @@ public class World {
     }
 
     /**
-     * Get the tree of players.
+     * Get the players.
      *
-     * @return The tree of players.
+     * @return The players.
      */
     public RTree getPlayers() {
         return players;

@@ -53,12 +53,6 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent event) throws Exception {
         stateEventBus.publish(event);
-        /*Player player = (Player) stateEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
-        if (player != null) {
-            //World.getInstance().removePlayer(player);
-            LOGGER.info("Removed player from World {}", player.getId());
-        }*/
-        //subject.logout();
     }
 
     /**

@@ -27,11 +27,11 @@ public class AuthenticateActor extends UntypedActor {
     @Override
     public void onReceive(Object o) throws Exception {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
-        Subject user = messageEvent.getSubject();
-        LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), user.getPrincipal());
+        Subject subject = messageEvent.getSubject();
+        LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), subject.getPrincipal());
 
-        if (user.isAuthenticated()) {
-            LOGGER.error("User {} is already authenticated", user.getPrincipal());
+        if (subject.isAuthenticated()) {
+            LOGGER.error("User {} is already authenticated", subject.getPrincipal());
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
             messageEvent.getChannel().write(builder.build());
@@ -42,7 +42,7 @@ public class AuthenticateActor extends UntypedActor {
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, "test");
         LOGGER.debug("Authentication attempt for user {}", usernamePasswordToken.toString());
         try {
-            user.login(usernamePasswordToken);
+            subject.login(usernamePasswordToken);
         } catch (AuthenticationException ignored) {
             LOGGER.warn("Authentication failed for user {}", usernamePasswordToken.toString());
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
@@ -54,7 +54,7 @@ public class AuthenticateActor extends UntypedActor {
         // Fetch player & add it to world
         Player player = new Player();
         player.setPosition(0, 0);
-        user.getSession().setAttribute(Player.class.getSimpleName(), player);
+        subject.getSession().setAttribute(Player.class.getSimpleName(), player);
         world.addPlayer(player);
 
         LOGGER.info("Adding new player to World {}", player.getId());
