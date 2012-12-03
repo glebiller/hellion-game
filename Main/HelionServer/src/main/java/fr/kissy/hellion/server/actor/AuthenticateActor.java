@@ -3,7 +3,7 @@ package fr.kissy.hellion.server.actor;
 import akka.actor.UntypedActor;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.domain.World;
+import fr.kissy.hellion.server.service.WorldService;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,7 +22,7 @@ public class AuthenticateActor extends UntypedActor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateActor.class);
 
     @Autowired
-    private World world;
+    private WorldService world;
 
     @Override
     public void onReceive(Object o) throws Exception {

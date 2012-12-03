@@ -2,7 +2,7 @@ package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.domain.World;
+import fr.kissy.hellion.server.service.WorldService;
 import fr.kissy.hellion.server.handler.event.AuthenticatedStateEvent;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class DisconnectActor extends UntypedActor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateActor.class);
 
     @Autowired
-    private World world;
+    private WorldService world;
 
     @Override
     public void onReceive(Object o) throws Exception {

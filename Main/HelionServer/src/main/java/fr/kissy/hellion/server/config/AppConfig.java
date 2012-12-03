@@ -1,6 +1,6 @@
 package fr.kissy.hellion.server.config;
 
-import fr.kissy.hellion.server.domain.World;
+import fr.kissy.hellion.server.service.WorldService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.ImportResource;
 public class AppConfig {
 
     @Bean
-    public World world() {
-        return new World();
+    public WorldService world() {
+        return new WorldService();
     }
 
 }
