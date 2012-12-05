@@ -53,7 +53,6 @@ public class AuthenticateActor extends UntypedActor {
 
         // Fetch player & add it to world
         Player player = new Player();
-        player.setPosition(0, 0);
         subject.getSession().setAttribute(Player.class.getSimpleName(), player);
         world.addPlayer(player);
 

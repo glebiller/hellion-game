@@ -1,7 +1,15 @@
 package fr.kissy.hellion.server.service;
 
-import com.infomatiq.jsi.rtree.RTree;
+import fr.kissy.hellion.server.core.AABB;
+import fr.kissy.hellion.server.core.BoundedObject;
 import fr.kissy.hellion.server.domain.Player;
+import fr.kissy.hellion.server.domain.World;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
@@ -9,20 +17,14 @@ import fr.kissy.hellion.server.domain.Player;
  */
 public class WorldService {
 
-    private RTree players = new RTree();
-
-    /**
-     * Default constructor
-     */
-    public WorldService() {
-        players.init(null);
-    }
+    @Autowired
+    private World world;
 
     /**
      * Add player to world.
      */
     public void addPlayer(Player player) {
-        players.add(player, player.getId());
+        world.getPlayers().insert(player);
     }
 
     /**
@@ -31,7 +33,20 @@ public class WorldService {
      * @param player The player to remove.
      */
     public void removePlayer(Player player) {
-        players.delete(player, player.getId());
+        world.getPlayers().remove(player);
+    }
+
+    /**
+     * Get the nearest Players.
+     *
+     * @param player The current Player.
+     * @return The list of nearest players.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Player> getNearest(Player player) {
+        List<BoundedObject> nearestPlayers = new ArrayList<BoundedObject>();
+        world.getPlayers().query(nearestPlayers, player.getNearestBounds());
+        return (List<Player>) nearestPlayers;
     }
 
 }
