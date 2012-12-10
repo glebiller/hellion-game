@@ -1,14 +1,10 @@
 package fr.kissy.hellion.server.service;
 
-import fr.kissy.hellion.server.core.AABB;
-import fr.kissy.hellion.server.core.BoundedObject;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.domain.World;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

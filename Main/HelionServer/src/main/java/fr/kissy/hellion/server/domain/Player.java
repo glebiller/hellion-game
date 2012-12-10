@@ -5,8 +5,8 @@ import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.common.PropertyDto;
 import fr.kissy.hellion.proto.common.SystemDto;
 import fr.kissy.hellion.proto.message.Authenticated;
-import fr.kissy.hellion.server.core.AABB;
-import fr.kissy.hellion.server.core.BoundedObject;
+import fr.kissy.hellion.server.core.rtree.model.AABB;
+import fr.kissy.hellion.server.core.rtree.model.BoundedObject;
 import org.springframework.data.annotation.Id;
 
 import java.beans.Transient;

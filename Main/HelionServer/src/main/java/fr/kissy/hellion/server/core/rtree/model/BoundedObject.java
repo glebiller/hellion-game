@@ -1,4 +1,4 @@
-package fr.kissy.hellion.server.core;
+package fr.kissy.hellion.server.core.rtree.model;
 
 /**
  * An object bounded on an Axis-Aligned Bounding Box.

@@ -1,6 +1,6 @@
 package fr.kissy.hellion.server.domain;
 
-import fr.kissy.hellion.server.core.RTree;
+import fr.kissy.hellion.server.core.rtree.RTree;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

@@ -1,6 +1,6 @@
 package fr.kissy.hellion.server.config;
 
-import fr.kissy.hellion.server.core.RTree;
+import fr.kissy.hellion.server.core.rtree.RTree;
 import fr.kissy.hellion.server.domain.World;
 import fr.kissy.hellion.server.service.WorldService;
 import org.springframework.context.annotation.Bean;

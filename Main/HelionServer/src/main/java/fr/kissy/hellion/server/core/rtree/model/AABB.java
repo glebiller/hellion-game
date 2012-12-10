@@ -1,4 +1,4 @@
-package fr.kissy.hellion.server.core;
+package fr.kissy.hellion.server.core.rtree.model;
 
 /**
  * 3D Axis Aligned Bounding Box
