@@ -8,298 +8,11 @@ import java.util.*;
  *
  * @author Colonel32
  */
-public class RTree {
-    private Node root;
+public class RTree<T extends BoundedObject> {
+    private Node<T> root;
     private int maxSize;
     private int minSize;
-    private NodeSplitter splitter;
-
-    private class Node implements BoundedObject {
-        Node parent;
-        AABB box;
-        ArrayList<Node> children;
-        ArrayList<BoundedObject> data;
-
-        public Node() {
-        }
-
-        public Node(boolean isLeaf) {
-            if (isLeaf)
-                data = new ArrayList<BoundedObject>(maxSize + 1);
-            else
-                children = new ArrayList<Node>(maxSize + 1);
-        }
-
-        public boolean isLeaf() {
-            return data != null;
-        }
-
-        public boolean isRoot() {
-            return parent == null;
-        }
-
-        public void addTo(Node parent) {
-            assert (parent.children != null);
-            parent.children.add(this);
-            this.parent = parent;
-            computeMBR();
-            splitter.split(parent);
-        }
-
-        public void computeMBR() {
-            computeMBR(true);
-        }
-
-        public void computeMBR(boolean doParents) {
-            if (box == null) box = new AABB();
-            if (!isLeaf()) {
-                if (children.isEmpty()) return;
-                children.get(0).box.copyInto(box);
-                for (int i = 1; i < children.size(); i++)
-                    box.merge(children.get(i).box);
-            } else {
-                if (data.isEmpty()) return;
-                data.get(0).getBounds().copyInto(box);
-                for (int i = 1; i < data.size(); i++)
-                    box.merge(data.get(i).getBounds());
-            }
-
-            if (doParents && parent != null) parent.computeMBR();
-        }
-
-        public void remove() {
-            if (parent == null) {
-                assert (root == this);
-                root = null;
-                return;
-            }
-            parent.children.remove(this);
-            if (parent.children.isEmpty())
-                parent.remove();
-            else
-                parent.computeMBR();
-        }
-
-        public ArrayList<? extends BoundedObject> getSubItems() {
-            return isLeaf() ? data : children;
-        }
-
-        public AABB getBounds() {
-            return box;
-        }
-
-        public boolean contains(int px, int py, int pz) {
-            return box.contains(px, py, pz);
-        }
-
-        public int size() {
-            return isLeaf() ? data.size() : children.size();
-        }
-
-        public int depth() {
-            Node n = this;
-            int d = 0;
-            while (n != null) {
-                n = n.parent;
-                d++;
-            }
-            return d;
-        }
-
-        public String toString() {
-            return "Depth: " + depth() + ", size: " + size();
-        }
-    }
-
-    /**
-     * Node splitting algorithms selectors.
-     */
-    public enum SplitterType {
-        /**
-         * Quadratic splitting algorithm. Runs in O(n^2) time where n = maxChildren+1.
-         * Use this for R-trees that update with new data fairly often.
-         */
-        QUADRATIC,
-        /**
-         * NOT IMPLEMENTED.
-         * Exhaustive splitting algorithm. Runs in O(2^n) time where n = maxChildren+1.
-         * Produces a more optimized result than the quadratic algorithm
-         * at the cost of a high runtime. Use this for R-trees that update rarely
-         * and queried frequently, such as zone protection.
-         */
-        EXHAUSTIVE,
-    }
-
-    private interface NodeSplitter {
-        void split(Node n);
-    }
-
-    private class QuadraticNodeSplitter implements NodeSplitter {
-        public void split(Node n) {
-            if (n.size() <= maxSize) return;
-            boolean isleaf = n.isLeaf();
-
-            // Choose seeds. Would write a function for this, but it requires returning 2 objects
-            BoundedObject seed1 = null, seed2 = null;
-            ArrayList<? extends BoundedObject> list;
-            if (isleaf)
-                list = n.data;
-            else
-                list = n.children;
-
-            int maxD = Integer.MIN_VALUE;
-            AABB box = new AABB();
-            for (int i = 0; i < list.size(); i++)
-                for (int j = 0; j < list.size(); j++) {
-                    if (i == j) continue;
-                    BoundedObject n1 = list.get(i), n2 = list.get(j);
-                    n1.getBounds().copyInto(box);
-                    box.merge(n2.getBounds());
-                    int d = box.getVolume() - n1.getBounds().getVolume() - n2.getBounds().getVolume();
-                    if (d > maxD) {
-                        maxD = d;
-                        seed1 = n1;
-                        seed2 = n2;
-                    }
-                }
-            assert (seed1 != null);
-
-            // Distribute
-            Node group1 = new Node(isleaf);
-            group1.box = seed1.getBounds().getCopy();
-            Node group2 = new Node(isleaf);
-            group2.box = seed2.getBounds().getCopy();
-            if (isleaf)
-                distributeLeaves(n, group1, group2);
-            else
-                distributeBranches(n, group1, group2);
-
-            Node parent = n.parent;
-            if (parent == null) {
-                parent = new Node(false);
-                root = parent;
-            } else
-                parent.children.remove(n);
-
-            group1.parent = parent;
-            parent.children.add(group1);
-            group1.computeMBR();
-            split(parent);
-
-            group2.parent = parent;
-            parent.children.add(group2);
-            group2.computeMBR();
-            split(parent);
-        }
-
-        private void distributeBranches(Node n, Node g1, Node g2) {
-            assert (!(n.isLeaf() || g1.isLeaf() || g2.isLeaf()));
-
-            while (!n.children.isEmpty() && g1.children.size() < maxSize - minSize + 1 &&
-                    g2.children.size() < maxSize - minSize + 1) {
-                // Pick next
-                int difmax = Integer.MIN_VALUE;
-                int nmax_index = -1;
-                for (int i = 0; i < n.children.size(); i++) {
-                    Node node = n.children.get(i);
-                    int dif = Math.abs(node.box.expansionNeeded(g1.box) - node.box.expansionNeeded(g2.box));
-                    if (dif > difmax) {
-                        difmax = dif;
-                        nmax_index = i;
-                    }
-                }
-                assert (nmax_index != -1);
-
-                // Distribute Entry
-                Node nmax = n.children.remove(nmax_index);
-                Node parent;
-
-                // ... to the one with the least expansion
-                int overlap1 = nmax.box.expansionNeeded(g1.box);
-                int overlap2 = nmax.box.expansionNeeded(g2.box);
-                if (overlap1 > overlap2) parent = g1;
-                else if (overlap2 > overlap1) parent = g2;
-                else {
-                    // Or the one with the lowest volume
-                    int vol1 = g1.box.getVolume();
-                    int vol2 = g2.box.getVolume();
-                    if (vol1 > vol2) parent = g2;
-                    else if (vol2 > vol1) parent = g1;
-                    else {
-                        // Or the one with the least items
-                        if (g1.children.size() < g2.children.size()) parent = g1;
-                        else parent = g2;
-                    }
-                }
-                parent.children.add(nmax);
-                nmax.parent = parent;
-            }
-
-            if (!n.children.isEmpty()) {
-                Node parent;
-                if (g1.children.size() == maxSize - minSize + 1)
-                    parent = g2;
-                else
-                    parent = g1;
-
-                for (int i = 0; i < n.children.size(); i++) {
-                    parent.children.add(n.children.get(i));
-                    n.children.get(i).parent = parent;
-                }
-                n.children.clear();
-            }
-        }
-
-        private void distributeLeaves(Node n, Node g1, Node g2) {
-            // Same process as above; just different types.
-            assert (n.isLeaf() && g1.isLeaf() && g2.isLeaf());
-
-            while (!n.data.isEmpty() && g1.data.size() < maxSize - minSize + 1 &&
-                    g2.data.size() < maxSize - minSize + 1) {
-                // Pick next
-                int difmax = Integer.MIN_VALUE;
-                int nmax_index = -1;
-                for (int i = 0; i < n.data.size(); i++) {
-                    BoundedObject node = n.data.get(i);
-                    int d1 = node.getBounds().expansionNeeded(g1.box);
-                    int d2 = node.getBounds().expansionNeeded(g2.box);
-                    int dif = Math.abs(d1 - d2);
-                    if (dif > difmax) {
-                        difmax = dif;
-                        nmax_index = i;
-                    }
-                }
-                assert (nmax_index != -1);
-
-                // Distribute Entry
-                BoundedObject nmax = n.data.remove(nmax_index);
-
-                // ... to the one with the least expansion
-                int overlap1 = nmax.getBounds().expansionNeeded(g1.box);
-                int overlap2 = nmax.getBounds().expansionNeeded(g2.box);
-                if (overlap1 > overlap2) g1.data.add(nmax);
-                else if (overlap2 > overlap1) g2.data.add(nmax);
-                else {
-                    int vol1 = g1.box.getVolume();
-                    int vol2 = g2.box.getVolume();
-                    if (vol1 > vol2) g2.data.add(nmax);
-                    else if (vol2 > vol1) g1.data.add(nmax);
-                    else {
-                        if (g1.data.size() < g2.data.size()) g1.data.add(nmax);
-                        else g2.data.add(nmax);
-                    }
-                }
-            }
-
-            if (!n.data.isEmpty()) {
-                if (g1.data.size() == maxSize - minSize + 1)
-                    g2.data.addAll(n.data);
-                else
-                    g1.data.addAll(n.data);
-                n.data.clear();
-            }
-        }
-    }
+    private NodeSplitter<T> splitter;
 
     /**
      * Creates an R-Tree. Sets the splitting algorithm to quadratic splitting.
@@ -317,7 +30,7 @@ public class RTree {
 
         switch (splittertyp) {
             case QUADRATIC:
-                splitter = new QuadraticNodeSplitter();
+                splitter = new QuadraticNodeSplitter<T>(this);
                 break;
             case EXHAUSTIVE:
                 throw new UnsupportedOperationException("Not implemented yet.");
@@ -336,20 +49,22 @@ public class RTree {
      * @param results A collection to store the query results
      * @param box     The query
      */
-    public void query(Collection<? super BoundedObject> results, AABB box) {
+    public void query(Collection<T> results, AABB box) {
         query(results, box, root);
     }
 
-    private void query(Collection<? super BoundedObject> results, AABB box, Node node) {
+    private void query(Collection<T> results, AABB box, Node<T> node) {
         if (node == null) return;
         if (node.isLeaf()) {
-            for (int i = 0; i < node.data.size(); i++)
-                if (node.data.get(i).getBounds().overlaps(box))
-                    results.add(node.data.get(i));
+            for (int i = 0; i < node.getData().size(); i++) {
+                T object = node.getData().get(i);
+                if (object.getBounds().overlaps(box))
+                    results.add(object);
+            }
         } else {
-            for (int i = 0; i < node.children.size(); i++)
-                if (node.children.get(i).box.overlaps(box))
-                    query(results, box, node.children.get(i));
+            for (int i = 0; i < node.getChildren().size(); i++)
+                if (node.getChildren().get(i).getBox().overlaps(box))
+                    query(results, box, node.getChildren().get(i));
         }
     }
 
@@ -357,21 +72,23 @@ public class RTree {
      * Returns one item that intersects the query box, or null if nothing intersects
      * the query box.
      */
-    public BoundedObject queryOne(AABB box) {
+    public T queryOne(AABB box) {
         return queryOne(box, root);
     }
 
-    private BoundedObject queryOne(AABB box, Node node) {
+    private T queryOne(AABB box, Node<T> node) {
         if (node == null) return null;
         if (node.isLeaf()) {
-            for (int i = 0; i < node.data.size(); i++)
-                if (node.data.get(i).getBounds().overlaps(box))
-                    return node.data.get(i);
+            for (int i = 0; i < node.getData().size(); i++) {
+                T object = node.getData().get(i);
+                if (object.getBounds().overlaps(box))
+                    return object;
+            }
             return null;
         } else {
-            for (int i = 0; i < node.children.size(); i++)
-                if (node.children.get(i).box.overlaps(box)) {
-                    BoundedObject result = queryOne(box, node.children.get(i));
+            for (int i = 0; i < node.getChildren().size(); i++)
+                if (node.getChildren().get(i).getBox().overlaps(box)) {
+                    T result = queryOne(box, node.getChildren().get(i));
                     if (result != null) return result;
                 }
             return null;
@@ -386,41 +103,45 @@ public class RTree {
      * @param py      Point Y coordinate
      * @param pz      Point Z coordinate
      */
-    public void query(Collection<? super BoundedObject> results, int px, int py, int pz) {
+    public void query(Collection<T> results, int px, int py, int pz) {
         query(results, px, py, pz, root);
     }
 
-    private void query(Collection<? super BoundedObject> results, int px, int py, int pz, Node node) {
+    private void query(Collection<T> results, int px, int py, int pz, Node<T> node) {
         if (node == null) return;
         if (node.isLeaf()) {
-            for (int i = 0; i < node.data.size(); i++)
-                if (node.data.get(i).getBounds().contains(px, py, pz))
-                    results.add(node.data.get(i));
+            for (int i = 0; i < node.getData().size(); i++) {
+                T object = node.getData().get(i);
+                if (object.getBounds().contains(px, py, pz))
+                    results.add(object);
+            }
         } else {
-            for (int i = 0; i < node.children.size(); i++)
-                if (node.children.get(i).box.contains(px, py, pz))
-                    query(results, px, py, pz, node.children.get(i));
+            for (int i = 0; i < node.getChildren().size(); i++)
+                if (node.getChildren().get(i).getBox().contains(px, py, pz))
+                    query(results, px, py, pz, node.getChildren().get(i));
         }
     }
 
     /**
      * Returns one item that intersects the query point, or null if no items intersect that point.
      */
-    public BoundedObject queryOne(int px, int py, int pz) {
+    public T queryOne(int px, int py, int pz) {
         return queryOne(px, py, pz, root);
     }
 
-    private BoundedObject queryOne(int px, int py, int pz, Node node) {
+    private T queryOne(int px, int py, int pz, Node<T> node) {
         if (node == null) return null;
         if (node.isLeaf()) {
-            for (int i = 0; i < node.data.size(); i++)
-                if (node.data.get(i).getBounds().contains(px, py, pz))
-                    return node.data.get(i);
+            for (int i = 0; i < node.getData().size(); i++) {
+                T object = node.getData().get(i);
+                if (object.getBounds().contains(px, py, pz))
+                    return object;
+            }
             return null;
         } else {
-            for (int i = 0; i < node.children.size(); i++)
-                if (node.children.get(i).box.contains(px, py, pz)) {
-                    BoundedObject result = queryOne(px, py, pz, node.children.get(i));
+            for (int i = 0; i < node.getChildren().size(); i++)
+                if (node.getChildren().get(i).getBox().contains(px, py, pz)) {
+                    T result = queryOne(px, py, pz, node.getChildren().get(i));
                     if (result != null) return result;
                 }
             return null;
@@ -432,10 +153,10 @@ public class RTree {
      *
      * @param o The object to remove.
      */
-    public void remove(BoundedObject o) {
-        Node n = chooseLeaf(o, root);
+    public void remove(T o) {
+        Node<T> n = chooseLeaf(o, root);
         assert (n.isLeaf());
-        n.data.remove(o);
+        n.getData().remove(o);
         n.computeMBR();
     }
 
@@ -445,14 +166,14 @@ public class RTree {
      *
      * @throws NullPointerException If o == null
      */
-    public void insert(BoundedObject o) {
+    public void insert(T o) {
         if (o == null) throw new NullPointerException("Cannot store null object");
         if (root == null)
-            root = new Node(true);
+            root = new Node<T>(this, true);
 
-        Node n = chooseLeaf(o, root);
+        Node<T> n = chooseLeaf(o, root);
         assert (n.isLeaf());
-        n.data.add(o);
+        n.getData().add(o);
         n.computeMBR();
         splitter.split(n);
     }
@@ -465,37 +186,69 @@ public class RTree {
         return count(root);
     }
 
-    private int count(Node n) {
+    private int count(Node<T> n) {
         assert (n != null);
         if (n.isLeaf()) {
-            return n.data.size();
+            return n.getData().size();
         } else {
             int sum = 0;
-            for (int i = 0; i < n.children.size(); i++)
-                sum += count(n.children.get(i));
+            for (int i = 0; i < n.getChildren().size(); i++)
+                sum += count(n.getChildren().get(i));
             return sum;
         }
     }
 
-    private Node chooseLeaf(BoundedObject o, Node n) {
+    private Node<T> chooseLeaf(T o, Node<T> n) {
         assert (n != null);
         if (n.isLeaf()) return n;
         else {
             AABB box = o.getBounds();
 
             int maxOverlap = Integer.MAX_VALUE;
-            Node maxnode = null;
-            for (int i = 0; i < n.children.size(); i++) {
-                int overlap = n.children.get(i).box.expansionNeeded(box);
+            Node<T> maxnode = null;
+            for (int i = 0; i < n.getChildren().size(); i++) {
+                int overlap = n.getChildren().get(i).getBox().expansionNeeded(box);
                 if ((overlap < maxOverlap) || (overlap == maxOverlap && maxnode != null
-                        && n.children.get(i).box.getVolume() < maxnode.box.getVolume())) {
+                        && n.getChildren().get(i).getBox().getVolume() < maxnode.getBox().getVolume())) {
                     maxOverlap = overlap;
-                    maxnode = n.children.get(i);
+                    maxnode = n.getChildren().get(i);
                 }
             }
             if (maxnode == null) // Not sure how this could occur
                 return null;
             return chooseLeaf(o, maxnode);
         }
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node<T> root) {
+        this.root = root;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public int getMinSize() {
+        return minSize;
+    }
+
+    public void setMinSize(int minSize) {
+        this.minSize = minSize;
+    }
+
+    public NodeSplitter getSplitter() {
+        return splitter;
+    }
+
+    public void setSplitter(NodeSplitter splitter) {
+        this.splitter = splitter;
     }
 }

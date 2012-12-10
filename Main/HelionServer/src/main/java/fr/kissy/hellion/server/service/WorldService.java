@@ -44,9 +44,9 @@ public class WorldService {
      */
     @SuppressWarnings("unchecked")
     public List<Player> getNearest(Player player) {
-        List<BoundedObject> nearestPlayers = new ArrayList<BoundedObject>();
+        List<Player> nearestPlayers = new ArrayList<Player>();
         world.getPlayers().query(nearestPlayers, player.getNearestBounds());
-        return (List<Player>) nearestPlayers;
+        return nearestPlayers;
     }
 
 }

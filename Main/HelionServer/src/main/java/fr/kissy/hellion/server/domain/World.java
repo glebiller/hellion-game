@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class World {
 
     @Autowired
-    private RTree players;
+    private RTree<Player> players;
 
-    public RTree getPlayers() {
+    public RTree<Player> getPlayers() {
         return players;
     }
 }
