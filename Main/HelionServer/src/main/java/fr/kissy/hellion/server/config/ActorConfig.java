@@ -10,7 +10,7 @@ import fr.kissy.hellion.server.actor.DisconnectActor;
 import fr.kissy.hellion.server.actor.SpawnActor;
 import fr.kissy.hellion.server.config.bus.MessageEventBus;
 import fr.kissy.hellion.server.config.bus.StateEventBus;
-import fr.kissy.hellion.server.handler.event.AuthenticatedStateEvent;
+import org.jboss.netty.channel.ChannelState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +47,7 @@ public class ActorConfig {
     @Bean
     public ActorRef disconnectActorRef() {
         ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, DisconnectActor.class)));
-        messageEventBus().subscribe(actorRef, AuthenticatedStateEvent.class);
+        stateEventBus().subscribe(actorRef, ChannelState.CONNECTED);
         return actorRef;
     }
 

@@ -17,7 +17,6 @@ package fr.kissy.hellion.client.handler;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.message.Authenticated;
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
@@ -65,11 +64,11 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
             } catch (InvalidProtocolBufferException e) {
                 LOGGER.error("Cannot parse proto", e);
             }
-        }
 
-        DownstreamMessageDto.DownstreamMessageProto.Builder downstream = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
-        downstream.setType(DownstreamMessageDto.DownstreamMessageProto.Type.SPAWN);
-        event.getChannel().write(downstream.build());
+            DownstreamMessageDto.DownstreamMessageProto.Builder downstream = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
+            downstream.setType(DownstreamMessageDto.DownstreamMessageProto.Type.SPAWN);
+            event.getChannel().write(downstream.build());
+        }
     }
 
     @Override

@@ -40,11 +40,11 @@ public class AuthenticateActor extends UntypedActor {
 
         String username = new String(messageEvent.getMessage().getData().toByteArray());
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, "test");
-        LOGGER.debug("Authentication attempt for user {}", usernamePasswordToken.toString());
+        LOGGER.debug("Authentication attempt for user {}", usernamePasswordToken.getUsername());
         try {
             subject.login(usernamePasswordToken);
-        } catch (AuthenticationException ignored) {
-            LOGGER.warn("Authentication failed for user {}", usernamePasswordToken.toString());
+        } catch (AuthenticationException e) {
+            LOGGER.warn("Authentication failed for user {}", usernamePasswordToken.getUsername());
             UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
             builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED);
             messageEvent.getChannel().write(builder.build());
