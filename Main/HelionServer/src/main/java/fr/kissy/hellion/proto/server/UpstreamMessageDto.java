@@ -52,11 +52,17 @@ public final class UpstreamMessageDto {
       ERROR(0, 1),
       UNAUTHORIZED(1, 2),
       AUTHENTICATED(2, 3),
+      OBJECT_CREATED(3, 10),
+      OBJECT_UPDATED(4, 11),
+      OBJECT_DELETED(5, 12),
       ;
       
       public static final int ERROR_VALUE = 1;
       public static final int UNAUTHORIZED_VALUE = 2;
       public static final int AUTHENTICATED_VALUE = 3;
+      public static final int OBJECT_CREATED_VALUE = 10;
+      public static final int OBJECT_UPDATED_VALUE = 11;
+      public static final int OBJECT_DELETED_VALUE = 12;
       
       
       public final int getNumber() { return value; }
@@ -66,6 +72,9 @@ public final class UpstreamMessageDto {
           case 1: return ERROR;
           case 2: return UNAUTHORIZED;
           case 3: return AUTHENTICATED;
+          case 10: return OBJECT_CREATED;
+          case 11: return OBJECT_UPDATED;
+          case 12: return OBJECT_DELETED;
           default: return null;
         }
       }
@@ -96,7 +105,7 @@ public final class UpstreamMessageDto {
       }
       
       private static final Type[] VALUES = {
-        ERROR, UNAUTHORIZED, AUTHENTICATED, 
+        ERROR, UNAUTHORIZED, AUTHENTICATED, OBJECT_CREATED, OBJECT_UPDATED, OBJECT_DELETED, 
       };
       
       public static Type valueOf(
@@ -509,12 +518,14 @@ public final class UpstreamMessageDto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\"Proto/Server/UpstreamMessage.proto\"\206\001\n" +
+      "\n\"Proto/Server/UpstreamMessage.proto\"\302\001\n" +
       "\024UpstreamMessageProto\022(\n\004type\030\001 \002(\0162\032.Up" +
-      "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"6\n" +
+      "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"r\n" +
       "\004Type\022\t\n\005ERROR\020\001\022\020\n\014UNAUTHORIZED\020\002\022\021\n\rAU" +
-      "THENTICATED\020\003B6\n\035fr.kissy.hellion.proto." +
-      "serverB\022UpstreamMessageDto\210\001\000"
+      "THENTICATED\020\003\022\022\n\016OBJECT_CREATED\020\n\022\022\n\016OBJ" +
+      "ECT_UPDATED\020\013\022\022\n\016OBJECT_DELETED\020\014B6\n\035fr." +
+      "kissy.hellion.proto.serverB\022UpstreamMess" +
+      "ageDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

@@ -5,16 +5,22 @@ package fr.kissy.hellion.server.core.rtree.model;
  *
  * @author Colonel32
  */
-public class AABB implements BoundedObject {
+public class Box {
     private int minx, miny, minz;
     private int maxx, maxy, maxz;
 
-    public AABB() {
+    public Box() {
         minx = miny = minz = 0;
         maxx = maxy = maxz = 0;
     }
 
-    public AABB getBounds() {
+    public Box(int x, int y, int z) {
+        minx = maxx = x;
+        miny = maxy = y;
+        minz = maxz = z;
+    }
+
+    public Box getBounds() {
         return this;
     }
 
@@ -72,7 +78,7 @@ public class AABB implements BoundedObject {
                 pz >= minz && pz <= maxz;
     }
 
-    public boolean overlaps(AABB other) {
+    public boolean overlaps(Box other) {
         return minx <= other.maxx && maxx >= other.minx && miny <= other.maxy
                 && maxy >= other.miny && minz <= other.maxz && maxz >= other.minz;
     }
@@ -81,7 +87,7 @@ public class AABB implements BoundedObject {
      * Returns the amount of overlap between 2 AABBs. Result will be negative if they
      * do not overlap.
      */
-    public int getOverlap(AABB other) {
+    public int getOverlap(Box other) {
         int overlapx = (maxx - minx + other.maxx - other.minx) - Math.abs(minx + maxx - other.minx - other.minx);
         int overlapy = (maxy - miny + other.maxy - other.miny) - Math.abs(minx + maxy - other.miny - other.miny);
         int overlapz = (maxz - minz + other.maxz - other.minz) - Math.abs(minx + maxz - other.minz - other.minz);
@@ -93,7 +99,7 @@ public class AABB implements BoundedObject {
     /**
      * Returns the amount that other will need to be expanded to fit this.
      */
-    public int expansionNeeded(AABB other) {
+    public int expansionNeeded(Box other) {
         int total = 0;
 
         if (other.minx < minx) total += minx - other.minx;
@@ -113,7 +119,7 @@ public class AABB implements BoundedObject {
      *
      * @return this
      */
-    public AABB merge(AABB other) {
+    public Box merge(Box other) {
         minx = Math.min(minx, other.minx);
         maxx = Math.max(maxx, other.maxx);
 
@@ -130,8 +136,8 @@ public class AABB implements BoundedObject {
         return (maxx - minx) * (maxy - miny) * (maxz - minz);
     }
 
-    public AABB getCopy() {
-        AABB clone = new AABB();
+    public Box getCopy() {
+        Box clone = new Box();
         clone.minx = minx;
         clone.miny = miny;
         clone.minz = minz;
@@ -142,7 +148,7 @@ public class AABB implements BoundedObject {
         return clone;
     }
 
-    public void copyInto(AABB target) {
+    public void copyInto(Box target) {
         target.minx = minx;
         target.miny = miny;
         target.minz = minz;
@@ -152,7 +158,7 @@ public class AABB implements BoundedObject {
         target.maxz = maxz;
     }
 
-    public boolean equals(AABB other) {
+    public boolean equals(Box other) {
         return minx == other.minx && maxx == other.maxx &&
                 miny == other.miny && maxy == other.maxy &&
                 minz == other.minz && maxz == other.maxz;

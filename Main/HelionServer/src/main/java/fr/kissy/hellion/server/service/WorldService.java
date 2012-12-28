@@ -39,9 +39,9 @@ public class WorldService {
      * @return The list of nearest players.
      */
     @SuppressWarnings("unchecked")
-    public List<Player> getNearest(Player player) {
+    public List<Player> getNearPlayers(Player player) {
         List<Player> nearestPlayers = new ArrayList<Player>();
-        world.getPlayers().query(nearestPlayers, player.getNearestBounds());
+        world.getPlayers().query(nearestPlayers, player.getNearestBounds(), player);
         return nearestPlayers;
     }
 

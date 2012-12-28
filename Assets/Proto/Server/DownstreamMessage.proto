@@ -5,7 +5,8 @@ option java_generic_services = false;
 message DownstreamMessageProto {
 	enum Type {
 		AUTHENTICATE = 1;
-		SPAWN = 2;
+		ENTER_WORLD = 2;
+		PLAYER_MOVE = 3;
 	}
 	required Type type = 1;
 	optional bytes data = 2;

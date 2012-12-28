@@ -6,6 +6,5 @@ import "Proto/Common/Object.proto";
 import "Proto/Common/Property.proto";
 
 message AuthenticatedProto {
-    required ObjectProto player = 1;
-    repeated ObjectProto objects = 2;	
+    repeated ObjectProto players = 1;	
 }

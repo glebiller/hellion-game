@@ -7,6 +7,10 @@ message UpstreamMessageProto {
 		ERROR = 1;
 		UNAUTHORIZED = 2;
 		AUTHENTICATED = 3;
+
+		OBJECT_CREATED = 10;
+		OBJECT_UPDATED = 11;
+		OBJECT_DELETED = 12;
 	}
 	required Type type = 1;
 	optional bytes data = 2;

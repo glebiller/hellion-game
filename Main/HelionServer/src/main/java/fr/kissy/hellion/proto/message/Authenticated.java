@@ -11,19 +11,14 @@ public final class Authenticated {
   public interface AuthenticatedProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
     
-    // required .ObjectProto player = 1;
-    boolean hasPlayer();
-    fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayer();
-    fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayerOrBuilder();
-    
-    // repeated .ObjectProto objects = 2;
+    // repeated .ObjectProto players = 1;
     java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> 
-        getObjectsList();
-    fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index);
-    int getObjectsCount();
+        getPlayersList();
+    fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index);
+    int getPlayersCount();
     java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
-        getObjectsOrBuilderList();
-    fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
+        getPlayersOrBuilderList();
+    fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
         int index);
   }
   public static final class AuthenticatedProto extends
@@ -54,60 +49,37 @@ public final class Authenticated {
       return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable;
     }
     
-    private int bitField0_;
-    // required .ObjectProto player = 1;
-    public static final int PLAYER_FIELD_NUMBER = 1;
-    private fr.kissy.hellion.proto.common.ObjectDto.ObjectProto player_;
-    public boolean hasPlayer() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayer() {
-      return player_;
-    }
-    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayerOrBuilder() {
-      return player_;
-    }
-    
-    // repeated .ObjectProto objects = 2;
-    public static final int OBJECTS_FIELD_NUMBER = 2;
-    private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> objects_;
-    public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getObjectsList() {
-      return objects_;
+    // repeated .ObjectProto players = 1;
+    public static final int PLAYERS_FIELD_NUMBER = 1;
+    private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> players_;
+    public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getPlayersList() {
+      return players_;
     }
     public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
-        getObjectsOrBuilderList() {
-      return objects_;
+        getPlayersOrBuilderList() {
+      return players_;
     }
-    public int getObjectsCount() {
-      return objects_.size();
+    public int getPlayersCount() {
+      return players_.size();
     }
-    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index) {
-      return objects_.get(index);
+    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index) {
+      return players_.get(index);
     }
-    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
+    public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
         int index) {
-      return objects_.get(index);
+      return players_.get(index);
     }
     
     private void initFields() {
-      player_ = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance();
-      objects_ = java.util.Collections.emptyList();
+      players_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
       
-      if (!hasPlayer()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!getPlayer().isInitialized()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      for (int i = 0; i < getObjectsCount(); i++) {
-        if (!getObjects(i).isInitialized()) {
+      for (int i = 0; i < getPlayersCount(); i++) {
+        if (!getPlayers(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -119,11 +91,8 @@ public final class Authenticated {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeMessage(1, player_);
-      }
-      for (int i = 0; i < objects_.size(); i++) {
-        output.writeMessage(2, objects_.get(i));
+      for (int i = 0; i < players_.size(); i++) {
+        output.writeMessage(1, players_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -134,13 +103,9 @@ public final class Authenticated {
       if (size != -1) return size;
     
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      for (int i = 0; i < players_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, player_);
-      }
-      for (int i = 0; i < objects_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, objects_.get(i));
+          .computeMessageSize(1, players_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -258,8 +223,7 @@ public final class Authenticated {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getPlayerFieldBuilder();
-          getObjectsFieldBuilder();
+          getPlayersFieldBuilder();
         }
       }
       private static Builder create() {
@@ -268,17 +232,11 @@ public final class Authenticated {
       
       public Builder clear() {
         super.clear();
-        if (playerBuilder_ == null) {
-          player_ = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance();
+        if (playersBuilder_ == null) {
+          players_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          playerBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        if (objectsBuilder_ == null) {
-          objects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        } else {
-          objectsBuilder_.clear();
+          playersBuilder_.clear();
         }
         return this;
       }
@@ -317,25 +275,15 @@ public final class Authenticated {
       public fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto buildPartial() {
         fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto result = new fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        if (playerBuilder_ == null) {
-          result.player_ = player_;
-        } else {
-          result.player_ = playerBuilder_.build();
-        }
-        if (objectsBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            objects_ = java.util.Collections.unmodifiableList(objects_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+        if (playersBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            players_ = java.util.Collections.unmodifiableList(players_);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.objects_ = objects_;
+          result.players_ = players_;
         } else {
-          result.objects_ = objectsBuilder_.build();
+          result.players_ = playersBuilder_.build();
         }
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
@@ -351,32 +299,29 @@ public final class Authenticated {
       
       public Builder mergeFrom(fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto other) {
         if (other == fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.getDefaultInstance()) return this;
-        if (other.hasPlayer()) {
-          mergePlayer(other.getPlayer());
-        }
-        if (objectsBuilder_ == null) {
-          if (!other.objects_.isEmpty()) {
-            if (objects_.isEmpty()) {
-              objects_ = other.objects_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+        if (playersBuilder_ == null) {
+          if (!other.players_.isEmpty()) {
+            if (players_.isEmpty()) {
+              players_ = other.players_;
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensureObjectsIsMutable();
-              objects_.addAll(other.objects_);
+              ensurePlayersIsMutable();
+              players_.addAll(other.players_);
             }
             onChanged();
           }
         } else {
-          if (!other.objects_.isEmpty()) {
-            if (objectsBuilder_.isEmpty()) {
-              objectsBuilder_.dispose();
-              objectsBuilder_ = null;
-              objects_ = other.objects_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-              objectsBuilder_ = 
+          if (!other.players_.isEmpty()) {
+            if (playersBuilder_.isEmpty()) {
+              playersBuilder_.dispose();
+              playersBuilder_ = null;
+              players_ = other.players_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              playersBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getObjectsFieldBuilder() : null;
+                   getPlayersFieldBuilder() : null;
             } else {
-              objectsBuilder_.addAllMessages(other.objects_);
+              playersBuilder_.addAllMessages(other.players_);
             }
           }
         }
@@ -385,16 +330,8 @@ public final class Authenticated {
       }
       
       public final boolean isInitialized() {
-        if (!hasPlayer()) {
-          
-          return false;
-        }
-        if (!getPlayer().isInitialized()) {
-          
-          return false;
-        }
-        for (int i = 0; i < getObjectsCount(); i++) {
-          if (!getObjects(i).isInitialized()) {
+        for (int i = 0; i < getPlayersCount(); i++) {
+          if (!getPlayers(i).isInitialized()) {
             
             return false;
           }
@@ -427,17 +364,8 @@ public final class Authenticated {
             }
             case 10: {
               fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder subBuilder = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.newBuilder();
-              if (hasPlayer()) {
-                subBuilder.mergeFrom(getPlayer());
-              }
               input.readMessage(subBuilder, extensionRegistry);
-              setPlayer(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder subBuilder = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addObjects(subBuilder.buildPartial());
+              addPlayers(subBuilder.buildPartial());
               break;
             }
           }
@@ -446,280 +374,190 @@ public final class Authenticated {
       
       private int bitField0_;
       
-      // required .ObjectProto player = 1;
-      private fr.kissy.hellion.proto.common.ObjectDto.ObjectProto player_ = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> playerBuilder_;
-      public boolean hasPlayer() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayer() {
-        if (playerBuilder_ == null) {
-          return player_;
-        } else {
-          return playerBuilder_.getMessage();
-        }
-      }
-      public Builder setPlayer(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
-        if (playerBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          player_ = value;
-          onChanged();
-        } else {
-          playerBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder setPlayer(
-          fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
-        if (playerBuilder_ == null) {
-          player_ = builderForValue.build();
-          onChanged();
-        } else {
-          playerBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder mergePlayer(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
-        if (playerBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
-              player_ != fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance()) {
-            player_ =
-              fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.newBuilder(player_).mergeFrom(value).buildPartial();
-          } else {
-            player_ = value;
-          }
-          onChanged();
-        } else {
-          playerBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000001;
-        return this;
-      }
-      public Builder clearPlayer() {
-        if (playerBuilder_ == null) {
-          player_ = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance();
-          onChanged();
-        } else {
-          playerBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder getPlayerBuilder() {
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return getPlayerFieldBuilder().getBuilder();
-      }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayerOrBuilder() {
-        if (playerBuilder_ != null) {
-          return playerBuilder_.getMessageOrBuilder();
-        } else {
-          return player_;
-        }
-      }
-      private com.google.protobuf.SingleFieldBuilder<
-          fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
-          getPlayerFieldBuilder() {
-        if (playerBuilder_ == null) {
-          playerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder>(
-                  player_,
-                  getParentForChildren(),
-                  isClean());
-          player_ = null;
-        }
-        return playerBuilder_;
-      }
-      
-      // repeated .ObjectProto objects = 2;
-      private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> objects_ =
+      // repeated .ObjectProto players = 1;
+      private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> players_ =
         java.util.Collections.emptyList();
-      private void ensureObjectsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          objects_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto>(objects_);
-          bitField0_ |= 0x00000002;
+      private void ensurePlayersIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          players_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto>(players_);
+          bitField0_ |= 0x00000001;
          }
       }
       
       private com.google.protobuf.RepeatedFieldBuilder<
-          fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> objectsBuilder_;
+          fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> playersBuilder_;
       
-      public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getObjectsList() {
-        if (objectsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(objects_);
+      public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getPlayersList() {
+        if (playersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(players_);
         } else {
-          return objectsBuilder_.getMessageList();
+          return playersBuilder_.getMessageList();
         }
       }
-      public int getObjectsCount() {
-        if (objectsBuilder_ == null) {
-          return objects_.size();
+      public int getPlayersCount() {
+        if (playersBuilder_ == null) {
+          return players_.size();
         } else {
-          return objectsBuilder_.getCount();
+          return playersBuilder_.getCount();
         }
       }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index) {
-        if (objectsBuilder_ == null) {
-          return objects_.get(index);
+      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index) {
+        if (playersBuilder_ == null) {
+          return players_.get(index);
         } else {
-          return objectsBuilder_.getMessage(index);
+          return playersBuilder_.getMessage(index);
         }
       }
-      public Builder setObjects(
+      public Builder setPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
-        if (objectsBuilder_ == null) {
+        if (playersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureObjectsIsMutable();
-          objects_.set(index, value);
+          ensurePlayersIsMutable();
+          players_.set(index, value);
           onChanged();
         } else {
-          objectsBuilder_.setMessage(index, value);
+          playersBuilder_.setMessage(index, value);
         }
         return this;
       }
-      public Builder setObjects(
+      public Builder setPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
-        if (objectsBuilder_ == null) {
-          ensureObjectsIsMutable();
-          objects_.set(index, builderForValue.build());
+        if (playersBuilder_ == null) {
+          ensurePlayersIsMutable();
+          players_.set(index, builderForValue.build());
           onChanged();
         } else {
-          objectsBuilder_.setMessage(index, builderForValue.build());
+          playersBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addObjects(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
-        if (objectsBuilder_ == null) {
+      public Builder addPlayers(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
+        if (playersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureObjectsIsMutable();
-          objects_.add(value);
+          ensurePlayersIsMutable();
+          players_.add(value);
           onChanged();
         } else {
-          objectsBuilder_.addMessage(value);
+          playersBuilder_.addMessage(value);
         }
         return this;
       }
-      public Builder addObjects(
+      public Builder addPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
-        if (objectsBuilder_ == null) {
+        if (playersBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureObjectsIsMutable();
-          objects_.add(index, value);
+          ensurePlayersIsMutable();
+          players_.add(index, value);
           onChanged();
         } else {
-          objectsBuilder_.addMessage(index, value);
+          playersBuilder_.addMessage(index, value);
         }
         return this;
       }
-      public Builder addObjects(
+      public Builder addPlayers(
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
-        if (objectsBuilder_ == null) {
-          ensureObjectsIsMutable();
-          objects_.add(builderForValue.build());
+        if (playersBuilder_ == null) {
+          ensurePlayersIsMutable();
+          players_.add(builderForValue.build());
           onChanged();
         } else {
-          objectsBuilder_.addMessage(builderForValue.build());
+          playersBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
-      public Builder addObjects(
+      public Builder addPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
-        if (objectsBuilder_ == null) {
-          ensureObjectsIsMutable();
-          objects_.add(index, builderForValue.build());
+        if (playersBuilder_ == null) {
+          ensurePlayersIsMutable();
+          players_.add(index, builderForValue.build());
           onChanged();
         } else {
-          objectsBuilder_.addMessage(index, builderForValue.build());
+          playersBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
-      public Builder addAllObjects(
+      public Builder addAllPlayers(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> values) {
-        if (objectsBuilder_ == null) {
-          ensureObjectsIsMutable();
-          super.addAll(values, objects_);
+        if (playersBuilder_ == null) {
+          ensurePlayersIsMutable();
+          super.addAll(values, players_);
           onChanged();
         } else {
-          objectsBuilder_.addAllMessages(values);
+          playersBuilder_.addAllMessages(values);
         }
         return this;
       }
-      public Builder clearObjects() {
-        if (objectsBuilder_ == null) {
-          objects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+      public Builder clearPlayers() {
+        if (playersBuilder_ == null) {
+          players_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          objectsBuilder_.clear();
+          playersBuilder_.clear();
         }
         return this;
       }
-      public Builder removeObjects(int index) {
-        if (objectsBuilder_ == null) {
-          ensureObjectsIsMutable();
-          objects_.remove(index);
+      public Builder removePlayers(int index) {
+        if (playersBuilder_ == null) {
+          ensurePlayersIsMutable();
+          players_.remove(index);
           onChanged();
         } else {
-          objectsBuilder_.remove(index);
+          playersBuilder_.remove(index);
         }
         return this;
       }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder getObjectsBuilder(
+      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder getPlayersBuilder(
           int index) {
-        return getObjectsFieldBuilder().getBuilder(index);
+        return getPlayersFieldBuilder().getBuilder(index);
       }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
+      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
           int index) {
-        if (objectsBuilder_ == null) {
-          return objects_.get(index);  } else {
-          return objectsBuilder_.getMessageOrBuilder(index);
+        if (playersBuilder_ == null) {
+          return players_.get(index);  } else {
+          return playersBuilder_.getMessageOrBuilder(index);
         }
       }
       public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
-           getObjectsOrBuilderList() {
-        if (objectsBuilder_ != null) {
-          return objectsBuilder_.getMessageOrBuilderList();
+           getPlayersOrBuilderList() {
+        if (playersBuilder_ != null) {
+          return playersBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(objects_);
+          return java.util.Collections.unmodifiableList(players_);
         }
       }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addObjectsBuilder() {
-        return getObjectsFieldBuilder().addBuilder(
+      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addPlayersBuilder() {
+        return getPlayersFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
-      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addObjectsBuilder(
+      public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addPlayersBuilder(
           int index) {
-        return getObjectsFieldBuilder().addBuilder(
+        return getPlayersFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
       public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder> 
-           getObjectsBuilderList() {
-        return getObjectsFieldBuilder().getBuilderList();
+           getPlayersBuilderList() {
+        return getPlayersFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
-          getObjectsFieldBuilder() {
-        if (objectsBuilder_ == null) {
-          objectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+          getPlayersFieldBuilder() {
+        if (playersBuilder_ == null) {
+          playersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder>(
-                  objects_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  players_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          objects_ = null;
+          players_ = null;
         }
-        return objectsBuilder_;
+        return playersBuilder_;
       }
       
       // @@protoc_insertion_point(builder_scope:AuthenticatedProto)
@@ -749,10 +587,9 @@ public final class Authenticated {
     java.lang.String[] descriptorData = {
       "\n!Proto/Message/Authenticated.proto\032\031Pro" +
       "to/Common/Object.proto\032\033Proto/Common/Pro" +
-      "perty.proto\"Q\n\022AuthenticatedProto\022\034\n\006pla" +
-      "yer\030\001 \002(\0132\014.ObjectProto\022\035\n\007objects\030\002 \003(\013" +
-      "2\014.ObjectProtoB2\n\036fr.kissy.hellion.proto" +
-      ".messageB\rAuthenticated\210\001\000"
+      "perty.proto\"3\n\022AuthenticatedProto\022\035\n\007pla" +
+      "yers\030\001 \003(\0132\014.ObjectProtoB2\n\036fr.kissy.hel" +
+      "lion.proto.messageB\rAuthenticated\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -764,7 +601,7 @@ public final class Authenticated {
           internal_static_AuthenticatedProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_AuthenticatedProto_descriptor,
-              new java.lang.String[] { "Player", "Objects", },
+              new java.lang.String[] { "Players", },
               fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.class,
               fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.Builder.class);
           return null;

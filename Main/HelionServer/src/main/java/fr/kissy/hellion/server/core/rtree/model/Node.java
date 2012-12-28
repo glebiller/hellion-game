@@ -5,39 +5,37 @@ import fr.kissy.hellion.server.core.rtree.RTree;
 import java.util.ArrayList;
 
 /**
-* Created with IntelliJ IDEA.
-* User: Guillaume
-* Date: 10/12/12
-* Time: 01:33
-* To change this template use File | Settings | File Templates.
-*/
-public class Node<T extends BoundedObject> implements BoundedObject {
+ * A node of the R-Tree.
+ */
+public class Node<T extends BoxObject> implements BoxObject {
+
+    private Box box;
+    private RTree rTree;
     private Node<T> parent;
-    private AABB box;
+
     private ArrayList<Node<T>> children;
     private ArrayList<T> data;
-    private RTree rTree;
 
-    public Node(RTree<T> rTree) {
-        this.rTree = rTree;
-    }
-
+    /**
+     * Default constructor.
+     *
+     * @param rTree  The R-Tree that contains the node.
+     * @param isLeaf True if the node is a leaf.
+     */
     public Node(RTree<T> rTree, boolean isLeaf) {
         this.rTree = rTree;
-        if (isLeaf)
+        if (isLeaf) {
             data = new ArrayList<T>(rTree.getMaxSize() + 1);
-        else
+        } else {
             children = new ArrayList<Node<T>>(rTree.getMaxSize() + 1);
+        }
     }
 
-    public boolean isLeaf() {
-        return data != null;
-    }
-
-    public boolean isRoot() {
-        return parent == null;
-    }
-
+    /**
+     * Add the node to a parent node.
+     *
+     * @param parent The parent node.
+     */
     @SuppressWarnings("unchecked")
     public void addTo(Node parent) {
         assert (parent.children != null);
@@ -47,56 +45,79 @@ public class Node<T extends BoundedObject> implements BoundedObject {
         rTree.getSplitter().split(parent);
     }
 
+    /**
+     * Compute the new MBR for the node.
+     */
     public void computeMBR() {
         computeMBR(true);
     }
 
+    /**
+     * Compute the new MBR for the node.
+     *
+     * @param doParents True if we also compute parents.
+     */
+    @SuppressWarnings("unchecked")
     public void computeMBR(boolean doParents) {
-        if (box == null) box = new AABB();
+        if (box == null) {
+            box = new Box();
+        }
+
         if (!isLeaf()) {
-            if (children.isEmpty()) return;
-            children.get(0).box.copyInto(box);
+            if (children.isEmpty()) {
+                return;
+            }
+
+            children.get(0).getBox().copyInto(box);
             for (int i = 1; i < children.size(); i++)
-                box.merge(children.get(i).box);
+                box.merge(children.get(i).getBox());
         } else {
-            if (data.isEmpty()) return;
-            data.get(0).getBounds().copyInto(box);
-            for (int i = 1; i < data.size(); i++)
-                box.merge(data.get(i).getBounds());
+            if (data.isEmpty()) {
+                return;
+            }
+
+            data.get(0).getBox().copyInto(box);
+            for (int i = 1; i < data.size(); i++) {
+                box.merge(data.get(i).getBox());
+            }
         }
 
         if (doParents && parent != null) parent.computeMBR();
     }
 
+    /**
+     * Remove the node from the tree.
+     */
+    @SuppressWarnings("unchecked")
     public void remove() {
         if (parent == null) {
             assert (rTree.getRoot() == this);
             rTree.setRoot(null);
             return;
         }
+
         parent.children.remove(this);
-        if (parent.children.isEmpty())
+        if (parent.children.isEmpty()) {
             parent.remove();
-        else
+        } else {
             parent.computeMBR();
+        }
     }
 
-    public ArrayList<? extends BoundedObject> getSubItems() {
-        return isLeaf() ? data : children;
-    }
-
-    public AABB getBounds() {
-        return box;
-    }
-
-    public boolean contains(int px, int py, int pz) {
-        return box.contains(px, py, pz);
-    }
-
+    /**
+     * The size of the node.
+     *
+     * @return The size of the node.
+     */
     public int size() {
         return isLeaf() ? data.size() : children.size();
     }
 
+    /**
+     * The depth of the node.
+     *
+     * @return The depth of the node.
+     */
     public int depth() {
         Node n = this;
         int d = 0;
@@ -107,8 +128,30 @@ public class Node<T extends BoundedObject> implements BoundedObject {
         return d;
     }
 
-    public String toString() {
-        return "Depth: " + depth() + ", size: " + size();
+    /**
+     * Is leaf ?
+     *
+     * @return Is leaf ?
+     */
+    public boolean isLeaf() {
+        return data != null;
+    }
+
+    /**
+     * Is root ?
+     *
+     * @return Is root ?
+     */
+    public boolean isRoot() {
+        return parent == null;
+    }
+
+    public Box getBox() {
+        return box;
+    }
+
+    public void setBox(Box box) {
+        this.box = box;
     }
 
     public Node<T> getParent() {
@@ -119,35 +162,19 @@ public class Node<T extends BoundedObject> implements BoundedObject {
         this.parent = parent;
     }
 
-    public AABB getBox() {
-        return box;
-    }
-
-    public void setBox(AABB box) {
-        this.box = box;
-    }
-
     public ArrayList<Node<T>> getChildren() {
         return children;
-    }
-
-    public void setChildren(ArrayList<Node<T>> children) {
-        this.children = children;
     }
 
     public ArrayList<T> getData() {
         return data;
     }
 
-    public void setData(ArrayList<T> data) {
-        this.data = data;
-    }
-
-    public RTree getrTree() {
-        return rTree;
-    }
-
-    public void setrTree(RTree rTree) {
-        this.rTree = rTree;
+    /**
+     * @ineheritDoc
+     */
+    @Override
+    public String toString() {
+        return "Depth: " + depth() + ", size: " + size();
     }
 }

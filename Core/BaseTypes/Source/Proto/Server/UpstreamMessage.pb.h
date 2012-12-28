@@ -35,11 +35,14 @@ class UpstreamMessageProto;
 enum UpstreamMessageProto_Type {
   UpstreamMessageProto_Type_ERROR = 1,
   UpstreamMessageProto_Type_UNAUTHORIZED = 2,
-  UpstreamMessageProto_Type_AUTHENTICATED = 3
+  UpstreamMessageProto_Type_AUTHENTICATED = 3,
+  UpstreamMessageProto_Type_OBJECT_CREATED = 10,
+  UpstreamMessageProto_Type_OBJECT_UPDATED = 11,
+  UpstreamMessageProto_Type_OBJECT_DELETED = 12
 };
 bool UpstreamMessageProto_Type_IsValid(int value);
 const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MIN = UpstreamMessageProto_Type_ERROR;
-const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MAX = UpstreamMessageProto_Type_AUTHENTICATED;
+const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MAX = UpstreamMessageProto_Type_OBJECT_DELETED;
 const int UpstreamMessageProto_Type_Type_ARRAYSIZE = UpstreamMessageProto_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* UpstreamMessageProto_Type_descriptor();
@@ -110,6 +113,9 @@ class UpstreamMessageProto : public ::google::protobuf::Message {
   static const Type ERROR = UpstreamMessageProto_Type_ERROR;
   static const Type UNAUTHORIZED = UpstreamMessageProto_Type_UNAUTHORIZED;
   static const Type AUTHENTICATED = UpstreamMessageProto_Type_AUTHENTICATED;
+  static const Type OBJECT_CREATED = UpstreamMessageProto_Type_OBJECT_CREATED;
+  static const Type OBJECT_UPDATED = UpstreamMessageProto_Type_OBJECT_UPDATED;
+  static const Type OBJECT_DELETED = UpstreamMessageProto_Type_OBJECT_DELETED;
   static inline bool Type_IsValid(int value) {
     return UpstreamMessageProto_Type_IsValid(value);
   }

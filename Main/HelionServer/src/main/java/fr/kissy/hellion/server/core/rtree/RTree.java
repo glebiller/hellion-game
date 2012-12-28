@@ -1,13 +1,13 @@
 package fr.kissy.hellion.server.core.rtree;
 
-import fr.kissy.hellion.server.core.rtree.model.AABB;
-import fr.kissy.hellion.server.core.rtree.model.BoundedObject;
+import fr.kissy.hellion.server.core.rtree.model.Box;
+import fr.kissy.hellion.server.core.rtree.model.BoxObject;
 import fr.kissy.hellion.server.core.rtree.model.Node;
 import fr.kissy.hellion.server.core.rtree.splitter.NodeSplitter;
-import fr.kissy.hellion.server.core.rtree.splitter.impl.QuadraticNodeSplitter;
 import fr.kissy.hellion.server.core.rtree.splitter.SplitterType;
+import fr.kissy.hellion.server.core.rtree.splitter.impl.QuadraticNodeSplitter;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * 3D R-Tree implementation for minecraft.
@@ -15,34 +15,32 @@ import java.util.*;
  *
  * @author Colonel32
  */
-public class RTree<T extends BoundedObject> {
-    private Node<T> root;
+public class RTree<T extends BoxObject> {
+
+    private NodeSplitter<T> splitter;
     private int maxSize;
     private int minSize;
-    private NodeSplitter<T> splitter;
+
+    private Node<T> root;
 
     /**
-     * Creates an R-Tree. Sets the splitting algorithm to quadratic splitting.
+     * Create an R-Tree with a given splitting algorithm.
      *
-     * @param minChildren Minimum children in a node.  {@code 2 <= minChildren <= maxChildren/2}
-     * @param maxChildren Maximum children in a node. Node splits at this number + 1
+     * @param minChildren  Minimum children in a node.  {@code 2 <= minChildren <= maxChildren/2}
+     * @param maxChildren  Maximum children in a node. Node splits at this number + 1
+     * @param spliiterType The splitter type.
      */
-    public RTree(int minChildren, int maxChildren) {
-        this(minChildren, maxChildren, SplitterType.QUADRATIC);
-    }
-
-    public RTree(int minChildren, int maxChildren, SplitterType splittertyp) {
-        if (minChildren < 2 || minChildren > maxChildren / 2)
+    public RTree(int minChildren, int maxChildren, SplitterType spliiterType) {
+        if (minChildren < 2 || minChildren > maxChildren / 2) {
             throw new IllegalArgumentException("2 <= minChildren <= maxChildren/2");
+        }
 
-        switch (splittertyp) {
+        switch (spliiterType) {
             case QUADRATIC:
                 splitter = new QuadraticNodeSplitter<T>(this);
                 break;
             case EXHAUSTIVE:
                 throw new UnsupportedOperationException("Not implemented yet.");
-            default:
-                throw new RuntimeException("Invalid node splitter");
         }
 
         this.minSize = minChildren;
@@ -51,105 +49,81 @@ public class RTree<T extends BoundedObject> {
     }
 
     /**
-     * Adds items whose AABB intersects the query AABB to results
+     * Adds items whose BoundingBox intersects the query BoundingBox to results
      *
      * @param results A collection to store the query results
-     * @param box     The query
+     * @param box     The query box.
+     * @param self    The current object to ignore in the results.
      */
-    public void query(Collection<T> results, AABB box) {
-        query(results, box, root);
+    public void query(Collection<T> results, Box box, T self) {
+        query(results, box, root, self);
     }
 
-    private void query(Collection<T> results, AABB box, Node<T> node) {
-        if (node == null) return;
+    /**
+     * Recursive query for list of items that intersects with the query box.
+     *
+     * @param results A collection to store the query results
+     * @param box     The query box.
+     * @param node    The root node.
+     * @param self    The self object in order to ignore it in the results.
+     */
+    private void query(Collection<T> results, Box box, Node<T> node, T self) {
+        if (node == null) {
+            return;
+        }
+
         if (node.isLeaf()) {
             for (int i = 0; i < node.getData().size(); i++) {
                 T object = node.getData().get(i);
-                if (object.getBounds().overlaps(box))
+                if (!object.equals(self) && object.getBox().overlaps(box)) {
                     results.add(object);
+                }
             }
         } else {
             for (int i = 0; i < node.getChildren().size(); i++)
-                if (node.getChildren().get(i).getBox().overlaps(box))
-                    query(results, box, node.getChildren().get(i));
+                if (node.getChildren().get(i).getBox().overlaps(box)) {
+                    query(results, box, node.getChildren().get(i), self);
+                }
         }
     }
 
     /**
      * Returns one item that intersects the query box, or null if nothing intersects
      * the query box.
+     *
+     * @param box The query box.
      */
-    public T queryOne(AABB box) {
-        return queryOne(box, root);
+    public T query(Box box) {
+        return query(box, root);
     }
 
-    private T queryOne(AABB box, Node<T> node) {
-        if (node == null) return null;
+    /**
+     * Recursive query for one item that intersects with the query box.
+     *
+     * @param box The query box.
+     * @param node The starting node.
+     * @return The object found.
+     */
+    private T query(Box box, Node<T> node) {
+        if (node == null) {
+            return null;
+        }
+
         if (node.isLeaf()) {
             for (int i = 0; i < node.getData().size(); i++) {
                 T object = node.getData().get(i);
-                if (object.getBounds().overlaps(box))
+                if (object.getBox().overlaps(box)) {
                     return object;
+                }
             }
             return null;
         } else {
             for (int i = 0; i < node.getChildren().size(); i++)
                 if (node.getChildren().get(i).getBox().overlaps(box)) {
-                    T result = queryOne(box, node.getChildren().get(i));
-                    if (result != null) return result;
-                }
-            return null;
-        }
-    }
-
-    /**
-     * Adds items whose AABB contains the specified point.
-     *
-     * @param results A collection to store the query results.
-     * @param px      Point X coordinate
-     * @param py      Point Y coordinate
-     * @param pz      Point Z coordinate
-     */
-    public void query(Collection<T> results, int px, int py, int pz) {
-        query(results, px, py, pz, root);
-    }
-
-    private void query(Collection<T> results, int px, int py, int pz, Node<T> node) {
-        if (node == null) return;
-        if (node.isLeaf()) {
-            for (int i = 0; i < node.getData().size(); i++) {
-                T object = node.getData().get(i);
-                if (object.getBounds().contains(px, py, pz))
-                    results.add(object);
-            }
-        } else {
-            for (int i = 0; i < node.getChildren().size(); i++)
-                if (node.getChildren().get(i).getBox().contains(px, py, pz))
-                    query(results, px, py, pz, node.getChildren().get(i));
-        }
-    }
-
-    /**
-     * Returns one item that intersects the query point, or null if no items intersect that point.
-     */
-    public T queryOne(int px, int py, int pz) {
-        return queryOne(px, py, pz, root);
-    }
-
-    private T queryOne(int px, int py, int pz, Node<T> node) {
-        if (node == null) return null;
-        if (node.isLeaf()) {
-            for (int i = 0; i < node.getData().size(); i++) {
-                T object = node.getData().get(i);
-                if (object.getBounds().contains(px, py, pz))
-                    return object;
-            }
-            return null;
-        } else {
-            for (int i = 0; i < node.getChildren().size(); i++)
-                if (node.getChildren().get(i).getBox().contains(px, py, pz)) {
-                    T result = queryOne(px, py, pz, node.getChildren().get(i));
-                    if (result != null) return result;
+                    T result = query(box, node.getChildren().get(i));
+                    if (result != null) {
+                        return result;
+                    }
                 }
             return null;
         }
@@ -168,15 +142,19 @@ public class RTree<T extends BoundedObject> {
     }
 
     /**
-     * Inserts object o into the tree. Note that if the value of o.getAABB() changes
+     * Inserts object o into the tree. Note that if the value of o.getBoundingBox() changes
      * while in the R-tree, the result is undefined.
      *
      * @throws NullPointerException If o == null
      */
     public void insert(T o) {
-        if (o == null) throw new NullPointerException("Cannot store null object");
-        if (root == null)
+        if (o == null) {
+            throw new NullPointerException("Cannot store null object");
+        }
+
+        if (root == null) {
             root = new Node<T>(this, true);
+        }
 
         Node<T> n = chooseLeaf(o, root);
         assert (n.isLeaf());
@@ -189,10 +167,18 @@ public class RTree<T extends BoundedObject> {
      * Counts the number of items in the tree.
      */
     public int count() {
-        if (root == null) return 0;
+        if (root == null) {
+            return 0;
+        }
         return count(root);
     }
 
+    /**
+     * Recursif count.
+     *
+     * @param n The node object.
+     * @return The sum of the given node object.
+     */
     private int count(Node<T> n) {
         assert (n != null);
         if (n.isLeaf()) {
@@ -205,11 +191,19 @@ public class RTree<T extends BoundedObject> {
         }
     }
 
+    /**
+     * Choose a leaf.
+     *
+     * @param o The object to start from.
+     * @param n The node representing the object.
+     * @return The found node that is a leaf.
+     */
     private Node<T> chooseLeaf(T o, Node<T> n) {
         assert (n != null);
-        if (n.isLeaf()) return n;
-        else {
-            AABB box = o.getBounds();
+        if (n.isLeaf()) {
+            return n;
+        } else {
+            Box box = o.getBox();
 
             int maxOverlap = Integer.MAX_VALUE;
             Node<T> maxnode = null;
@@ -221,8 +215,9 @@ public class RTree<T extends BoundedObject> {
                     maxnode = n.getChildren().get(i);
                 }
             }
-            if (maxnode == null) // Not sure how this could occur
+            if (maxnode == null) {
                 return null;
+            }
             return chooseLeaf(o, maxnode);
         }
     }
@@ -235,27 +230,15 @@ public class RTree<T extends BoundedObject> {
         this.root = root;
     }
 
+    public NodeSplitter<T> getSplitter() {
+        return splitter;
+    }
+
     public int getMaxSize() {
         return maxSize;
     }
 
-    public void setMaxSize(int maxSize) {
-        this.maxSize = maxSize;
-    }
-
     public int getMinSize() {
         return minSize;
-    }
-
-    public void setMinSize(int minSize) {
-        this.minSize = minSize;
-    }
-
-    public NodeSplitter getSplitter() {
-        return splitter;
-    }
-
-    public void setSplitter(NodeSplitter splitter) {
-        this.splitter = splitter;
     }
 }

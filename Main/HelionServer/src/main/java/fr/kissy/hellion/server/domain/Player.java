@@ -1,78 +1,144 @@
 package fr.kissy.hellion.server.domain;
 
+import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.common.PropertyDto;
 import fr.kissy.hellion.proto.common.SystemDto;
-import fr.kissy.hellion.proto.message.Authenticated;
-import fr.kissy.hellion.server.core.rtree.model.AABB;
-import fr.kissy.hellion.server.core.rtree.model.BoundedObject;
+import fr.kissy.hellion.server.core.rtree.model.Box;
+import fr.kissy.hellion.server.core.rtree.model.BoxObject;
+import org.jboss.netty.channel.Channel;
 import org.springframework.data.annotation.Id;
 
 import java.beans.Transient;
+import java.util.List;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
  * @version $Id$
  */
-public class Player implements BoundedObject {
+public class Player implements BoxObject {
 
     @Id
-    private int id;
-    private AABB aabb = new AABB();
+    private String id;
+    private int x;
+    private int y;
+    private int z;
 
-    public int getId() {
+    // Local Instance //
+    private Channel channel;
+    private List<String> localInstanceIds = Lists.newArrayList();
+
+    // Protobuf Builder //
+    private PropertyDto.PropertyProto.Builder positionProperty = PropertyDto.PropertyProto.newBuilder();
+    private ObjectDto.ObjectProto.SystemObjectProto.Builder geometrySystemObject = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
+    private ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
+
+    public Player() {
+        positionProperty.setName("Position");
+        positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+
+        geometrySystemObject.setSystemType(SystemDto.SystemProto.Type.Geometry);
+        geometrySystemObject.addProperties(0, positionProperty);
+
+        player.addSystemObjects(0, geometrySystemObject);
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+        player.setName(String.valueOf(id));
     }
 
-    @Override
-    public AABB getBounds() {
-        return aabb;
+    public int getX() {
+        return x;
     }
 
-    public void setAabb(AABB aabb) {
-        this.aabb = aabb;
+    public void setX(int x) {
+        this.x = x;
+        positionProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+        positionProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
+        positionProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
     }
 
     public void setPosition(int x, int y, int z) {
-        aabb.setX(x);
-        aabb.setY(y);
-        aabb.setZ(z);
+        setX(x);
+        setY(y);
+        setZ(z);
+    }
+
+    @Override
+    public Box getBox() {
+        return new Box(x, y, z);
     }
 
     @Transient
-    public AABB getNearestBounds() {
-        AABB nearest = aabb.getCopy();
+    public Box getNearestBounds() {
+        Box nearest = getBox();
         nearest.expand(10, 10, 10);
         return nearest;
     }
 
     @Transient
-    public Authenticated.AuthenticatedProto.Builder getAuthenticatedData() {
-        Authenticated.AuthenticatedProto.Builder builder = Authenticated.AuthenticatedProto.newBuilder();
-        builder.setPlayer(toObjectProtoBuilder());
-        return builder;
+    public boolean hasLocalInstanceId(String objectId) {
+        return localInstanceIds.contains(objectId);
     }
 
     @Transient
-    private ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
-        PropertyDto.PropertyProto.Builder positionBuilder = PropertyDto.PropertyProto.newBuilder();
-        positionBuilder.setName("Position");
-        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(aabb.getX())));
-        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(aabb.getY())));
-        positionBuilder.addValue(ByteString.copyFromUtf8(String.valueOf(aabb.getZ())));
-
-        ObjectDto.ObjectProto.SystemObjectProto.Builder propertiesProto = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
-        propertiesProto.setSystemType(SystemDto.SystemProto.Type.Geometry);
-        propertiesProto.addProperties(positionBuilder);
-
-        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
-        builder.setName(String.valueOf(id));
-        builder.addSystemObjects(propertiesProto);
-        return builder;
+    public List<String> getLocalInstanceIds() {
+        return localInstanceIds;
     }
+
+    @Transient
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    @Transient
+    public ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
+        geometrySystemObject.setProperties(0, positionProperty);
+        player.setSystemObjects(0, geometrySystemObject);
+        return player;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+        return !(id != null ? !id.equals(player.id) : player.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }

@@ -90,38 +90,27 @@ class AuthenticatedProto : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .ObjectProto player = 1;
-  inline bool has_player() const;
-  inline void clear_player();
-  static const int kPlayerFieldNumber = 1;
-  inline const ::ObjectProto& player() const;
-  inline ::ObjectProto* mutable_player();
-  inline ::ObjectProto* release_player();
-  
-  // repeated .ObjectProto objects = 2;
-  inline int objects_size() const;
-  inline void clear_objects();
-  static const int kObjectsFieldNumber = 2;
-  inline const ::ObjectProto& objects(int index) const;
-  inline ::ObjectProto* mutable_objects(int index);
-  inline ::ObjectProto* add_objects();
+  // repeated .ObjectProto players = 1;
+  inline int players_size() const;
+  inline void clear_players();
+  static const int kPlayersFieldNumber = 1;
+  inline const ::ObjectProto& players(int index) const;
+  inline ::ObjectProto* mutable_players(int index);
+  inline ::ObjectProto* add_players();
   inline const ::google::protobuf::RepeatedPtrField< ::ObjectProto >&
-      objects() const;
+      players() const;
   inline ::google::protobuf::RepeatedPtrField< ::ObjectProto >*
-      mutable_objects();
+      mutable_players();
   
   // @@protoc_insertion_point(class_scope:AuthenticatedProto)
  private:
-  inline void set_has_player();
-  inline void clear_has_player();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
-  ::ObjectProto* player_;
-  ::google::protobuf::RepeatedPtrField< ::ObjectProto > objects_;
+  ::google::protobuf::RepeatedPtrField< ::ObjectProto > players_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
   
   friend void  protobuf_AddDesc_Proto_2fMessage_2fAuthenticated_2eproto();
   friend void protobuf_AssignDesc_Proto_2fMessage_2fAuthenticated_2eproto();
@@ -137,58 +126,29 @@ class AuthenticatedProto : public ::google::protobuf::Message {
 
 // AuthenticatedProto
 
-// required .ObjectProto player = 1;
-inline bool AuthenticatedProto::has_player() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+// repeated .ObjectProto players = 1;
+inline int AuthenticatedProto::players_size() const {
+  return players_.size();
 }
-inline void AuthenticatedProto::set_has_player() {
-  _has_bits_[0] |= 0x00000001u;
+inline void AuthenticatedProto::clear_players() {
+  players_.Clear();
 }
-inline void AuthenticatedProto::clear_has_player() {
-  _has_bits_[0] &= ~0x00000001u;
+inline const ::ObjectProto& AuthenticatedProto::players(int index) const {
+  return players_.Get(index);
 }
-inline void AuthenticatedProto::clear_player() {
-  if (player_ != NULL) player_->::ObjectProto::Clear();
-  clear_has_player();
+inline ::ObjectProto* AuthenticatedProto::mutable_players(int index) {
+  return players_.Mutable(index);
 }
-inline const ::ObjectProto& AuthenticatedProto::player() const {
-  return player_ != NULL ? *player_ : *default_instance_->player_;
-}
-inline ::ObjectProto* AuthenticatedProto::mutable_player() {
-  set_has_player();
-  if (player_ == NULL) player_ = new ::ObjectProto;
-  return player_;
-}
-inline ::ObjectProto* AuthenticatedProto::release_player() {
-  clear_has_player();
-  ::ObjectProto* temp = player_;
-  player_ = NULL;
-  return temp;
-}
-
-// repeated .ObjectProto objects = 2;
-inline int AuthenticatedProto::objects_size() const {
-  return objects_.size();
-}
-inline void AuthenticatedProto::clear_objects() {
-  objects_.Clear();
-}
-inline const ::ObjectProto& AuthenticatedProto::objects(int index) const {
-  return objects_.Get(index);
-}
-inline ::ObjectProto* AuthenticatedProto::mutable_objects(int index) {
-  return objects_.Mutable(index);
-}
-inline ::ObjectProto* AuthenticatedProto::add_objects() {
-  return objects_.Add();
+inline ::ObjectProto* AuthenticatedProto::add_players() {
+  return players_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::ObjectProto >&
-AuthenticatedProto::objects() const {
-  return objects_;
+AuthenticatedProto::players() const {
+  return players_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::ObjectProto >*
-AuthenticatedProto::mutable_objects() {
-  return &objects_;
+AuthenticatedProto::mutable_players() {
+  return &players_;
 }
 
 

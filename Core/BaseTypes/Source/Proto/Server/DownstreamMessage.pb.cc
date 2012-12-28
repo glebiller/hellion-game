@@ -76,12 +76,13 @@ void protobuf_AddDesc_Proto_2fServer_2fDownstreamMessage_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n$Proto/Server/DownstreamMessage.proto\"w"
-    "\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162\034"
-    ".DownstreamMessageProto.Type\022\014\n\004data\030\002 \001"
-    "(\014\"#\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\t\n\005SPAWN\020\002B"
-    "8\n\035fr.kissy.hellion.proto.serverB\024Downst"
-    "reamMessageDto\210\001\000", 217);
+    "\n$Proto/Server/DownstreamMessage.proto\"\216"
+    "\001\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162"
+    "\034.DownstreamMessageProto.Type\022\014\n\004data\030\002 "
+    "\001(\014\":\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\017\n\013ENTER_W"
+    "ORLD\020\002\022\017\n\013PLAYER_MOVE\020\003B8\n\035fr.kissy.hell"
+    "ion.proto.serverB\024DownstreamMessageDto\210\001"
+    "\000", 241);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Server/DownstreamMessage.proto", &protobuf_RegisterTypes);
   DownstreamMessageProto::default_instance_ = new DownstreamMessageProto();
@@ -107,6 +108,7 @@ bool DownstreamMessageProto_Type_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -115,7 +117,8 @@ bool DownstreamMessageProto_Type_IsValid(int value) {
 
 #ifndef _MSC_VER
 const DownstreamMessageProto_Type DownstreamMessageProto::AUTHENTICATE;
-const DownstreamMessageProto_Type DownstreamMessageProto::SPAWN;
+const DownstreamMessageProto_Type DownstreamMessageProto::ENTER_WORLD;
+const DownstreamMessageProto_Type DownstreamMessageProto::PLAYER_MOVE;
 const DownstreamMessageProto_Type DownstreamMessageProto::Type_MIN;
 const DownstreamMessageProto_Type DownstreamMessageProto::Type_MAX;
 const int DownstreamMessageProto::Type_ARRAYSIZE;

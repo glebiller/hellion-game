@@ -38,10 +38,12 @@ import java.net.InetSocketAddress;
  */
 public class MainTest {
 
+    private final String user;
     private final String host;
     private final int port;
 
-    public MainTest(String host, int port) {
+    public MainTest(String user, String host, int port) {
+        this.user = user;
         this.host = host;
         this.port = port;
     }
@@ -55,7 +57,7 @@ public class MainTest {
                         new ProtobufDecoder(UpstreamMessageDto.UpstreamMessageProto.getDefaultInstance()),
                         new ProtobufVarint32LengthFieldPrepender(),
                         new ProtobufEncoder(),
-                        new ClientHandlerTest()
+                        new ClientHandlerTest(user)
                 );
             }
         });
@@ -66,6 +68,7 @@ public class MainTest {
     }
 
     public static void main(String[] args) throws Exception {
-        new MainTest("127.0.0.1", 9999).run();
+        String user = (args.length >= 1) ? args[0] : "user1";
+        new MainTest(user, "127.0.0.1", 9999).run();
     }
 }

@@ -50,11 +50,13 @@ public final class DownstreamMessageDto {
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
       AUTHENTICATE(0, 1),
-      SPAWN(1, 2),
+      ENTER_WORLD(1, 2),
+      PLAYER_MOVE(2, 3),
       ;
       
       public static final int AUTHENTICATE_VALUE = 1;
-      public static final int SPAWN_VALUE = 2;
+      public static final int ENTER_WORLD_VALUE = 2;
+      public static final int PLAYER_MOVE_VALUE = 3;
       
       
       public final int getNumber() { return value; }
@@ -62,7 +64,8 @@ public final class DownstreamMessageDto {
       public static Type valueOf(int value) {
         switch (value) {
           case 1: return AUTHENTICATE;
-          case 2: return SPAWN;
+          case 2: return ENTER_WORLD;
+          case 3: return PLAYER_MOVE;
           default: return null;
         }
       }
@@ -93,7 +96,7 @@ public final class DownstreamMessageDto {
       }
       
       private static final Type[] VALUES = {
-        AUTHENTICATE, SPAWN, 
+        AUTHENTICATE, ENTER_WORLD, PLAYER_MOVE, 
       };
       
       public static Type valueOf(
@@ -506,12 +509,13 @@ public final class DownstreamMessageDto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n$Proto/Server/DownstreamMessage.proto\"w" +
-      "\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162\034" +
-      ".DownstreamMessageProto.Type\022\014\n\004data\030\002 \001" +
-      "(\014\"#\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\t\n\005SPAWN\020\002B" +
-      "8\n\035fr.kissy.hellion.proto.serverB\024Downst" +
-      "reamMessageDto\210\001\000"
+      "\n$Proto/Server/DownstreamMessage.proto\"\216" +
+      "\001\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162" +
+      "\034.DownstreamMessageProto.Type\022\014\n\004data\030\002 " +
+      "\001(\014\":\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\017\n\013ENTER_W" +
+      "ORLD\020\002\022\017\n\013PLAYER_MOVE\020\003B8\n\035fr.kissy.hell" +
+      "ion.proto.serverB\024DownstreamMessageDto\210\001" +
+      "\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

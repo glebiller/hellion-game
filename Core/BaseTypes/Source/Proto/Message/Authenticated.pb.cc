@@ -29,9 +29,8 @@ void protobuf_AssignDesc_Proto_2fMessage_2fAuthenticated_2eproto() {
       "Proto/Message/Authenticated.proto");
   GOOGLE_CHECK(file != NULL);
   AuthenticatedProto_descriptor_ = file->message_type(0);
-  static const int AuthenticatedProto_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AuthenticatedProto, player_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AuthenticatedProto, objects_),
+  static const int AuthenticatedProto_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AuthenticatedProto, players_),
   };
   AuthenticatedProto_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -78,10 +77,9 @@ void protobuf_AddDesc_Proto_2fMessage_2fAuthenticated_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n!Proto/Message/Authenticated.proto\032\031Pro"
     "to/Common/Object.proto\032\033Proto/Common/Pro"
-    "perty.proto\"Q\n\022AuthenticatedProto\022\034\n\006pla"
-    "yer\030\001 \002(\0132\014.ObjectProto\022\035\n\007objects\030\002 \003(\013"
-    "2\014.ObjectProtoB2\n\036fr.kissy.hellion.proto"
-    ".messageB\rAuthenticated\210\001\000", 226);
+    "perty.proto\"3\n\022AuthenticatedProto\022\035\n\007pla"
+    "yers\030\001 \003(\0132\014.ObjectProtoB2\n\036fr.kissy.hel"
+    "lion.proto.messageB\rAuthenticated\210\001\000", 196);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Message/Authenticated.proto", &protobuf_RegisterTypes);
   AuthenticatedProto::default_instance_ = new AuthenticatedProto();
@@ -100,8 +98,7 @@ struct StaticDescriptorInitializer_Proto_2fMessage_2fAuthenticated_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int AuthenticatedProto::kPlayerFieldNumber;
-const int AuthenticatedProto::kObjectsFieldNumber;
+const int AuthenticatedProto::kPlayersFieldNumber;
 #endif  // !_MSC_VER
 
 AuthenticatedProto::AuthenticatedProto()
@@ -110,7 +107,6 @@ AuthenticatedProto::AuthenticatedProto()
 }
 
 void AuthenticatedProto::InitAsDefaultInstance() {
-  player_ = const_cast< ::ObjectProto*>(&::ObjectProto::default_instance());
 }
 
 AuthenticatedProto::AuthenticatedProto(const AuthenticatedProto& from)
@@ -121,7 +117,6 @@ AuthenticatedProto::AuthenticatedProto(const AuthenticatedProto& from)
 
 void AuthenticatedProto::SharedCtor() {
   _cached_size_ = 0;
-  player_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -131,7 +126,6 @@ AuthenticatedProto::~AuthenticatedProto() {
 
 void AuthenticatedProto::SharedDtor() {
   if (this != default_instance_) {
-    delete player_;
   }
 }
 
@@ -156,12 +150,7 @@ AuthenticatedProto* AuthenticatedProto::New() const {
 }
 
 void AuthenticatedProto::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_player()) {
-      if (player_ != NULL) player_->::ObjectProto::Clear();
-    }
-  }
-  objects_.Clear();
+  players_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -172,30 +161,17 @@ bool AuthenticatedProto::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .ObjectProto player = 1;
+      // repeated .ObjectProto players = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_players:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_player()));
+                input, add_players()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(18)) goto parse_objects;
-        break;
-      }
-      
-      // repeated .ObjectProto objects = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_objects:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_objects()));
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(18)) goto parse_objects;
+        if (input->ExpectTag(10)) goto parse_players;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -218,16 +194,10 @@ bool AuthenticatedProto::MergePartialFromCodedStream(
 
 void AuthenticatedProto::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required .ObjectProto player = 1;
-  if (has_player()) {
+  // repeated .ObjectProto players = 1;
+  for (int i = 0; i < this->players_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->player(), output);
-  }
-  
-  // repeated .ObjectProto objects = 2;
-  for (int i = 0; i < this->objects_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->objects(i), output);
+      1, this->players(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -238,18 +208,11 @@ void AuthenticatedProto::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* AuthenticatedProto::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .ObjectProto player = 1;
-  if (has_player()) {
+  // repeated .ObjectProto players = 1;
+  for (int i = 0; i < this->players_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->player(), target);
-  }
-  
-  // repeated .ObjectProto objects = 2;
-  for (int i = 0; i < this->objects_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->objects(i), target);
+        1, this->players(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -262,21 +225,12 @@ void AuthenticatedProto::SerializeWithCachedSizes(
 int AuthenticatedProto::ByteSize() const {
   int total_size = 0;
   
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .ObjectProto player = 1;
-    if (has_player()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->player());
-    }
-    
-  }
-  // repeated .ObjectProto objects = 2;
-  total_size += 1 * this->objects_size();
-  for (int i = 0; i < this->objects_size(); i++) {
+  // repeated .ObjectProto players = 1;
+  total_size += 1 * this->players_size();
+  for (int i = 0; i < this->players_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->objects(i));
+        this->players(i));
   }
   
   if (!unknown_fields().empty()) {
@@ -304,12 +258,7 @@ void AuthenticatedProto::MergeFrom(const ::google::protobuf::Message& from) {
 
 void AuthenticatedProto::MergeFrom(const AuthenticatedProto& from) {
   GOOGLE_CHECK_NE(&from, this);
-  objects_.MergeFrom(from.objects_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_player()) {
-      mutable_player()->::ObjectProto::MergeFrom(from.player());
-    }
-  }
+  players_.MergeFrom(from.players_);
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -326,21 +275,16 @@ void AuthenticatedProto::CopyFrom(const AuthenticatedProto& from) {
 }
 
 bool AuthenticatedProto::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
-  if (has_player()) {
-    if (!this->player().IsInitialized()) return false;
-  }
-  for (int i = 0; i < objects_size(); i++) {
-    if (!this->objects(i).IsInitialized()) return false;
+  for (int i = 0; i < players_size(); i++) {
+    if (!this->players(i).IsInitialized()) return false;
   }
   return true;
 }
 
 void AuthenticatedProto::Swap(AuthenticatedProto* other) {
   if (other != this) {
-    std::swap(player_, other->player_);
-    objects_.Swap(&other->objects_);
+    players_.Swap(&other->players_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

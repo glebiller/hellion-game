@@ -18,8 +18,10 @@ package fr.kissy.hellion.client.handler;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import fr.kissy.hellion.proto.message.Authenticated;
+import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
@@ -27,6 +29,10 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Handler implementation for the echo client.  It initiates the ping-pong
@@ -37,18 +43,22 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandlerTest.class.getName());
 
+    private final String user;
+
     /**
      * Creates a client-side handler.
      */
-    public ClientHandlerTest() {
-
+    public ClientHandlerTest(String user) {
+        this.user = user;
     }
+
+    private static final ScheduledExecutorService WORKER = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void channelConnected(ChannelHandlerContext context, ChannelStateEvent event) {
         DownstreamMessageDto.DownstreamMessageProto.Builder builder = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
         builder.setType(DownstreamMessageDto.DownstreamMessageProto.Type.AUTHENTICATE);
-        builder.setData(ByteString.copyFrom("Username".getBytes()));
+        builder.setData(ByteString.copyFrom(user.getBytes()));
         event.getChannel().write(builder.build());
     }
 
@@ -57,17 +67,46 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
         UpstreamMessageDto.UpstreamMessageProto message = (UpstreamMessageDto.UpstreamMessageProto) event.getMessage();
         LOGGER.debug("client : {}", message.getType());
 
-        if (message.getType() == UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED) {
-            try {
-                Authenticated.AuthenticatedProto authenticated = Authenticated.AuthenticatedProto.parseFrom(message.getData());
-                LOGGER.debug("Received player {} \n{}", authenticated.getPlayer().getName(), authenticated.getPlayer().getSystemObjectsList());
-            } catch (InvalidProtocolBufferException e) {
-                LOGGER.error("Cannot parse proto", e);
-            }
+        switch (message.getType()) {
+            case AUTHENTICATED:
+                try {
+                    Authenticated.AuthenticatedProto authenticated = Authenticated.AuthenticatedProto.parseFrom(message.getData());
+                    LOGGER.debug("Received {} players \n{}", authenticated.getPlayersList().size(), authenticated.getPlayersList());
+                } catch (InvalidProtocolBufferException e) {
+                    LOGGER.error("Cannot parse proto", e);
+                }
 
-            DownstreamMessageDto.DownstreamMessageProto.Builder downstream = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
-            downstream.setType(DownstreamMessageDto.DownstreamMessageProto.Type.SPAWN);
-            event.getChannel().write(downstream.build());
+                final Channel channel = event.getChannel();
+
+                WORKER.schedule(new Runnable() {
+                    public void run() {
+                        DownstreamMessageDto.DownstreamMessageProto.Builder downstream2 = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
+                        downstream2.setType(DownstreamMessageDto.DownstreamMessageProto.Type.PLAYER_MOVE);
+                        channel.write(downstream2.build());
+                    }
+                }, 5, TimeUnit.SECONDS);
+                WORKER.schedule(new Runnable() {
+                    public void run() {
+                        DownstreamMessageDto.DownstreamMessageProto.Builder downstream2 = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
+                        downstream2.setType(DownstreamMessageDto.DownstreamMessageProto.Type.PLAYER_MOVE);
+                        channel.write(downstream2.build());
+                    }
+                }, 15, TimeUnit.SECONDS);
+
+                DownstreamMessageDto.DownstreamMessageProto.Builder downstream = DownstreamMessageDto.DownstreamMessageProto.newBuilder();
+                downstream.setType(DownstreamMessageDto.DownstreamMessageProto.Type.ENTER_WORLD);
+                event.getChannel().write(downstream.build());
+                break;
+            case OBJECT_CREATED:
+            case OBJECT_DELETED:
+            case OBJECT_UPDATED:
+                try {
+                    ObjectUpdated.ObjectUpdatedProto spawned = ObjectUpdated.ObjectUpdatedProto.parseFrom(message.getData());
+                    LOGGER.debug("Received {} objects around \n{}", spawned.getObjectsList().size(), spawned.getObjectsList());
+                } catch (InvalidProtocolBufferException e) {
+                    LOGGER.error("Cannot parse proto", e);
+                }
+                break;
         }
     }
 

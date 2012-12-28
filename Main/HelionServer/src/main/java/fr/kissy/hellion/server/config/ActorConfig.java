@@ -7,11 +7,13 @@ import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.server.actor.AuthenticateActor;
 import fr.kissy.hellion.server.actor.AutowireUntypedActorFactory;
 import fr.kissy.hellion.server.actor.DisconnectActor;
-import fr.kissy.hellion.server.actor.SpawnActor;
+import fr.kissy.hellion.server.actor.PlayerMoveActor;
+import fr.kissy.hellion.server.actor.SynchronizeActor;
 import fr.kissy.hellion.server.config.bus.MessageEventBus;
 import fr.kissy.hellion.server.config.bus.StateEventBus;
 import org.jboss.netty.channel.ChannelState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,9 +54,17 @@ public class ActorConfig {
     }
 
     @Bean
-    public ActorRef spawnActorRef() {
-        ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, SpawnActor.class)));
-        messageEventBus().subscribe(actorRef, DownstreamMessageDto.DownstreamMessageProto.Type.SPAWN);
+    @Qualifier("synchronizeActorRef")
+    public ActorRef synchronizeActorRef() {
+        ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, SynchronizeActor.class)));
+        messageEventBus().subscribe(actorRef, DownstreamMessageDto.DownstreamMessageProto.Type.ENTER_WORLD);
+        return actorRef;
+    }
+
+    @Bean
+    public ActorRef moveActorRef() {
+        ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, PlayerMoveActor.class)));
+        messageEventBus().subscribe(actorRef, DownstreamMessageDto.DownstreamMessageProto.Type.PLAYER_MOVE);
         return actorRef;
     }
 

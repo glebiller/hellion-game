@@ -1,6 +1,7 @@
 package fr.kissy.hellion.server.config;
 
 import fr.kissy.hellion.server.core.rtree.RTree;
+import fr.kissy.hellion.server.core.rtree.splitter.SplitterType;
 import fr.kissy.hellion.server.domain.World;
 import fr.kissy.hellion.server.service.WorldService;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ public class AppConfig {
 
     @Bean
     public RTree rTree() {
-        return new RTree(15, 30);
+        return new RTree(15, 30, SplitterType.QUADRATIC);
     }
 
 }
