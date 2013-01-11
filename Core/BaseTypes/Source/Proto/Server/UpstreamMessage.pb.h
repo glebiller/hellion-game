@@ -33,15 +33,14 @@ void protobuf_ShutdownFile_Proto_2fServer_2fUpstreamMessage_2eproto();
 class UpstreamMessageProto;
 
 enum UpstreamMessageProto_Type {
-  UpstreamMessageProto_Type_ERROR = 1,
-  UpstreamMessageProto_Type_UNAUTHORIZED = 2,
-  UpstreamMessageProto_Type_AUTHENTICATED = 3,
+  UpstreamMessageProto_Type_UNAUTHORIZED = 1,
+  UpstreamMessageProto_Type_AUTHENTICATED = 2,
   UpstreamMessageProto_Type_OBJECT_CREATED = 10,
   UpstreamMessageProto_Type_OBJECT_UPDATED = 11,
   UpstreamMessageProto_Type_OBJECT_DELETED = 12
 };
 bool UpstreamMessageProto_Type_IsValid(int value);
-const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MIN = UpstreamMessageProto_Type_ERROR;
+const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MIN = UpstreamMessageProto_Type_UNAUTHORIZED;
 const UpstreamMessageProto_Type UpstreamMessageProto_Type_Type_MAX = UpstreamMessageProto_Type_OBJECT_DELETED;
 const int UpstreamMessageProto_Type_Type_ARRAYSIZE = UpstreamMessageProto_Type_Type_MAX + 1;
 
@@ -110,7 +109,6 @@ class UpstreamMessageProto : public ::google::protobuf::Message {
   // nested types ----------------------------------------------------
   
   typedef UpstreamMessageProto_Type Type;
-  static const Type ERROR = UpstreamMessageProto_Type_ERROR;
   static const Type UNAUTHORIZED = UpstreamMessageProto_Type_UNAUTHORIZED;
   static const Type AUTHENTICATED = UpstreamMessageProto_Type_AUTHENTICATED;
   static const Type OBJECT_CREATED = UpstreamMessageProto_Type_OBJECT_CREATED;

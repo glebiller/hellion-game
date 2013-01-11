@@ -4,9 +4,8 @@ option java_generic_services = false;
 
 message UpstreamMessageProto {
 	enum Type {
-		ERROR = 1;
-		UNAUTHORIZED = 2;
-		AUTHENTICATED = 3;
+		UNAUTHORIZED = 1;
+		AUTHENTICATED = 2;
 
 		OBJECT_CREATED = 10;
 		OBJECT_UPDATED = 11;

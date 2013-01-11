@@ -49,17 +49,15 @@ public final class UpstreamMessageDto {
     
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
-      ERROR(0, 1),
-      UNAUTHORIZED(1, 2),
-      AUTHENTICATED(2, 3),
-      OBJECT_CREATED(3, 10),
-      OBJECT_UPDATED(4, 11),
-      OBJECT_DELETED(5, 12),
+      UNAUTHORIZED(0, 1),
+      AUTHENTICATED(1, 2),
+      OBJECT_CREATED(2, 10),
+      OBJECT_UPDATED(3, 11),
+      OBJECT_DELETED(4, 12),
       ;
       
-      public static final int ERROR_VALUE = 1;
-      public static final int UNAUTHORIZED_VALUE = 2;
-      public static final int AUTHENTICATED_VALUE = 3;
+      public static final int UNAUTHORIZED_VALUE = 1;
+      public static final int AUTHENTICATED_VALUE = 2;
       public static final int OBJECT_CREATED_VALUE = 10;
       public static final int OBJECT_UPDATED_VALUE = 11;
       public static final int OBJECT_DELETED_VALUE = 12;
@@ -69,9 +67,8 @@ public final class UpstreamMessageDto {
       
       public static Type valueOf(int value) {
         switch (value) {
-          case 1: return ERROR;
-          case 2: return UNAUTHORIZED;
-          case 3: return AUTHENTICATED;
+          case 1: return UNAUTHORIZED;
+          case 2: return AUTHENTICATED;
           case 10: return OBJECT_CREATED;
           case 11: return OBJECT_UPDATED;
           case 12: return OBJECT_DELETED;
@@ -105,7 +102,7 @@ public final class UpstreamMessageDto {
       }
       
       private static final Type[] VALUES = {
-        ERROR, UNAUTHORIZED, AUTHENTICATED, OBJECT_CREATED, OBJECT_UPDATED, OBJECT_DELETED, 
+        UNAUTHORIZED, AUTHENTICATED, OBJECT_CREATED, OBJECT_UPDATED, OBJECT_DELETED, 
       };
       
       public static Type valueOf(
@@ -150,7 +147,7 @@ public final class UpstreamMessageDto {
     }
     
     private void initFields() {
-      type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.ERROR;
+      type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED;
       data_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
@@ -316,7 +313,7 @@ public final class UpstreamMessageDto {
       
       public Builder clear() {
         super.clear();
-        type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.ERROR;
+        type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED;
         bitField0_ = (bitField0_ & ~0x00000001);
         data_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -446,7 +443,7 @@ public final class UpstreamMessageDto {
       private int bitField0_;
       
       // required .UpstreamMessageProto.Type type = 1;
-      private fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.ERROR;
+      private fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED;
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
@@ -464,7 +461,7 @@ public final class UpstreamMessageDto {
       }
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.ERROR;
+        type_ = fr.kissy.hellion.proto.server.UpstreamMessageDto.UpstreamMessageProto.Type.UNAUTHORIZED;
         onChanged();
         return this;
       }
@@ -518,14 +515,13 @@ public final class UpstreamMessageDto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\"Proto/Server/UpstreamMessage.proto\"\302\001\n" +
+      "\n\"Proto/Server/UpstreamMessage.proto\"\267\001\n" +
       "\024UpstreamMessageProto\022(\n\004type\030\001 \002(\0162\032.Up" +
-      "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"r\n" +
-      "\004Type\022\t\n\005ERROR\020\001\022\020\n\014UNAUTHORIZED\020\002\022\021\n\rAU" +
-      "THENTICATED\020\003\022\022\n\016OBJECT_CREATED\020\n\022\022\n\016OBJ" +
-      "ECT_UPDATED\020\013\022\022\n\016OBJECT_DELETED\020\014B6\n\035fr." +
-      "kissy.hellion.proto.serverB\022UpstreamMess" +
-      "ageDto\210\001\000"
+      "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"g\n" +
+      "\004Type\022\020\n\014UNAUTHORIZED\020\001\022\021\n\rAUTHENTICATED" +
+      "\020\002\022\022\n\016OBJECT_CREATED\020\n\022\022\n\016OBJECT_UPDATED" +
+      "\020\013\022\022\n\016OBJECT_DELETED\020\014B6\n\035fr.kissy.helli" +
+      "on.proto.serverB\022UpstreamMessageDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

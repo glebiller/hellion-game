@@ -76,14 +76,13 @@ void protobuf_AddDesc_Proto_2fServer_2fUpstreamMessage_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\"Proto/Server/UpstreamMessage.proto\"\302\001\n"
+    "\n\"Proto/Server/UpstreamMessage.proto\"\267\001\n"
     "\024UpstreamMessageProto\022(\n\004type\030\001 \002(\0162\032.Up"
-    "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"r\n"
-    "\004Type\022\t\n\005ERROR\020\001\022\020\n\014UNAUTHORIZED\020\002\022\021\n\rAU"
-    "THENTICATED\020\003\022\022\n\016OBJECT_CREATED\020\n\022\022\n\016OBJ"
-    "ECT_UPDATED\020\013\022\022\n\016OBJECT_DELETED\020\014B6\n\035fr."
-    "kissy.hellion.proto.serverB\022UpstreamMess"
-    "ageDto\210\001\000", 289);
+    "streamMessageProto.Type\022\014\n\004data\030\002 \001(\014\"g\n"
+    "\004Type\022\020\n\014UNAUTHORIZED\020\001\022\021\n\rAUTHENTICATED"
+    "\020\002\022\022\n\016OBJECT_CREATED\020\n\022\022\n\016OBJECT_UPDATED"
+    "\020\013\022\022\n\016OBJECT_DELETED\020\014B6\n\035fr.kissy.helli"
+    "on.proto.serverB\022UpstreamMessageDto\210\001\000", 278);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Proto/Server/UpstreamMessage.proto", &protobuf_RegisterTypes);
   UpstreamMessageProto::default_instance_ = new UpstreamMessageProto();
@@ -109,7 +108,6 @@ bool UpstreamMessageProto_Type_IsValid(int value) {
   switch(value) {
     case 1:
     case 2:
-    case 3:
     case 10:
     case 11:
     case 12:
@@ -120,7 +118,6 @@ bool UpstreamMessageProto_Type_IsValid(int value) {
 }
 
 #ifndef _MSC_VER
-const UpstreamMessageProto_Type UpstreamMessageProto::ERROR;
 const UpstreamMessageProto_Type UpstreamMessageProto::UNAUTHORIZED;
 const UpstreamMessageProto_Type UpstreamMessageProto::AUTHENTICATED;
 const UpstreamMessageProto_Type UpstreamMessageProto::OBJECT_CREATED;
