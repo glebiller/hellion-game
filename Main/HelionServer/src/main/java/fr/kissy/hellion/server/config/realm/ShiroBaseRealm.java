@@ -53,7 +53,6 @@ public class ShiroBaseRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // Test is 69fe296adb135f39dc8858238da49928a022b3d9
         Account account = accountRepository.findByUsername(token.getPrincipal().toString());
         if (account == null) {
             throw new AuthenticationException();
