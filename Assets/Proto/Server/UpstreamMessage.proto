@@ -1,0 +1,16 @@
+option java_package = "fr.kissy.hellion.proto.server";
+option java_outer_classname = "UpstreamMessageDto";
+option java_generic_services = false;
+
+message UpstreamMessageProto {
+	enum Type {
+		UNAUTHORIZED = 1;
+		AUTHENTICATED = 2;
+
+		OBJECT_CREATED = 10;
+		OBJECT_UPDATED = 11;
+		OBJECT_DELETED = 12;
+	}
+	required Type type = 1;
+	optional bytes data = 2;
+}

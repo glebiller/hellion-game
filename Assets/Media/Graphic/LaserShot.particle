@@ -1,0 +1,18 @@
+particle_system LaserShot
+{
+	material Particles/Classic.000
+	particle_width 0.5
+	particle_height 5.0
+	quota 1
+	local_space true
+	billboard_type oriented_self
+	nonvisible_update_timeout 0.1
+	point_rendering false
+
+	emitter Point
+	{
+		direction 0 1 0
+		emission_rate 1000
+		velocity 1
+	}
+}

@@ -1,0 +1,31 @@
+// Example particle systems
+
+particle_system Examples/JetEngine1
+{
+	material 		Examples/Flare
+	particle_width 	1
+	particle_height	1
+	cull_each		false
+	quota			100
+	billboard_type	point
+
+	emitter Point
+	{
+		angle 5
+		emission_rate   100
+        time_to_live    0.4
+        direction       0 -1 0
+        velocity_min    5
+        velocity_max    10
+        colour_range_start  1 1 0.5
+        colour_range_end    1 0.8 0.3
+		
+	}
+	affector ColourFader
+	{
+		red -0.25
+		green -1
+		blue -1
+	}
+	
+}

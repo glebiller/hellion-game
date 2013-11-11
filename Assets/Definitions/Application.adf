@@ -1,0 +1,41 @@
+<Application>
+	<Properties>
+		<Property Name="Framework::DebugWindow" Value="0"/>
+		<Property Name="Scheduler::Benchmarking" Value="0"/>
+		<Property Name="TaskManager::Threads" Value="0"/>
+		<Property Name="TaskManager::TPEventsForTasks" Value="0"/>
+		<Property Name="TaskManager::TPEventsForJobs" Value="0"/>
+		<Property Name="TaskManager::TPEventsForSynchronize" Value="0"/>
+	</Properties>
+	<Systems>
+		<System Type="Graphic">
+			<Properties>
+                <Property Name="ResourceLocation" Value1="Assets/Media/Graphic" Value2="FileSystem" Value3="Default" Value4="0"/>
+				<Property Name="WindowName" Value1="Hellion Game"/>
+				<Property Name="Resolution" Value1="1024" Value2="768"/>
+				<Property Name="ShadowTexture" Value1="1" Value2="1024"/>
+				<Property Name="FullScreen" Value1="0"/>
+				<Property Name="VerticalSync" Value1="0"/>
+				<!-- Full Screen Anti-Aliasing
+					Example Type's: (Value1)
+					D3DMULTISAMPLE_NONE            =  0,
+					D3DMULTISAMPLE_NONMASKABLE     =  1,
+					D3DMULTISAMPLE_2_SAMPLES       =  2,
+					D3DMULTISAMPLE_4_SAMPLES       =  4,
+					D3DMULTISAMPLE_16_SAMPLES      = 16,          
+					Quality levels are driver specific.
+					0 selects default quality level. (Value2) -->
+				<Property Name="FSAntiAliasing" Value1="4" Value2="0"/>
+			</Properties>
+		</System>
+		<System Type="Input">
+		</System>
+		<System Type="Network">
+		</System>
+		<System Type="Physic">
+		</System>
+	</Systems>
+	<Scenes Startup="Main">
+		<Scene Name="Main" />
+	</Scenes>
+</Application>

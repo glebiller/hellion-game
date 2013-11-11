@@ -1,0 +1,27 @@
+option java_package = "fr.kissy.hellion.proto";
+option java_outer_classname = "Definition";
+option java_generic_services = false;
+
+package Proto;
+
+import "Proto/Common.proto";
+
+message Application {
+    required string startupScene = 1;
+    repeated Property properties = 2;
+    repeated System systems = 3;
+    repeated string scenes = 4;
+}
+message Scene {
+    required string name = 1;
+    repeated System systems = 2;
+    repeated Object templates = 3;
+    repeated Object objects = 4;
+    repeated Link links = 5;
+}
+message Link {
+    required string subject = 1;
+    required string observer = 2;
+    required SystemType subjectSystemType = 3;
+    required SystemType observerSystemType = 4;
+}

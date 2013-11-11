@@ -1,0 +1,154 @@
+material bloodelffemale_0
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_3
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Hair00_06.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_13
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Hair00_06.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_26
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Hair00_06.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_34
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_35
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_37
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_43
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_46
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_52
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/Body.tga -1
+			}
+		}
+	}
+}
+material bloodelffemale_58
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			texture_unit
+			{
+				texture bloodelffemale/BLOODELFFEMALEEYEGLOWGREEN.tga -1
+			}
+		}
+	}
+}

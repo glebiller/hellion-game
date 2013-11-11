@@ -1,0 +1,14 @@
+option java_package = "fr.kissy.hellion.proto";
+option java_outer_classname = "Message";
+option java_generic_services = false;
+
+package Proto;
+
+import "Proto/Common.proto";
+
+message Authenticated {
+    repeated Object players = 1;	
+}
+message ObjectUpdated {
+    repeated Object objects = 1;	
+}
