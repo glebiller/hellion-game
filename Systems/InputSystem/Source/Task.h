@@ -27,31 +27,36 @@
 class InputTask : public ISystemTask {
 public:
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     InputTask(ISystemScene* pScene);
-
-    /**
-     * @inheritDoc
-     */
+    
+    ///
+    /// @inheritDoc.
+    ///
     ~InputTask(void);
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
+    Error initialize();
+    
+    ///
+    /// @inheritDoc.
+    ///
     void Update(f32 DeltaTime);
-
-    /**
-     * @inheritDoc
-     */
+    
+    ///
+    /// @inheritDoc.
+    ///
     inline bool IsPrimaryThreadOnly(void) {
         return false;
     };
-
-    /**
-     * @inheritDoc
-     */
+    
+    ///
+    /// @inheritDoc.
+    ///
     inline Proto::SystemType GetSystemType(void) {
         return Proto::SystemType::Input;
     }

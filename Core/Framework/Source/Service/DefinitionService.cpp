@@ -21,6 +21,7 @@
 #include "Proto.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
+#include "System/ISystemTask.h"
 #include "Manager/ServiceManager.h"
 #include "Service/SettingService.h"
 #include "Generic/SystemInterface.h"
@@ -132,6 +133,7 @@ void DefinitionService::parseScene(std::string sScene) {
             // Initialize system scene properties
             m_pSystemScene->setProperties(system.properties());
             m_pSystemScene->initialize();
+            m_pSystemScene->GetSystemTask<ISystemTask>()->initialize();
         }
     }
 

@@ -31,7 +31,7 @@
 #include <Physics2012\Utilities\Destruction\BreakOffParts\hkpBreakOffPartsUtil.h>
 #include <Physics2012\Utilities\Dynamics\Inertia\hkpInertiaTensorComputer.h>
 
-#ifdef __HAVOK_VDB__
+#ifdef HAVOK_VDB_ENABLED
 #include <Common/Visualize/hkVisualDebugger.h>
 #include <Physics2012/Utilities/VisualDebugger/hkpPhysicsContext.h>
 #endif
@@ -54,8 +54,29 @@ static const u32    PhysicSystemTaskGrainSize = 8;
 PhysicTask::PhysicTask(ISystemScene* pScene) 
     : ISystemTask(pScene) {
     m_jobQueue = GetSystemScene<PhysicScene>()->GetSystem<PhysicSystem>()->getJobQueue();
+}
 
-#ifdef __HAVOK_VDB__
+///
+/// @inheritDoc
+///
+PhysicTask::~PhysicTask(void) {
+ #ifdef HAVOK_VDB_ENABLED
+    if (m_pVisualDebugger != nullptr) {
+        m_pVisualDebugger->shutdown();
+        m_pVisualDebugger->removeReference();
+        m_pPhysicsContext->removeReference();
+    }
+#endif
+}
+
+///
+/// @inheritDoc
+///
+Error PhysicTask::initialize(void) {
+    m_pWorld = GetSystemScene<PhysicScene>()->getWorld();
+    ASSERT(m_pWorld != nullptr);
+
+#ifdef HAVOK_VDB_ENABLED
     hkArray<hkProcessContext*> contexts;
     {
         // The visual debugger so we can connect remotely to the simulation
@@ -69,19 +90,11 @@ PhysicTask::PhysicTask(ISystemScene* pScene)
     m_pVisualDebugger = new hkVisualDebugger(contexts);
     m_pVisualDebugger->serve();
 #endif
-}
 
-///
-/// @inheritDoc
-///
-PhysicTask::~PhysicTask(void) {
- #ifdef __HAVOK_VDB__
-    {
-        m_pVisualDebugger->shutdown();
-        m_pVisualDebugger->removeReference();
-        m_pPhysicsContext->removeReference();
-    }
-#endif
+    m_pWorld->markForWrite();
+    m_pWorld->addEntityListener(this);
+    m_pWorld->unmarkForWrite();
+    return Errors::Success;
 }
 
 ///
@@ -92,7 +105,7 @@ void PhysicTask::Update(f32 DeltaTime) {
         m_DeltaTime = DeltaTime;
 
         // Udpate Havok multi thread
-        hkpStepResult result = GetSystemScene<PhysicScene>()->getWorld()->initMtStep(m_jobQueue , hkReal(DeltaTime));
+        hkpStepResult result = m_pWorld->initMtStep(m_jobQueue , hkReal(DeltaTime));
         ASSERT(result == hkpStepResult::HK_STEP_RESULT_SUCCESS);
         g_serviceManager->getTaskManager()->ParallelFor(this, 
             reinterpret_cast<ITaskManager::ParallelForFunction>(stepUpdateS),
@@ -111,31 +124,6 @@ void PhysicTask::stepUpdateS(PhysicTask* pTask, u32 uStart, u32 uEnd) {
     pTask->stepUpdate();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// SetObjectActivation - Add or removes the given object from actively tracked objects
-void PhysicTask::setObjectActivation(PhysicObject* pObject, bool bActivated) {
-    if (bActivated) {
-        if (!pObject->isStatic()) {
-#ifdef _DEBUG
-            for (auto it : m_ActiveObjects) {
-                if (it == pObject) {
-                    return;
-                }
-            }
-#endif
-            m_ActiveObjects.push_back(pObject);
-            GetSystemScene<PhysicScene>()->getWorld()->markForWrite();
-            pObject->getBody()->addEntityActivationListener(this);
-            GetSystemScene<PhysicScene>()->getWorld()->unmarkForWrite();
-        }
-    } else {
-        m_ActiveObjects.remove(pObject);
-        GetSystemScene<PhysicScene>()->getWorld()->markForWrite();
-        pObject->getBody()->removeEntityActivationListener(this);
-        GetSystemScene<PhysicScene>()->getWorld()->unmarkForWrite();
-    }
-}
-
 ///
 /// @inheritDoc
 ///
@@ -150,7 +138,7 @@ void PhysicTask::updateCompletion() {
     //
     // End the world stepping.
     //
-    hkpStepResult result = GetSystemScene<PhysicScene>()->getWorld()->finishMtStep();
+    hkpStepResult result = m_pWorld->finishMtStep();
     ASSERT(result == hkpStepResult::HK_STEP_RESULT_SUCCESS);
 
     //
@@ -162,21 +150,17 @@ void PhysicTask::updateCompletion() {
         it->Update(m_DeltaTime);
     }
 
-    GetSystemScene<PhysicScene>()->getWorld()->lock();
-
     /*std::list<HavokCharacterObject*> CharacterObjects = m_pScene->GetCharacters();
     for (std::list<HavokCharacterObject*>::iterator it = CharacterObjects.begin(); it != CharacterObjects.end(); it++) {
         (*it)->Update(m_DeltaTime);
     }*/
 
-#ifdef __HAVOK_VDB__
+#ifdef HAVOK_VDB_ENABLED
     if (m_pVisualDebugger != NULL) {
         //m_pPhysicsContext->syncTimers();
         m_pVisualDebugger->step();
     }
 #endif
-
-    GetSystemScene<PhysicScene>()->getWorld()->unlock();
 }
 
 ///
@@ -195,8 +179,7 @@ void PhysicTask::entityAddedCallback(hkpEntity* pEntity) {
 ///
 void PhysicTask::entityRemovedCallback(hkpEntity* pEntity) {
     PhysicObject* pObject = reinterpret_cast<PhysicObject*>(pEntity->getUserData());
-    ASSERT(pObject != NULL);
-    if (!pObject->isStatic()) {
+    if (pObject != NULL && !pObject->isStatic()) {
         m_ActiveObjects.remove(pObject);
         pEntity->removeEntityActivationListener(this);
     }

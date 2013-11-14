@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Errors.h"
 #include "Generic/IComponent.h"
 #include "Generic/IUpdatable.h"
 
@@ -26,36 +27,41 @@ class ISystemScene;
 class ISystemTask : public IComponent, public IUpdatable {
 public:
 
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  pSystemScene    If non-null, the system scene.
-     */
+    ///
+    /// Constructor.
+    ///
+    /// @param [in,out] pSystemScene    If non-null, the system scene.
+    ///
     ISystemTask(ISystemScene* pSystemScene);
 
-    /**
-     * Destructor.
-     */
-    virtual ~ISystemTask(void);
+    ///
+    /// Destructor.
+    ///
+    virtual ~ISystemTask();
+    
+    ///
+    /// @inheritDoc.
+    ///
+    virtual Error initialize() = 0;
 
-    /**
-     * Query if this ISystemTask is primary thread only.
-     * Implementing tasks should return true to indicate that their <c>Update</c> function should
-     * only be called from the primary thread.  false allows their <c>Update</c> function to be
-     * called from an arbitrary thread.
-     *
-     * @return  true if primary thread only, false if not.
-     */
-    virtual bool IsPrimaryThreadOnly(void) = 0;
-        
-    /**
-     * Gets the system scene.
-     * Gets the scene for this task.
-     *
-     * @return  The scene for this task.
-     */
+    ///
+    /// Query if this ISystemTask is primary thread only. Implementing tasks should return true
+    /// to indicate that their <c>Update</c> function should only be called from the primary thread.
+    /// false allows their <c>Update</c> function to be called from an arbitrary thread.
+    ///
+    /// @return true if primary thread only, false if not.
+    ///
+    virtual bool IsPrimaryThreadOnly() = 0;
+
+    ///
+    /// Gets the system scene. Gets the scene for this task.
+    ///
+    /// @tparam typename TSystemScene   Type of the typename t system scene.
+    ///
+    /// @return The scene for this task.
+    ///
     template <typename TSystemScene>
-    inline TSystemScene* GetSystemScene(void) {
+    inline TSystemScene* GetSystemScene() {
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
 

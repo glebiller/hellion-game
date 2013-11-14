@@ -4,6 +4,8 @@ project("PhysicSystem")
 
 check_root_module()
 
+add_definitions("-DHK_PLATFORM_SIM")
+
 find_package("Ogre" REQUIRED)
 find_package("Havok" REQUIRED COMPONENTS "hkCompat" REQUIRED "hkSceneData" REQUIRED 
     "hkSerialize" REQUIRED "hkInternal" REQUIRED "hkGeometryUtilities" REQUIRED 

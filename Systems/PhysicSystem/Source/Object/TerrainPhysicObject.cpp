@@ -100,10 +100,9 @@ Error TerrainPhysicObject::initialize() {
     ci.m_maxHeight = 100.0f;
     ci.m_minHeight = 0.0f;
     ci.m_scale = hkVector4(4.0f, 1.0f, 4.0f, 0.0f);
-    //
-    // Start editing the world.
-    //
-    GetSystemScene<PhysicScene>()->getWorld()->lock();
+
+    hkpWorld* world = GetSystemScene<PhysicScene>()->getWorld();
+    world->lock();
 
     //
     // now to make a rigid body out of our height field
@@ -117,7 +116,9 @@ Error TerrainPhysicObject::initialize() {
         bodyInfo.m_shape = pTerrainShape;
         bodyInfo.m_friction = 0.5f;
         m_pBody = new hkpRigidBody(bodyInfo);
-        GetSystemScene<PhysicScene>()->getWorld()->addEntity(m_pBody);
+        m_pBody->setName(m_entity->getName().c_str());
+        m_pBody->setUserData(hkUlong(this));
+        world->addEntity(m_pBody);
         m_pBody->removeReference();
         pTerrainShape->removeReference();
     }
@@ -125,7 +126,7 @@ Error TerrainPhysicObject::initialize() {
     //
     // Now we have finished modifying the world, release our write marker.
     //
-    GetSystemScene<PhysicScene>()->getWorld()->unlock();
+    world->unlock();
     return Errors::Success;
 }
 

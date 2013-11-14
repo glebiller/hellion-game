@@ -31,6 +31,11 @@ class ISystemScene;
 class PhysicObject;
 class hkpWorld;
 
+#ifdef HAVOK_VDB_ENABLED
+class hkpPhysicsContext;
+class hkVisualDebugger;
+#endif
+
 ///
 /// <c>HavokPhysicsTask</c> Implementation of the ISystemTask interface for HavokPhysics.
 ///
@@ -47,6 +52,11 @@ public:
     /// @inheritDoc.
     ///
     ~PhysicTask();
+
+    ///
+    /// @inheritDoc.
+    ///
+    Error initialize();
         
     ///
     /// @inheritDoc.
@@ -78,13 +88,13 @@ public:
     static void stepUpdateS(PhysicTask* pTask, u32 uStart, u32 uEnd);
 
     ///
-    /// Sets object activation.
-    /// Add or removes the given object from actively tracked objects.
+    /// Gets active objects.
     ///
-    /// @param [in,out] pObject The Object that we want to activate/deactivate.
-    /// @param  bActivated      (Optional) the activated.
+    /// @return null if it fails, else the active objects.
     ///
-    void setObjectActivation(PhysicObject* pObject, bool bActivated = true);
+    inline std::list<PhysicObject*>* getActiveObjects() {
+        return &m_ActiveObjects;
+    }
     
 private:
     ///
@@ -132,11 +142,12 @@ private:
     virtual void entityActivatedCallback(hkpEntity* pEntity);
 
 private:
-#ifdef __HAVOK_VDB__
+#ifdef HAVOK_VDB_ENABLED
     hkpPhysicsContext*                      m_pPhysicsContext;
     hkVisualDebugger*                       m_pVisualDebugger;
 #endif
 
+    hkpWorld*                               m_pWorld;
     hkJobQueue*                             m_jobQueue;
     std::list<PhysicObject*>                m_ActiveObjects;
 

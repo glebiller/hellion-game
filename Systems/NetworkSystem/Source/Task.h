@@ -25,43 +25,44 @@ class UpstreamMessageProto;
 class DownstreamMessageProto;
 
 /**
- * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
- * definition of the class and its functions.
- * 
- * @sa  ISystemTask
- */
+* Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
+* definition of the class and its functions.
+*
+* @sa  ISystemTask
+*/
 class NetworkTask : public ISystemTask {
-
 public:
-        
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     NetworkTask(ISystemScene* pScene);
 
-    /**
-     * @inheritDoc
-     */
-    ~NetworkTask(void);
-        
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
+    ~NetworkTask();
+
+    ///
+    /// @inheritDoc.
+    ///
+    Error initialize();
+
+    ///
+    /// @inheritDoc.
+    ///
     void Update(f32 DeltaTime);
 
-    /**
-     * @inheritDoc
-     */
-    bool IsPrimaryThreadOnly(void) {
+    ///
+    /// @inheritDoc.
+    ///
+    bool IsPrimaryThreadOnly() {
         return false;
     };
-        
-    /**
-     * @inheritDoc
-     */
-    Proto::SystemType GetSystemType(void) {
+
+    ///
+    /// @inheritDoc.
+    ///
+    Proto::SystemType GetSystemType() {
         return Proto::SystemType::Network;
     }
-
 };
-

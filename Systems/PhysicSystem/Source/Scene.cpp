@@ -52,6 +52,7 @@
 #include "System.h"
 #include "Task.h"
 #include "Object/PhysicObject.h"
+#include "Object/CharacterPhysicObject.h"
 #include "Object/MovablePhysicObject.h"
 #include "Object/TerrainPhysicObject.h"
 
@@ -65,6 +66,7 @@ PhysicScene::PhysicScene(ISystem* pSystem)
     , m_pWorld(nullptr) {
     m_TaskFactory = boost::factory<PhysicTask*>();
 
+    m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
     m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
     m_ObjectFactories["Terrain"] = boost::factory<TerrainPhysicObject*>();
 }
@@ -78,8 +80,9 @@ PhysicScene::~PhysicScene(void) {
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Initialize - Initializes this Scene with the given properties
+///
+/// @inheritDoc
+///
 Error PhysicScene::initialize(void) {
     ASSERT(!m_bInitialized);
     

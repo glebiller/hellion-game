@@ -41,6 +41,7 @@
 #endif
 
 #define LOGGER_ENABLED
+#define HAVOK_VDB_ENABLED
 
 // The current mechanism of by-job statistics does not work correctly in case of
 // nested parallelism, since work-stealing TBB scheduler may (and does) interleave

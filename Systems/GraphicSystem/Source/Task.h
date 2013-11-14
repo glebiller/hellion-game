@@ -23,45 +23,48 @@
 
 class GraphicScene;
 
-/**
- * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
- * definition of the class and its functions.
- *
- * @sa  ISystemTask
- */
+///
+/// Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h
+/// for a definition of the class and its functions.
+///
+/// @sa ISystemTask
+///
 class GraphicTask : public ISystemTask {
 public:
-
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     GraphicTask(ISystemScene* pScene);
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     ~GraphicTask(void);
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
+    Error initialize();
+
+    ///
+    /// @inheritDoc.
+    ///
     void Update(f32 DeltaTime);
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     bool IsPrimaryThreadOnly(void) {
         return true;
     };
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// @inheritDoc.
+    ///
     Proto::SystemType GetSystemType(void) {
         return Proto::SystemType::Graphic;
     }
 
 private:
     Ogre::Root*                         m_pRoot;
-
 };

@@ -19,23 +19,30 @@
 #include "Object/Object.h"
 #include "Task.h"
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 InputTask::InputTask(ISystemScene* pScene) : ISystemTask(pScene) {
     ASSERT(m_pSystemScene != NULL);
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 InputTask::~InputTask(void) {
 
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
+Error InputTask::initialize(void) {
+    return Errors::Success;
+}
+
+///
+/// @inheritDoc
+///
 void InputTask::Update(f32 DeltaTime) {
     OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);

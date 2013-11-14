@@ -71,8 +71,11 @@
 				<Property Name="Animation" Value1="idle" Value2="Idle"/>
 				<Property Name="Animation" Value1="run" Value2="Running"/>-->
 			</Properties>
-			<Properties SystemType="Physic" ObjectType="Movable">
-				<Property Name="Position" Value1="510" Value2="10" Value3="510"/>
+			<Properties SystemType="Physic" ObjectType="Character">
+				<Property Name="Position" Value1="0" Value2="500" Value3="0"/>
+				<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
+				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
+				<Property Name="Radius" Value1="0.3"/>
 			</Properties>
 		</Object>
 		<Object Id="Connect" Name="Connect"></Object>

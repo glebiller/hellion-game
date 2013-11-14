@@ -22,29 +22,34 @@
 #include "Object/Object.h"
 #include "Generic/IttNotify.h"
 
-
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 
-
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 GraphicTask::GraphicTask(ISystemScene* pScene) 
     : ISystemTask((ISystemScene*)pScene) {
     m_pRoot = pScene->GetSystem<GraphicSystem>()->getRoot(); 
     ASSERT(m_pRoot != NULL);
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 GraphicTask::~GraphicTask(void) {
 
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
+Error GraphicTask::initialize(void) {
+    return Errors::Success;
+}
+
+///
+/// @inheritDoc
+///
 void GraphicTask::Update(f32 DeltaTime) {
     // Since rendering is a limiting serial stage in some (if not most) of the frames,
     // we do not want it to be preempted. So temporarily boost up its thread priority.

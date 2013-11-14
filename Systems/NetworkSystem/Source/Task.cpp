@@ -16,23 +16,28 @@
 #include "Scene.h"
 #include "Object/Object.h"
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc.
+///
 NetworkTask::NetworkTask(ISystemScene* pScene) : ISystemTask(pScene) {
-
 }
 
-/**
- * @inheritDoc
- */
-NetworkTask::~NetworkTask(void) {
-
+///
+/// @inheritDoc.
+///
+NetworkTask::~NetworkTask() {
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
+Error NetworkTask::initialize() {
+    return Errors::Success;
+}
+
+///
+/// @inheritDoc.
+///
 void NetworkTask::Update(f32 DeltaTime) {
     GetSystemScene<NetworkScene>()->GetSystem<NetworkSystem>()->getNetworkService()->receive();
     m_pSystemScene->Update(DeltaTime);

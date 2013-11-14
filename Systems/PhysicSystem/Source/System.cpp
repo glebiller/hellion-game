@@ -95,15 +95,16 @@ Error PhysicSystem::initialize(void) {
     info.m_jobQueueHwSetup.m_numCpuThreads = g_serviceManager->getTaskManager()->GetRecommendedJobCount();
     m_jobQueue = new hkJobQueue(info);
 
-    hkError::getInstance().setEnabled(0x2a2cde91, false);
     /*hkError::getInstance().setEnabled(0x6e8d163b, false);
     hkError::getInstance().setEnabled(0xad345a23, false);
     hkError::getInstance().setEnabled(0x11fce585, false);
     hkError::getInstance().setEnabled(0x34df5494, false);
-#ifdef __HAVOK_VDB__
+    */
+    hkError::getInstance().setEnabled(0x2a2cde91, false);
+#ifdef HAVOK_VDB_ENABLED
     hkError::getInstance().setEnabled(0x1293ADE8, false);
     hkError::getInstance().setEnabled(0x1293ADEF, false);
-#endif*/
+#endif
 
     g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
@@ -167,5 +168,5 @@ void PhysicSystem::FreeThreadResources(PhysicSystem* pSystem) {
 void PhysicSystem::ErrorReport(const char* pString, void* pErrorOutputObject) {
     PhysicSystem* pSystem = reinterpret_cast<PhysicSystem*>(pErrorOutputObject);
     g_serviceManager->getLogService()->log(LOGOG_LEVEL_ERROR, pString);
-    ASSERTMSG1(false, "[PhysicSystem Error] %s", pString);
+    //ASSERTMSG1(false, "[PhysicSystem Error] %s", pString);
 }
