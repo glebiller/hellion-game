@@ -72,7 +72,7 @@
 				<Property Name="Animation" Value1="run" Value2="Running"/>-->
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Character">
-				<Property Name="Position" Value1="0" Value2="500" Value3="0"/>
+				<Property Name="Position" Value1="500" Value2="20" Value3="500"/>
 				<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
 				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
 				<Property Name="Radius" Value1="0.3"/>

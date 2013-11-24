@@ -145,40 +145,45 @@ Error CharacterPhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes:
 /// @inheritDoc
 ///
 void CharacterPhysicObject::Update(f32 DeltaTime) {
+    if (m_rotation != Math::Vector3::Zero) {
+        Math::Quaternion rotation = Math::Quaternion();
+        rotation.Set(Math::Vector3::UnitY, m_rotation.y * DeltaTime * 5);
+        m_orientation *= rotation;
+    }
+
     hkpWorld* pWorld = GetSystemScene<PhysicScene>()->getWorld();
     ASSERT(pWorld != NULL);
 
     pWorld->markForWrite();
-
-    hkVector4 up = hkVector4(0, 0, 1, 0);
-    hkVector4 down;
-    down.setNeg4(up);
+    
     hkpCharacterInput input;
     hkpCharacterOutput output;
     {
-        input.m_inputLR = m_velocity.x;
-        input.m_inputUD = m_velocity.z;
-        input.m_wantJump = m_velocity.y != 0;
+        input.m_inputLR = m_velocity.z;
+        input.m_inputUD = m_velocity.x;
+        input.m_wantJump = false;
         input.m_atLadder = false;
-        input.m_up = up;
-        input.m_forward.set(1, 0, 0);
+        input.m_up = s_up;
+        input.m_forward = s_forward;
+        input.m_forward.setRotatedDir(hkQuaternion(m_orientation.x, m_orientation.y, m_orientation.z, m_orientation.w), input.m_forward);
         input.m_stepInfo.m_deltaTime = DeltaTime;
         input.m_stepInfo.m_invDeltaTime = 1.0f / DeltaTime;
-        input.m_characterGravity.set(0, -16, 0);
+        input.m_characterGravity = s_gravity;
+        input.m_velocity = m_CharacterProxy->getLinearVelocity();
         input.m_position = m_CharacterProxy->getPosition();
-        m_CharacterProxy->checkSupport(down, input.m_surfaceInfo);
+        m_CharacterProxy->checkSupport(s_down, input.m_surfaceInfo);
     }
     {
         HK_TIMER_BEGIN("update character state", HK_NULL);
         m_characterContext->update(input, output);
         HK_TIMER_END();
     }
+
     m_CharacterProxy->setLinearVelocity(output.m_velocity);
-    hkStepInfo StepInfo(hkTime(0.0f), hkTime(DeltaTime));
-    m_CharacterProxy->integrate(StepInfo, pWorld->getGravity());
+    m_CharacterProxy->integrate(input.m_stepInfo, pWorld->getGravity());
     m_CharacterProxy->getPosition().store3(m_position);
     
     pWorld->unmarkForWrite();
 
-    PostChanges(System::Changes::Physic::Position);
+    PostChanges(System::Changes::Physic::Position | System::Changes::Physic::Orientation);
 }

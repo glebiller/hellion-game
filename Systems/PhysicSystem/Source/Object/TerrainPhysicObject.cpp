@@ -111,8 +111,7 @@ Error TerrainPhysicObject::initialize() {
         TerrainShape* pTerrainShape = new TerrainShape(ci, pHeightData);
         hkpRigidBodyCinfo bodyInfo;
         bodyInfo.m_motionType = hkpMotion::MOTION_FIXED;
-        //bodyInfo.m_position = hkVector4(- 2.0f * (xRes - 1.0f), 0.0f, - 2.0f * (zRes - 1.0f));
-        bodyInfo.m_position.setMul4(-0.5f, pTerrainShape->m_extents);
+        bodyInfo.m_position = hkVector4(- 2.0f * (xRes - 1.0f), 0.0f, - 2.0f * (zRes - 1.0f));
         bodyInfo.m_shape = pTerrainShape;
         bodyInfo.m_friction = 0.5f;
         m_pBody = new hkpRigidBody(bodyInfo);

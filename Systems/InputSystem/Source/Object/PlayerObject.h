@@ -86,13 +86,13 @@ public:
     void createShot(void);
 
 private:
-    OISB::TriggerAction*    m_upInputAction;
-    OISB::TriggerAction*    m_rightInputAction;
-    OISB::TriggerAction*    m_downInputAction;
-    OISB::TriggerAction*    m_leftInputAction;
-    OISB::TriggerAction*    m_rightRotateInputAction;
-    OISB::TriggerAction*    m_leftRotateInputAction;
-    OISB::TriggerAction*    m_shotInputAction;
+    OISB::TriggerAction*    m_forwardInputAction;
+    OISB::TriggerAction*    m_backwardInputAction;
+    OISB::TriggerAction*    m_strafeRightInputAction;
+    OISB::TriggerAction*    m_strafeLeftInputAction;
+    OISB::TriggerAction*    m_turnRightInputAction;
+    OISB::TriggerAction*    m_turnLeftInputAction;
+    OISB::TriggerAction*    m_jumpInputAction;
 
     KeyboardButtonData*     m_shotKeyboardButtonData;
 

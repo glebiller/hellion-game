@@ -38,6 +38,11 @@
 
 #include "Scene.h"
 
+hkVector4 PhysicObject::s_up = hkVector4(0, 1, 0);
+hkVector4 PhysicObject::s_down = hkVector4(0,-1, 0);
+hkVector4 PhysicObject::s_forward = hkVector4(1, 0, 0);
+hkVector4 PhysicObject::s_gravity = hkVector4(0, -16, 0);
+
 /**
  * @inheritDoc
  */

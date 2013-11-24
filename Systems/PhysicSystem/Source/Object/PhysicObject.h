@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <Common\Base\hkBase.h>
+
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
 #include "Object/IGeometryObject.h"
@@ -69,6 +71,10 @@ public:
     };
 
 protected:
+    static hkVector4    s_up;
+    static hkVector4    s_down;
+    static hkVector4    s_forward;
+    static hkVector4    s_gravity;
     hkpRigidBody*       m_pBody;
     bool                m_bStatic;
 

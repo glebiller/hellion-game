@@ -28,13 +28,13 @@ PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity
     
     m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = GetSystemScene<InputScene>();
-    m_upInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Up");
-    m_rightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_R");
-    m_downInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Down");
-    m_leftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_E");
-    m_rightRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Right");
-    m_leftRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Left");
-    m_shotInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Shot");
+    m_forwardInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Forward");
+    m_backwardInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Backward");
+    m_strafeRightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_StrafeRight");
+    m_strafeLeftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_StrafeLeft");
+    m_turnRightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_TurnRight");
+    m_turnLeftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_TurnLeft");
+    m_jumpInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Jump");
 }
 
 /**
@@ -50,13 +50,13 @@ PlayerInputObject::~PlayerInputObject(void) {
 Error PlayerInputObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    m_upInputAction->bind("Keyboard/HAUT");
-    m_rightInputAction->bind("Keyboard/R");
-    m_downInputAction->bind("Keyboard/BAS");
-    m_leftInputAction->bind("Keyboard/E");
-    m_rightRotateInputAction->bind("Keyboard/DROITE");
-    m_leftRotateInputAction->bind("Keyboard/GAUCHE");
-    m_shotInputAction->bind("Keyboard/J");
+    m_forwardInputAction->bind("Keyboard/HAUT");
+    m_backwardInputAction->bind("Keyboard/BAS");
+    m_strafeRightInputAction->bind("Keyboard/R");
+    m_strafeLeftInputAction->bind("Keyboard/E");
+    m_turnRightInputAction->bind("Keyboard/DROITE");
+    m_turnLeftInputAction->bind("Keyboard/GAUCHE");
+    m_jumpInputAction->bind("Keyboard/ESPACE");
 
     m_bInitialized = true;
     return Errors::Success;
@@ -86,36 +86,36 @@ void PlayerInputObject::Update(f32 DeltaTime) {
 
     u32 mModified = 0;
     
-    if (m_upInputAction->hasChanged()) {
+    if (m_forwardInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        m_velocity.y += m_upInputAction->isActive() ? -1 : 1;
+        m_velocity.x += m_forwardInputAction->isActive() ? 1 : -1;
     }
-    if (m_rightInputAction->hasChanged()) {
+    if (m_backwardInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        m_velocity.x += m_rightInputAction->isActive() ? 1 : -1;
+        m_velocity.x += m_backwardInputAction->isActive() ? -1 : 1;
     }
-    if (m_downInputAction->hasChanged()) {
+    if (m_strafeRightInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        m_velocity.y += m_downInputAction->isActive() ? 1 : -1;
+        m_velocity.z += m_strafeRightInputAction->isActive() ? 1 : -1;
     }
-    if (m_leftInputAction->hasChanged()) {
+    if (m_strafeLeftInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
+        m_velocity.z += m_strafeLeftInputAction->isActive() ? -1 : 1;
     }
-    if (m_rightRotateInputAction->hasChanged()) {
+    if (m_turnRightInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Rotation;
-        m_rotation.z += m_rightRotateInputAction->isActive() ? -1 : 1;
+        m_rotation.y += m_turnRightInputAction->isActive() ? -1 : 1;
     }
-    if (m_leftRotateInputAction->hasChanged()) {
+    if (m_turnLeftInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Rotation;
-        m_rotation.z += m_leftRotateInputAction->isActive() ? 1 : -1;
+        m_rotation.y += m_turnLeftInputAction->isActive() ? 1 : -1;
     }
-    if (m_shotInputAction->hasChanged()) {
-        if (m_shotInputAction->isActive()) {
-            createShot();
+    if (m_jumpInputAction->hasChanged()) {
+        if (m_jumpInputAction->isActive()) {
+            //createShot();
         }
-        mModified |= System::Changes::Input::Action;
-        m_shotKeyboardButtonData->down = m_shotInputAction->isActive();
+        //mModified |= System::Changes::Input::Action;
+        //m_shotKeyboardButtonData->down = m_jumpInputAction->isActive();
     }
     
     if (mModified != 0) {
