@@ -31,10 +31,10 @@ public class Player implements BoxObject {
     private ActorRef sessionActor;
     private Set<Player> nearPlayers = Sets.newHashSet();
 
-    public Player(String image) {
+    public Player() {
         meshProperty = Common.Property.newBuilder();
         meshProperty.setName("Mesh");
-        meshProperty.addValue(ByteString.copyFrom(image.getBytes()));
+        meshProperty.addValue(ByteString.copyFrom("bloodelffemale/bloodelffemale.mesh".getBytes()));
 
         positionProperty = Common.Property.newBuilder();
         positionProperty.setName("Position");

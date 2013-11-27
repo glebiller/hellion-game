@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Shape/PhantomShape.h"
+#include "Shape/PhantomCallbackShape.h"
 
 #pragma warning( push, 0 )
 #pragma warning( disable : 6031 6201 6323 6386 )
@@ -39,21 +39,21 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // PhantomShape - Default constructor
-PhantomShape::PhantomShape(PhysicScene* pSystemScene)
+PhantomCallbackShape::PhantomCallbackShape(PhysicScene* pSystemScene)
     : m_pSystemScene(pSystemScene) {
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // ~PhantomShape - Default destructor
-PhantomShape::~PhantomShape() {
+PhantomCallbackShape::~PhantomCallbackShape() {
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // phantomEnterEvent - Callback that handle objects entering this phantom
 void
-PhantomShape::phantomEnterEvent(
+PhantomCallbackShape::phantomEnterEvent(
     const hkpCollidable* pPhantomCollidable,
     const hkpCollidable* pOtherCollidable,
     const hkpCollisionInput& CollisionInput
@@ -71,7 +71,7 @@ PhantomShape::phantomEnterEvent(
 ///////////////////////////////////////////////////////////////////////////////
 // phantomLeaveEvent - Callback that handle objects leaving this phantom
 void
-PhantomShape::phantomLeaveEvent(
+PhantomCallbackShape::phantomLeaveEvent(
     const hkpCollidable* pPhantomCollidable,
     const hkpCollidable* pOtherCollidable
 ) {

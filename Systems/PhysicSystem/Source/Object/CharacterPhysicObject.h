@@ -20,6 +20,7 @@
 class ISystemScene;
 class hkpCharacterProxy;
 class hkpCharacterContext;
+class IgnorePhantomOverlapListener;
 
 ///
 /// <c>CharacterPhysicObject</c> Implementation of the ISystemObject interface. This is the
@@ -72,11 +73,11 @@ public:
     void Update(f32 DeltaTime);
 
 private:
-    hkpCharacterProxy*      m_CharacterProxy;
-    hkpCharacterContext*    m_characterContext;
+    hkpCharacterProxy*              m_CharacterProxy;
+    hkpCharacterContext*            m_characterContext;
 
-    Math::Vector3           m_CapsuleA;
-    Math::Vector3           m_CapsuleB;
-    f32                     m_Radius;
+    Math::Vector3                   m_CapsuleA;
+    Math::Vector3                   m_CapsuleB;
+    f32                             m_Radius;
 
 };

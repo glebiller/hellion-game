@@ -32,6 +32,7 @@
 
 #include "Scene.h"
 #include "Task.h"
+#include "Shape/IgnorePhantomOverlapListener.h"
 
 ///
 /// @inheritDoc
@@ -86,6 +87,7 @@ Error CharacterPhysicObject::initialize() {
         hkpShape* crouchShape = new hkpCapsuleShape(VertexA, VertexB, m_Radius);
         hkpShapePhantom* phantom = new hkpSimpleShapePhantom(standShape, hkTransform::getIdentity());
         phantom->setName(m_entity->getName().c_str());
+        phantom->addPhantomOverlapListener(new IgnorePhantomOverlapListener());
         pWorld->addPhantom(phantom);
         phantom->removeReference();
 

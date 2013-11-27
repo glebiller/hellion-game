@@ -5,15 +5,15 @@ import fr.kissy.hellion.server.domain.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-
 /**
  * @author Guillaume LE BILLER
  */
 public class ObjectService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectService.class);
 
-    private static final String MOVABLE = "Movable";
+    public static final String PLAYER_TEMPLATE = "PlayerTemplate";
+    private static final String CHARACTER = "Character";
+    private static final String PASSIVE = "Passive";
     private static final String PLAYER = "Player";
     private static final String MESH = "Mesh";
     private static final String UPDATABLE = "Updatable";
@@ -29,6 +29,7 @@ public class ObjectService {
     public Common.Object getCreateObject(Player player, boolean isControllable) {
         Common.Object.Builder builder = Common.Object.newBuilder();
         builder.setId(player.getId().toString());
+        builder.setTemplate(PLAYER_TEMPLATE);
         builder.setName(player.getName());
 
         Common.SystemObject.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
@@ -36,11 +37,11 @@ public class ObjectService {
         graphicSystemObject.setType(MESH);
         graphicSystemObject.addProperties(player.getMeshProperty().build());
 
-        if (isControllable) {
-            Common.SystemObject.Builder inputSystemObject = builder.addSystemObjectsBuilder();
-            inputSystemObject.setSystemType(Common.SystemType.Input);
-            inputSystemObject.setType(PLAYER);
-        }
+        Common.SystemObject.Builder inputSystemObject = builder.addSystemObjectsBuilder();
+        inputSystemObject.setSystemType(Common.SystemType.Input);
+        inputSystemObject.setType(isControllable ? PLAYER : PASSIVE);
+        inputSystemObject.addProperties(player.getVelocityProperty().build());
+        inputSystemObject.addProperties(player.getRotationProperty().build());
 
         Common.SystemObject.Builder networkSystemObject = builder.addSystemObjectsBuilder();
         networkSystemObject.setSystemType(Common.SystemType.Network);
@@ -48,11 +49,9 @@ public class ObjectService {
 
         Common.SystemObject.Builder physicSystemObject = builder.addSystemObjectsBuilder();
         physicSystemObject.setSystemType(Common.SystemType.Physic);
-        physicSystemObject.setType(MOVABLE);
+        physicSystemObject.setType(CHARACTER);
         physicSystemObject.addProperties(player.getPositionProperty().build());
         physicSystemObject.addProperties(player.getOrientationProperty().build());
-        physicSystemObject.addProperties(player.getVelocityProperty().build());
-        physicSystemObject.addProperties(player.getRotationProperty().build());
         return builder.build();
     }
 

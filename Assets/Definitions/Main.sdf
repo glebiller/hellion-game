@@ -18,6 +18,22 @@
 		</System>
 	</Systems>
 	<Templates>
+        <Object Name="PlayerTemplate">
+			<!--<Properties SystemType="Input" ObjectType="Player">
+			</Properties>-->
+			<Properties SystemType="Graphic" ObjectType="Mesh">
+				<!--<Property Name="Mesh" Value1="bloodelffemale/bloodelffemale.mesh"/>
+				<Property Name="Skeleton" Value1="bloodelffemale/bloodelffemale.skeleton"/>
+				<Property Name="CastShadows" Value1="0"/>
+				<Property Name="Animation" Value1="idle" Value2="Idle"/>
+				<Property Name="Animation" Value1="run" Value2="Running"/>-->
+			</Properties>
+			<Properties SystemType="Physic" ObjectType="Character">
+				<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
+				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
+				<Property Name="Radius" Value1="0.3"/>
+			</Properties>
+		</Object>
 		<Object Name="ShotTemplate">
 			<Properties SystemType="Graphic" ObjectType="Particle">
 			</Properties>
@@ -60,16 +76,15 @@
 				<Property Name="Position" Value1="550.0" Value2="20.0" Value3="550.0" />
 			</Properties>
 		</Object>
-		<Object Name="Player">
+		<!--<Object Name="Player">
 			<Properties SystemType="Input" ObjectType="Player">
-				<!--<Property Name="Orientation" Value1="0.0" Value2="0.0" Value3="0.0"/>-->
 			</Properties>
 			<Properties SystemType="Graphic" ObjectType="Mesh">
 				<Property Name="Mesh" Value1="bloodelffemale/bloodelffemale.mesh"/>
-				<!--<Property Name="Skeleton" Value1="bloodelffemale/bloodelffemale.skeleton"/>-->
-				<!--<Property Name="CastShadows" Value1="0"/>
+				<Property Name="Skeleton" Value1="bloodelffemale/bloodelffemale.skeleton"/>
+				<Property Name="CastShadows" Value1="0"/>
 				<Property Name="Animation" Value1="idle" Value2="Idle"/>
-				<Property Name="Animation" Value1="run" Value2="Running"/>-->
+				<Property Name="Animation" Value1="run" Value2="Running"/>
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Character">
 				<Property Name="Position" Value1="500" Value2="20" Value3="500"/>
@@ -77,7 +92,7 @@
 				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
 				<Property Name="Radius" Value1="0.3"/>
 			</Properties>
-		</Object>
+		</Object>-->
 		<Object Id="Connect" Name="Connect"></Object>
 		<Object Name="Connect1" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">

@@ -55,14 +55,14 @@ public class AuthenticateActor extends UntypedActor {
         }
 
         // TODO save a player to the database & load it
-        Player player = new Player("RZR/RZR-002.mesh");
+        Player player = new Player();
         player.setSessionActor(sessionActorRef);
         player.setId(new ObjectId());
         player.setName(username);
         player.setPosition(
-            ByteString.copyFrom(String.valueOf(0).getBytes()),
-            ByteString.copyFrom(String.valueOf(0).getBytes()),
-            ByteString.copyFrom(String.valueOf(0).getBytes())
+            ByteString.copyFrom(String.valueOf(500).getBytes()),
+            ByteString.copyFrom(String.valueOf(20).getBytes()),
+            ByteString.copyFrom(String.valueOf(500).getBytes())
         );
 
         subject.getSession().setAttribute(Player.class.getSimpleName(), player);
