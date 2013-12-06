@@ -54,7 +54,7 @@ Error TerrainGraphicObject::initialize() {
 
     mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
     mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(GetSystemScene<GraphicScene>()->getSceneManager(), Ogre::Terrain::ALIGN_X_Z, 257, 1024.0f);
-    mTerrainGroup->setFilenameConvention(Ogre::String("MainTerrain"), Ogre::String("dat"));
+    mTerrainGroup->setFilenameConvention(Ogre::String("terrain/MainTerrain"), Ogre::String("dat"));
     mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
     configureTerrainDefaults();
 
@@ -84,7 +84,12 @@ Error TerrainGraphicObject::initialize() {
 /// @inheritDoc.
 ///
 void TerrainGraphicObject::Update(f32 DeltaTime) {
-    
+    if (!mTerrainGroup->isDerivedDataUpdateInProgress()) {
+        if (mTerrainsImported) {
+            mTerrainGroup->saveAllTerrains(false);
+            mTerrainsImported = false;
+        }
+    }
 }
 
 ///
@@ -129,8 +134,8 @@ void TerrainGraphicObject::configureTerrainDefaults() {
 
 void TerrainGraphicObject::defineTerrain(long x, long y) {
     Ogre::String filename = mTerrainGroup->generateFilename(x, y);
-
-    if (Ogre::ResourceGroupManager::getSingleton().resourceExists(mTerrainGroup->getResourceGroup(), filename)) {
+    Ogre::String group = mTerrainGroup->getResourceGroup();
+    if (Ogre::ResourceGroupManager::getSingleton().resourceExists(group, filename)) {
         mTerrainGroup->defineTerrain(x, y);
     } else {
         Ogre::Image img;

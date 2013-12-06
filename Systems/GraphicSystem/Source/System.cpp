@@ -135,9 +135,9 @@ Error GraphicSystem::initialize(void) {
 
     // Load materials
     // TODO make a way to use the property setters to set this
-    m_pResourceGroupManager->addResourceLocation("Assets/Media/Graphic", "FileSystem", "Default", true);
-    m_pResourceGroupManager->initialiseResourceGroup("Default");
-    m_pResourceGroupManager->loadResourceGroup("Default");
+    m_pResourceGroupManager->addResourceLocation("Assets/Media/Graphic", "FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, true);
+    m_pResourceGroupManager->initialiseResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    m_pResourceGroupManager->loadResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     
     Berkelium::init(Berkelium::FileString::empty());
     
