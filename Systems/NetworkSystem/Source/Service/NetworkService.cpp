@@ -15,11 +15,14 @@
 #include <boost/bind.hpp>
 #include <google/protobuf/io/coded_stream.h>
 
+#include "Manager/ServiceManager.h"
 #include "NetworkService.h"
 #include "MatchingVarintPrefix.h"
 #include "Scene.h"
 
 #include "Proto/Message.pb.h"
+
+extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -140,11 +143,12 @@ void NetworkService::onRead(const boost::system::error_code& error) {
  * @inheritDoc
  */
 void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessageProto) {
-    Proto::Authenticated authenticated;
+    /*Proto::Authenticated authenticated;
     authenticated.ParseFromString(upstreamMessageProto.data());
     if (authenticated.players().size() > 0) {
         m_pSystem->getSystemScene<NetworkScene>()->queueCreateObjects(authenticated.players());
-    }
+    }*/
+    g_serviceManager->getRuntimeService()->setNextScene("Main");
 }
 
 /**

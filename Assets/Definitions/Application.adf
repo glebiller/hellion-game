@@ -35,7 +35,8 @@
 		<System Type="Physic">
 		</System>
 	</Systems>
-	<Scenes Startup="Main">
+	<Scenes Startup="Login">
+		<Scene Name="Login" />
 		<Scene Name="Main" />
 	</Scenes>
 </Application>

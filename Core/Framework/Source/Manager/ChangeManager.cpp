@@ -374,12 +374,8 @@ ChangeManager::DistributeRange(u32 begin, u32 end) {
 
 ///////////////////////////////////////////////////////////////////////////////
 // SetTaskManager - Set TaskManager and init associated data
-Error
-ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
-    if (!pTaskManager) {
-        return Errors::Undefined;
-    }
-
+Error ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
+    ASSERT(pTaskManager && "Cannot set the task manager to null");
     ASSERT(!m_pTaskManager && "ChangeManager: Call ResetTaskManager before using SetTaskManager to set the new task manager");
 
     // Set up prethread NotiftyList
@@ -400,16 +396,18 @@ ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
 // (Must be called before the previously set task manager has been shut down)
 void ChangeManager::ResetTaskManager(void) {
     // Free all data associated with m_pTaskManager
-    if (m_pTaskManager) {
-        // Make each thread call FreeThreadLocalData
-        m_pTaskManager->NonStandardPerThreadCallback(FreeThreadLocalData, this);
-        m_NotifyLists.clear();
-        m_pTaskManager = nullptr;
-        // Restore main (this) thread data
-        auto* pList = new std::vector<Notification>();
-        ::TlsSetValue(m_tlsNotifyList, pList);
-        m_NotifyLists.push_back(pList);
+    if (!m_pTaskManager) {
+        return;
     }
+
+    // Make each thread call FreeThreadLocalData
+    m_pTaskManager->NonStandardPerThreadCallback(FreeThreadLocalData, this);
+    m_NotifyLists.clear();
+    m_pTaskManager = nullptr;
+    // Restore main (this) thread data
+    auto* pList = new std::vector<Notification>();
+    ::TlsSetValue(m_tlsNotifyList, pList);
+    m_NotifyLists.push_back(pList);
 }
 
 

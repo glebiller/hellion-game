@@ -25,23 +25,25 @@
 #include "Generic/Instrumentation.h"
 #include "Generic/Framework.h"
 
-/**
- * @inheritDoc
- */
-Framework::Framework(void)
-    : m_serviceManager(new ServiceManager())
-    , m_pScheduler(new Scheduler()) 
-    , m_pSceneCCM(new ChangeManager())
-    , m_pObjectCCM(new ChangeManager()) {
-    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
-    m_definitionService = new DefinitionService(m_pScene);
+///
+/// @inheritDoc.
+///
+Framework::Framework() :
+    m_serviceManager(new ServiceManager()), 
+    m_pScheduler(new Scheduler()),
+    m_pSceneCCM(new ChangeManager()),
+    m_pObjectCCM(new ChangeManager()),
+    m_definitionService(new DefinitionService()),
+    m_pScene(nullptr) {
 }
 
-/**
- * @inheritDoc
- */
-Framework::~Framework(void) {
-    delete m_pScene;
+///
+/// @inheritDoc.
+///
+Framework::~Framework() {
+    if (m_pScene != nullptr) {
+        delete m_pScene;
+    }
     delete m_pScheduler;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
@@ -49,10 +51,10 @@ Framework::~Framework(void) {
     delete m_serviceManager;
 }
 
-/**
- * @inheritDoc
- */
-Error Framework::Initialize(void) {
+///
+/// @inheritDoc.
+///
+Error Framework::Initialize() {
     m_definitionService->parseEnvironment();
     
     //
@@ -68,7 +70,7 @@ Error Framework::Initialize(void) {
     // Register the framework as the system access provider.  The system access provider gives the
     //  ability for systems to set the properties in other systems.
     //
-    //Singletons::ServiceManager.RegisterSystemAccessProvider(this);
+    //IServiceManager::get().RegisterSystemAccessProvider(this);
     
     m_pScheduler->init();
 
@@ -76,10 +78,7 @@ Error Framework::Initialize(void) {
     // Complete the parsing of the GDF and the initial scene.
     //
     m_definitionService->parseSystems();
-    m_sNextScene = m_definitionService->getStartupScene();
-    m_definitionService->parseScene(m_sNextScene);
-
-    m_pScheduler->SetScene(m_pScene);
+    IServiceManager::get()->getRuntimeService()->setNextScene(m_definitionService->getStartupScene());
 
     //
     // Initialize resources necessary for parallel change distribution.
@@ -87,16 +86,13 @@ Error Framework::Initialize(void) {
     m_pObjectCCM->SetTaskManager(m_pScheduler->getTaskManager());
     m_pSceneCCM->SetTaskManager(m_pScheduler->getTaskManager());
 
-    //
-    // Init Scene
-    // 
-    m_pScene->init();
-
     return Errors::Success;
 }
 
-
-void Framework::Shutdown(void) {
+///
+/// @inheritDoc.
+///
+void Framework::Shutdown() {
     //
     // Clean debugger
     //
@@ -111,16 +107,22 @@ void Framework::Shutdown(void) {
     m_pSceneCCM->ResetTaskManager();
 }
 
+///
+/// @inheritDoc.
+///
+Error Framework::Execute() {
+    RuntimeService* runtimeService = IServiceManager::get()->getRuntimeService();
+    while (true) {    
+        if (runtimeService->isNextScene()) {
+            setNextScene(runtimeService->getSceneName());
+            runtimeService->setStatus(RuntimeService::Status::Running);
+        }
 
-Error Framework::Execute(void) {
-    ServiceManager::get()->getRuntimeService()->setStatus(RuntimeService::Status::Running);
-
-    while (true) {
         processMessages();
-        m_pScheduler->Execute();
+        m_pScheduler->execute();
         m_pScene->update();
         
-        if (IServiceManager::get()->getRuntimeService()->isQuit()) {
+        if (runtimeService->isQuit()) {
             break;
         }
     }
@@ -128,10 +130,10 @@ Error Framework::Execute(void) {
     return Errors::Success;
 }
 
-/**
- * @inheritDoc
- */
-void Framework::processMessages(void) {
+///
+/// @inheritDoc.
+///
+void Framework::processMessages() {
 #if defined(MSC_COMPILER)
     MSG Msg;
     while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
@@ -139,4 +141,18 @@ void Framework::processMessages(void) {
         DispatchMessage(&Msg);
     }
 #endif
+}
+
+///
+/// @inheritDoc.
+///
+void Framework::setNextScene(std::string nextSceneName) {
+    m_pScheduler->waitForScenes();
+    if (m_pScene != nullptr) {
+        delete m_pScene;
+    }
+    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
+    m_definitionService->parseScene(m_pScene, nextSceneName);
+    m_pScheduler->setScene(m_pScene);
+    m_pScene->init();
 }

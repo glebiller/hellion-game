@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <string>
+
 #include "System/Types.h"
 #include "Manager/IServiceManager.h"
 #include "Service/RuntimeService.h"
@@ -26,47 +28,53 @@ class UScene;
 class UObject;
 class Gdf;
 
-/**
- * Framework.
- * Responsible for tying in all the different managers and systems.  Also handles
- * loading and parsing of the global definition file (gdf).
- */
+///
+/// Framework. Responsible for tying in all the different managers and systems.  Also handles
+/// loading and parsing of the global definition file (gdf).
+///
 class Framework {
 public:
-    /**
-     * Default constructor.
-     */
-    Framework(void);
 
-    /**
-     * Destructor.
-     */
-    ~Framework(void);
+    ///
+    /// Default constructor.
+    ///
+    Framework();
 
-    /**
-     * Initializes this :.
-     *
-     * @return  Error status.
-     */
-    Error Initialize(void);
+    ///
+    /// Destructor.
+    ///
+    ~Framework();
 
-    /**
-     * Shuts down this : and frees any resources it is using.
-     */
-    void Shutdown(void);
+    ///
+    /// Initializes this :.
+    ///
+    /// @return Error status.
+    ///
+    Error Initialize();
 
-    /**
-     * Executes the framework..
-     *
-     * @return An error code.
-     */
-    Error Execute(void);
+    ///
+    /// Shuts down this : and frees any resources it is using.
+    ///
+    void Shutdown();
+
+    ///
+    /// Executes the framework..
+    ///
+    /// @return An error code.
+    ///
+    Error Execute();
 
 protected:
-    /**
-     * Process the messages.
-     */
-    void processMessages(void);
+
+    ///
+    /// Process the messages.
+    ///
+    void processMessages();
+
+    ///
+    /// Sets next scene.
+    ///
+    void setNextScene(std::string nextSceneName);
 
     /**
      * Issues all the pending property changes.  This only occurs after the scheduler has
@@ -85,6 +93,5 @@ private:
     ChangeManager*                          m_pObjectCCM;
 
     UScene*                                 m_pScene;
-    std::string                             m_sNextScene;
 
 };

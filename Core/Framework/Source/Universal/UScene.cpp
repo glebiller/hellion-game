@@ -76,7 +76,7 @@ UScene::~UScene(void) {
 /**
  * @inheritDoc
  */
-void UScene::init(void) {
+void UScene::init() {
     //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
     // The link needs to be established before any other messages come through.
@@ -117,13 +117,12 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     Proto::SystemType SystemType = pSystem->GetSystemType();
     ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
+
     //
     // Have the system create it's scene.
     //
-    pSystem->createScene();
-    ISystemScene* pScene = pSystem->getSystemScene<ISystemScene>();
+    ISystemScene* pScene = pSystem->createScene();
     ASSERT(pScene != NULL);
-    
     //
     // Create the associated task.
     pScene->createTask();

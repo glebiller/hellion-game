@@ -48,7 +48,8 @@ InputScene::InputScene(ISystem* pSystem)
  * @inheritDoc
  */
 InputScene::~InputScene(void) {
-    
+    OISB::System::getSingleton().destroyActionSchema(m_defaultSchema);
+
 }
 
 /**

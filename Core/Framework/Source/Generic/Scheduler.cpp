@@ -26,9 +26,9 @@
 // Set the timer to 120Hz
 const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost::timer::nanosecond_type(1000000000LL / 120);
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 Scheduler::Scheduler()
     : m_runtimeService(IServiceManager::get()->getRuntimeService()) {
     SettingService* settingService = IServiceManager::get()->getSettingService();
@@ -38,52 +38,29 @@ Scheduler::Scheduler()
     m_executionTimer.start();
 }
 
-/**
- * @inheritDoc
- */
+///
+/// @inheritDoc
+///
 Scheduler::~Scheduler(void) {
     m_pTaskManager->Shutdown();
     delete m_pTaskManager;
 }
 
-/**
- * Initialises this object.
- */
+///
+/// @inheritDoc
+///
 void Scheduler::init(void) {
     m_pTaskManager->Init();
 }
 
-/**
- * @inheritDoc
- */
-void Scheduler::SetScene(const UScene* pScene) {
-    //
-    // Setup the Debugger
-    // 
+///
+/// @inheritDoc
+///
+void Scheduler::setScene(const UScene* pScene) {
 #ifdef DEBUG_BUILD
     //Singletons::Debugger.setScene(pScene);
 #endif
 
-    //
-    // Wait for any executing scenes to finish and clear out the list.
-    //
-    ISystemTask* aScenesToWaitFor[Proto::SystemType_MAX];
-    u32 cScenesToWaitFor = 0;
-
-    for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
-        aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
-    }
-
-    m_SceneExecs.clear();
-
-    if (cScenesToWaitFor > 0) {
-        m_pTaskManager->WaitForSystemTasks(aScenesToWaitFor, cScenesToWaitFor);
-    }
-
-    //
-    // Copy over all the system scenes.
-    //
     const UScene::SystemScenes& SystemScenes = pScene->GetSystemScenes();
     for (auto it = SystemScenes.begin(); it != SystemScenes.end(); it++) {
         if (it->second->GetSystemTask<ISystemTask>() != NULL) {
@@ -91,16 +68,13 @@ void Scheduler::SetScene(const UScene* pScene) {
         }
     }
 
-    //
-    // Re-create the timer as a scene load may have taken a long time.
-    //
     m_executionTimer.start();
 }
 
-/**
- * @inheritDoc
- */
-void Scheduler::Execute(void) {
+///
+/// @inheritDoc
+///
+void Scheduler::execute(void) {
     //
     // Get the delta time; seconds since last Execute call.
     //
@@ -120,15 +94,9 @@ void Scheduler::Execute(void) {
     m_pTaskManager->updatePeriodicData(deltaTime);
     
 #ifdef DEBUG_BUILD
-    //
-    // Update the debugger
-    // 
     //Singletons::Debugger.update(DeltaTime);
 #endif
 
-    //
-    // Check if the execution is paused, and set delta time to 0 if so.
-    //
     if (m_runtimeService->isPaused()) {
         deltaTime = 0.0f;
     }
@@ -136,18 +104,32 @@ void Scheduler::Execute(void) {
     //
     // Schedule the scenes that are ready for execution.
     //
-    ISystemTask* aScenesToExecute[Proto::SystemType_MAX];
     u32 cScenesToExecute = 0;
-
+    ISystemTask* aScenesToExecute[Proto::SystemType_MAX];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
     }
 
     m_pTaskManager->IssueJobsForSystemTasks(aScenesToExecute, cScenesToExecute, deltaTime);
-
-    //
-    // Wait for the scenes that will be completing execution in this frame.
-    //
     m_pTaskManager->WaitForSystemTasks(aScenesToExecute, cScenesToExecute);
+}
+
+///
+/// @inheritDoc
+///
+void Scheduler::waitForScenes() {
+    ISystemTask* aScenesToWaitFor[Proto::SystemType_MAX];
+    u32 cScenesToWaitFor = 0;
+
+    for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
+        ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
+        aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
+    }
+
+    m_SceneExecs.clear();
+
+    if (cScenesToWaitFor > 0) {
+        m_pTaskManager->WaitForSystemTasks(aScenesToWaitFor, cScenesToWaitFor);
+    }
 }

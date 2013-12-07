@@ -19,47 +19,50 @@
 class RuntimeService;
 class TaskManager;
 
-/**
- * Handles scheduling of all task execution.
- */
+///
+/// Handles scheduling of all task execution.
+///
 class Scheduler {
 public:
 
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  pTaskManager    A pointer to the task manager.
-     */
+    ///
+    /// Constructor.
+    ///
     Scheduler();
 
-    /**
-     * Destructor.
-     */
-    ~Scheduler(void);
+    ///
+    /// Destructor.
+    ///
+    ~Scheduler();
 
-    /**
-     * Initialises this object.
-     */
-    void init(void);
+    ///
+    /// Initialises this object.
+    ///
+    void init();
 
-    /**
-     * Sets the UScene to schedule execution of.
-     *
-     * @param   pScene  A pointer to the universal scene.
-     */
-    void SetScene(const UScene* pScene);
+    ///
+    /// Sets the UScene to schedule execution of.
+    ///
+    /// @param  pScene  A pointer to the universal scene.
+    ///
+    void setScene(const UScene* pScene);
 
-    /**
-     * Execute the set UScene.
-     */
-    void Execute(void);
+    ///
+    /// Execute the set UScene.
+    ///
+    void execute();
 
-    /**
-     * Gets task manager.
-     *
-     * @return  null if it fails, else the task manager.
-     */
-    inline TaskManager* getTaskManager(void) {
+    ///
+    /// Wait for scenes.
+    ///
+    void waitForScenes();
+
+    ///
+    /// Gets task manager.
+    ///
+    /// @return null if it fails, else the task manager.
+    ///
+    inline TaskManager* getTaskManager() {
         return m_pTaskManager;
     }
 

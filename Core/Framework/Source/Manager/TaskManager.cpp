@@ -217,7 +217,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
                 // see if it's time to dispatch this task
                 if (Task::getPerformanceHint(pTasks[i]->GetSystemType()) == (Task::PerformanceHint) h) {
                     // this task can be run on an arbitrary thread -- allocate it
-                    SystemTask* pSystemTask = new(m_pSystemTasksRoot->allocate_additional_child_of(*m_pSystemTasksRoot))
+                    SystemTask* pSystemTask = new(tbb::task::allocate_additional_child_of(*m_pSystemTasksRoot))
                     SystemTask(m_instrumentation, SystemTaskCallback, pTasks[i] 
                         PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
                     // affinity will increase the chances that each SystemTask will be assigned
@@ -328,27 +328,29 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
 #if defined(MSC_COMPILER)
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 #endif
-    SystemTasksList::iterator it = m_primaryThreadSystemTaskList.begin();
-
-    for (; it != m_primaryThreadSystemTaskList.end(); ++it) {
+    for (auto systemTask : m_primaryThreadSystemTaskList) {
         // see if we are waiting for this task
-        if (std::find(pTasks, pTasks + uTaskCount, *it)) {
+        if (std::find(pTasks, pTasks + uTaskCount, systemTask)) {
             // we are, so execute it now on the primary thread
-            __ITT_EVENT_START(GetSupportForSystemTask(*it).m_tpeSystemTask, PROFILE_TASKMANAGER);
-            (*it)->Update(m_fDeltaTime);
-            __ITT_EVENT_END(GetSupportForSystemTask(*it).m_tpeSystemTask, PROFILE_TASKMANAGER);
+            __ITT_EVENT_START(GetSupportForSystemTask(systemTask).m_tpeSystemTask, PROFILE_TASKMANAGER);
+            systemTask->Update(m_fDeltaTime);
+            __ITT_EVENT_END(GetSupportForSystemTask(systemTask).m_tpeSystemTask, PROFILE_TASKMANAGER);
         } else {
             // save it for next time
-            m_tmpTaskList.push_back(*it);
+            m_tmpTaskList.push_back(systemTask);
         }
     }
-
 #if defined(MSC_COMPILER)
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
 #endif
     m_primaryThreadSystemTaskList.clear();
     m_primaryThreadSystemTaskList.swap(m_tmpTaskList);
+
     // contribute to the parallel calculation, and when it completes, we're done
+    if (m_pSystemTasksRoot->ref_count() == 0) {
+        return;
+    }
+
     m_pSystemTasksRoot->wait_for_all();
 }
 

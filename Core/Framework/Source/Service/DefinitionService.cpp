@@ -30,8 +30,7 @@
 /**
  * @inheritDoc
  */
-DefinitionService::DefinitionService(UScene* pScene)
-    : m_pScene(pScene) {
+DefinitionService::DefinitionService() {
     Error result = loadProto("Application.adf.bin", &m_gdProto);
     ASSERT(result == Errors::Success);
 }
@@ -90,9 +89,9 @@ void DefinitionService::parseSystems(void) {
 /**
  * @inheritDoc
  */
-void DefinitionService::parseScene(std::string sScene) {
+void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     const auto& scenes = m_gdProto.scenes();
-    auto sceneIt = std::find(scenes.begin(), scenes.end(), sScene);
+    auto sceneIt = std::find(scenes.begin(), scenes.end(), sceneName);
     if (sceneIt == scenes.end()) {
         return;
     }
@@ -103,31 +102,31 @@ void DefinitionService::parseScene(std::string sScene) {
     // Create the initial scene for each system.
     //
     for (auto it : systemService->get()) {
-        m_pScene->Extend(it.second);
+        scene->Extend(it.second);
     }
 
     //
     // Parse the SDF file
     //
-    Proto::Scene scene;
-    Error result = loadProto(*sceneIt + ".sdf.bin", &scene);
+    Proto::Scene sceneProto;
+    Error result = loadProto(*sceneIt + ".sdf.bin", &sceneProto);
     ASSERT(result == Errors::Success);
 
     //
     // Initialize the scene templates.
     //
-    m_pScene->addTemplates(&scene.templates());
+    scene->addTemplates(&sceneProto.templates());
 
     //
     // Initialize the System scenes.
     //
-    for (auto system : scene.systems()) {
+    for (auto system : sceneProto.systems()) {
         m_pSystem = systemService->get(system.type());
         ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", Proto::SystemType_Name(system.type()));
 
         if (m_pSystem != NULL) {
-            auto it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-            ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", Proto::SystemType_Name(system.type()));
+            auto it = scene->GetSystemScenes().find(m_pSystem->GetSystemType());
+            ASSERTMSG1(it != scene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", Proto::SystemType_Name(system.type()));
             m_pSystemScene = it->second;
             ASSERT(m_pSystemScene != NULL);
             // Initialize system scene properties
@@ -140,23 +139,23 @@ void DefinitionService::parseScene(std::string sScene) {
     //
     // Initialize the scene objects.
     //
-    for (auto object : scene.objects()) {
-        m_pScene->createObject(&object);
+    for (auto object : sceneProto.objects()) {
+        scene->createObject(&object);
     }
 
     //
     // Refresh all scenes
     // 
-    for (auto scene : m_pScene->GetSystemScenes()) {
+    for (auto scene : scene->GetSystemScenes()) {
         scene.second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
     }
 
     //
     // Initialize the links.
     //
-    for (auto link : scene.links()) {
-        UObject* pSubject = m_pScene->FindObject(link.subject().c_str());
-        UObject* pObserver = m_pScene->FindObject(link.observer().c_str());
+    for (auto link : sceneProto.links()) {
+        UObject* pSubject = scene->FindObject(link.subject().c_str());
+        UObject* pObserver = scene->FindObject(link.observer().c_str());
 
         //
         // Get the extension for the object.
@@ -168,9 +167,9 @@ void DefinitionService::parseScene(std::string sScene) {
         //
         if (link.subjectsystemtype() != Proto::SystemType::Null) {
             ISystemObject* pSystemSubject = pSystemSubject = pSubject->GetExtension(link.subjectsystemtype());
-            m_pScene->CreateObjectLink(pSystemSubject, pSystemObserver);
+            scene->CreateObjectLink(pSystemSubject, pSystemObserver);
         } else {
-            m_pScene->CreateObjectLink(pSubject, pSystemObserver);
+            scene->CreateObjectLink(pSubject, pSystemObserver);
         }
     }
 }

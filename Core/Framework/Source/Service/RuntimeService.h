@@ -14,36 +14,79 @@
 
 #pragma once
 
+#include <string>
+#include <boost/noncopyable.hpp>
+
 /**
  * An interface for environment runtime functionality.
  */
-class RuntimeService {
+class RuntimeService : public boost::noncopyable {
 public:
     enum Status {
         Unknown, Running, Paused, NextScene, Quit
     };
 
-    /**
-     * @inheritDoc
-     */
-    Status getStatus(void);
+    ///
+    /// Default constructor.
+    ///
+    RuntimeService();
 
-    /**
-     * @inheritDoc
-     */
+    ///
+    /// Destructor.
+    ///
+    ~RuntimeService();
+
+    ///
+    /// Gets the status.
+    ///
+    /// @return The status.
+    ///
+    Status getStatus();
+
+    ///
+    /// Sets the status.
+    ///
+    /// @param  Status  The status.
+    ///
     void setStatus(Status Status);
-    
-    /**
-     * @inheritDoc
-     */
-    bool isPaused(void);
-    
-    /**
-     * @inheritDoc
-     */
-    bool isQuit(void);
+
+    ///
+    /// Sets next scene.
+    ///
+    /// @param  sceneName   Name of the scene.
+    ///
+    void setNextScene(std::string sceneName);
+
+    ///
+    /// Query if this object is paused.
+    ///
+    /// @return true if paused, false if not.
+    ///
+    bool isPaused();
+
+    ///
+    /// Query if this object is quit.
+    ///
+    /// @return true if quit, false if not.
+    ///
+    bool isQuit();
+
+    ///
+    /// Query if this object is next scene.
+    ///
+    /// @return true if next scene, false if not.
+    ///
+    bool isNextScene();
+
+    ///
+    /// Gets scene name.
+    ///
+    /// @return The scene name.
+    ///
+    std::string getSceneName();
 
 private:
-    Status      m_runtimeStatus;
+    Status          m_runtimeStatus;
+    std::string     m_sceneName;
 
 };

@@ -36,8 +36,9 @@ ISystem::~ISystem() {
 /**
  * @inheritDoc
  */
-void ISystem::createScene() {
+ISystemScene* ISystem::createScene() {
     m_pSystemScene = m_SceneFactory(this);
+    return m_pSystemScene;
 }
 
 /**

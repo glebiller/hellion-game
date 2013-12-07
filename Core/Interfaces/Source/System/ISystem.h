@@ -46,7 +46,7 @@ public:
     /**
      * Creates a system scene for containing system objects.
      */
-    void createScene(void);
+    ISystemScene* createScene(void);
 
     /**
      * Destroys a system scene.

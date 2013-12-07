@@ -32,10 +32,9 @@ public:
     /**
      * Constructor.
      *
-     * @param [in,out]  pScene  If non-null, the scene.
      * @param   sGDF            The gdf.
      */
-    DefinitionService(UScene* pScene);
+    DefinitionService();
 
     /**
      * Destructor.
@@ -57,7 +56,7 @@ public:
      *
      * @param   sScene  The scene.
      */
-    void parseScene(std::string sScene);
+    void parseScene(UScene* scene, std::string sceneName);
 
     /**
      * Gets the startup scene.
@@ -92,7 +91,6 @@ private:
 
     std::vector<SystemLib>                          m_systemLibs;
     Proto::Application                              m_gdProto;
-    UScene*                                         m_pScene;
     ISystem*                                        m_pSystem;
     ISystemScene*                                   m_pSystemScene;
 
