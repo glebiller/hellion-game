@@ -1,0 +1,11 @@
+include "Common.fbs";
+
+namespace Schema;
+
+table Authenticated {
+  players:[Object];
+}
+
+table ObjectUpdated {
+  objects:[Object];
+}

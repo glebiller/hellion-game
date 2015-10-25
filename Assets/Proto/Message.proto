@@ -4,7 +4,16 @@ option java_generic_services = false;
 
 package Proto;
 
-import "Proto/Common.proto";
+
+message Property {
+}
+message System {
+}
+message Object {
+}
+enum SystemType {
+    Null;
+}
 
 message Authenticated {
     repeated Object players = 1;	

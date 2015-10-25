@@ -1,0 +1,39 @@
+namespace Schema;
+
+enum SystemType : short {
+  Null = 0,
+  Generic = 1,
+  AI = 2,
+  Animation = 4,
+  Audio = 8,
+  Graphic = 16,
+  Gui = 32,
+  Input = 64,
+  Network = 128,
+  Physic = 256,
+}
+
+table Property {
+  name:string (required);
+  value:[string];
+}
+
+table SystemObject {
+  type:string (required);
+  systemType:SystemType;
+  properties:[Property];
+}
+
+table Object {
+  id:string (required);
+  name:string;
+  parent:string;
+  template:string;
+  systemObjects:[SystemObject];
+}
+
+table System {
+  type:short;
+  properties:[Property];
+}
+

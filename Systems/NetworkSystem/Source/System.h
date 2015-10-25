@@ -64,7 +64,7 @@ public:
 
 private:
 
-    NetworkService*     m_networkService;
+    NetworkService*             m_networkService;
 
 };
 

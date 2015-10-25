@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <berkelium/Berkelium.hpp>
+#include <cef_app.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
@@ -29,7 +29,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 ///
 GraphicTask::GraphicTask(ISystemScene* pScene) 
     : ISystemTask((ISystemScene*)pScene) {
-    m_pRoot = pScene->GetSystem<GraphicSystem>()->getRoot(); 
+    m_pRoot = pScene->GetSystem<GraphicSystem>()->getRoot();
     ASSERT(m_pRoot != NULL);
 }
 
@@ -54,6 +54,8 @@ void GraphicTask::Update(f32 DeltaTime) {
     // Since rendering is a limiting serial stage in some (if not most) of the frames,
     // we do not want it to be preempted. So temporarily boost up its thread priority.
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    // Update GUI
+    CefDoMessageLoopWork();
     //
     // Render the scene
     //
@@ -68,7 +70,4 @@ void GraphicTask::Update(f32 DeltaTime) {
     // Update objects for next frame
     //
     m_pSystemScene->Update(DeltaTime);
-
-    // Update GUI
-    Berkelium::update();
 }

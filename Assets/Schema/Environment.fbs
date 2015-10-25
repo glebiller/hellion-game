@@ -1,0 +1,55 @@
+include "Systems.fbs";
+
+namespace Schema;
+
+table Framework_DebugWindow {
+    value:bool;
+}
+table Scheduler_Benchmarking {
+    value:bool;
+}
+table TaskManager_Threads {
+    value:short;
+}
+table TaskManager_TPEventsForTasks {
+    value:string;
+}
+table TaskManager_TPEventsForJobs {
+    value:string;
+}
+table TaskManager_TPEventsForSynchronize {
+    value:string;
+}
+
+union EnvironmentPropertyData {
+  Framework_DebugWindow,
+  Scheduler_Benchmarking,
+  TaskManager_Threads,
+  TaskManager_TPEventsForTasks,
+  TaskManager_TPEventsForJobs,
+  TaskManager_TPEventsForSynchronize
+}
+
+table EnvironmentProperty {
+    property: EnvironmentPropertyData;
+}
+
+union System {
+    GraphicSystem,
+    InputSystem,
+    NetworkSystem,
+    PhysicSystem
+}
+
+table Systems {
+  system:System;
+}
+
+table Environment {
+  startupScene:string;
+  properties:[EnvironmentProperty];
+  systems:[Systems];
+  scenes:[string];
+}
+
+root_type Environment;

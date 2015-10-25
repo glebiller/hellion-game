@@ -25,6 +25,8 @@
 #include "Generic/Instrumentation.h"
 #include "Generic/Framework.h"
 
+#include <cef_app.h>
+
 ///
 /// @inheritDoc.
 ///
@@ -55,6 +57,12 @@ Framework::~Framework() {
 /// @inheritDoc.
 ///
 Error Framework::Initialize() {
+    //
+    // Init CEF
+    // 
+    CefMainArgs args;
+    CefExecuteProcess(args, nullptr, NULL);
+
     m_definitionService->parseEnvironment();
     
     //

@@ -40,9 +40,20 @@ public:
      * @inheritDoc
      */
     Handle getRenderWindow(void);
+    
+    /**
+     * @inheritDoc
+     */
+    void setBrowser(Handle browser);
+    
+    /**
+     * @inheritDoc
+     */
+    Handle getBrowser(void);
 
 private:
     size_t          m_handle;
     Handle          m_renderWindow;
+    Handle          m_browser;
 
 };

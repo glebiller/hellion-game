@@ -14,8 +14,6 @@
 
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
-#include <berkelium/Berkelium.hpp>
-#include <berkelium/Context.hpp>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
@@ -26,12 +24,12 @@
 #include "Task.h"
 #include "Object/Object.h"
 #include "Object/CameraGraphicObject.h"
+#include "Object/GuiGraphicObject.h"
 #include "Object/LightGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
 #include "Object/ParticleGraphicObject.h"
 #include "Object/SkyGraphicObject.h"
 #include "Object/TerrainGraphicObject.h"
-#include "Browser/BrowserWindow.h"
 
 extern IServiceManager* g_serviceManager;
 
@@ -63,6 +61,7 @@ GraphicScene::GraphicScene(ISystem* pSystem)
     m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
     
     m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
+    m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Mesh"] = boost::factory<MeshGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
@@ -93,18 +92,11 @@ Error GraphicScene::initialize(void) {
     ASSERT(m_pRootNode != NULL);
     //m_pRootNode->hideBoundingBox(true);
 
+    m_ambientLight = Ogre::ColourValue(1, 1, 1, 1);
     m_pSceneManager->setAmbientLight(m_ambientLight);
     //m_pSceneManager->setSkyBox(true, "nebula");
     m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
     
-    /*Berkelium::Context* windowContext = Berkelium::Context::create();
-    Berkelium::Window* window = Berkelium::Window::create(windowContext);
-    delete windowContext;
-    window->resize(500, 500);
-    window->setTransparent(true);
-    window->setDelegate(new BrowserWindow());
-    window->navigateTo(Berkelium::URLString::point_to("file://D:/My Documents/GitHub/shoot-em-up-project/Assets/Media/Gui/index.html"));
-    */
     m_bInitialized = true;
     return Errors::Success;
 }

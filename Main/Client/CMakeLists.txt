@@ -4,6 +4,8 @@ project("Client")
 
 check_root_module()
 
+find_package("CEF" REQUIRED)
+
 add_project_dependency("Framework")
 add_project_sources("Source")
 list(REMOVE_ITEM "${PROJECT_NAME}_DEPENDENCIES" ${PROJECT_NAME})
@@ -11,4 +13,4 @@ add_executable(${PROJECT_NAME} WIN32 ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_DEPENDENCIES} 
     "GraphicSystem" "InputSystem" "NetworkSystem" "PhysicSystem")
 target_link_libraries(${PROJECT_NAME} "Pdh.lib" ${${PROJECT_NAME}_DEPENDENCIES}
-    ${PROTOBUF_LIBRARIES} ${LOGOG_LIBRARIES})
+    ${PROTOBUF_LIBRARIES} ${LOGOG_LIBRARIES} ${CEF_LIBRARIES})

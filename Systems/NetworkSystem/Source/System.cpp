@@ -44,7 +44,7 @@ Error NetworkSystem::initialize(void) {
     ASSERT(!m_bInitialized);
     
     m_networkService->connect("localhost", "26000");
-    
+
     g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;

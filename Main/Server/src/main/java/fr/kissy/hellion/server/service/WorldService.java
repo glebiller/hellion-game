@@ -1,5 +1,6 @@
 package fr.kissy.hellion.server.service;
 
+import com.google.common.collect.Lists;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.domain.World;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class WorldService {
      */
     @SuppressWarnings("unchecked")
     public List<Player> getNearPlayers(Player player) {
-        List<Player> nearestPlayers = new ArrayList<Player>();
+        List<Player> nearestPlayers = Lists.newArrayList();
         world.getPlayers().query(nearestPlayers, player.getNearestBounds(), player);
         return nearestPlayers;
     }

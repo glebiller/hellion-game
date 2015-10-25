@@ -43,6 +43,12 @@
 				<Property Name="Position" Value1="550.0" Value2="20.0" Value3="550.0" />
 			</Properties>
 		</Object>
+		<Object Name="Login">
+			<Properties SystemType="Input" ObjectType="Cursor">
+			</Properties>
+			<Properties SystemType="Graphic" ObjectType="Gui">
+			</Properties>
+		</Object>
 		<Object Id="Connect" Name="Connect"></Object>
 		<Object Name="Connect1" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">

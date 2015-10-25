@@ -1,0 +1,17 @@
+namespace Schema;
+
+table InputSystemName {
+    value:string;
+}
+
+union InputSystemPropertyData {
+    InputSystemName
+}
+
+table InputSystemProperty {
+    property:InputSystemPropertyData;
+}
+
+table InputSystem {
+  properties:[InputSystemProperty];
+}

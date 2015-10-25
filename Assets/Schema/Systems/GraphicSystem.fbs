@@ -1,0 +1,44 @@
+namespace Schema;
+
+table ResourceLocation {
+    
+}
+table WindowName {
+    value:string;
+}
+table Resolution {
+    x:float;
+    y:float;
+}
+table ShadowTexture {
+    x:float;
+    y:float;
+}
+table FullScreen {
+    value:bool;
+}
+table VerticalSync {
+    value:bool;
+}
+table FSAntiAliasing {
+    x:float;
+    y:float;
+}
+
+union GraphicSystemPropertyData {
+    ResourceLocation,
+    WindowName,
+    Resolution,
+    ShadowTexture,
+    FullScreen,
+    VerticalSync,
+    FSAntiAliasing
+}
+
+table GraphicSystemProperty {
+    property:GraphicSystemPropertyData;
+}
+
+table GraphicSystem {
+  properties:[GraphicSystemProperty];
+}

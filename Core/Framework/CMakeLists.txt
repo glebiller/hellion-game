@@ -4,8 +4,9 @@ project(Framework)
 
 check_root_module()
 
-find_package(ZeroMQ REQUIRED)
-include_directories(${ZEROMQ_INCLUDE_DIRS})
+find_package("ZeroMQ" REQUIRED)
+find_package("CEF" REQUIRED)
+include_directories(${ZEROMQ_INCLUDE_DIRS} ${CEF_INCLUDE_DIR})
 
 add_project_dependency("Interfaces")
 add_project_sources("Source")

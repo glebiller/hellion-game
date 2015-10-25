@@ -42,3 +42,16 @@ Handle WindowService::getRenderWindow(void) {
     return m_renderWindow;
 }
 
+/**
+ * @inheritDoc
+ */
+void WindowService::setBrowser(Handle browser) {
+    m_browser = browser;
+}
+
+/**
+ * @inheritDoc
+ */
+Handle WindowService::getBrowser(void) {
+    return m_browser;
+}

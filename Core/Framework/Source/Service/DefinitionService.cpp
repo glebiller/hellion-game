@@ -26,6 +26,7 @@
 #include "Service/SettingService.h"
 #include "Generic/SystemInterface.h"
 #include "Service/DefinitionService.h"
+#include "Environment_generated.h"
 
 /**
  * @inheritDoc
@@ -193,6 +194,17 @@ Error DefinitionService::loadProto(std::string file, google::protobuf::Message* 
     // Build proto
     proto->Clear();
     proto->ParseFromIstream(&input);
+
+    // TEST
+    //boost::filesystem::path filePatha(boost::filesystem::current_path() / "Environment.bin");
+    //std::fstream inputa(filePatha.c_str(), std::ios::in | std::ios::binary);
+
+    //auto environment = Schema::GetEnvironment(&inputa);
+    //auto propp = environment->properties()->Get(0);
+
+    //printf("%s", propp);
+
+    // TEST
     return Errors::Success;
 }
 

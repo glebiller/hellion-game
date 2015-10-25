@@ -22,6 +22,7 @@
 package fr.kissy.hellion.server;
 
 import fr.kissy.hellion.server.config.ApplicationConfig;
+import fr.kissy.hellion.server.service.PhysicService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -29,12 +30,12 @@ public class Main {
 
     private static AnnotationConfigApplicationContext context;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
         context = new AnnotationConfigApplicationContext();
         context.register(ApplicationConfig.class);
         context.scan("fr.kissy.hellion.server.repository");
         context.refresh();
-	}
+    }
 
     /**
      * Get the spring context.

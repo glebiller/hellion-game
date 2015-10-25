@@ -15,7 +15,7 @@
 #pragma once
 
 #pragma warning( push, 0 )
-#include "Ogre.h"
+#include <Ogre.h>
 #pragma warning( pop )
 
 #include "System/ISystemScene.h"
@@ -55,7 +55,7 @@ public:
     /// @inheritDoc.
     ///
     bool IsPrimaryThreadOnly(void) {
-        return true;
+        return false;
     };
 
     ///
@@ -67,4 +67,5 @@ public:
 
 private:
     Ogre::Root*                         m_pRoot;
+
 };

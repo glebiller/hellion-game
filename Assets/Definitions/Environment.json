@@ -1,0 +1,46 @@
+{
+    properties: [
+        {
+            property_type: "TaskManager_Threads",
+            property: {
+                value: 8
+            }
+        }
+    ],
+    systems: [
+        {
+            system_type: "GraphicSystem",
+            system: {
+                properties: [
+                    {
+                        property_type: "WindowName",
+                        property: {
+                            value: "Test"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            system_type: "InputSystem",
+            system: {
+                properties: [
+                ]
+            }
+        },
+        {
+            system_type: "NetworkSystem",
+            system: {
+                properties: [
+                ]
+            }
+        },
+        {
+            system_type: "PhysicSystem",
+            system: {
+                properties: [
+                ]
+            }
+        }
+    ]
+}

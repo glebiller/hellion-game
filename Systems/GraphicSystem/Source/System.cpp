@@ -15,8 +15,7 @@
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <berkelium/Berkelium.hpp>
-
+#include <cef_app.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #include <OgrePlugin.h>
@@ -28,6 +27,8 @@
 #include "Defines.h"
 #include "System.h"
 #include "Scene.h"
+
+#define CEF_ENABLE_SANDBOX 0
 
 extern IServiceManager* g_serviceManager;
 
@@ -73,7 +74,7 @@ GraphicSystem::~GraphicSystem(void) {
         // m_pRoot->unloadPlugin("Plugin_ParticleFX");
         // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
 
-        Berkelium::destroy();
+        CefShutdown();
     }
 
     m_pRoot->shutdown();
@@ -101,7 +102,7 @@ Error GraphicSystem::initialize(void) {
     pRenderList = m_pRoot->getAvailableRenderers();
     m_pRenderSystem = pRenderList.front();
     m_pRoot->setRenderSystem(m_pRenderSystem);
-    m_pRoot->initialise(false, "Shoot Em Up Project");
+    m_pRoot->initialise(false, "Hellion Game");
 
     // Install the particle fx plugin
 #ifdef DEBUG_BUILD
@@ -139,8 +140,19 @@ Error GraphicSystem::initialize(void) {
     m_pResourceGroupManager->initialiseResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     m_pResourceGroupManager->loadResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     
-    Berkelium::init(Berkelium::FileString::empty());
-    
+    CefMainArgs args;
+    CefSettings settings;
+    settings.no_sandbox = true;
+    //settings.single_process = true;
+    settings.command_line_args_disabled = true;
+    //settings.multi_threaded_message_loop = true;
+    CefString(&settings.log_file).FromASCII("logs/Interface.log");
+    CefString(&settings.resources_dir_path).FromASCII("Assets/Browser");
+    CefString(&settings.locales_dir_path).FromASCII("Assets/Browser/locales");
+
+    bool result = CefInitialize(args, settings, nullptr, NULL);
+    ASSERT(result);
+
     g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;

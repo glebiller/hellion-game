@@ -14,6 +14,9 @@
 
 #include "Object/CameraInputObject.h"
 
+#include <windows.h>
+#include <OISMouse.h>
+
 #include "Scene.h"
 #include "Generic/IEntity.h"
 
@@ -40,6 +43,18 @@ CameraInputObject::~CameraInputObject() {
 Error CameraInputObject::initialize() {
     ASSERT(!m_bInitialized);
 
+    m_rotateUpDownAction->setUseAbsoluteValues(true);
+    m_rotateUpDownAction->setAnalogEmulator(nullptr);
+    m_rotateUpDownAction->setMinimumValue(0);
+    m_rotateUpDownAction->setMaximumValue(1024);
+    m_rotateUpDownAction->bind("Mouse/X Axis");
+    m_rotateRightLeftAction->bind("Mouse/Y Axis");
+
+    // TODO better
+    OIS::Mouse* mouse = OISB::System::getSingleton().getOISMouse();
+    mouse->getMouseState().width = 1024;
+    mouse->getMouseState().height = 728;
+
     return Errors::Success;
 }
 
@@ -52,6 +67,9 @@ void CameraInputObject::Update(f32 DeltaTime) {
     if (m_rotation != Math::Vector3::Zero) {
         PostChanges(System::Changes::Input::Rotation);
     }
+
+    OIS::Mouse* mouse = OISB::System::getSingleton().getOISMouse();
+    int x = mouse->getMouseState().X.abs;
 }
 
 ///

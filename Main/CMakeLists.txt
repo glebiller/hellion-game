@@ -5,3 +5,4 @@ project("Main")
 check_root_module()
 
 add_project_module("Client")
+add_project_module("Server")

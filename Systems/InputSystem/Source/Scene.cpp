@@ -22,6 +22,7 @@
 #include "Object/Object.h"
 #include "Object/CameraInputObject.h"
 #include "Object/ConnectInputObject.h"
+#include "Object/CursorInputObject.h"
 #include "Object/PassiveInputObject.h"
 #include "Object/PlayerObject.h"
 
@@ -37,6 +38,7 @@ InputScene::InputScene(ISystem* pSystem)
     
     m_ObjectFactories["Camera"] = boost::factory<CameraInputObject*>();
     m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
+    m_ObjectFactories["Cursor"] = boost::factory<CursorInputObject*>();
     m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();
     m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
     

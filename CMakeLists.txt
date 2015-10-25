@@ -22,10 +22,11 @@ include("ProjectUtils")
 find_package("Boost" COMPONENTS thread REQUIRED)
 find_package("TBB" REQUIRED)
 find_package("Protobuf" REQUIRED)
+find_package("FlatBuffers" REQUIRED)
 find_package("Logog" REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS} ${TBB_INCLUDE_DIRS} 
-    ${PROTOBUF_INCLUDE_DIRS} ${LOGOG_INCLUDE_DIRS})
+    ${PROTOBUF_INCLUDE_DIRS} ${FLATBUFFERS_INCLUDE_DIR} ${LOGOG_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS} ${TBB_LIBRARY_DIRS})
 
 add_subdirectory("Core")

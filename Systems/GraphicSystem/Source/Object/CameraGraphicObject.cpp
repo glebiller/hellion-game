@@ -25,10 +25,6 @@
 #include "Object/CameraGraphicObject.h"
 #include "Object/IGeometryObject.h"
 
-#define PSCENE          (reinterpret_cast<GraphicScene*>(m_pSystemScene))
-#define PSYSTEM         (m_pSystemScene->GetSystem<GraphicSystem>())
-#define POGRESCENEMGR   (PSCENE->getSceneManager())
-
 /**
  * @inheritDoc
  */
@@ -71,7 +67,7 @@ Error CameraGraphicObject::initialize(void) {
     //
     // Create the viewport.
     //
-    Ogre::RenderWindow* pRenderWindow = PSYSTEM->getRenderWindow();
+    Ogre::RenderWindow* pRenderWindow = m_pSystemScene->GetSystem<GraphicSystem>()->getRenderWindow();
     m_pViewport = pRenderWindow->addViewport(m_pCamera);
     ASSERT(m_pViewport != NULL);
         
@@ -81,7 +77,7 @@ Error CameraGraphicObject::initialize(void) {
         return Errors::Failure;
     }
 
-    m_pViewport->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+    m_pViewport->setBackgroundColour(Ogre::ColourValue(0.25, 0.25, 0.25));
     //
     // Set the camera's aspect ratio to the dimensions of the viewport.
     //
@@ -101,10 +97,10 @@ Error CameraGraphicObject::initialize(void) {
     //
     // Set the far clip distance
     //
-    if (PSYSTEM->getRoot()->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
+    if (m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
         m_pCamera->setFarClipDistance(0);   // enable infinite far clip distance if we can
     }
-            
+
     m_bInitialized = true;
     return Errors::Success;
 }

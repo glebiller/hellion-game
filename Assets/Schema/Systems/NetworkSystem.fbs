@@ -1,0 +1,17 @@
+namespace Schema;
+
+table NetworkSystemName {
+    value:string;
+}
+
+union NetworkSystemPropertyData {
+    NetworkSystemName
+}
+
+table NetworkSystemProperty {
+    property:NetworkSystemPropertyData;
+}
+
+table NetworkSystem {
+  properties:[NetworkSystemProperty];
+}

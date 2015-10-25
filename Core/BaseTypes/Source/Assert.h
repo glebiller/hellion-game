@@ -49,5 +49,7 @@
     #define ASSERTMSG4(c,  m, p1, p2, p3, p4)
 #endif
 
-#define COMPILE_ASSERT(e)							typedef char __FILE____LINE__[ (e) ? 1 : -1 ]
+#ifndef COMPILE_ASSERT
+    #define COMPILE_ASSERT(e)							typedef char __FILE____LINE__[ (e) ? 1 : -1 ]
+#endif
 #define assert(c)									ASSERT(c)

@@ -1,7 +1,6 @@
 package fr.kissy.hellion.server.transform;
 
 import com.google.common.base.Function;
-import com.sun.istack.internal.Nullable;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.service.ObjectService;
@@ -19,7 +18,7 @@ public class PlayerToCreateObjectDto implements Function<Player, Common.Object> 
      * @inheritDoc
      */
     @Override
-    public Common.Object apply(@Nullable Player player) {
+    public Common.Object apply(Player player) {
         return objectService.getCreateObject(player, false);
     }
 }

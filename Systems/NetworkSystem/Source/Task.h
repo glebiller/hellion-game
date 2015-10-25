@@ -56,7 +56,7 @@ public:
     /// @inheritDoc.
     ///
     bool IsPrimaryThreadOnly() {
-        return false;
+        return true;
     };
 
     ///

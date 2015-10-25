@@ -7,6 +7,7 @@ import akka.io.Tcp;
 import akka.io.TcpMessage;
 import akka.io.TcpPipelineHandler;
 import fr.kissy.hellion.server.actor.creator.SpringActorCreator;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,8 @@ public class ServerActor extends UntypedActor {
         if (data instanceof Tcp.CommandFailed) {
             getContext().stop(getSelf());
         } else if (data instanceof Tcp.Connected) {
+            Subject subject = new Subject.Builder().buildSubject();
+            subject.getSession(true).setAttribute(ActorRef.class.getSimpleName(), getSelf());
             final ActorRef handler = getContext().actorOf(Props.create(new SpringActorCreator<SessionActor>
                     (beanFactory, SessionActor.class))/*, SessionActor.class.getSimpleName()*/);
             final ActorRef pipeline = getContext().actorOf(TcpPipelineHandler.props(tcpPipelineHandlerInit,

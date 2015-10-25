@@ -1,0 +1,17 @@
+namespace Schema;
+
+table PhysicSystemName {
+    value:string;
+}
+
+union PhysicSystemPropertyData {
+    PhysicSystemName
+}
+
+table PhysicSystemProperty {
+    property:PhysicSystemPropertyData;
+}
+
+table PhysicSystem {
+  properties:[PhysicSystemProperty];
+}

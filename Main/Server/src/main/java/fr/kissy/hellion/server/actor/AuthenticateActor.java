@@ -1,6 +1,7 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.ActorRef;
+import akka.actor.Props;
 import akka.actor.UntypedActor;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
@@ -70,6 +71,7 @@ public class AuthenticateActor extends UntypedActor {
         LOGGER.info("Adding new player to World {}", player.getId());
         world.addPlayer(player);
 
+        //getContext().actorOf(Props.create())
         sessionActorRef.tell(upstreamMessageService.getAuthenticatedMessage(player), getSelf());
     }
 }
