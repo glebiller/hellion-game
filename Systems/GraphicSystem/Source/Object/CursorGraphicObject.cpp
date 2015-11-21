@@ -43,7 +43,7 @@ CursorGraphicObject::CursorGraphicObject(ISystemScene* pSystemScene, IEntity* en
 /**
  * @inheritDoc
  */
-CursorGraphicObject::~CursorGraphicObject(void) {
+CursorGraphicObject::~CursorGraphicObject() {
     m_browser = nullptr;
     m_browserClient = nullptr;
 }
@@ -51,7 +51,7 @@ CursorGraphicObject::~CursorGraphicObject(void) {
 /**
  * @inheritDoc
  */
-Error CursorGraphicObject::initialize(void) {
+Error CursorGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

@@ -1,0 +1,12 @@
+include "Proto/Common.fbs";
+
+namespace Proto;
+
+table Application {
+    startupScene:string (required);
+    properties:[Property];
+    systems:[System];
+    scenes:[string];
+}
+
+root_type Application;

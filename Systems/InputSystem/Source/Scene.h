@@ -42,12 +42,12 @@ public:
     /**
      * @inheritDoc
      */
-    ~InputScene(void);
+    ~InputScene();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
@@ -57,21 +57,21 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::Generic::DeleteObject;
     };
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetDesiredSystemChanges(void) {
+    System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    Proto::SystemType GetSystemType(void) {
+    Proto::SystemType GetSystemType() {
         return Proto::SystemType::Input;
     };
 
@@ -80,7 +80,7 @@ public:
      *
      * @return  null if it fails, else the default schema.
      */
-    OISB::ActionSchema* getDefaultSchema(void) const {
+    OISB::ActionSchema* getDefaultSchema() const {
         return m_defaultSchema;
     };
     

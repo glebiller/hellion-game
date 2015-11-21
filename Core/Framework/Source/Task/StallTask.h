@@ -15,6 +15,8 @@
 #pragma once    
 
 #include <tbb/task.h>
+#include <mutex>
+#include <condition_variable>
 
 #include "DataTypes.h"
 
@@ -34,7 +36,7 @@ public:
      * @param [in,out]  pTaskManager    If non-null, manager for task.
      * @param   hWaitFor                Handle of the wait for.
      */
-    StallTask(TaskManager* pTaskManager, Handle hWaitFor);
+    StallTask(TaskManager* pTaskManager, std::shared_ptr<boost::interprocess::named_semaphore> hWaitFor);
 
     /**
      * Gets the execute.
@@ -44,7 +46,7 @@ public:
     tbb::task* execute();
 
 protected:
-    TaskManager*        m_pTaskManager;
-    Handle              m_hWaitFor;
+    TaskManager* m_pTaskManager;
+    std::shared_ptr<boost::interprocess::named_semaphore> m_hWaitFor;
 
 };

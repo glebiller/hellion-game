@@ -43,7 +43,7 @@ public:
      *
      * @return  A System::Changes::BitMask.
      */
-    virtual inline System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
+    virtual inline System::Changes::BitMask GetDesiredSystemChanges() = 0;
 
     /**
      * Lets the ISubject notify the IObserver in changes in registered aspects of interest.

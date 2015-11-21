@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/dll.hpp>
 #include "Defines.h"
-#include <windows.h>
 
 #include "System/ISystem.h"
 #include "Manager/ServiceManager.h"
@@ -21,33 +21,18 @@
 #include "System.h"
 
 IServiceManager*        g_serviceManager;
-HINSTANCE               g_hInstance;
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
-    switch (Reason) {
-        case DLL_PROCESS_ATTACH:
-            g_hInstance = hModule;
-            break;
-        case DLL_THREAD_ATTACH:
-        case DLL_THREAD_DETACH:
-        case DLL_PROCESS_DETACH:
-            break;
-    }
-
-    return TRUE;
-}
-
-extern "C" void __stdcall InitializeGraphicSystem(IServiceManager* serviceManager) {
+extern "C" void BOOST_SYMBOL_EXPORT InitializeGraphicSystem(IServiceManager* serviceManager) {
     g_serviceManager = serviceManager;
-    g_serviceManager->getLogService()->initSystem(Proto::SystemType::Graphic);
+    g_serviceManager->getLogService()->initSystem(Schema::SystemType::Graphic);
 }
 
-extern "C" ISystem* __stdcall CreateGraphicSystem() {
+extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateGraphicSystem() {
     return new GraphicSystem();
 }
 
-extern "C" void __stdcall DestroyGraphicSystem(ISystem* pSystem) {
+extern "C" void BOOST_SYMBOL_EXPORT DestroyGraphicSystem(ISystem* pSystem) {
     delete reinterpret_cast<GraphicSystem*>(pSystem);
-    g_serviceManager->getLogService()->closeSystem(Proto::SystemType::Graphic);
+    g_serviceManager->getLogService()->closeSystem(Schema::SystemType::Graphic);
 }
 

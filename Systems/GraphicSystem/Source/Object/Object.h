@@ -37,13 +37,13 @@ public:
     /**
      * @inheritDoc
      */
-    virtual ~GraphicObject(void);
+    virtual ~GraphicObject();
 
     /**
      * @inheritDoc
      */
-    inline Proto::SystemType GetSystemType(void) {
-        return Proto::SystemType::Graphic;
+    inline Schema::SystemType GetSystemType() {
+        return Schema::SystemType::Graphic;
     }
 
 protected:

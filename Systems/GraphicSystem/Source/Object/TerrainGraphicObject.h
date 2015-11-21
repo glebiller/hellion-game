@@ -54,14 +54,14 @@ public:
     ///
     /// @inheritDoc.
     ///
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
     
     ///
     /// @inheritDoc.
     ///
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
     

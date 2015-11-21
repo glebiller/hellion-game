@@ -13,12 +13,13 @@
 // responsibility to update it.
 
 #include "Defines.h"
-#include <windows.h>
-#include <tchar.h>
+//#include <windows.h>
+//#include <tchar.h>
 
 #include "Main.h"
 
-int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
+//int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
+int main( int argc, char* argv[] ) {
     ExecuteFramework();
     return 0;
 }

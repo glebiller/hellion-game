@@ -29,12 +29,12 @@ public:
     /**
      * Destructor.
      */
-    ~ParticleGraphicObject(void);
+    ~ParticleGraphicObject();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
@@ -44,14 +44,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 

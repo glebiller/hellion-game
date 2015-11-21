@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -39,7 +39,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    ~GraphicTask(void);
+    ~GraphicTask();
 
     ///
     /// @inheritDoc.
@@ -54,15 +54,15 @@ public:
     ///
     /// @inheritDoc.
     ///
-    bool IsPrimaryThreadOnly(void) {
+    bool IsPrimaryThreadOnly() {
         return false;
     };
 
     ///
     /// @inheritDoc.
     ///
-    Proto::SystemType GetSystemType(void) {
-        return Proto::SystemType::Graphic;
+    Schema::SystemType GetSystemType() {
+        return Schema::SystemType::Graphic;
     }
 
 private:

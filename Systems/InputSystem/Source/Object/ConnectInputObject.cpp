@@ -36,13 +36,13 @@ ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, IEntity* enti
 /**
  * @inheritDoc
  */
-ConnectInputObject::~ConnectInputObject(void) {
+ConnectInputObject::~ConnectInputObject() {
 }
 
 /**
  * @inheritDoc
  */
-Error ConnectInputObject::initialize(void) {
+Error ConnectInputObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_connectInputAction->bind(m_key);

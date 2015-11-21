@@ -26,7 +26,7 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-InputSystem::InputSystem(void) 
+InputSystem::InputSystem()
     : ISystem() {
     new OISB::System();
     m_SceneFactory = boost::factory<InputScene*>();
@@ -35,7 +35,7 @@ InputSystem::InputSystem(void)
 /**
  * @inheritDoc
  */
-InputSystem::~InputSystem(void) {
+InputSystem::~InputSystem() {
     delete OISB::System::getSingletonPtr();
 }
 
@@ -126,7 +126,7 @@ class KeyCallback : public OIS::KeyListener {
 /**
  * @inheritDoc
  */
-Error InputSystem::initialize(void) {
+Error InputSystem::initialize() {
     ASSERT(!m_bInitialized);
     
     size_t hWnd = g_serviceManager->getWindowService()->getHandle();

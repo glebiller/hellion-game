@@ -46,7 +46,7 @@ GuiGraphicObject::GuiGraphicObject(ISystemScene* pSystemScene, IEntity* entity)
 /**
  * @inheritDoc
  */
-GuiGraphicObject::~GuiGraphicObject(void) {
+GuiGraphicObject::~GuiGraphicObject() {
     m_browser = nullptr;
     m_browserClient = nullptr;
 }
@@ -54,11 +54,11 @@ GuiGraphicObject::~GuiGraphicObject(void) {
 /**
  * @inheritDoc
  */
-Error GuiGraphicObject::initialize(void) {
+Error GuiGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
     
     CefWindowInfo window_info;
-    window_info.SetAsWindowless((HWND) g_serviceManager->getWindowService()->getHandle(), true);
+    //window_info.SetAsWindowless((HWND) g_serviceManager->getWindowService()->getHandle(), true);
     CefBrowserSettings browserSettings;
     m_browser = CefBrowserHost::CreateBrowserSync(window_info, m_browserClient.get(), "file:///Assets/Media/Gui/index.html", browserSettings, nullptr);
     m_browser->GetHost()->SendFocusEvent(true);

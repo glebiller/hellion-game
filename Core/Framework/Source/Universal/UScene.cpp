@@ -19,6 +19,7 @@
 #include "Manager/ServiceManager.h"
 #include "Manager/IChangeManager.h"
 #include "System/ISystemObject.h"
+#include "../../../Generated/src/Common_generated.h"
 
 /**
  * @inheritDoc
@@ -32,7 +33,7 @@ UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM)
 /**
  * @inheritDoc
  */
-UScene::~UScene(void) {
+UScene::~UScene() {
     //
     // Send "pre-destroying objects" message to the scene extensions.
     //
@@ -95,7 +96,7 @@ void UScene::init() {
 /**
  * @inheritDoc
  */
-void UScene::update(void) {
+void UScene::update() {
     // Process first the object creation messages alone since it will 
     // generate some object messages that need to be processed by the object CCM.
     m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
@@ -114,7 +115,7 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     //
     // Get the system's type.
     //
-    Proto::SystemType SystemType = pSystem->GetSystemType();
+    Schema::SystemType SystemType = pSystem->GetSystemType();
     ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
 
@@ -151,7 +152,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     //
     // Get the system's type.
     //
-    Proto::SystemType SystemType = pSystem->GetSystemType();
+    Schema::SystemType SystemType = pSystem->GetSystemType();
     //
     // Find the system scene in the collection and remove it.
     //
@@ -172,33 +173,31 @@ Error UScene::Unextend(ISystemScene* pScene) {
 /**
  * @inheritDoc
  */
-void UScene::addTemplates(const Proto::RepeatedObject* objects) {
-    for (auto template_ : *objects) {
-        Templates::iterator it = m_templates.find(template_.name());
+void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::Object>>* templates) {
+/*    for (auto template_ : objects) {
+        Templates::iterator it = m_templates.find(template_->name());
         ASSERTMSG(it == m_templates.end(), "The template to add to the scene already exists.");
         if (it != m_templates.end()) {
             continue;
         }
-        
-        Proto::Object* newTemplate = new Proto::Object();
-        newTemplate->CopyFrom(template_);
-        m_templates.insert(std::pair<std::string, Proto::Object*>(*(newTemplate->mutable_name()), newTemplate));
-    }
+
+        m_templates.insert(std::pair<flatbuffers::String, flatbuffers::Offset<Proto::Object>>(template_->name(), template_));
+    }*/
 }
 
 /**
  * @inheritDoc
  */
-UObject* UScene::createObject(const Proto::Object* objectProto) {
+UObject* UScene::createObject(const Schema::Object* objectProto) {
     IEntity* parent = nullptr;
-    if (objectProto->has_parent()) {
-        parent = FindObject(objectProto->parent());
+    if (objectProto->parent()) {
+        parent = FindObject(objectProto->parent()->c_str());
     }
 
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, objectProto->id(), objectProto->name(), parent);
+    UObject* pObject = new UObject(this, objectProto->id()->c_str(), objectProto->name()->c_str(), parent);
     ASSERT(pObject != NULL);
     //
     // Add the object to the collection.
@@ -209,17 +208,18 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     }
 
     SystemService* systemService = IServiceManager::get()->getSystemService();
-    Templates::iterator templateIt = m_templates.find(objectProto->template_());
+    // TODO
+    /*Templates::iterator templateIt = m_templates.find(std::string(objectProto->name()->c_str()));
     
     //
     // SystemObjects
     // 
     if (templateIt != m_templates.end()) {
-        for (auto objectProto : (*templateIt).second->systemobjects()) {
+        for (auto objectProto : *(*templateIt).second->systemObjects()) {
             createSystemObject(systemService, pObject, objectProto);
         }
     }
-    for (auto objectProto : objectProto->systemobjects()) {
+    for (auto objectProto : *objectProto->systemObjects()) {
         createSystemObject(systemService, pObject, objectProto);
     }
 
@@ -227,12 +227,12 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     // Properties
     // 
     if (templateIt != m_templates.end()) {
-        for (auto objectProto : (*templateIt).second->systemobjects()) {
-            pObject->GetExtension(objectProto.systemtype())->setProperties(objectProto.properties());
+        for (auto objectProto : *(*templateIt).second->systemObjects()) {
+            pObject->GetExtension(objectProto->systemType())->setProperties(objectProto->properties());
         }
     }
-    for (auto objectProto : objectProto->systemobjects()) {
-        pObject->GetExtension(objectProto.systemtype())->setProperties(objectProto.properties());
+    for (auto objectProto : *objectProto->systemObjects()) {
+        pObject->GetExtension(objectProto->systemType())->setProperties(objectProto->properties());
     }
 
     //
@@ -240,24 +240,24 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     // 
     for (auto systemObject : pObject->GetExtensions()) {
         systemObject.second->initialize();
-    }
+    }*/
     return pObject;
 }
 
 /**
  * @inheritDoc
  */
-void UScene::createSystemObject(SystemService* systemService, UObject* pObject, Proto::SystemObject objectProto) {
+void UScene::createSystemObject(SystemService* systemService, UObject* pObject, const Schema::SystemObject* objectProto) {
     UObject::SystemObjects extensions = pObject->GetExtensions();
-    if (extensions.find(objectProto.systemtype()) != extensions.end()) {
+    if (extensions.find(objectProto->systemType()) != extensions.end()) {
         return;
     }
 
-    ISystem* m_pSystem = systemService->get(objectProto.systemtype());
+    ISystem* m_pSystem = systemService->get(objectProto->systemType());
     ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
     auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
     ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-    ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type());
+    ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto->type()->c_str());
     ASSERT(pSystemObject != NULL);
     m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
 };
@@ -354,7 +354,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             const ISceneObject::ObjectProtoQueue objectsToCreate = *pScene->getCreateObjects();
             for (auto objectProto : objectsToCreate) {
                 ASSERT(FindObject(objectProto.id()) == NULL);
-                UObject* pObject = createObject(&objectProto);
+                UObject* pObject = createObject(objectProto);
                 ASSERT(pObject != NULL);
             }
             pScene->resetCreateObjectQueues();
@@ -365,7 +365,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             const ISceneObject::ObjectProtoQueue objectsToDestroy = *pScene->getDeleteObjects();
             for (auto objectProto : objectsToDestroy) {
-                UObject* pObject = FindObject(objectProto.id());
+                UObject* pObject = FindObject(objectProto->id()->c_str());
                 ASSERT(pObject != NULL);
                 DestroyObject(pObject);
             }

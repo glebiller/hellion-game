@@ -32,6 +32,10 @@ class ISystem;
 class ISystemObject;
 class ISystemTask;
 
+#include "ISystemObject.h"
+#include "ISystemScene.h"
+#include "Generic/IEntity.h"
+
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
  */
@@ -60,7 +64,7 @@ public:
     /**
      * @inheritDoc
      */
-    virtual ~ISystemScene(void);
+    virtual ~ISystemScene();
 
     /**
      * Called from the framework to inform the scene extension of the overall scene status.
@@ -79,7 +83,7 @@ public:
      * 
      * @return A pointer to the system task.
      */
-    void createTask(void);
+    virtual void createTask() = 0;
 
     /**
      * Creates a system object used to extend a UObject.
@@ -109,7 +113,7 @@ public:
      * @return  A pointer to the system.
      */
     template <typename TSystem>
-    TSystem* GetSystem(void) {
+    TSystem* GetSystem() {
         return static_cast<TSystem*>(m_pSystem);
     }
 
@@ -119,20 +123,18 @@ public:
      * @return  The task for this scene.
      */
     template <typename TSystemTask>
-    TSystemTask* GetSystemTask(void) {
+    TSystemTask* GetSystemTask() {
         return static_cast<TSystemTask*>(m_pSystemTask);
     }
 
 protected:
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
-    typedef boost::function<ISystemTask*(ISystemScene* pSystemScene)> TaskFactory;
-    typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, IEntity* entity)> ObjectFactory;
+    typedef std::function<ISystemObject*(ISystemScene* pSystemScene, IEntity* entity)> ObjectFactory;
 
     ISystem*                                        m_pSystem;
     ISystemTask*							        m_pSystemTask;
     ObjectsList                                     m_pObjects;
 
-    TaskFactory                                     m_TaskFactory;
     std::map<std::string, ObjectFactory>            m_ObjectFactories;
 
 };

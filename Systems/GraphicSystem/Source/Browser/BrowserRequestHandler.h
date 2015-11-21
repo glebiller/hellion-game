@@ -14,9 +14,9 @@
 
 #pragma once
 
-#include <cef_browser.h>
-#include <cef_request_handler.h>
-#include <wrapper/cef_message_router.h>
+#include <include/cef_browser.h>
+#include <include/cef_request_handler.h>
+#include <include/wrapper/cef_message_router.h>
 
 /**
 * Implementation of the Surface.
@@ -31,7 +31,7 @@ public:
     /**
      * Destructor.
      */
-    ~BrowserRequestHandler(void);
+    ~BrowserRequestHandler();
     
     IMPLEMENT_REFCOUNTING(BrowserRequestHandler);
 

@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include "Proto/Common.pb.h"
 #include "Defines.h"
 
 class IServiceManager;
@@ -50,7 +49,7 @@ extern "C" {
      * 
      * @return   The newly created system.
      */
-    ISystem* __attribute__((__stdcall)) CreateSystemFunction(Log::Logger* p_logger);
+    ISystem* __attribute__((__stdcall)) CreateSystemFunction();
 
     /**
      * Function definition for calling into a system library for initializing a system.

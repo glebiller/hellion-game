@@ -17,44 +17,30 @@
 #include "Defines.h"
 #include "Service/SettingService.h"
 
-/**
- * @inhertiDoc
- */
-void SettingService::add(Proto::Property propertyValue) {
-    m_settings[propertyValue.name()] = propertyValue;
-}
-
-/**
- * @inhertiDoc
- */
-Proto::Property SettingService::get(std::string propertyName) {
-    auto iterator = m_settings.find(propertyName);
-    if (iterator == m_settings.end()) {
-        return Proto::Property();
-    }
-    return iterator->second;
+void SettingService::initialize(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
+    m_settings = properties;
 }
 
 /**
  * @inhertiDoc
  */
 std::string SettingService::getString(std::string propertyName) {
-    Proto::Property property = get(propertyName);
-    if (property.value().size() == 0) {
+    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
+    if (values->size() == 0) {
         return "";
     }
-    return property.value().Get(0);
+    return ""; //TODO property.value()->Get(0);
 }
 
 /**
  * @inhertiDoc
  */
 int SettingService::getInt(std::string propertyName) {
-    Proto::Property property = get(propertyName);
-    if (property.value().size() == 0) {
+    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
+    if (values->size() == 0) {
         return 0;
     }
-    return boost::lexical_cast<int>(property.value().Get(0));
+    return boost::lexical_cast<int>(values->Get(0));
 }
 
 
@@ -62,9 +48,9 @@ int SettingService::getInt(std::string propertyName) {
  * @inhertiDoc
  */
 bool SettingService::getBool(std::string propertyName) {
-    Proto::Property property = get(propertyName);
-    if (property.value().size() == 0) {
+    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
+    if (values->size() == 0) {
         return false;
     }
-    return boost::lexical_cast<bool>(property.value().Get(0));
+    return boost::lexical_cast<bool>(values->Get(0));
 }

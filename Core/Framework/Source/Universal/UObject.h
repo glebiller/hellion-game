@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -33,7 +33,7 @@ class UScene;
  */
 class UObject : public ISubject, public IObserver, public IEntity {
 public:
-    typedef std::map<Proto::SystemType, ISystemObject*>      SystemObjects;
+    typedef std::map<Schema::SystemType, ISystemObject*>      SystemObjects;
 
     /**
      * Constructor.
@@ -47,7 +47,7 @@ public:
     /**
      * Destructor.
      */
-    ~UObject(void);
+    ~UObject();
 
     /**
      * Used to extend the objects functionality for a given system.
@@ -72,7 +72,7 @@ public:
      *
      * @return  A constant reference to the system object mapping.
      */
-    const SystemObjects& GetExtensions(void);
+    const SystemObjects& GetExtensions();
 
     /**
      * Gets the specified system object.
@@ -83,7 +83,7 @@ public:
      *
      * @return  null if it fails, else the extension.
      */
-    ISystemObject* GetExtension(Proto::SystemType System);
+    ISystemObject* GetExtension(Schema::SystemType System);
 
     /**
      * @inheritDoc
@@ -93,14 +93,14 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+    inline System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     }
     
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetPotentialSystemChanges(void) {
+    inline System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     }
 

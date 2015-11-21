@@ -16,7 +16,7 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Proto/Common.pb.h"
+#include "Common_generated.h"
 
 #if defined( MSC_COMPILER )
 #include <intrin.h>
@@ -42,7 +42,7 @@ namespace System {
          * @param   SystemType  Type - The type ID of a system.
          * @return  u32 - Index of this system.
          */
-        inline u32 GetIndex(const Proto::SystemType systemType) {
+        inline u32 GetIndex(const Schema::SystemType systemType) {
             u32 Index = All;
 #if defined(MSC_COMPILER)
             _BitScanForward((unsigned long*)&Index, systemType);
@@ -58,8 +58,8 @@ namespace System {
          * @param   SystemType  Type of the system.
          * @return  The type.
          */
-        inline Proto::SystemType GetType(const u32 index) {
-            return (Proto::SystemType) (1 << index);
+        inline Schema::SystemType GetType(const u32 index) {
+            return (Schema::SystemType) (1 << index);
         }
 
         typedef u32 BitMask;

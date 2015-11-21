@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -36,29 +36,29 @@ public:
     /**
      * @inheritDoc
      */
-    NetworkSystem(void);
+    NetworkSystem();
         
     /**
      * @inheritDoc
      */
-    ~NetworkSystem(void);
+    ~NetworkSystem();
         
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    inline Proto::SystemType GetSystemType(void) {
+    inline Proto::SystemType GetSystemType() {
         return Proto::SystemType::Network;
     }
 
     /**
      * @inheritDoc
      */
-    inline NetworkService* getNetworkService(void) {
+    inline NetworkService* getNetworkService() {
         return m_networkService;
     }
 

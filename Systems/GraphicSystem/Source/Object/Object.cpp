@@ -29,7 +29,7 @@ GraphicObject::GraphicObject(ISystemScene* pSystemScene, IEntity* entity)
 /**
  * @inheritDoc
  */
-GraphicObject::~GraphicObject(void) {
+GraphicObject::~GraphicObject() {
     m_pNode->getParent()->removeChild(m_pNode);
     m_sceneManager->destroySceneNode(m_pNode);
 }

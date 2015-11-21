@@ -28,24 +28,24 @@ public:
     /**
      * Destructor.
      */
-    ~ConnectNetworkObject(void);
+    ~ConnectNetworkObject();
     
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetPotentialSystemChanges(void) {
+    inline System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    inline System::Types::BitMask GetDesiredSystemChanges(void) {
+    inline System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::Input::Action;
     };
 

@@ -35,7 +35,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    ~InputTask(void);
+    ~InputTask();
 
     ///
     /// @inheritDoc.
@@ -50,14 +50,14 @@ public:
     ///
     /// @inheritDoc.
     ///
-    inline bool IsPrimaryThreadOnly(void) {
+    inline bool IsPrimaryThreadOnly() {
         return false;
     };
     
     ///
     /// @inheritDoc.
     ///
-    inline Proto::SystemType GetSystemType(void) {
+    inline Proto::SystemType GetSystemType() {
         return Proto::SystemType::Input;
     }
 

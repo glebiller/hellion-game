@@ -4,9 +4,10 @@ project(Framework)
 
 check_root_module()
 
+find_package("Boost" COMPONENTS "thread" REQUIRED "log" REQUIRED)
 find_package("ZeroMQ" REQUIRED)
 find_package("CEF" REQUIRED)
-include_directories(${ZEROMQ_INCLUDE_DIRS} ${CEF_INCLUDE_DIR})
+include_directories(${ZEROMQ_INCLUDE_DIRS} ${CEF_INCLUDE_DIRS})
 
 add_project_dependency("Interfaces")
 add_project_sources("Source")

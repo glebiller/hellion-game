@@ -31,14 +31,14 @@ void protobuf_uint8_free(void* data, void* hint) {
 /**
  * @inheritDoc
  */
-Debugger::Debugger(void) 
+Debugger::Debugger()
     : m_bDebuggerActive(false) {
 }
 
 /**
  * @inheritDoc
  */
-Debugger::~Debugger(void) {
+Debugger::~Debugger() {
     if (!m_bDebuggerActive) {
         return;
     }
@@ -105,7 +105,7 @@ void Debugger::setScene(const UScene* pUScene) {
 /**
  * @inheritDoc
  */
-void Debugger::clean(void) {
+void Debugger::clean() {
     if (!m_bDebuggerActive) {
         return;
     }

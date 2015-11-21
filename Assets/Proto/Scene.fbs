@@ -1,0 +1,22 @@
+include "Proto/Common.fbs";
+
+namespace Proto;
+
+table LinkEntity {
+    name:string;
+    systemType:SystemType;
+}
+table Link {
+    subject:LinkEntity;
+    observer:LinkEntity;
+}
+
+table Scene {
+    name:string (required);
+    systems:[System];
+    templates:[Object];
+    objects:[Object];
+    links:[Link];
+}
+
+root_type Scene;

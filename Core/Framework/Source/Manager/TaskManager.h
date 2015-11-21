@@ -14,12 +14,17 @@
 
 #pragma once
 
+#include "Defines.h"
 #include <vector>
+#include <boost/interprocess/sync/named_semaphore.hpp>
+
 #pragma warning( push )
 #pragma warning( disable : 4100 4189 4244 4512 4634 )
+
 #include <tbb/task.h>
 #include <tbb/task_scheduler_init.h>
 #include <tbb/tbb_thread.h>
+
 #pragma warning( pop )
 
 #include "Defines.h"
@@ -35,7 +40,7 @@ class Instrumentation;
  * 
  * @sa  ITaskManager
  */
-class TaskManager: public ITaskManager {
+class TaskManager : public ITaskManager {
 public:
     /**
      * Constructor.
@@ -45,19 +50,19 @@ public:
     /**
      * Destructor.
      */
-    ~TaskManager(void);
+    ~TaskManager();
 
     /**
      * Initialises this TaskManager.
      * Call this from the primary thread before calling any other <c>TaskManager</c> methods.
      */
-    void Init(void);
+    void Init();
 
     /**
      * Shuts down this TaskManager and frees any resources it is using.
      * Call this from the primary thread as the last <c>TaskManager</c> call.
      */
-    void Shutdown(void);
+    void Shutdown();
 
     /**
      * Updates the periodic data described by deltaTime.
@@ -115,7 +120,8 @@ public:
      * @param   minGrainSize        (Optional) size of the minimum grain.
      */
     virtual void ParallelFor(ISystemTask* pSystemTask,
-                                ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize = 1);
+                             ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end,
+                             u32 minGrainSize = 1);
 
     /**
      * Wait for system tasks.
@@ -137,7 +143,7 @@ public:
      *
      * @return  the number of threads being used.
      */
-    inline u32 GetNumberOfThreads(void) {
+    inline u32 GetNumberOfThreads() {
         return m_uNumberOfThreads;
     };
 
@@ -154,12 +160,12 @@ public:
      *
      * @return  true if primary thread, false if not.
      */
-    bool IsPrimaryThread(void);
+    bool IsPrimaryThread();
 
     /**
      * Adds stall task.
      */
-    void AddStallTask(void);
+    void AddStallTask();
 
     /**
      * Callback, called when the system task.
@@ -170,15 +176,14 @@ public:
 
 private:
     // TODO completely remove it when disabled.
-    Instrumentation*            m_instrumentation;
+    Instrumentation* m_instrumentation;
 
-    tbb::tbb_thread::id         m_uPrimaryThreadID;
-
-    Handle                      m_hStallPoolSemaphore;
-    tbb::task*                  m_pStallPoolParent;
+    tbb::tbb_thread::id m_uPrimaryThreadID;
+    std::shared_ptr<boost::interprocess::named_semaphore> m_hStallPoolSemaphore;
+    tbb::task* m_pStallPoolParent;
     DEFINE_SPIN_MUTEX(m_tSynchronizedCallbackMutex);
 
-    tbb::task_scheduler_init*   m_pTbbScheduler;
+    tbb::task_scheduler_init* m_pTbbScheduler;
 
 #if USE_MAIN_THREAD_FOR_SERIAL_TASKS_ONLY
     // IMPLEMENTATION NOTE
@@ -198,10 +203,10 @@ private:
     bool m_bTimeToQuit;
 
     // requested, maximum and current number of threads in use
-    u32 m_uRequestedNumberOfThreads;
-    u32 m_uMaxNumberOfThreads;
-    u32 m_uNumberOfThreads;
-    u32 m_uTargetNumberOfThreads;
+    int m_uRequestedNumberOfThreads;
+    int m_uMaxNumberOfThreads;
+    int m_uNumberOfThreads;
+    int m_uTargetNumberOfThreads;
 
 #if defined(USE_THREAD_PROFILER)
     bool m_bTPEventsForTasks;
@@ -267,7 +272,7 @@ private:
      * @return  true if the calling thread is managed by Intel Theading Building Blocks, false
      *          otherwise.
      */
-    static bool IsTBBThread(void);
+    static bool IsTBBThread();
 
     /**
      * Updates the thread pool size.
@@ -277,5 +282,5 @@ private:
      * @sa  TaskManager::SetNumberOfThreads     .
      * @sa  TaskManager::IssueJobsForSystemTasks    .
      */
-    void UpdateThreadPoolSize(void);
+    void UpdateThreadPoolSize();
 };

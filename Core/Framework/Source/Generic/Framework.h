@@ -16,6 +16,7 @@
 
 #include <string>
 
+#include "Environment_generated.h"
 #include "System/Types.h"
 #include "Manager/IServiceManager.h"
 #include "Service/RuntimeService.h"
@@ -93,5 +94,6 @@ private:
     ChangeManager*                          m_pObjectCCM;
 
     UScene*                                 m_pScene;
+    const Schema::Environment*              m_environment;
 
 };

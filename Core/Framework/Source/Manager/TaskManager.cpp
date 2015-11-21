@@ -13,6 +13,8 @@
 // responsibility to update it.
 
 #include "Defines.h"
+#include "DataTypes.h"
+#include <boost/interprocess/sync/named_semaphore.hpp>
 
 #pragma warning (push)
 #pragma warning (disable: 4100)
@@ -24,14 +26,6 @@
 #if defined(MSC_COMPILER)
     #include <Windows.h>
     #include <process.h>
-#elif defined(GCC_COMPILER)
-    #include <cstdint>
-     
-    __inline__ u64 __rdtsc(void) {
-        u32 lo, hi;
-        __asm__ __volatile__("rdtscp" : "=a"(lo), "=d"(hi) :: "ecx" );
-        return (u64)hi << 32 | lo;
-    }
 #endif
 
 #include "System/ISystemTask.h"
@@ -43,6 +37,8 @@
 #include "Task/GenericCallbackTask.h"
 #include "Task/ParallelForBody.h"
 #include "Task/PerformanceHint.h"
+
+const char* const   semaphoreName  = "TaskManagerSemaphore";
 
 namespace local {
     typedef GenericCallbackTask<ITaskManager::JobFunction> SystemTask;
@@ -71,14 +67,14 @@ TaskManager::TaskManager(u32 requestedNumberOfThreads)
 /**
  * @inhertiDoc
  */
-TaskManager::~TaskManager(void) {
+TaskManager::~TaskManager() {
     delete m_instrumentation;
 }
 
 /**
  * @inhertiDoc
  */
-void TaskManager::AddStallTask(void) {
+void TaskManager::AddStallTask() {
     ASSERT(m_pStallPoolParent != NULL);
     tbb::task* pStallTask = new(m_pStallPoolParent->allocate_additional_child_of(*m_pStallPoolParent))
     StallTask(this, m_hStallPoolSemaphore);
@@ -106,7 +102,7 @@ void TaskManager::InitAffinityData(void* mgr) {
 /**
  * @inhertiDoc
  */
-void TaskManager::Init(void) {
+void TaskManager::Init() {
     // Call this from the primary thread before calling any other TaskManager methods.
     g_pTaskManager = this;
 
@@ -122,10 +118,9 @@ void TaskManager::Init(void) {
     }
 
     m_pStallPoolParent = NULL;
-#if defined(MSC_COMPILER)
-    m_hStallPoolSemaphore = CreateSemaphore(NULL, 0, m_uRequestedNumberOfThreads, NULL);
-    SynchronizeTask::m_hAllCallbacksInvokedEvent = CreateEvent(NULL, true, false, NULL);
-#endif
+    m_hStallPoolSemaphore = std::make_shared<boost::interprocess::named_semaphore>(
+            boost::interprocess::create_only_t(), semaphoreName, m_uRequestedNumberOfThreads
+    );
 #if defined(USE_THREAD_PROFILER)
     ISettingService* settingService = IServiceManager::get()->getSettingService();
     m_bTPEventsForTasks = settingService->getBool("TaskManager::TPEventsForTasks");
@@ -152,25 +147,16 @@ void TaskManager::Init(void) {
 /**
  * @inhertiDoc
  */
-void TaskManager::Shutdown(void) {
+void TaskManager::Shutdown() {
     // Call this from the primary thread as the last TaskManager call.
     ASSERT(IsPrimaryThread());
     // get the callback thread to exit
     m_bTimeToQuit = true;
     // trigger the release of the stall pool
-#if defined(MSC_COMPILER)
-    ReleaseSemaphore(m_hStallPoolSemaphore, m_uMaxNumberOfThreads, NULL);
-#endif
+    boost::interprocess::named_semaphore::remove(semaphoreName);
     m_pSystemTasksRoot->destroy(*m_pSystemTasksRoot);
     delete m_pTbbScheduler;
     // now get rid of all the events
-#if defined(MSC_COMPILER)
-    CloseHandle(m_hStallPoolSemaphore);
-#endif
-    m_hStallPoolSemaphore = NULL;
-#if defined(MSC_COMPILER)
-    CloseHandle(SynchronizeTask::m_hAllCallbacksInvokedEvent);
-#endif
 #ifdef USE_THREAD_PROFILER
     m_SupportForSystemTasks.clear();
 #endif
@@ -296,7 +282,7 @@ u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints H
 void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
-    Proto::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Proto::SystemType::Null;
+    Schema::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Schema::SystemType::Null;
 #endif
 #if defined(USE_THREAD_PROFILER)
     __itt_event tpEvent = GetSupportForSystemTask(pSystemTask).m_tpeSystemTaskJob;
@@ -450,14 +436,14 @@ TaskManager::SystemTaskSupport& TaskManager::GetSupportForSystemTask(ISystemTask
 /**
  * @inhertiDoc
  */
-bool TaskManager::IsPrimaryThread(void) {
+bool TaskManager::IsPrimaryThread() {
     return (tbb::this_tbb_thread::get_id() == m_uPrimaryThreadID);
 }
 
 /**
  * @inhertiDoc
  */
-bool TaskManager::IsTBBThread(void) {
+bool TaskManager::IsTBBThread() {
     // This method is used to determine if the calling thread is an Intel Threading Building Blocks thread.
 #ifdef DEBUG_BUILD
     // If called not from TBB thread task::self() will assert itself
@@ -470,7 +456,7 @@ bool TaskManager::IsTBBThread(void) {
 /**
  * @inhertiDoc
  */
-void TaskManager::UpdateThreadPoolSize(void) {
+void TaskManager::UpdateThreadPoolSize() {
     // This method is called within IssueJobsForSystemTasks to update the size of TBB thread pool
     // if necessary.  The thread pool is resized by a call to SetNumberOfThreads.
 
@@ -483,6 +469,7 @@ void TaskManager::UpdateThreadPoolSize(void) {
         // free up all the threads
         if (m_pStallPoolParent) {
 #if defined(MSC_COMPILER)
+            // TODO
             ReleaseSemaphore(m_hStallPoolSemaphore, uNumThreadsToFree, NULL);
 #endif
             // Make sure there are no stall tasks from the previous cycle lingering

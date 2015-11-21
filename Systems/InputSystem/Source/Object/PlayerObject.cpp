@@ -40,14 +40,14 @@ PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity
 /**
  * @inheritDoc
  */
-PlayerInputObject::~PlayerInputObject(void) {
+PlayerInputObject::~PlayerInputObject() {
     
 }
 
 /**
  * @inheritDoc
  */
-Error PlayerInputObject::initialize(void) {
+Error PlayerInputObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_forwardInputAction->bind("Keyboard/HAUT");
@@ -126,7 +126,7 @@ void PlayerInputObject::Update(f32 DeltaTime) {
 /**
  * @inheritDoc
  */
-void PlayerInputObject::createShot(void) {
+void PlayerInputObject::createShot() {
     Proto::Object shotProto;
     shotProto.set_id(ObjectId::gen().str());
     shotProto.set_name("Shot");

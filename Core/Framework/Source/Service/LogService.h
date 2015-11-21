@@ -15,10 +15,9 @@
 #pragma once
 
 #include <vector>
-#include <logog.hpp>
-
+#include <Common_generated.h>
+#include <boost/log/trivial.hpp>
 #include "Defines.h"
-#include "Proto/Common.pb.h"
 
 /**
  * LogManager class.
@@ -41,14 +40,14 @@ public:
      *
      * @param   type    The type.
      */
-    void initSystem(Proto::SystemType type);
+    void initSystem(Schema::SystemType type);
 
     /**
      * Closes a system.
      *
      * @param   type    The type.
      */
-    void closeSystem(Proto::SystemType type);
+    void closeSystem(Schema::SystemType type);
 
     /**
      * Logs.
@@ -56,7 +55,7 @@ public:
      * @param   type    The type.
      * @param   message The message.
      */
-    void log(const LOGOG_LEVEL_TYPE level, const char* message, ...);
+    void log(const int level, const char* message, ...);
 
     /**
      * Logs.
@@ -65,7 +64,7 @@ public:
      * @param   group   The group.
      * @param   message The message.
      */
-    void log(const LOGOG_LEVEL_TYPE level, const char* group, const char* message, ...);
+    void log(const int level, const char* group, const char* message, ...);
 
     /**
      * Logs.
@@ -75,10 +74,10 @@ public:
      * @param   category    The category.
      * @param   message     The message.
      */
-    void log(const LOGOG_LEVEL_TYPE level, const char* group, const char* category, const char* message, ...);
+    void log(const int level, const char* group, const char* category, const char* message, ...);
 
 private:
-    std::map<Proto::SystemType, logog::LogFile*>    m_logFile;
+
 
 };
 

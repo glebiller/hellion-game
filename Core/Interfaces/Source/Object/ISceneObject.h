@@ -15,7 +15,7 @@
 #pragma once
 
 #include <list>
-#include "Proto/Common.pb.h"
+#include "Common_generated.h"
 
 /**
  * <c>IGenericScene</c> is an interface for providing generic scene related functionality. Any
@@ -24,7 +24,7 @@
 class ISceneObject {
 public:
 
-    typedef std::list<Proto::Object> ObjectProtoQueue;
+    typedef std::list<Schema::Object*> ObjectProtoQueue;
     
     /**
      * Default constructor.
@@ -39,19 +39,19 @@ public:
     /**
      * Resets the create object lists.
      */
-    void resetCreateObjectQueues(void);
+    void resetCreateObjectQueues();
     
     /**
      * Resets the delete object lists.
      */
-    void resetDeleteObjectQueues(void);
+    void resetDeleteObjectQueues();
 
     /**
      * Gets create objects.
      *
      * @return  null if it fails, else the create objects.
      */
-    inline const ObjectProtoQueue* getCreateObjects(void) {
+    inline const ObjectProtoQueue* getCreateObjects() {
         return m_createObjectQueue;
     }
 
@@ -60,7 +60,7 @@ public:
      *
      * @return  null if it fails, else the destroy objects.
      */
-    inline const ObjectProtoQueue* getDeleteObjects(void) {
+    inline const ObjectProtoQueue* getDeleteObjects() {
         return m_deleteObjectQueue;
     }
     

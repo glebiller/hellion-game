@@ -59,7 +59,7 @@ tbb::concurrent_hash_map<u32, hkMemoryRouter*> PhysicSystem::s_workerMemoryRoute
 /**
  * @inheritDoc
  */
-PhysicSystem::PhysicSystem(void) : ISystem() {
+PhysicSystem::PhysicSystem() : ISystem() {
     m_SceneFactory = boost::factory<PhysicScene*>();
 
     //m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
@@ -68,7 +68,7 @@ PhysicSystem::PhysicSystem(void) : ISystem() {
 /**
  * @inheritDoc
  */
-PhysicSystem::~PhysicSystem(void) {
+PhysicSystem::~PhysicSystem() {
     if (m_bInitialized) {
         hkBaseSystem::quit();
         hkMemoryInitUtil::quit();
@@ -78,7 +78,7 @@ PhysicSystem::~PhysicSystem(void) {
 /**
  * @inheritDoc
  */
-Error PhysicSystem::initialize(void) {
+Error PhysicSystem::initialize() {
     ASSERT(!m_bInitialized);
     
     s_idMainThread = ::GetCurrentThreadId();

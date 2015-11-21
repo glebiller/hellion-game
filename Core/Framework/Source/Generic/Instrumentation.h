@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <Common_generated.h>
 #include "System/Types.h"
 
 /**
@@ -29,7 +30,7 @@ public:
     /**
      * Basic constructor.
      */
-    Instrumentation(void);
+    Instrumentation();
 
     /**
      * Basic destructor.
@@ -127,9 +128,10 @@ public:
      * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
      *                          during this frame.
      */
-    void CaptureJobCounterTicks(Proto::SystemType jobType, i64 jobCounterTicks) {
+    void CaptureJobCounterTicks(Schema::SystemType jobType, i64 jobCounterTicks) {
         u32 jobIndex = System::Types::GetIndex(jobType);
-        if (jobIndex < Proto::SystemType_MAX) {
+#if defined(_MSC_VER)
+        if (jobIndex < Proto::SystemType) {
             //******************************
             // GDC - LAB 4 - Activity 3
             //
@@ -144,6 +146,7 @@ public:
             //
             //******************************
         }
+#endif
     }
 
     /**
@@ -153,7 +156,7 @@ public:
      * @return  i32 - Max number of job types.
      */
     i32 getJobCount() {
-        return (i32) Proto::SystemType_MAX;
+        return (i32) Schema::SystemType::Count ;
     }
 
     /**
@@ -164,7 +167,7 @@ public:
      *                      getJobCount.
      */
     void getJobRatios(f32* jobRatios) {
-        for (int i = Proto::SystemType_MAX; i < Proto::SystemType_MAX; i++) {
+        for (int i = 0; i < Schema::SystemType::Count; i++) {
             jobRatios[i] = m_pLastFrameRatio[i];
         }
     }

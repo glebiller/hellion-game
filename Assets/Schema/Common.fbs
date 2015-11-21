@@ -6,6 +6,7 @@ enum SystemType : short {
   AI = 2,
   Animation = 4,
   Audio = 8,
+  Count = 9,
   Graphic = 16,
   Gui = 32,
   Input = 64,
@@ -13,8 +14,13 @@ enum SystemType : short {
   Physic = 256,
 }
 
+struct vector2 {
+    x:float;
+    y:float;
+}
+
 table Property {
-  name:string (required);
+  name:string (required, key);
   value:[string];
 }
 
@@ -28,7 +34,7 @@ table Object {
   id:string (required);
   name:string;
   parent:string;
-  template:string;
+  templateObject:string;
   systemObjects:[SystemObject];
 }
 

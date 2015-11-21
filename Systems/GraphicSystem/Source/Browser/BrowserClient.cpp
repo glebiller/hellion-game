@@ -1,7 +1,7 @@
 #include "BrowserClient.h"
 
-#include "Browser\BrowserRenderHandler.h"
-#include "Browser\BrowserLifeSpanHandler.h"
+#include "Browser/BrowserRenderHandler.h"
+#include "Browser/BrowserLifeSpanHandler.h"
 
 BrowserClient::BrowserClient(CefLifeSpanHandler* lifeSpanHandler, BrowserRenderHandler* renderHandler)
         : m_lifeSpanHandler(lifeSpanHandler)
@@ -13,7 +13,7 @@ BrowserClient::BrowserClient(CefLifeSpanHandler* lifeSpanHandler, BrowserRenderH
     m_browserRouterRendererSide = CefMessageRouterRendererSide::Create(config);
 }
 
-BrowserClient::~BrowserClient(void) {
+BrowserClient::~BrowserClient() {
 }
 
 CefRefPtr<CefLifeSpanHandler> BrowserClient::GetLifeSpanHandler() {

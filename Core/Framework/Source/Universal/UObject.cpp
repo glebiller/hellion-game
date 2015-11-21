@@ -20,6 +20,7 @@
 #include "Manager/IServiceManager.h"
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
+#include "../../../Generated/src/Common_generated.h"
 
 /**
  * @inheritDoc
@@ -27,14 +28,14 @@
 UObject::UObject(UScene* pScene, std::string id, std::string name, IEntity* parent)
     : ISubject()
     , IEntity(id, name, parent)
-    , m_pScene(pScene)
-    , m_pObjectCCM(pScene->getObjectCCM()) {
+    , m_pObjectCCM(pScene->getObjectCCM())
+    , m_pScene(pScene) {
 }
 
 /**
  * @inheritDoc
  */
-UObject::~UObject(void) {
+UObject::~UObject() {
     //
     // Remove all the extensions.
     //
@@ -97,7 +98,7 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     //
     // Add the system object to the list.
     //
-    Proto::SystemType SystemType = pSystemObject->GetSystemType();
+    Schema::SystemType SystemType = pSystemObject->GetSystemType();
     m_ObjectExtensions[SystemType] = pSystemObject;
 
     //
@@ -120,7 +121,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     //
     // Get the iterator for the object.
     //
-    Proto::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
+    Schema::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
     auto SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;
@@ -166,14 +167,14 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
 /**
  * @inheritDoc
  */
-const UObject::SystemObjects& UObject::GetExtensions(void) {
+const UObject::SystemObjects& UObject::GetExtensions() {
     return m_ObjectExtensions;
 }
 
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
+ISystemObject* UObject::GetExtension(Schema::SystemType SystemType) {
     ISystemObject* pSystemObject = nullptr;
 
     auto it = m_ObjectExtensions.find(SystemType);

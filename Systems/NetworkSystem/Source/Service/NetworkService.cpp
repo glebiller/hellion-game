@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -44,7 +44,7 @@ NetworkService::NetworkService(NetworkSystem* networkSystem)
 /**
  * @inheritDoc
  */
-NetworkService::~NetworkService(void) {
+NetworkService::~NetworkService() {
     disconnect();
     delete m_pSocket;
 }
@@ -83,14 +83,14 @@ void NetworkService::send(const DownstreamMessageProto& downstreamMessageProto) 
 /**
  * @inheritDoc
  */
-void NetworkService::receive(void) {
+void NetworkService::receive() {
     m_ioService.poll();
 }
 
 /**
  * @inheritDoc
  */
-void NetworkService::disconnect(void) {
+void NetworkService::disconnect() {
     if (!m_connected) {
         return;
     }

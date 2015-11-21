@@ -20,13 +20,13 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-CustomLogListener::CustomLogListener(void) {
+CustomLogListener::CustomLogListener() {
 };
 
 /**
  * @inheritDoc
  */
-CustomLogListener::~CustomLogListener(void) {
+CustomLogListener::~CustomLogListener() {
 };
  
 /**
@@ -37,7 +37,7 @@ void CustomLogListener::messageLogged(const Ogre::String& message, Ogre::LogMess
         return;
     }
 
-    LOGOG_LEVEL_TYPE logLevel;
+    /*LOGOG_LEVEL_TYPE logLevel;
     switch (lml) {
     case Ogre::LogMessageLevel::LML_TRIVIAL:
         logLevel = LOGOG_LEVEL_DEBUG;
@@ -50,5 +50,5 @@ void CustomLogListener::messageLogged(const Ogre::String& message, Ogre::LogMess
         break;
     }
     
-    g_serviceManager->getLogService()->log(logLevel, "Ogre", message.c_str());
+    g_serviceManager->getLogService()->log(logLevel, "Ogre", message.c_str());*/
 };

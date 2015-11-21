@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -40,7 +40,7 @@ public:
     /**
      * Destructor.
      */
-    ~SceneChangesDebugger(void);
+    ~SceneChangesDebugger();
     
     /**
      * @inheritDoc
@@ -50,7 +50,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+    inline System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::All;
     }
 

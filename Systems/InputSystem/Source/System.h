@@ -30,22 +30,22 @@ public:
     /**
      * @inheritDoc
      */
-    InputSystem(void);
+    InputSystem();
 
     /**
      * @inheritDoc
      */
-    ~InputSystem(void);
+    ~InputSystem();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    Proto::SystemType GetSystemType(void) {
+    Proto::SystemType GetSystemType() {
         return Proto::SystemType::Input;
     }
 };

@@ -17,80 +17,39 @@
 #include <string>
 #include <vector>
 
+#include "Environment_generated.h"
 #include "Assert.h"
-#include "Proto.h"
 #include "System/ISystem.h"
 #include "System/ISystemObject.h"
 
 class UScene;
 
-/**
- * Gdf parser.
- */
 class DefinitionService {
 public:
-    /**
-     * Constructor.
-     *
-     * @param   sGDF            The gdf.
-     */
     DefinitionService();
 
-    /**
-     * Destructor.
-     */
     ~DefinitionService();
 
-    /**
-     * Parse environment.
-     */
     void parseEnvironment();
 
-    /**
-     * Parse systems.
-     */
     void parseSystems();
 
-    /**
-     * Parse scene.
-     *
-     * @param   sScene  The scene.
-     */
     void parseScene(UScene* scene, std::string sceneName);
 
-    /**
-     * Gets the startup scene.
-     *
-     * @return The startup scene.
-     */
-    std::string getStartupScene(void);
+    std::string getStartupScene();
 
 private:
-    /**
-     * Loads a prototype.
-     *
-     * @param   pszFile         The file.
-     * @param [in,out]  proto   If non-null, the prototype.
-     *
-     * @return  The prototype.
-     */
-    Error loadProto(std::string file, google::protobuf::Message* proto);
+    Error loadProto(std::string file, std::string* proto);
 
-    /**
-     * Loads system library.
-     *
-     * @param   type                The type.
-     * @param [in,out]  ppSystem    If non-null, the system.
-     */
-    Error loadSystemLibrary(Proto::SystemType type, ISystem** ppSystem);
+    Error loadSystemLibrary(const std::string type);
     
     struct SystemLib {
-        Handle      hLib;
+        void*      hLib;
         ISystem*    pSystem;
     };
 
     std::vector<SystemLib>                          m_systemLibs;
-    Proto::Application                              m_gdProto;
+    const Schema::Environment*                      m_gdProto;
     ISystem*                                        m_pSystem;
     ISystemScene*                                   m_pSystemScene;
 

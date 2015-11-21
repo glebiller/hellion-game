@@ -1,6 +1,0 @@
-include "Systems/GraphicSystem.fbs";
-include "Systems/InputSystem.fbs";
-include "Systems/NetworkSystem.fbs";
-include "Systems/PhysicSystem.fbs";
-
-namespace Schema;

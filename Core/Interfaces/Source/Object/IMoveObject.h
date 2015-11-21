@@ -43,7 +43,7 @@ public:
      *
      * @return  A constant pointer to the velocity.
      */
-    inline const Math::Vector3* getVelocity(void) {
+    inline const Math::Vector3* getVelocity() {
         return &m_velocity;
     }
 
@@ -52,7 +52,7 @@ public:
      *
      * @return  null if it fails, else the rotation.
      */
-    inline const Math::Vector3* getRotation(void) {
+    inline const Math::Vector3* getRotation() {
         return &m_rotation;
     }
 

@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -28,7 +28,7 @@ SceneChangesDebugger::SceneChangesDebugger(Debugger* debugger) :
 }
 
 
-SceneChangesDebugger::~SceneChangesDebugger(void) {
+SceneChangesDebugger::~SceneChangesDebugger() {
 }
 
 Error SceneChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {

@@ -73,7 +73,7 @@ PhysicScene::PhysicScene(ISystem* pSystem)
 
 ///////////////////////////////////////////////////////////////////////////////
 // ~HavokPhysicsScene - Default destructor
-PhysicScene::~PhysicScene(void) {
+PhysicScene::~PhysicScene() {
     if (m_bInitialized) {
         m_pWorld->markForWrite();
         m_pWorld->removeReference();
@@ -83,7 +83,7 @@ PhysicScene::~PhysicScene(void) {
 ///
 /// @inheritDoc
 ///
-Error PhysicScene::initialize(void) {
+Error PhysicScene::initialize() {
     ASSERT(!m_bInitialized);
     
     //

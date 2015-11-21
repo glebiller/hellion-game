@@ -19,7 +19,7 @@
 /**
  * @inheritDoc
  */
-void ExecuteFramework(void) {
+void ExecuteFramework() {
 #ifndef DEBUG_BUILD
     try
 #endif

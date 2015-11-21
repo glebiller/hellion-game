@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <cef_app.h>
+#include <include/cef_app.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
@@ -36,14 +36,14 @@ GraphicTask::GraphicTask(ISystemScene* pScene)
 ///
 /// @inheritDoc
 ///
-GraphicTask::~GraphicTask(void) {
+GraphicTask::~GraphicTask() {
 
 }
 
 ///
 /// @inheritDoc
 ///
-Error GraphicTask::initialize(void) {
+Error GraphicTask::initialize() {
     return Errors::Success;
 }
 
@@ -53,7 +53,8 @@ Error GraphicTask::initialize(void) {
 void GraphicTask::Update(f32 DeltaTime) {
     // Since rendering is a limiting serial stage in some (if not most) of the frames,
     // we do not want it to be preempted. So temporarily boost up its thread priority.
-    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    // TODO
+    //SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
     // Update GUI
     CefDoMessageLoopWork();
     //
@@ -65,7 +66,8 @@ void GraphicTask::Update(f32 DeltaTime) {
     // Since it's the pool thread, we know that normally it runs at normal priority.
     // In more general case we would have needed to remember the initial priority
     // before bringing it up.
-    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
+    // TODO
+    //SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
     //
     // Update objects for next frame
     //

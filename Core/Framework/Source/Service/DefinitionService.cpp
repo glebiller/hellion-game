@@ -12,13 +12,18 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Defines.h"
-#include <Windows.h>
+#include <Defines.h>
 
+#if defined(MSC_COMPILER)
+#include <Windows.h>
+#endif
+
+#include <fstream>
+#include <boost/dll.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 
-#include "Proto.h"
+#include "Environment_generated.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "System/ISystemTask.h"
@@ -32,18 +37,21 @@
  * @inheritDoc
  */
 DefinitionService::DefinitionService() {
-    Error result = loadProto("Application.adf.bin", &m_gdProto);
+    std::string applicationFile;
+    Error result = loadProto("Application.adf.bin", &applicationFile);
     ASSERT(result == Errors::Success);
+    m_gdProto = nullptr; // TODO
 }
 
 /**
  * @inheritDoc
  */
-DefinitionService::~DefinitionService(void) {
+DefinitionService::~DefinitionService() {
     //
     // Iterate through all the loaded libraries.
     //
     for (auto it = m_systemLibs.begin(); it != m_systemLibs.end(); it++) {
+#if defined(MSC_COMPILER)
         HMODULE hLib = reinterpret_cast<HMODULE>(it->hLib);
         //
         // Get the system destruction function.
@@ -54,6 +62,7 @@ DefinitionService::~DefinitionService(void) {
         }
 
         FreeLibrary(hLib);
+#endif
     }
 
     m_systemLibs.clear();
@@ -62,26 +71,25 @@ DefinitionService::~DefinitionService(void) {
 /**
  * @inheritDoc
  */
-void DefinitionService::parseEnvironment(void) {
-    ASSERT(m_gdProto.IsInitialized());
-    SettingService* settingService = IServiceManager::get()->getSettingService();
-    for (auto property : m_gdProto.properties()) {
-        settingService->add(property);
-    }
+void DefinitionService::parseEnvironment() {
+    // TODO save environment
+    //SettingService* settingService = IServiceManager::get()->getSettingService();
+    //settingService->initialize(nullptr);
 }
 
 /**
  * @inheritDoc
  */
-void DefinitionService::parseSystems(void) {
-    ASSERT(m_gdProto.systems_size() > 0);
-    for (auto system : m_gdProto.systems()) {
-        loadSystemLibrary(system.type(), &m_pSystem);
+void DefinitionService::parseSystems() {
+    BOOST_ASSERT(m_gdProto->systems()->size() > 0);
+    for (auto system : *m_gdProto->systems()) {
+        loadSystemLibrary(system->c_str());
         ASSERT(m_pSystem != NULL);
 
         // Get the default properties from system, then Initialize it
-        m_pSystem->setProperties(system.properties());
-        m_pSystem->initialize();
+        // TODO
+        //m_pSystem->setProperties(system->properties());
+        //m_pSystem->initialize();
         ASSERTMSG1(system.type() == m_pSystem->GetSystemType(),
                    "Parser identified an incorrect system type. It should be %s.", Proto::SystemType_Name(m_pSystem->GetSystemType()));
     }
@@ -91,12 +99,12 @@ void DefinitionService::parseSystems(void) {
  * @inheritDoc
  */
 void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
-    const auto& scenes = m_gdProto.scenes();
-    auto sceneIt = std::find(scenes.begin(), scenes.end(), sceneName);
+    const auto scenes = m_gdProto->scenes();
+    /*auto sceneIt = std::find(scenes->begin(), scenes->end(), sceneName.c_str());
     if (sceneIt == scenes.end()) {
         return;
     }
-    
+    */
     SystemService* systemService = IServiceManager::get()->getSystemService();
     
     //
@@ -109,20 +117,22 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     //
     // Parse the SDF file
     //
-    Proto::Scene sceneProto;
-    Error result = loadProto(*sceneIt + ".sdf.bin", &sceneProto);
+    std::string sceneFile;
+    Error result = loadProto(sceneName + ".sdf.bin", &sceneFile);
+    // TODO
+    /*const Schema::Scene* sceneProto = Schema::CreateScene(sceneFile.c_str()) nullptr;
     ASSERT(result == Errors::Success);
 
     //
     // Initialize the scene templates.
     //
-    scene->addTemplates(&sceneProto.templates());
+    scene->addTemplates(sceneProto->templates());
 
     //
     // Initialize the System scenes.
     //
-    for (auto system : sceneProto.systems()) {
-        m_pSystem = systemService->get(system.type());
+    for (auto system : *sceneProto->systems()) {
+        m_pSystem = systemService->get(system->type());
         ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", Proto::SystemType_Name(system.type()));
 
         if (m_pSystem != NULL) {
@@ -131,7 +141,7 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
             m_pSystemScene = it->second;
             ASSERT(m_pSystemScene != NULL);
             // Initialize system scene properties
-            m_pSystemScene->setProperties(system.properties());
+            m_pSystemScene->setProperties(system->properties());
             m_pSystemScene->initialize();
             m_pSystemScene->GetSystemTask<ISystemTask>()->initialize();
         }
@@ -140,8 +150,8 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     //
     // Initialize the scene objects.
     //
-    for (auto object : sceneProto.objects()) {
-        scene->createObject(&object);
+    for (auto object : *sceneProto->objects()) {
+        scene->createObject(object);
     }
 
     //
@@ -154,35 +164,35 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     //
     // Initialize the links.
     //
-    for (auto link : sceneProto.links()) {
-        UObject* pSubject = scene->FindObject(link.subject().c_str());
-        UObject* pObserver = scene->FindObject(link.observer().c_str());
+    for (auto link : *sceneProto->links()) {
+        UObject* pSubject = scene->FindObject(link->subject()->name()->c_str());
+        UObject* pObserver = scene->FindObject(link->observer()->name()->c_str());
 
         //
         // Get the extension for the object.
         //
-        ISystemObject* pSystemObserver = pSystemObserver = pObserver->GetExtension(link.observersystemtype());
+        ISystemObject* pSystemObserver = pSystemObserver = pObserver->GetExtension(link->observer()->systemType());
 
         //
         // Call the scene to register the links.
         //
-        if (link.subjectsystemtype() != Proto::SystemType::Null) {
-            ISystemObject* pSystemSubject = pSystemSubject = pSubject->GetExtension(link.subjectsystemtype());
+        if (link->subject()->systemType() != Proto::SystemType::Undefined) {
+            ISystemObject* pSystemSubject = pSystemSubject = pSubject->GetExtension(link->subject()->systemType());
             scene->CreateObjectLink(pSystemSubject, pSystemObserver);
         } else {
             scene->CreateObjectLink(pSubject, pSystemObserver);
         }
-    }
+    }*/
 }
 
-std::string DefinitionService::getStartupScene(void) {
-    return m_gdProto.startupscene();
+std::string DefinitionService::getStartupScene() {
+    return m_gdProto->startupScene()->c_str();
 }
 
 /**
  * @inheritDoc
  */
-Error DefinitionService::loadProto(std::string file, google::protobuf::Message* proto) {
+Error DefinitionService::loadProto(std::string file, std::string* proto) {
     boost::filesystem::path filePath(boost::filesystem::current_path() / file);
     if (!boost::filesystem::exists(filePath)) {
         return Errors::Failure;
@@ -190,10 +200,13 @@ Error DefinitionService::loadProto(std::string file, google::protobuf::Message* 
     
     // Read file
     std::fstream input(filePath.c_str(), std::ios::in | std::ios::binary);
-
-    // Build proto
-    proto->Clear();
-    proto->ParseFromIstream(&input);
+    if (!input.is_open()) {
+        return Errors::Failure;
+    }
+    *proto = std::string(std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>());
+    if (input.bad()) {
+        return Errors::Failure;
+    }
 
     // TEST
     //boost::filesystem::path filePatha(boost::filesystem::current_path() / "Environment.bin");
@@ -211,8 +224,20 @@ Error DefinitionService::loadProto(std::string file, google::protobuf::Message* 
 /**
  * @inheritDoc
  */
-Error DefinitionService::loadSystemLibrary(Proto::SystemType type,  ISystem** ppSystem) {
+Error DefinitionService::loadSystemLibrary(const std::string type) {
     Error Err = Errors::Failure;
+
+    boost::filesystem::path shared_library_path(".");               // argv[1] contains path to directory with our plugin library
+    shared_library_path /= type;
+    boost::function<void(IServiceManager*)> fnInitSystemLib = boost::dll::import<void (IServiceManager*)>(
+            shared_library_path, "InitializeSystemLib"
+    );
+
+    if (fnInitSystemLib != NULL) {
+        fnInitSystemLib(IServiceManager::get());
+    }
+
+#if defined(MSVC_COMPILER)
 
     std::string libraryName = Proto::SystemType_Name(type) + "System";
     HMODULE hLib = LoadLibraryA(libraryName.c_str());
@@ -250,8 +275,9 @@ Error DefinitionService::loadSystemLibrary(Proto::SystemType type,  ISystem** pp
         pSystem
     };
     m_systemLibs.push_back(systemLib);
-
     *ppSystem = pSystem;
+
+#endif
     return Errors::Success;
 }
 

@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -40,12 +40,12 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        ~CameraGraphicObject(void);
+        ~CameraGraphicObject();
         
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -55,14 +55,14 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
+        virtual System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;    
         }
         
         /**
          * @inheritDoc
          */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
+        virtual System::Types::BitMask GetDesiredSystemChanges() {
             return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
         }
         
@@ -73,11 +73,11 @@ class CameraGraphicObject : public GraphicObject {
 
     protected:
 
-        void setFOVy(Proto::RepeatedString* values);
+        void setFOVy(Schema::vector2* values);
 
-        void setClipDistances(Proto::RepeatedString* values);
+        void setClipDistances(Schema::vector2* values);
 
-        void setPolygonMode(Proto::RepeatedString* values);
+        void setPolygonMode(Schema::vector2* values);
 
     private:
 

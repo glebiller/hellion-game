@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -59,7 +59,7 @@ PhysicTask::PhysicTask(ISystemScene* pScene)
 ///
 /// @inheritDoc
 ///
-PhysicTask::~PhysicTask(void) {
+PhysicTask::~PhysicTask() {
  #ifdef HAVOK_VDB_ENABLED
     if (m_pVisualDebugger != nullptr) {
         m_pVisualDebugger->shutdown();
@@ -72,7 +72,7 @@ PhysicTask::~PhysicTask(void) {
 ///
 /// @inheritDoc
 ///
-Error PhysicTask::initialize(void) {
+Error PhysicTask::initialize() {
     m_pWorld = GetSystemScene<PhysicScene>()->getWorld();
     ASSERT(m_pWorld != nullptr);
 

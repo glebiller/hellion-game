@@ -37,7 +37,7 @@ public:
     /**
      * Default constructor.
      */
-    ISubject(void);
+    ISubject();
 
     /**
      * Destructor.
@@ -94,7 +94,7 @@ public:
      *
      * @return  A bitmask of the possible system changes.
      */
-    virtual System::Changes::BitMask GetPotentialSystemChanges(void) = 0;
+    virtual System::Changes::BitMask GetPotentialSystemChanges() = 0;
 
     /**
      * Publishes to attached Observers and ChanageManager that changes have occurred.
@@ -114,7 +114,7 @@ protected:
      * @return One of the following Error codes: Error::Success No error. Error::InvalidAddress
      *          pInObserver and/or pInSubject was NULL.
      */
-    virtual void PreDestruct(void);
+    virtual void PreDestruct();
 
     /**
      * Defines a structure used by the subject to store information about observers for PostChanges

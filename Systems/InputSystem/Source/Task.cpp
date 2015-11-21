@@ -29,14 +29,14 @@ InputTask::InputTask(ISystemScene* pScene) : ISystemTask(pScene) {
 ///
 /// @inheritDoc
 ///
-InputTask::~InputTask(void) {
+InputTask::~InputTask() {
 
 }
 
 ///
 /// @inheritDoc
 ///
-Error InputTask::initialize(void) {
+Error InputTask::initialize() {
     return Errors::Success;
 }
 

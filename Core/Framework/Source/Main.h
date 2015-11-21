@@ -15,4 +15,4 @@
 //
 // Calls the framework to start executing.=
 //
-extern void ExecuteFramework(void);
+extern void ExecuteFramework();

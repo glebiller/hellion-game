@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -43,12 +43,12 @@ public:
     ///
     /// @inheritDoc.
     ///
-    virtual ~PhysicObject(void);
+    virtual ~PhysicObject();
 
     ///
     /// @inheritDoc.
     ///
-    inline Proto::SystemType GetSystemType(void) {
+    inline Proto::SystemType GetSystemType() {
         return Proto::SystemType::Physic;
     };
 

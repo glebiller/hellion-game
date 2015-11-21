@@ -15,9 +15,12 @@
 // Instrumentation class, to collect execution and performance stats.
 
 #include <sstream>
+
+#if defined(_MSC_VER)
 #include <tchar.h>
 #include <pdh.h>
 #include <pdhmsg.h>
+#endif
 
 #include "Manager/ServiceManager.h"
 #include "Manager/ITaskManager.h"
@@ -27,7 +30,7 @@
 // Constant number of seconds per update.
 const f32 Instrumentation::m_secondsPerUpdate = 1.0f;
 
-
+#if defined(_MSC_VER)
 // Local helper class, to hold details of one processor counter.
 class ProcessorCounter {
     public:
@@ -49,7 +52,7 @@ class ProcessorCounter {
             }
         }
 
-        void Initialize(void) {
+        void Initialize() {
             // Create a PDH Query for reading real-time data, and add the counter to it.
             PDH_STATUS status = PdhOpenQuery(NULL, 0, &m_hQuery);
 
@@ -59,7 +62,7 @@ class ProcessorCounter {
                 // If we can't add this counter to our query, it's not a very useful
                 // query.  Later uses of this query will always fail.  There isn't much
                 // else we can do here, so just ignore the return value.
-                (void) PdhAddCounter(m_hQuery, m_szCounterPath, 0, &m_hCounter);
+                () PdhAddCounter(m_hQuery, m_szCounterPath, 0, &m_hCounter);
             }
         }
 
@@ -71,16 +74,17 @@ class ProcessorCounter {
         ProcessorCounter() {};
         LPTSTR m_szCounterPath;
 };
-
+#endif
 
 // Instrumentation class constructor.  Hook the instrumentation into the service
 // manager and set up performance counters.
-Instrumentation::Instrumentation(void) :
+Instrumentation::Instrumentation() :
     m_currentFPS(0.0f),
     m_secondsSinceLastUpdate(0.0f),
     m_framesSinceLastUpdate(0),
     m_activeThreadCount(0),
     m_numCounters(0) {
+#if defined(_MSC_VER)
     // Register this provider with the service manager.
     //Singletons::ServiceManager.RegisterInstrumentationProvider(this);
     // Prepare to monitor CPU performance.
@@ -240,9 +244,11 @@ Instrumentation::Instrumentation(void) :
     // Capture the first value of a tick.
     m_LastUpdateTick = __rdtsc();
     return;
+#endif
 }
 
 Instrumentation::~Instrumentation() {
+#if defined(_MSC_VER)
     // Delete all locally-allocated things.
     delete [] m_CPUPercentCounters;
     // Undo the registration, probably not too important since we're shutting down.
@@ -264,6 +270,7 @@ Instrumentation::~Instrumentation() {
     }
 
     return;
+#endif
 }
 
 // Get some data periodically.  Called once per frame.
@@ -274,6 +281,7 @@ Instrumentation::~Instrumentation() {
 // Thus, there is no need to make either the read or write code thread-safe.
 // If this calling pattern is ever changed, make both ends thread-safe.
 void Instrumentation::UpdatePeriodicData(f32 deltaTime) {
+#if defined(_MSC_VER)
     // Only get it if it has been a while.
     m_framesSinceLastUpdate++;
     m_secondsSinceLastUpdate += deltaTime;
@@ -356,4 +364,5 @@ void Instrumentation::UpdatePeriodicData(f32 deltaTime) {
         m_secondsSinceLastUpdate = 0.0f;
         m_framesSinceLastUpdate = 0;
     }
+#endif
 }

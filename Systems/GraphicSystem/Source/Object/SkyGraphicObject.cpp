@@ -33,7 +33,7 @@ SkyGraphicObject::SkyGraphicObject(ISystemScene* pSystemScene, IEntity* entity)
 ///
 /// @inheritDoc.
 ///
-SkyGraphicObject::~SkyGraphicObject(void) {
+SkyGraphicObject::~SkyGraphicObject() {
 }
 
 ///

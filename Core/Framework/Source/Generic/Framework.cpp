@@ -12,8 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <fstream>
+
 #include "Defines.h"
-#include "Proto.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Debugger/Debugger.h"
@@ -25,7 +26,8 @@
 #include "Generic/Instrumentation.h"
 #include "Generic/Framework.h"
 
-#include <cef_app.h>
+#include "include/cef_base.h"
+#include "include/cef_app.h"
 
 ///
 /// @inheritDoc.
@@ -53,17 +55,29 @@ Framework::~Framework() {
     delete m_serviceManager;
 }
 
+inline bool load_file(const char* name, std::string* buf) {
+    std::ifstream ifs(name, std::ifstream::in);
+    if (!ifs.is_open())
+        return false;
+    *buf = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+    return !ifs.bad();
+}
+
 ///
 /// @inheritDoc.
 ///
 Error Framework::Initialize() {
+    std::string environmentFile;
+    load_file("Environment.json", &environmentFile);
+    m_environment = Schema::GetEnvironment(environmentFile.c_str());
+
     //
     // Init CEF
     // 
     CefMainArgs args;
     CefExecuteProcess(args, nullptr, NULL);
 
-    m_definitionService->parseEnvironment();
+    //m_definitionService->parseEnvironment();
     
     //
     // Init debugger

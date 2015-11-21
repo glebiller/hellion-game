@@ -37,7 +37,7 @@ LightGraphicObject::LightGraphicObject(ISystemScene* pSystemScene, IEntity* enti
 /**
  * @inheritDoc
  */
-LightGraphicObject::~LightGraphicObject(void) {
+LightGraphicObject::~LightGraphicObject() {
     if (m_pLight != NULL) {
         //m_pNode->detachObject(m_pLight);
         POGRESCENEMGR->destroyLight(m_pLight);
@@ -47,7 +47,7 @@ LightGraphicObject::~LightGraphicObject(void) {
 /**
  * @inheritDoc
  */
-Error LightGraphicObject::initialize(void) {
+Error LightGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
 
     m_pLight = POGRESCENEMGR->createLight(m_entity->getName());

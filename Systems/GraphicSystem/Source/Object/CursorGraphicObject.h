@@ -42,12 +42,12 @@ class CursorGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        ~CursorGraphicObject(void);
+        ~CursorGraphicObject();
 
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -57,14 +57,14 @@ class CursorGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Types::BitMask GetDesiredSystemChanges() {
             return System::Changes::Input::Velocity;
         };
         

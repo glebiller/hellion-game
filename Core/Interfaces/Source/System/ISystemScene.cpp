@@ -54,13 +54,6 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
 /**
  * @inheritDoc
  */
-void ISystemScene::createTask(void) {
-    m_pSystemTask = m_TaskFactory(this);
-}
-
-/**
- * @inheritDoc
- */
 ISystemObject* ISystemScene::CreateObject(IEntity* entity, std::string type) {
     ASSERT(m_bInitialized);
 

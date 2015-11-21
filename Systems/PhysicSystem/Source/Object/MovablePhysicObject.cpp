@@ -40,14 +40,14 @@ MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, IEntity* en
 /**
  * @inheritDoc
  */
-MovablePhysicObject::~MovablePhysicObject(void) {
+MovablePhysicObject::~MovablePhysicObject() {
     
 }
 
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::initialize(void) {
+Error MovablePhysicObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

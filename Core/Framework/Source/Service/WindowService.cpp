@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <stddef.h>
 #include "Service/WindowService.h"
 
 /**
@@ -24,34 +25,34 @@ void WindowService::setHandle(size_t handle) {
 /**
  * @inheritDoc
  */
-size_t WindowService::getHandle(void) {
+size_t WindowService::getHandle() {
     return m_handle;
 }
 
 /**
  * @inheritDoc
  */
-void WindowService::setRenderWindow(Handle renderWindow) {
+void WindowService::setRenderWindow(void* renderWindow) {
     m_renderWindow = renderWindow;
 }
 
 /**
  * @inheritDoc
  */
-Handle WindowService::getRenderWindow(void) {
+void* WindowService::getRenderWindow() {
     return m_renderWindow;
 }
 
 /**
  * @inheritDoc
  */
-void WindowService::setBrowser(Handle browser) {
+void WindowService::setBrowser(void* browser) {
     m_browser = browser;
 }
 
 /**
  * @inheritDoc
  */
-Handle WindowService::getBrowser(void) {
+void* WindowService::getBrowser() {
     return m_browser;
 }

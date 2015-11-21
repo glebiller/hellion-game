@@ -33,13 +33,13 @@ ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, IEntity* 
 /**
  * @inheritDoc
  */
-ConnectNetworkObject::~ConnectNetworkObject(void) {
+ConnectNetworkObject::~ConnectNetworkObject() {
 }
 
 /**
  * @inheritDoc
  */
-Error ConnectNetworkObject::initialize(void) {
+Error ConnectNetworkObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

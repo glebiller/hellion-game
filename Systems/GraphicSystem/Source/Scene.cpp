@@ -56,30 +56,28 @@ GraphicScene::GraphicScene(ISystem* pSystem)
     , m_pSceneManager(nullptr)
     , m_pRootNode(nullptr)
     , m_FogMode(Ogre::FOG_NONE) {
-    m_TaskFactory = boost::factory<GraphicTask*>();
+    //m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
     
-    m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
-    
-    m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
+    /*m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Mesh"] = boost::factory<MeshGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
     m_ObjectFactories["Sky"] = boost::factory<SkyGraphicObject*>();
-    m_ObjectFactories["Terrain"] = boost::factory<TerrainGraphicObject*>();
+    m_ObjectFactories["Terrain"] = boost::factory<TerrainGraphicObject*>();*/
 }
 
 /**
  * @inheritDoc
  */
-GraphicScene::~GraphicScene(void) {
+GraphicScene::~GraphicScene() {
     GetSystem<GraphicSystem>()->getRoot()->destroySceneManager(m_pSceneManager);
 }
 
 /**
  * @inheritDoc
  */
-Error GraphicScene::initialize(void) {
+Error GraphicScene::initialize() {
     ASSERT(!m_bInitialized);
 
     m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
@@ -144,9 +142,13 @@ void GraphicScene::ProcessRange(u32 begin, u32 end) {
 /**
  * @inheritDoc
  */
-void GraphicScene::setAmbientLight(Proto::RepeatedString* values) {
-    auto value = values->begin();
+void GraphicScene::setAmbientLight(Schema::vector2* values) {
+    /*auto value = values->begin();
     m_ambientLight.r = boost::lexical_cast<f32>(*value);
     m_ambientLight.g = boost::lexical_cast<f32>(*(++value));
-    m_ambientLight.b = boost::lexical_cast<f32>(*(++value));
+    m_ambientLight.b = boost::lexical_cast<f32>(*(++value));*/
+}
+
+void GraphicScene::createTask() {
+    m_pSystemTask = new GraphicTask(this);
 }

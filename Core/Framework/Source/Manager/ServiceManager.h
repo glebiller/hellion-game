@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -32,17 +32,17 @@ public:
     /**
      * Constructor.
      */
-    ServiceManager(void);
+    ServiceManager();
 
     /**
      * Destructor.
      */
-    ~ServiceManager(void);
+    ~ServiceManager();
 
     /**
      * @inheritDoc
      */
-    ITaskManager* getTaskManager(void) {
+    ITaskManager* getTaskManager() {
         return m_taskManager;
     };
     
@@ -56,35 +56,35 @@ public:
     /**
      * @inheritDoc
      */
-    LogService* getLogService(void) {
+    LogService* getLogService() {
         return m_logService;
     };
     
     /**
      * @inheritDoc
      */
-    RuntimeService* getRuntimeService(void) {
+    RuntimeService* getRuntimeService() {
         return m_runtimeService;
     };
     
     /**
      * @inheritDoc
      */
-    SettingService* getSettingService(void) {
+    SettingService* getSettingService() {
         return m_settingService;
     };
     
     /**
      * @inheritDoc
      */
-    SystemService* getSystemService(void) {
+    SystemService* getSystemService() {
         return m_systemService;
     };
     
     /**
      * @inheritDoc
      */
-    WindowService* getWindowService(void) {
+    WindowService* getWindowService() {
         return m_windowService;
     };
 

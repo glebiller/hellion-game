@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include "Proto/Common.pb.h"
 #include "System/Types.h"
 
 namespace Task {
@@ -28,7 +27,7 @@ namespace Task {
         Task_MAX
     };
 
-    inline PerformanceHint getPerformanceHint(Proto::SystemType systemType) {
+    inline PerformanceHint getPerformanceHint(Schema::SystemType systemType) {
         // The indices of this array need to match System::TypeIndices.
         // Custom type indices are added here for convenience, but they are not guaranteed
         // to match (they're created in code with System::Types::MakeCustom()).

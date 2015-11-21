@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -49,13 +49,13 @@ NetworkScene::NetworkScene(ISystem* pSystem)
 /**
  * @inheritDoc
  */
-NetworkScene::~NetworkScene(void) {
+NetworkScene::~NetworkScene() {
 }
 
 /**
  * @inheritDoc
  */
-Error NetworkScene::initialize(void) {
+Error NetworkScene::initialize() {
     ASSERT(!m_bInitialized);
 
     m_bInitialized = true;

@@ -41,7 +41,7 @@ Scheduler::Scheduler()
 ///
 /// @inheritDoc
 ///
-Scheduler::~Scheduler(void) {
+Scheduler::~Scheduler() {
     m_pTaskManager->Shutdown();
     delete m_pTaskManager;
 }
@@ -49,7 +49,7 @@ Scheduler::~Scheduler(void) {
 ///
 /// @inheritDoc
 ///
-void Scheduler::init(void) {
+void Scheduler::init() {
     m_pTaskManager->Init();
 }
 
@@ -74,7 +74,7 @@ void Scheduler::setScene(const UScene* pScene) {
 ///
 /// @inheritDoc
 ///
-void Scheduler::execute(void) {
+void Scheduler::execute() {
     //
     // Get the delta time; seconds since last Execute call.
     //
@@ -105,7 +105,7 @@ void Scheduler::execute(void) {
     // Schedule the scenes that are ready for execution.
     //
     u32 cScenesToExecute = 0;
-    ISystemTask* aScenesToExecute[Proto::SystemType_MAX];
+    ISystemTask* aScenesToExecute[Schema::Count];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
@@ -119,7 +119,7 @@ void Scheduler::execute(void) {
 /// @inheritDoc
 ///
 void Scheduler::waitForScenes() {
-    ISystemTask* aScenesToWaitFor[Proto::SystemType_MAX];
+    ISystemTask* aScenesToWaitFor[Schema::Count];
     u32 cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {

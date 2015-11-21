@@ -49,7 +49,7 @@ InputScene::InputScene(ISystem* pSystem)
 /**
  * @inheritDoc
  */
-InputScene::~InputScene(void) {
+InputScene::~InputScene() {
     OISB::System::getSingleton().destroyActionSchema(m_defaultSchema);
 
 }
@@ -57,7 +57,7 @@ InputScene::~InputScene(void) {
 /**
  * @inheritDoc
  */
-Error InputScene::initialize(void) {
+Error InputScene::initialize() {
     ASSERT(!m_bInitialized);
     
     m_quitInputAction->bind("Keyboard/ECHAP");

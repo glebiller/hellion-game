@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -42,12 +42,12 @@ class GraphicObjectLight : public GraphicObject {
         /**
          * @inheritDoc
          */
-        ~GraphicObjectLight(void);
+        ~GraphicObjectLight();
         
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -57,14 +57,14 @@ class GraphicObjectLight : public GraphicObject {
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Types::BitMask GetDesiredSystemChanges() {
             return System::Changes::Input::Velocity;
         };
         

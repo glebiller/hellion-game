@@ -17,20 +17,20 @@
 /**
  * @inheritDoc
  */
-SystemService::SystemService(void) {
+SystemService::SystemService() {
 }
 
 /**
  * @inheritDoc
  */
-SystemService::~SystemService(void) {
+SystemService::~SystemService() {
 }
 
 /**
  * @inheritDoc
  */
 Error SystemService::add(ISystem* pSystem) {
-    Proto::SystemType systemType = pSystem->GetSystemType();
+    Schema::SystemType systemType = pSystem->GetSystemType();
     ASSERT(m_systems.find(systemType) == m_systems.end());
     m_systems[systemType] = pSystem;
     return Errors::Success;
@@ -39,7 +39,7 @@ Error SystemService::add(ISystem* pSystem) {
 /**
  * @inheritDoc
  */
-Error SystemService::remove(const Proto::SystemType SystemType) {
+Error SystemService::remove(const Schema::SystemType SystemType) {
     Error Err = Errors::Success;
     auto it = m_systems.find(SystemType);
     if (it != m_systems.end()) {
@@ -51,7 +51,7 @@ Error SystemService::remove(const Proto::SystemType SystemType) {
 /**
  * @inheritDoc
  */
-ISystem* SystemService::get(const Proto::SystemType SystemType) {
+ISystem* SystemService::get(const Schema::SystemType SystemType) {
     ISystem* pSystem = nullptr;
     auto it = m_systems.find(SystemType);
     if (it != m_systems.end()) {
@@ -63,7 +63,7 @@ ISystem* SystemService::get(const Proto::SystemType SystemType) {
 /**
  * @inheritDoc
  */
-std::map<Proto::SystemType, ISystem*> SystemService::get(void) {
+std::map<Schema::SystemType, ISystem*> SystemService::get() {
     return m_systems;
 }
 

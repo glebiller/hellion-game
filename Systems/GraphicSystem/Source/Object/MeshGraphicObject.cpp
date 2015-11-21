@@ -47,14 +47,14 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene* pSystemScene, IEntity* entity
     , m_Orientation(Math::Quaternion::Zero)
     , m_Scale(Math::Vector3::One)
     , m_Dirty(true) {
-    m_propertySetters["Mesh"] = boost::bind(&MeshGraphicObject::setMeshName, this, _1);
+    //m_propertySetters["Mesh"] = boost::bind(&MeshGraphicObject::setMeshName, this, _1);
 }
 
 
 /**
  * @inheritDoc
  */
-MeshGraphicObject::~MeshGraphicObject(void) {
+MeshGraphicObject::~MeshGraphicObject() {
     if (m_pEntity != NULL) {
         POGRESCENEMGR->destroyEntity(m_pEntity);
     }
@@ -67,7 +67,7 @@ MeshGraphicObject::~MeshGraphicObject(void) {
 /**
  * @inheritDoc
  */
-Error MeshGraphicObject::initialize(void) {
+Error MeshGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
 
     m_pNode->attachObject(m_pEntity);
@@ -104,11 +104,11 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 /**
  * @inheritDoc
  */
-void MeshGraphicObject::setMeshName(Proto::RepeatedString* values) {
+void MeshGraphicObject::setMeshName(std::string values) {
     if (!m_bInitialized) {
-        auto value = values->begin();
+        /*auto value = values->begin();
         m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), *value);
-        ASSERT(m_pEntity != NULL);
+        ASSERT(m_pEntity != NULL);*/
     }
 }
 

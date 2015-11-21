@@ -8,6 +8,7 @@ endif(MSVC)
 
 check_root_module()
 
-add_project_sources("Source")
+
+add_project_sources("src")
 add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCES})
-set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE C++)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

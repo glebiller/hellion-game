@@ -21,10 +21,9 @@
 #include "Service/SystemService.h"
 #include "Service/WindowService.h"
 
-/**
- * @inheritDoc
- */
-ServiceManager::ServiceManager(void)
+IServiceManager* IServiceManager::sm_instance = nullptr;
+
+ServiceManager::ServiceManager()
     : IServiceManager()
     , m_logService(new LogService())
     , m_runtimeService(new RuntimeService())
@@ -33,10 +32,7 @@ ServiceManager::ServiceManager(void)
     , m_windowService(new WindowService()) {
 }
 
-/**
- * @inheritDoc
- */
-ServiceManager::~ServiceManager(void) {
+ServiceManager::~ServiceManager() {
     delete m_logService;
     delete m_runtimeService;
     delete m_settingService;
@@ -44,4 +40,3 @@ ServiceManager::~ServiceManager(void) {
     delete m_windowService;
 }
 
-IServiceManager* ServiceManager::sm_instance = nullptr;

@@ -19,6 +19,7 @@
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
+#include "Common_generated.h"
 
 class Instrumentation;
 class TaskManager;
@@ -43,7 +44,7 @@ protected:
     void*               m_pParam;
 
 #if defined(STATISTICS_BY_JOB_TYPE)
-    Proto::SystemType   m_jobType;
+    Schema::SystemType   m_jobType;
 #endif
 
 #if defined(USE_THREAD_PROFILER)

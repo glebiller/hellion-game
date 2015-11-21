@@ -30,13 +30,13 @@ ParticleGraphicObject::ParticleGraphicObject(ISystemScene* pSystemScene, IEntity
 /**
  * @inheritDoc
  */
-ParticleGraphicObject::~ParticleGraphicObject(void) {
+ParticleGraphicObject::~ParticleGraphicObject() {
 }
 
 /**
  * @inheritDoc
  */
-Error ParticleGraphicObject::initialize(void) {
+Error ParticleGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
 
     m_bInitialized = true;

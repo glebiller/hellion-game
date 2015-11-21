@@ -1,0 +1,9 @@
+namespace Proto.Message;
+
+import "Proto/Common.fbs";
+
+table Authenticated {
+    players:[Object];
+}
+
+root_type Authenticated;

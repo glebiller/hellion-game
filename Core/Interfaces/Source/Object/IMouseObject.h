@@ -44,12 +44,12 @@ class IMouseObject {
         /// Gets the mouse button data.
         /// </summary>
         /// <returns>A constant to the mouse button data.</returns>
-        virtual const MouseButtonData GetMouseButtonData(void) = 0;
+        virtual const MouseButtonData GetMouseButtonData() = 0;
 
         /// <summary>
         /// Gets the mouse position data.
         /// </summary>
         /// <returns>A constant pointer to the mouse position data.</returns>
-        virtual const Math::Vector3* GetMousePosition(void) = 0;
+        virtual const Math::Vector3* GetMousePosition() = 0;
 
 };

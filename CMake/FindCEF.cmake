@@ -33,57 +33,56 @@
 #
 #   ====================================================================
 
+include(SelectLibraryConfigurations)
 include(FindPackageHandleStandardArgs)
 
-if(NOT CEF_SRC_ROOT_FOLDER)
-    set(CEF_SRC_ROOT_FOLDER CEF_SRC_ROOT_FOLDER_NOT_FOUND 
-        CACHE PATH "Chromium Embedded Framework root folder")
-endif(NOT CEF_SRC_ROOT_FOLDER)
+if (NOT CEF_SRC_ROOT_FOLDER)
+    set(CEF_SRC_ROOT_FOLDER CEF_SRC_ROOT_FOLDER_NOT_FOUND
+            CACHE PATH "Chromium Embedded Framework root folder")
+endif (NOT CEF_SRC_ROOT_FOLDER)
 
 # The Chromium Embedded Framework library
 find_library(CEF_LIBRARY_RELEASE
-   NAMES libcef
-   PATHS ${CEF_SRC_ROOT_FOLDER}/Release)
+        NAMES libcef "Chromium Embedded Framework"
+        PATHS ${CEF_SRC_ROOT_FOLDER}/Release)
 mark_as_advanced(CEF_LIBRARY_RELEASE)
 
 find_library(CEF_DLL_WRAPPER_RELEASE
-   NAMES libcef_dll_wrapper
-   PATHS ${CEF_SRC_ROOT_FOLDER}/Release)
+        NAMES libcef_dll_wrapper
+        PATHS ${CEF_SRC_ROOT_FOLDER}/Release)
 mark_as_advanced(CEF_DLL_WRAPPER_RELEASE)
 
 find_library(CEF_LIBRARY_DEBUG
-   NAMES libcef
-   PATHS ${CEF_SRC_ROOT_FOLDER}/Debug)
+        NAMES libcef "Chromium Embedded Framework"
+        PATHS ${CEF_SRC_ROOT_FOLDER}/Debug)
 mark_as_advanced(CEF_LIBRARY_DEBUG)
 
 find_library(CEF_DLL_WRAPPER_DEBUG
-   NAMES libcef_dll_wrapper
-   PATHS ${CEF_SRC_ROOT_FOLDER}/Debug)
+        NAMES libcef_dll_wrapper
+        PATHS ${CEF_SRC_ROOT_FOLDER}/Debug)
 mark_as_advanced(CEF_DLL_WRAPPER_DEBUG)
 
-if(NOT CEF_LIBRARY_DEBUG AND NOT CEF_DLL_WRAPPER_RELEASE)
-  # There is no debug library
-  set(CEF_LIBRARIES_DEBUG ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE})
-  set(CEF_LIBRARIES     ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE})
+if (NOT CEF_LIBRARY_DEBUG AND NOT CEF_DLL_WRAPPER_RELEASE)
+    # There is no debug library
+    set(CEF_LIBRARIES_DEBUG ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE})
+    set(CEF_LIBRARIES ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE})
 else(NOT CEF_LIBRARY_DEBUG AND NOT CEF_DLL_WRAPPER_RELEASE)
-  # There IS a debug library
-  set(CEF_LIBRARIES
-      optimized ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE}
-      debug     ${CEF_LIBRARY_DEBUG} ${CEF_DLL_WRAPPER_DEBUG}
-  )
-endif(NOT CEF_LIBRARY_DEBUG AND NOT CEF_DLL_WRAPPER_RELEASE)
+    # There IS a debug library
+    set(CEF_LIBRARIES
+            optimized ${CEF_LIBRARY_RELEASE} ${CEF_DLL_WRAPPER_RELEASE}
+            debug ${CEF_LIBRARY_DEBUG} ${CEF_DLL_WRAPPER_DEBUG}
+    )
+endif (NOT CEF_LIBRARY_DEBUG AND NOT CEF_DLL_WRAPPER_RELEASE)
 
 # Find the include directory
-find_path(CEF_INCLUDE_DIR
-    cef_version.h
-    PATHS ${CEF_SRC_ROOT_FOLDER}/include
+find_path(CEF_INCLUDE_DIR "include/cef_version.h"
+        PATHS ${CEF_SRC_ROOT_FOLDER}
 )
-set(CEF_INCLUDE_DIR ${CEF_SRC_ROOT_FOLDER} ${CEF_INCLUDE_DIR})
 mark_as_advanced(CEF_INCLUDE_DIR)
 
 find_package_handle_standard_args(CEF DEFAULT_MSG
-    CEF_LIBRARY_RELEASE CEF_INCLUDE_DIR)
+        CEF_LIBRARY_RELEASE CEF_INCLUDE_DIR)
 
-if(CEF_FOUND)
+if (CEF_FOUND)
     set(CEF_INCLUDE_DIRS ${CEF_INCLUDE_DIR})
-endif(CEF_FOUND)
+endif (CEF_FOUND)

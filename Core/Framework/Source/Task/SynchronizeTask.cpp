@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.  
 
+#include <mutex>
 #include <tbb/task.h>
 
 #include "Assert.h"
@@ -19,7 +20,8 @@
 #include "Manager/TaskManager.h"
 #include "Task/SynchronizeTask.h"
 
-Handle SynchronizeTask::m_hAllCallbacksInvokedEvent = NULL;
+std::mutex SynchronizeTask::m_allCallbacksMutex;
+std::condition_variable SynchronizeTask::m_hAllCallbacksInvokedEvent;
 ITaskManager::JobFunction SynchronizeTask::m_fCallback = NULL;
 void* SynchronizeTask::m_pCallbackParam = NULL;
 volatile long SynchronizeTask::m_lCallbacksCount = 0;
@@ -32,15 +34,11 @@ tbb::task* SynchronizeTask::execute() {
     ASSERT(m_hAllCallbacksInvokedEvent != NULL);
     m_fCallback(m_pCallbackParam);
 
-#if defined(MSC_COMPILER)
-    if (InterlockedDecrement(&m_lCallbacksCount) == 0) {
-        // set all of the SynchronizeTasks free
-        SetEvent(m_hAllCallbacksInvokedEvent);
+    std::unique_lock<std::mutex> lock(m_allCallbacksMutex);
+    if (m_lCallbacksCount-- == 0) {
+        m_hAllCallbacksInvokedEvent.notify_all();
     } else {
-        // wait for somebody else to finish up
-        WaitForSingleObject(m_hAllCallbacksInvokedEvent, INFINITE);
+        m_hAllCallbacksInvokedEvent.wait(lock);
     }
-#endif
-
     return NULL;
 };

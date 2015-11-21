@@ -14,7 +14,7 @@
 
 #include "BrowserRequestHandler.h"
 
-#include <cef_app.h>
+#include <include/cef_app.h>
 
 /**
  * @inheritDoc

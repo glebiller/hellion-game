@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -32,7 +32,7 @@ public:
     /**
      * Default destructor.
      */
-    ~NetworkService(void);
+    ~NetworkService();
 
     /**
      * Connect to the remote server.
@@ -52,12 +52,12 @@ public:
     /**
      * Receive the messages from the server.
      */
-    void receive(void);
+    void receive();
 
     /**
      * If we are connected, then disconnect.
      */
-    void disconnect(void);
+    void disconnect();
 
 private:
 

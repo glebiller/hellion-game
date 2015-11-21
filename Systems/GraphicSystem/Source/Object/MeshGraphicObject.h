@@ -40,12 +40,12 @@ class MeshGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        ~MeshGraphicObject(void);
+        ~MeshGraphicObject();
 
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -55,14 +55,14 @@ class MeshGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Types::BitMask GetDesiredSystemChanges() {
             return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
         };
         
@@ -73,7 +73,7 @@ class MeshGraphicObject : public GraphicObject {
 
     protected:
 
-        void setMeshName(Proto::RepeatedString* values);
+        void setMeshName(std::string value);
 
     private:
         static u32                          sm_EntityId;

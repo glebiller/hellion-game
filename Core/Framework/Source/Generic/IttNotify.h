@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -15,6 +15,18 @@
 #pragma once
 
 #include "Defines.h"
+#include "DataTypes.h"
+#include "Common_generated.h"
+
+#if defined(GCC_COMPILER)
+#include <cstdint>
+
+__inline__ u64 __rdtsc() {
+    u32 lo, hi;
+    __asm__ __volatile__("rdtscp" : "=a"(lo), "=d"(hi) :: "ecx" );
+    return (u64)hi << 32 | lo;
+}
+#endif
 
 //
 // This disables warning 4127 which is a warning about using a constant in a conditional. This
@@ -45,8 +57,8 @@
     #define PROFILE_ALL            0xFF
     #define MONITORING             (PROFILE_AI | PROFILE_RENDER)
 
-    #define __ITT_EVENT_START(evt, system) if (system & MONITORING) { __itt_event_start(evt); } else { (void)0; }
-    #define __ITT_EVENT_END(evt, system)   if (system & MONITORING) { __itt_event_end(evt); } else { (void)0; }
+    #define __ITT_EVENT_START(evt, system) if (system & MONITORING) { __itt_event_start(evt); } else { ()0; }
+    #define __ITT_EVENT_END(evt, system)   if (system & MONITORING) { __itt_event_end(evt); } else { ()0; }
 
     #define __ITT_DEFINE_STATIC_EVENT(evt, name, len) static __itt_event evt = __itt_event_createA( name, len )
     #define __ITT_CREATE_EVENT(evt, name, len) evt = __itt_event_createA( name, len )
@@ -69,7 +81,7 @@
 #if defined(STATISTICS_BY_JOB_TYPE)
 
 #define DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)                 \
-     , Proto::SystemType jobType                                        \
+     , Schema::SystemType jobType                                        \
      DECLARE_TP_EVENT_ARG(tpEvent)
 
 #define PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)                    \

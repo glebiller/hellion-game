@@ -40,14 +40,14 @@ PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, IEntity* en
 /**
  * @inheritDoc
  */
-PlayerNetworkObject::~PlayerNetworkObject(void) {
+PlayerNetworkObject::~PlayerNetworkObject() {
     
 }
 
 /**
  * @inheritDoc
  */
-Error PlayerNetworkObject::initialize(void) {
+Error PlayerNetworkObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

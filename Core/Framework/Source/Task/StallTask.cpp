@@ -13,13 +13,14 @@
 // responsibility to update it.  
 
 #include <tbb/task.h>
+#include <condition_variable>
 
 #include "Assert.h"
 #include "DataTypes.h"
 #include "Manager/TaskManager.h"
 #include "Task/StallTask.h"
 
-StallTask::StallTask(TaskManager* pTaskManager, Handle hWaitFor)
+StallTask::StallTask(TaskManager* pTaskManager, std::shared_ptr<boost::interprocess::named_semaphore> hWaitFor)
     : m_pTaskManager(pTaskManager)
     , m_hWaitFor(hWaitFor) {
 
@@ -33,9 +34,7 @@ tbb::task* StallTask::execute() {
         tbb::this_tbb_thread::sleep(tbb::tick_count::interval_t(0.1));
     } else {
         ASSERT(m_hWaitFor != NULL);
-#if defined(MSC_COMPILER)
-        WaitForSingleObject(m_hWaitFor, INFINITE);
-#endif
+        m_hWaitFor->wait();
     }
 
     return NULL;

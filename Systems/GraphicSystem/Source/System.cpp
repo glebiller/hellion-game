@@ -15,13 +15,14 @@
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <cef_app.h>
+#include <include/cef_app.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #include <OgrePlugin.h>
 #include <OgreWindowEventUtilities.h>
 #pragma warning( pop )
 
+#include "GraphicSystem_generated.h"
 #include "Manager/ServiceManager.h"
 #include "Listener/CustomLogListener.h"
 #include "Defines.h"
@@ -35,19 +36,19 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-GraphicSystem::GraphicSystem(void) 
+GraphicSystem::GraphicSystem()
     : ISystem()
     , m_pRenderSystem(NULL)
     , m_pRenderWindow(NULL)
     , m_pMaterialManager(NULL) {
-    m_SceneFactory = boost::factory<GraphicScene*>();
+    //m_SceneFactory = boost::factory<GraphicScene*>();
 
-    m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
+    /*m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
     m_propertySetters["WindowName"] = boost::bind(&GraphicSystem::setWindowName, this, _1);
     m_propertySetters["Resolution"] = boost::bind(&GraphicSystem::setResolution, this, _1);
     m_propertySetters["FullScreen"] = boost::bind(&GraphicSystem::setFullScreen, this, _1);
     m_propertySetters["VerticalSync"] = boost::bind(&GraphicSystem::setVerticalSync, this, _1);
-    m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);
+    m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);*/
 
     Ogre::LogManager* logManager = new Ogre::LogManager();
     logManager->createLog("", true, false, true);
@@ -61,7 +62,7 @@ GraphicSystem::GraphicSystem(void)
 /**
  * @inheritDoc
  */
-GraphicSystem::~GraphicSystem(void) {
+GraphicSystem::~GraphicSystem() {
     if (m_bInitialized) {
         Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
 
@@ -86,7 +87,7 @@ GraphicSystem::~GraphicSystem(void) {
 /**
  * @inheritDoc
  */
-Error GraphicSystem::initialize(void) {
+Error GraphicSystem::initialize() {
    ASSERT(!m_bInitialized);
 
     //
@@ -153,7 +154,7 @@ Error GraphicSystem::initialize(void) {
     bool result = CefInitialize(args, settings, nullptr, NULL);
     ASSERT(result);
 
-    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
+    //g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -168,10 +169,9 @@ void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setResourceLocation(Proto::RepeatedString* values) {
+void GraphicSystem::setResourceLocation(Schema::Systems::ResourceLocation* values) {
     ASSERT(!m_bInitialized);
-    auto value = values->begin();
-
+    /*
     const std::string name = *value;
     const std::string locationType = *(++value);
     const std::string resourceGroup = *(++value);
@@ -185,7 +185,7 @@ void GraphicSystem::setResourceLocation(Proto::RepeatedString* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setWindowName(Proto::RepeatedString* values) {
+void GraphicSystem::setWindowName(std::string* values) {
     ASSERT(!m_bInitialized);
     auto value = values->begin();
     m_RenderWindowDescription.name = *value;
@@ -194,47 +194,44 @@ void GraphicSystem::setWindowName(Proto::RepeatedString* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setResolution(Proto::RepeatedString* values) {
-    auto value = values->begin();
-
-    u32 width  = boost::lexical_cast<u32>(*value);
-    u32 height = boost::lexical_cast<u32>(*(++value));
-
+void GraphicSystem::setResolution(Schema::vector2* values) {
     if (m_bInitialized) {
-        m_pRenderWindow->resize(width, height);
+        m_pRenderWindow->resize(values->x(), values->y());
     } else {
-        m_RenderWindowDescription.width = width;
-        m_RenderWindowDescription.height = height;
+        m_RenderWindowDescription.width = values->x();
+        m_RenderWindowDescription.height = values->y();
     }
 }
 
 /**
  * @inheritDoc
  */
-void GraphicSystem::setFullScreen(Proto::RepeatedString* values) {
+void GraphicSystem::setFullScreen(bool values) {
     ASSERT(!m_bInitialized);
-    auto value = values->begin();
-
-    m_RenderWindowDescription.useFullScreen = boost::lexical_cast<bool>(*value);
+    m_RenderWindowDescription.useFullScreen = values;
 }
 
 /**
  * @inheritDoc
  */
-void GraphicSystem::setVerticalSync(Proto::RepeatedString* values) {
+void GraphicSystem::setVerticalSync(bool values) {
     ASSERT(!m_bInitialized);
-    auto value = values->begin();
-
-    m_RenderWindowDescription.miscParams["verticalSync"] = boost::lexical_cast<bool>(*value);
+    m_RenderWindowDescription.miscParams["verticalSync"] = values;
 }
 
 /**
  * @inheritDoc
  */
-void GraphicSystem::setAntiAliasing(Proto::RepeatedString* values) {
+void GraphicSystem::setAntiAliasing(Schema::vector2* values) {
     ASSERT(!m_bInitialized);
-    auto value = values->begin();
+    m_RenderWindowDescription.miscParams["FSAA"] = values->x();
+    m_RenderWindowDescription.miscParams["FSAAQuality"] = values->y();
+}
 
-    m_RenderWindowDescription.miscParams["FSAA"] = *(value++);
-    m_RenderWindowDescription.miscParams["FSAAQuality"] = *value;
+void GraphicSystem::setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
+
+}
+
+flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* GraphicSystem::getProperties() {
+    return nullptr;
 }

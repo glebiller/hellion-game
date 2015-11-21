@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -25,7 +25,7 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-NetworkSystem::NetworkSystem(void) : ISystem() {
+NetworkSystem::NetworkSystem() : ISystem() {
     m_SceneFactory = boost::factory<NetworkScene*>();
     m_networkService = new NetworkService(static_cast<NetworkSystem*>(this));
 }
@@ -33,14 +33,14 @@ NetworkSystem::NetworkSystem(void) : ISystem() {
 /**
  * @inheritDoc
  */
-NetworkSystem::~NetworkSystem(void) {
+NetworkSystem::~NetworkSystem() {
     boost::checked_delete(m_networkService);
 }
 
 /**
  * @inheritDoc
  */
-Error NetworkSystem::initialize(void) {
+Error NetworkSystem::initialize() {
     ASSERT(!m_bInitialized);
     
     m_networkService->connect("localhost", "26000");

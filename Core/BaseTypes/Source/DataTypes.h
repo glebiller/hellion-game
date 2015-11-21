@@ -40,7 +40,9 @@ typedef long long               int64;
 typedef unsigned long long      uint64;
 #endif
 
+#ifdef _MSC_VER
 typedef void*               Handle;
+#endif
 typedef u32                 Error;
 typedef u32                 Id;
 

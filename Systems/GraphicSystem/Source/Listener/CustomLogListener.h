@@ -24,12 +24,12 @@ public:
     /**
      * Default constructor.
      */
-    CustomLogListener(void);
+    CustomLogListener();
 
     /**
      * Destructor.
      */
-    ~CustomLogListener(void);
+    ~CustomLogListener();
     
     /**
      * @inheritDoc

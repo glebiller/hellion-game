@@ -100,7 +100,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the matrix array.</returns>
-        operator f32* (void) {
+        operator f32* () {
             return &x;
         };
 
@@ -109,7 +109,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the constant matrix array.</returns>
-        operator const f32* (void) const {
+        operator const f32* () const {
             return &x;
         };
 
@@ -289,7 +289,7 @@ namespace Math {
         ///   Returns the magnitude of the vector.
         /// </summary>
         /// <returns>The magnitude of the vector.</returns>
-        f32 Magnitude(void) const {
+        f32 Magnitude() const {
             return sqrtf(x * x + y * y + z * z);
         };
 
@@ -297,7 +297,7 @@ namespace Math {
         ///   Normalizes this vector.
         /// </summary>
         /// <returns>A refrence to this vector.</returns>
-        const Vector3& Normalize(void) {
+        const Vector3& Normalize() {
             f32 Mag = Magnitude();
 
             if (Mag != 0.0f) {
@@ -387,7 +387,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the matrix array.</returns>
-        operator f32* (void) {
+        operator f32* () {
             return &x;
         };
 
@@ -396,7 +396,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the constant matrix array.</returns>
-        operator const f32* (void) const {
+        operator const f32* () const {
             return &x;
         };
 
@@ -676,7 +676,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>The magnitude.</returns>
-        inline f32 Magnitude(void) const {
+        inline f32 Magnitude() const {
             return sqrtf(x * x + y * y + z * z + w * w);
         };
 
@@ -684,7 +684,7 @@ namespace Math {
         ///   Calculates the conjugate or inverse of a quaternion.
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
-        inline void Conjugate(void) {
+        inline void Conjugate() {
             x = -x;
             y = -y;
             z = -z;
@@ -778,7 +778,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A reference to the translation.</returns>
-        const Vector3& GetTranslation(void) const {
+        const Vector3& GetTranslation() const {
             return *reinterpret_cast<const Vector3*>(m + 12);
         };
 
@@ -850,7 +850,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the matrix array.</returns>
-        operator f32* (void) {
+        operator f32* () {
             return m;
         };
 
@@ -859,7 +859,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>A pointer to the constant matrix array.</returns>
-        operator const f32* (void) const {
+        operator const f32* () const {
             return m;
         };
 

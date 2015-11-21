@@ -27,7 +27,7 @@
          *
          * @return  A reference to the ICollision class.
          */
-        virtual ISystemAccess& SystemAccess(void) = 0;
+        virtual ISystemAccess& SystemAccess() = 0;
 
         /**
          * Used by a system/framework to register itself as a provider for ISystemAccess.
@@ -83,7 +83,7 @@
          *
          * @return  A reference to the ICollision class.
          */
-        virtual ICollision& Collision(void) = 0;
+        virtual ICollision& Collision() = 0;
 
         /**
          * Used by a system/framework to register itself as a provider for ICollision.
@@ -209,7 +209,7 @@
          *
          * @return  .
          */
-        virtual IInstrumentation& Instrumentation(void) = 0;
+        virtual IInstrumentation& Instrumentation() = 0;
 
         /**
          * Register the given instrumentation object as the global provider. Call this once during

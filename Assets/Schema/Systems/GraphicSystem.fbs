@@ -1,44 +1,19 @@
-namespace Schema;
+include "../Common.fbs";
+
+namespace Schema.Systems;
 
 table ResourceLocation {
-    
-}
-table WindowName {
-    value:string;
-}
-table Resolution {
-    x:float;
-    y:float;
-}
-table ShadowTexture {
-    x:float;
-    y:float;
-}
-table FullScreen {
-    value:bool;
-}
-table VerticalSync {
-    value:bool;
-}
-table FSAntiAliasing {
-    x:float;
-    y:float;
-}
-
-union GraphicSystemPropertyData {
-    ResourceLocation,
-    WindowName,
-    Resolution,
-    ShadowTexture,
-    FullScreen,
-    VerticalSync,
-    FSAntiAliasing
-}
-
-table GraphicSystemProperty {
-    property:GraphicSystemPropertyData;
+    name:string;
+    type:string;
+    group:string;
+    recursive:bool;
 }
 
 table GraphicSystem {
-  properties:[GraphicSystemProperty];
+    windowName:string;
+    resolution:vector2;
+    shadowTexture:vector2;
+    fsAntiAliasing:vector2;
+    verticalSync:bool;
+    resources:[ResourceLocation];
 }

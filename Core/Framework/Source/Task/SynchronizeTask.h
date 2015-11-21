@@ -14,6 +14,8 @@
 
 #pragma once    
 
+#include <mutex>
+#include <condition_variable>
 #include <tbb/task.h>
 
 #include "DataTypes.h"
@@ -58,7 +60,8 @@ public:
     }
 
 public:
-    static Handle m_hAllCallbacksInvokedEvent;
+    static std::mutex m_allCallbacksMutex;
+    static std::condition_variable m_hAllCallbacksInvokedEvent;
     static ITaskManager::JobFunction m_fCallback;
     static void* m_pCallbackParam;
     static volatile long m_lCallbacksCount;

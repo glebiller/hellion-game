@@ -52,12 +52,12 @@ class GraphicScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        ~GraphicScene(void);
+        ~GraphicScene();
                 
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -67,29 +67,29 @@ class GraphicScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetDesiredSystemChanges(void) {
+        System::Changes::BitMask GetDesiredSystemChanges() {
             return System::Changes::None;
         };
         
         /**
          * @inheritDoc
          */
-        Proto::SystemType GetSystemType(void) {
-            return Proto::SystemType::Graphic;
+        Schema::SystemType GetSystemType() override {
+            return Schema::SystemType::Graphic;
         };
         
         /// <summary cref="OGREGraphicsScene::Update">
         ///   This function returns a pointer to the interanl Ogre scene manager.
         /// </summary>
         /// <returns>Ogre::SceneManager* - A pointer to the Ogre scene manager.</returns>
-        Ogre::SceneManager* getSceneManager(void) {
+        Ogre::SceneManager* getSceneManager() {
             return m_pSceneManager;
         };
 
@@ -97,13 +97,16 @@ class GraphicScene : public ISystemScene {
         ///   This function returns a pointer to the interanl Ogre scene root node.
         /// </summary>
         /// <returns>Ogre::SceneNode* - A pointer to the Ogre scene root node.</returns>
-        Ogre::SceneNode* getRootNode(void) {
+        Ogre::SceneNode* getRootNode() {
             return m_pRootNode;
         };
-        
-    protected:
 
-        void setAmbientLight(Proto::RepeatedString* values);
+
+    virtual void createTask() override;
+
+protected:
+
+        void setAmbientLight(Schema::vector2* values);
 
     protected:
         Ogre::SceneManager*                 m_pSceneManager;

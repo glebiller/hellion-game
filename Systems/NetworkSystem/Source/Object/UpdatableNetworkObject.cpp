@@ -44,14 +44,14 @@ UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, IEnti
 /**
  * @inheritDoc
  */
-UpdatableNetworkObject::~UpdatableNetworkObject(void) {
+UpdatableNetworkObject::~UpdatableNetworkObject() {
     
 }
 
 /**
  * @inheritDoc
  */
-Error UpdatableNetworkObject::initialize(void) {
+Error UpdatableNetworkObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

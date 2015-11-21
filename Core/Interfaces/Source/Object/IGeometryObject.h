@@ -44,7 +44,7 @@ public:
      *
      * @return  A constant pointer to the position.
      */
-    inline const Math::Vector3* GetPosition(void) {
+    inline const Math::Vector3* GetPosition() {
         return &m_position;
     };
 
@@ -53,7 +53,7 @@ public:
      *
      * @return  A constant pointer to the orientation.
      */
-    inline const Math::Quaternion* GetOrientation(void) {
+    inline const Math::Quaternion* GetOrientation() {
         return &m_orientation;
     };
 
@@ -62,7 +62,7 @@ public:
      *
      * @return  A constant pointer to the scle.
      */
-    inline const Math::Vector3* GetScale(void) {
+    inline const Math::Vector3* GetScale() {
         return &m_scale;
     };
     

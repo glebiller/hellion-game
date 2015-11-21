@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <boost/thread.hpp>
+#include <boost/thread/tss.hpp>
 #include <set>
 
 #include "Manager/IChangeManager.h"
@@ -35,12 +35,12 @@ public:
     /**
      * Default constructor.
      */
-    ChangeManager(void);
+    ChangeManager();
 
     /**
      * Destructor.
      */
-    virtual ~ChangeManager(void);
+    virtual ~ChangeManager();
 
     // Must be called after construction for a valid Change Manager
 
@@ -55,7 +55,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+    inline System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::All;
     }
 
@@ -88,7 +88,8 @@ protected:
     std::vector<SubjectInfo>                m_subjectsList;
     std::list<std::vector<Notification>*>   m_NotifyLists;
     std::vector<MappedNotification>         m_cumulativeNotifyList;
-    u32                                     m_tlsNotifyList;
+
+    static boost::thread_specific_ptr<std::vector<Notification>> m_tlsNotifyList;
 
     DEFINE_SPIN_MUTEX(m_swUpdate);
 

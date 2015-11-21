@@ -19,8 +19,8 @@
 #include <OgreTexture.h>
 #pragma warning( pop )
 
-#include <cef_browser.h>
-#include <cef_render_handler.h>
+#include <include/cef_browser.h>
+#include <include/cef_render_handler.h>
 
 /**
 * Implementation of the Surface.
@@ -35,7 +35,7 @@ public:
     /**
      * Destructor.
      */
-    ~BrowserRenderHandler(void);
+    ~BrowserRenderHandler();
 
     bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect);
 

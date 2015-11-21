@@ -39,12 +39,12 @@ public:
     /**
      * @inheritDoc
      */
-    virtual ~InputObject(void);
+    virtual ~InputObject();
     
     /**
      * @inheritDoc
      */
-    inline Proto::SystemType GetSystemType(void) {
+    inline Proto::SystemType GetSystemType() {
         return Proto::SystemType::Input;
     }
 };

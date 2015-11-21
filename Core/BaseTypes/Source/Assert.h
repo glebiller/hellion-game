@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -49,7 +49,4 @@
     #define ASSERTMSG4(c,  m, p1, p2, p3, p4)
 #endif
 
-#ifndef COMPILE_ASSERT
-    #define COMPILE_ASSERT(e)							typedef char __FILE____LINE__[ (e) ? 1 : -1 ]
-#endif
 #define assert(c)									ASSERT(c)

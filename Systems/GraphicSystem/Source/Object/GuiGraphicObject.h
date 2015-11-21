@@ -15,7 +15,7 @@
 #pragma once
 
 #include <OgreMesh.h>
-#include <wrapper/cef_message_router.h>
+#include <include/wrapper/cef_message_router.h>
 
 #include "MathUtils.h"
 #include "Object/Object.h"
@@ -42,12 +42,12 @@ class GuiGraphicObject : public GraphicObject, public CefMessageRouterBrowserSid
         /**
          * @inheritDoc
          */
-        ~GuiGraphicObject(void);
+        ~GuiGraphicObject();
 
         /**
          * @inheritDoc
          */
-        Error initialize(void);
+        Error initialize();
         
         /**
          * @inheritDoc
@@ -57,14 +57,14 @@ class GuiGraphicObject : public GraphicObject, public CefMessageRouterBrowserSid
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges() {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
+        System::Types::BitMask GetDesiredSystemChanges() {
             return System::Changes::None;
         };
         

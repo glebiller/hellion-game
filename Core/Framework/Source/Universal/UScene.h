@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -32,9 +32,9 @@ class UScene : public IObserver {
 public:
 
     // TODO move
-    typedef std::map<std::string, Proto::Object*>                       Templates;
-    typedef std::map<Proto::SystemType, ISystem*>                       Systems;
-    typedef std::map<Proto::SystemType, ISystemScene*>                  SystemScenes;
+    typedef std::map<std::string, Schema::Object*>                       Templates;
+    typedef std::map<Schema::SystemType, ISystem*>                       Systems;
+    typedef std::map<Schema::SystemType, ISystemScene*>                  SystemScenes;
     typedef std::list<UObject*>                                         Objects;
 
     struct ObjectLinkData {
@@ -101,7 +101,7 @@ public:
      *
      * @param   objects If non-null, the objects.
      */
-    void addTemplates(const Proto::RepeatedObject* objects);
+    void addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::Object>>* objects);
 
     /**
      * Creates a new UObject that gets attached to this scene.
@@ -111,7 +111,7 @@ public:
      *
      * @return  The newly created object that has consequently been added to the scene.
      */
-    UObject* createObject(const Proto::Object* objectProto);
+    UObject* createObject(const Schema::Object* objectProto);
 
     /**
      * Destroys a UObject removing it from the scene.  It also deletes it's CCM.
@@ -186,7 +186,7 @@ private:
      * @param [in,out]  pObject         If non-null, the object.
      * @param   objectProto             The object prototype.
      */
-    void createSystemObject(SystemService* systemService, UObject* pObject, Proto::SystemObject objectProto);
+    void createSystemObject(SystemService* systemService, UObject* pObject, const Schema::SystemObject* objectProto);
 
 protected:
     IChangeManager*                         m_pSceneCCM;

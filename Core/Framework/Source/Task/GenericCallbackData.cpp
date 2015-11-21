@@ -17,7 +17,6 @@
 #include "Assert.h"
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Proto/Common.pb.h"
 #include "Generic/IttNotify.h"
 #include "Manager/TaskManager.h"
 #include "Task/GenericCallbackData.h"

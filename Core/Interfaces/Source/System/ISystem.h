@@ -35,18 +35,18 @@ public:
     /**
      * Constructor.
      */
-    ISystem(void);
+    ISystem();
 
     /**
      * Destructor.
      * Interface have virtual destructors.
      */
-    virtual ~ISystem(void);
+    virtual ~ISystem();
 
     /**
      * Creates a system scene for containing system objects.
      */
-    ISystemScene* createScene(void);
+    ISystemScene* createScene();
 
     /**
      * Destroys a system scene.
@@ -63,7 +63,7 @@ public:
      * @return  null if it fails, else the system scene.
      */
     template <typename TSystemScene>
-    inline TSystemScene* getSystemScene(void) {
+    inline TSystemScene* getSystemScene() {
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
 
@@ -72,7 +72,7 @@ public:
      *
      * @return  CPU Utilization (0-100f)
      */
-    virtual f32 GetCPUUsage(void) {
+    virtual f32 GetCPUUsage() {
         return 0;
     }
 

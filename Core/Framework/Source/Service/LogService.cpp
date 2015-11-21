@@ -13,6 +13,7 @@
 // responsibility to update it.
 
 #include <boost/filesystem/operations.hpp>
+#include <Common_generated.h>
 
 #include "Service/LogService.h"
 
@@ -20,14 +21,12 @@
  * @inheritDoc
  */
 LogService::LogService() {
-    logog::Initialize();
 };
 
 /**
  * @inheritDoc
  */
 LogService::~LogService() {
-    logog::Shutdown();
 };
 
 /**
@@ -35,11 +34,10 @@ LogService::~LogService() {
  *
  * @param   type    The type.
  */
-void LogService::initSystem(Proto::SystemType type) {
-    logog::Initialize();
-    std::string fileName = "logs/" + Proto::SystemType_Name(type) + ".log";
-    boost::filesystem::remove(boost::filesystem::path(fileName));
-    m_logFile[type] = new logog::LogFile(fileName.c_str());
+void LogService::initSystem(Schema::SystemType type) {
+    //std::string fileName = "logs/" + Proto::SystemType_Name(type) + ".log";
+    //boost::filesystem::remove(boost::filesystem::path(fileName));
+    //m_logFile[type] = new logog::LogFile(fileName.c_str());
 };
 
 /**
@@ -47,16 +45,15 @@ void LogService::initSystem(Proto::SystemType type) {
  *
  * @param   type    The type.
  */
-void LogService::closeSystem(Proto::SystemType type) {
-    delete m_logFile[type];
-    m_logFile.erase(type);
-    logog::Shutdown();
+void LogService::closeSystem(Schema::SystemType type) {
+    //delete m_logFile[type];
+    //m_logFile.erase(type);
 };
 
 /**
  * @inheritDoc
  */
-void LogService::log(const LOGOG_LEVEL_TYPE level, const char* message, ...) {
+void LogService::log(const int level, const char* message, ...) {
     va_list args;
     va_start(args, message);
     log(level, nullptr, nullptr, message, args);
@@ -66,7 +63,7 @@ void LogService::log(const LOGOG_LEVEL_TYPE level, const char* message, ...) {
 /**
  * @inheritDoc
  */
-void LogService::log(const LOGOG_LEVEL_TYPE level, const char* group, const char* message, ...) {
+void LogService::log(const int level, const char* group, const char* message, ...) {
     va_list args;
     va_start(args, message);
     log(level, group, nullptr, message, args);
@@ -76,10 +73,11 @@ void LogService::log(const LOGOG_LEVEL_TYPE level, const char* group, const char
 /**
  * @inheritDoc
  */
-void LogService::log(const LOGOG_LEVEL_TYPE level, const char* group, const char* category, const char* message, ...) {
+void LogService::log(const int level, const char* group, const char* category, const char* message, ...) {
     va_list args;
     va_start(args, message);
-    LOGOG_LEVEL_GROUP_CATEGORY_MESSAGE(level, group, category, _LG(message), args);
+    //LOGOG_LEVEL_GROUP_CATEGORY_MESSAGE(level, group, category, _LG(message), args);
+    BOOST_LOG_TRIVIAL(info) << message;
     va_end(args);
 };
 

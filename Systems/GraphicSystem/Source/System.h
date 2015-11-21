@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -20,9 +20,12 @@
 #include <Overlay/OgreOverlaySystem.h>
 #pragma warning( pop )
 
+#include <boost/dll.hpp>
+#include "GraphicSystem_generated.h"
 #include "Errors.h"
 #include "System.h" 
 #include "System/ISystem.h"
+#include "Common_generated.h"
 
 class GraphicScene;
 class GraphicTask;
@@ -40,23 +43,17 @@ public:
     /**
      * @inheritDoc
      */
-    GraphicSystem(void);
+    GraphicSystem();
 
     /**
      * @inheritDoc
      */
-    ~GraphicSystem(void);
+    ~GraphicSystem();
 
-    /**
-     * @inheritDoc
-     */
-    Error initialize(void);
+    Error initialize() override;
 
-    /**
-     * @inheritDoc
-     */
-    inline Proto::SystemType GetSystemType(void) {
-        return Proto::SystemType::Graphic;
+    inline Schema::SystemType GetSystemType() override {
+        return Schema::SystemType::Graphic;
     }
 
     /**
@@ -65,7 +62,7 @@ public:
      *
      * @return  Ogre::Root* - A pointer to the Ogre root.
      */
-    inline Ogre::Root* getRoot(void) {
+    inline Ogre::Root* getRoot() {
         return m_pRoot;
     }
 
@@ -75,7 +72,7 @@ public:
      *
      * @return  Ogre::RenderWindow* - A pointer to the Ogre render window.
      */
-    inline Ogre::RenderWindow* getRenderWindow(void) {
+    inline Ogre::RenderWindow* getRenderWindow() {
         return m_pRenderWindow;
     }
 
@@ -84,7 +81,7 @@ public:
      *
      * @return  null if it fails, else the overlay system.
      */
-    inline Ogre::OverlaySystem* getOverlaySystem(void) {
+    inline Ogre::OverlaySystem* getOverlaySystem() {
         return m_pOverlaySystem;
     }
 
@@ -97,49 +94,24 @@ public:
      */
     void windowClosed(Ogre::RenderWindow* pRenderWindow);
 
+
+    void setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties);
+
+    flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* getProperties();
+
 protected:
-    
-    /**
-     * Sets the resources location.
-     *
-     * @param   values  The values.
-     */
-    void setResourceLocation(Proto::RepeatedString* values);
 
-    /**
-     * Sets the window name.
-     *
-     * @param   values  The values.
-     */
-    void setWindowName(Proto::RepeatedString* values);
+    void setResourceLocation(Schema::Systems::ResourceLocation* values);
 
-    /**
-     * Sets the resolution.
-     *
-     * @param   values  The values.
-     */
-    void setResolution(Proto::RepeatedString* values);
+    void setWindowName(std::string* values);
 
-    /**
-     * Sets the fullscreen.
-     *
-     * @param   values  The values.
-     */
-    void setFullScreen(Proto::RepeatedString* values);
+    void setResolution(Schema::vector2* values);
 
-    /**
-     * Sets the vertical sync.
-     *
-     * @param   values  The values.
-     */
-    void setVerticalSync(Proto::RepeatedString* values);
+    void setFullScreen(bool values);
 
-    /**
-     * Sets the anti aliasing.
-     *
-     * @param   values  The values.
-     */
-    void setAntiAliasing(Proto::RepeatedString* values);
+    void setVerticalSync(bool values);
+
+    void setAntiAliasing(Schema::vector2* values);
 
 private:
     Ogre::Root*                         m_pRoot;

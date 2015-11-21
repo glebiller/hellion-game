@@ -39,24 +39,24 @@ public:
     /**
      * @inheritDoc
      */
-    ~PlayerNetworkObject(void);
+    ~PlayerNetworkObject();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation
              | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };

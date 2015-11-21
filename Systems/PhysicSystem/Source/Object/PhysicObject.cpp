@@ -66,6 +66,6 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, IEntity* entity)
 /**
  * @inheritDoc
  */
-PhysicObject::~PhysicObject(void) {
+PhysicObject::~PhysicObject() {
 
 }

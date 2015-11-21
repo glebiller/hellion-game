@@ -44,7 +44,7 @@ public:
     /**
      * @inheritDoc
      */
-    virtual ~ISystemObject(void);
+    virtual ~ISystemObject();
 
     /**
      * @inheritDoc
@@ -57,7 +57,7 @@ public:
      * @return  A pointer to the system.
      */
     template <typename TSystemScene>
-    inline TSystemScene* GetSystemScene(void) {
+    inline TSystemScene* GetSystemScene() {
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
 
@@ -66,7 +66,7 @@ public:
      *
      * @return  A pointer to the entity.
      */
-    inline IEntity* getEntity(void) {
+    inline IEntity* getEntity() {
         return m_entity;
     }
 

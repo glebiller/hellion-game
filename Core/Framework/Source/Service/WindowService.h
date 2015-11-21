@@ -29,31 +29,31 @@ public:
     /**
      * @inheritDoc
      */
-    size_t getHandle(void);
+    size_t getHandle();
     
     /**
      * @inheritDoc
      */
-    void setRenderWindow(Handle renderWindow);
+    void setRenderWindow(void* renderWindow);
     
     /**
      * @inheritDoc
      */
-    Handle getRenderWindow(void);
+    void* getRenderWindow();
     
     /**
      * @inheritDoc
      */
-    void setBrowser(Handle browser);
+    void setBrowser(void* browser);
     
     /**
      * @inheritDoc
      */
-    Handle getBrowser(void);
+    void* getBrowser();
 
 private:
     size_t          m_handle;
-    Handle          m_renderWindow;
-    Handle          m_browser;
+    void*          m_renderWindow;
+    void*          m_browser;
 
 };

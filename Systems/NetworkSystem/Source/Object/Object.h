@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -39,12 +39,12 @@ class NetworkObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        virtual ~NetworkObject(void);
+        virtual ~NetworkObject();
 
         /**
          * @inheritDoc
          */
-        Proto::SystemType GetSystemType(void) {
+        Proto::SystemType GetSystemType() {
             return Proto::SystemType::Network;
         }
 

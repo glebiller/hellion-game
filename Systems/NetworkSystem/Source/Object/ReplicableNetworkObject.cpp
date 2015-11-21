@@ -38,14 +38,14 @@ ReplicableNetworkObject::ReplicableNetworkObject(ISystemScene* pSystemScene, IEn
 /**
  * @inheritDoc
  */
-ReplicableNetworkObject::~ReplicableNetworkObject(void) {
+ReplicableNetworkObject::~ReplicableNetworkObject() {
     
 }
 
 /**
  * @inheritDoc
  */
-Error ReplicableNetworkObject::initialize(void) {
+Error ReplicableNetworkObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

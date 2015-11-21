@@ -35,7 +35,7 @@ InputObject::InputObject(ISystemScene* pSystemScene, IEntity* entity)
 /**
  * @inheritDoc
  */
-InputObject::~InputObject(void) {
+InputObject::~InputObject() {
 
 }
 

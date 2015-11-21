@@ -15,24 +15,15 @@
 #pragma once
 
 #include <map>
-
-#include "Proto/Common.pb.h"
+#include <Common_generated.h>
 
 /**
  * An interface for environment runtime functionality.
  */
 class SettingService {
 public:
-    /**
-     * @inheritDoc
-     */
-    void add(Proto::Property propertyValue);
-    
-    /**
-     * @inheritDoc
-     */
-    Proto::Property get(std::string propertyName);
-    
+    void initialize(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties);
+
     /**
      * @inheritDoc
      */
@@ -49,6 +40,6 @@ public:
     bool getBool(std::string propertyName);
 
 private:
-    std::map<std::string, Proto::Property>         m_settings;
+    const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>*         m_settings;
 
 };

@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -32,14 +32,14 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene* pSystemScene, IEntity* en
     , m_pViewport(nullptr)
     , m_vLookAt(Ogre::Vector3::ZERO)
     , m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity->getName())) {
-    m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
-    m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
+    //m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
+    //m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
 }
 
 /**
  * @inheritDoc
  */
-CameraGraphicObject::~CameraGraphicObject(void) {
+CameraGraphicObject::~CameraGraphicObject() {
     if (m_bInitialized) {
         GetSystemScene<GraphicScene>()->GetSystem<GraphicSystem>()->getRenderWindow()->removeViewport(m_pViewport->getZOrder());
         m_pCameraNode->detachObject(m_pCamera);
@@ -51,7 +51,7 @@ CameraGraphicObject::~CameraGraphicObject(void) {
 /**
  * @inheritDoc
  */
-Error CameraGraphicObject::initialize(void) {
+Error CameraGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
 
     if (m_pCamera == NULL) {
@@ -135,25 +135,25 @@ Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setFOVy(Proto::RepeatedString* values) {
-    auto value = values->begin();
-    m_pCamera->setFOVy(Ogre::Radian(boost::lexical_cast<f32>(*value)));
+void CameraGraphicObject::setFOVy(Schema::vector2* values) {
+    //auto value = values->begin();
+    //m_pCamera->setFOVy(Ogre::Radian(boost::lexical_cast<f32>(*value)));
 }
 
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setClipDistances(Proto::RepeatedString* values) {
-    auto value = values->begin();
-    m_pCamera->setNearClipDistance(boost::lexical_cast<f32>(*value));
-    m_pCamera->setFarClipDistance(boost::lexical_cast<f32>(*(++value)));
+void CameraGraphicObject::setClipDistances(Schema::vector2* values) {
+    //auto value = values->begin();
+    //m_pCamera->setNearClipDistance(boost::lexical_cast<f32>(*value));
+    //m_pCamera->setFarClipDistance(boost::lexical_cast<f32>(*(++value)));
 }
 
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setPolygonMode(Proto::RepeatedString* values) {
-    auto value = values->begin();
+void CameraGraphicObject::setPolygonMode(Schema::vector2* values) {
+    /*auto value = values->begin();
 
     PolygonModes polygonMode = static_cast<PolygonModes>(boost::lexical_cast<i32>(*value));
     ASSERT(polygonMode > PolygonMode_Invalid);
@@ -171,5 +171,5 @@ void CameraGraphicObject::setPolygonMode(Proto::RepeatedString* values) {
         case PolygonMode_Solid:
             m_pCamera->setPolygonMode(Ogre::PM_SOLID);
             break;
-    }
+    }*/
 }

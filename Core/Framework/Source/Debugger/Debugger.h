@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -44,7 +44,7 @@ public:
     /**
      * Default constructor.
      */
-    Debugger(void);
+    Debugger();
 
     /**
      * Destructor.
@@ -76,7 +76,7 @@ public:
     /**
      * Cleans this object.
      */
-    void clean(void);
+    void clean();
 
     /**
      * Update the debugger.

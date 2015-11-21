@@ -36,6 +36,6 @@ public:
      *
      * @return  A constant to the keyboard button data.
      */
-    virtual const KeyboardButtonData* getKeyboardButtonData(void) = 0;
+    virtual const KeyboardButtonData* getKeyboardButtonData() = 0;
 
 };

@@ -29,24 +29,24 @@ public:
     /**
      * Destructor.
      */
-    ~PassiveInputObject(void);
+    ~PassiveInputObject();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
         

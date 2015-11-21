@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -40,12 +40,12 @@ public:
     /**
      * @inheritDoc
      */
-    ~NetworkScene(void);
+    ~NetworkScene();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
@@ -55,21 +55,21 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::Generic::All;
     };
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetDesiredSystemChanges(void) {
+    System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    Proto::SystemType GetSystemType(void) {
+    Proto::SystemType GetSystemType() {
         return Proto::SystemType::Network;
     };
 

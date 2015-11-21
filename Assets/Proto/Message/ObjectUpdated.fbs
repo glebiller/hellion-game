@@ -1,0 +1,9 @@
+namespace Proto.Message;
+
+import "Proto/Common.fbs";
+
+table ObjectUpdated {
+    objects:[Object];
+}
+
+root_type ObjectUpdated;

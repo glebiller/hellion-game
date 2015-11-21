@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -74,6 +74,6 @@ protected:
     
     bool                                                m_benchmarkingEnabled;
     boost::timer::cpu_timer                             m_executionTimer;
-    std::map<Proto::SystemType, ISystemScene*>          m_SceneExecs;
+    std::map<Schema::SystemType, ISystemScene*>          m_SceneExecs;
 
 };

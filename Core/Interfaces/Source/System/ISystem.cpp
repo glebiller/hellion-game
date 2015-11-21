@@ -16,7 +16,7 @@
 
 #include "DataTypes.h"
 #include "Errors.h"
-#include "System/ISystem.h"
+#include <System/ISystem.h>
 #include "System/ISystemScene.h"
 
 /**

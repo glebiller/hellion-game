@@ -36,6 +36,6 @@ public:
      *
      * @return  The type of the system.
      */
-    virtual inline Proto::SystemType GetSystemType() = 0;
+    virtual inline Schema::SystemType GetSystemType() = 0;
 
 };

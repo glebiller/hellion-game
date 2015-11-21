@@ -2,40 +2,6 @@ include "Common.fbs";
 
 namespace Schema;
 
-table GraphicProperty {
-    name:string;
-    value:string;
-}
-
-table GraphicSystem {
-  properties:[GraphicProperty];
-}
-
-table InputSystem {
-  nameb:string;
-}
-
-table PhysicSystem {
-  namec:string;
-}
-
-union SystemData {
-    GraphicSystem, 
-    InputSystem, 
-    PhysicSystem 
-}
-
-table Systems {
-  data:SystemData;
-}
-
-table Application {
-  startupScene:string;
-  properties:[Property];
-  systems:[Systems];
-  scenes:[string];
-}
-
 table Scene {
   name:string (required);
   systems:[System];
@@ -51,4 +17,4 @@ table Link {
   observerSystemType:short;
 }
 
-root_type Application;
+root_type Scene;

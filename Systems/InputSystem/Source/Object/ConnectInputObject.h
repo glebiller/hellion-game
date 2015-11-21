@@ -30,24 +30,24 @@ public:
     /**
      * Destructor.
      */
-    ~ConnectInputObject(void);
+    ~ConnectInputObject();
 
     /**
      * @inheritDoc
      */
-    Error initialize(void);
+    Error initialize();
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::Input::Action;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
         
@@ -64,7 +64,7 @@ public:
     /**
      * @inheritDoc
      */
-    const KeyboardButtonData* getKeyboardButtonData(void) {
+    const KeyboardButtonData* getKeyboardButtonData() {
         return &m_keyboardButtonData;
     }
 

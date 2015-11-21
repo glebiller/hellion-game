@@ -26,13 +26,13 @@ PassiveInputObject::PassiveInputObject(ISystemScene* pSystemScene, IEntity* enti
 /**
  * @inheritDoc
  */
-PassiveInputObject::~PassiveInputObject(void) {
+PassiveInputObject::~PassiveInputObject() {
 }
 
 /**
  * @inheritDoc
  */
-Error PassiveInputObject::initialize(void) {
+Error PassiveInputObject::initialize() {
     ASSERT(!m_bInitialized);
     
     m_bInitialized = true;

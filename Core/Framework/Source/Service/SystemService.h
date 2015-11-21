@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -31,12 +31,12 @@ public:
     /**
      * Constructor.
      */
-    SystemService(void);
+    SystemService();
 
     /**
      * Destructor.
      */
-    ~SystemService(void);
+    ~SystemService();
 
     /**
      * @inheritDoc
@@ -46,19 +46,19 @@ public:
     /**
      * @inheritDoc
      */
-    Error remove(const Proto::SystemType SystemType);
+    Error remove(const Schema::SystemType SystemType);
     
     /**
      * @inheritDoc
      */
-    ISystem* get(const Proto::SystemType SystemType);
+    ISystem* get(const Schema::SystemType SystemType);
     
     /**
      * @inheritDoc
      */
-    std::map<Proto::SystemType, ISystem*> get(void);
+    std::map<Schema::SystemType, ISystem*> get();
 
 protected:
-    std::map<Proto::SystemType, ISystem*>       m_systems;
+    std::map<Schema::SystemType, ISystem*>       m_systems;
 
 };
