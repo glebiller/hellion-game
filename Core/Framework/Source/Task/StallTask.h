@@ -36,7 +36,7 @@ public:
      * @param [in,out]  pTaskManager    If non-null, manager for task.
      * @param   hWaitFor                Handle of the wait for.
      */
-    StallTask(TaskManager* pTaskManager, std::shared_ptr<boost::interprocess::named_semaphore> hWaitFor);
+    StallTask(TaskManager* pTaskManager, boost::interprocess::named_semaphore* hWaitFor);
 
     /**
      * Gets the execute.
@@ -47,6 +47,6 @@ public:
 
 protected:
     TaskManager* m_pTaskManager;
-    std::shared_ptr<boost::interprocess::named_semaphore> m_hWaitFor;
+    boost::interprocess::named_semaphore* m_hWaitFor;
 
 };

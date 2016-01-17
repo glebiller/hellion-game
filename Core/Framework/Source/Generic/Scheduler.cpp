@@ -15,6 +15,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/timer/timer.hpp>
 
+#include "Environment_generated.h"
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
 #include "Service/SettingService.h"
@@ -26,31 +27,22 @@
 // Set the timer to 120Hz
 const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost::timer::nanosecond_type(1000000000LL / 120);
 
-///
-/// @inheritDoc
-///
 Scheduler::Scheduler()
-    : m_runtimeService(IServiceManager::get()->getRuntimeService()) {
-    SettingService* settingService = IServiceManager::get()->getSettingService();
-    m_benchmarkingEnabled = settingService->getBool("Scheduler::Benchmarking");
-    m_pTaskManager = new TaskManager(settingService->getInt("TaskManager::Threads"));
+    : m_runtimeService(IServiceManager::get()->getRuntimeService()),
+      // TODO move new TaskManager responsibility to Framework class
+      m_pTaskManager(new TaskManager()) {
     IServiceManager::get()->setTaskManager(m_pTaskManager);
-    m_executionTimer.start();
 }
 
-///
-/// @inheritDoc
-///
 Scheduler::~Scheduler() {
     m_pTaskManager->Shutdown();
     delete m_pTaskManager;
 }
 
-///
-/// @inheritDoc
-///
-void Scheduler::init() {
-    m_pTaskManager->Init();
+void Scheduler::init(const Schema::Environment* environment) {
+    m_benchmarkingEnabled = environment->schedulerBenchmarking();
+    m_pTaskManager->Init(environment);
+    m_executionTimer.start();
 }
 
 ///

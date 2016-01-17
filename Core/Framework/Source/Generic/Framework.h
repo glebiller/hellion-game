@@ -14,13 +14,17 @@
 
 #pragma once
 
+#include <map>
 #include <string>
+#include <boost/system/error_code.hpp>
 
-#include "Environment_generated.h"
 #include "System/Types.h"
 #include "Manager/IServiceManager.h"
 #include "Service/RuntimeService.h"
 
+namespace Schema {
+    class Environment;
+}
 class DefinitionService;
 class ServiceManager;
 class Scheduler;
@@ -28,6 +32,7 @@ class ChangeManager;
 class UScene;
 class UObject;
 class Gdf;
+class ISystem;
 
 ///
 /// Framework. Responsible for tying in all the different managers and systems.  Also handles
@@ -51,7 +56,7 @@ public:
     ///
     /// @return Error status.
     ///
-    Error Initialize();
+    boost::system::errc::errc_t Initialize();
 
     ///
     /// Shuts down this : and frees any resources it is using.
@@ -93,7 +98,9 @@ private:
     ChangeManager*                          m_pSceneCCM;
     ChangeManager*                          m_pObjectCCM;
 
+
     UScene*                                 m_pScene;
     const Schema::Environment*              m_environment;
+    std::map<Schema::SystemType, ISystem*>  m_systems;
 
 };

@@ -12,9 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/interprocess/sync/named_semaphore.hpp>
+#include "Environment_generated.h"
 #include "Defines.h"
 #include "DataTypes.h"
-#include <boost/interprocess/sync/named_semaphore.hpp>
 
 #pragma warning (push)
 #pragma warning (disable: 4100)
@@ -53,14 +54,13 @@ using namespace local;
 /**
  * @inhertiDoc
  */
-TaskManager::TaskManager(u32 requestedNumberOfThreads) 
+TaskManager::TaskManager()
     : m_instrumentation(new Instrumentation())
     , m_bTimeToQuit(false)
     , m_uMaxNumberOfThreads(0)
     , m_uNumberOfThreads(0)
     , m_uTargetNumberOfThreads(0)
-    , m_uPrimaryThreadID(tbb::this_tbb_thread::get_id())
-    , m_uRequestedNumberOfThreads(requestedNumberOfThreads) {
+    , m_uPrimaryThreadID(tbb::this_tbb_thread::get_id()) {
 
 }
 
@@ -102,11 +102,12 @@ void TaskManager::InitAffinityData(void* mgr) {
 /**
  * @inhertiDoc
  */
-void TaskManager::Init() {
+void TaskManager::Init(const Schema::Environment* environment) {
     // Call this from the primary thread before calling any other TaskManager methods.
     g_pTaskManager = this;
 
-    if (m_uRequestedNumberOfThreads == 0) {
+    int requestedNumberOfThreads = environment->taskManagerThreads();
+    if (requestedNumberOfThreads == 0) {
         // IMPLEMENTATION NOTE
         // The audio thread (which Thread Profiler shows as constantly working)
         // has no negative impact on the performance when it causes apparent
@@ -114,12 +115,13 @@ void TaskManager::Init() {
         // results in smaller FPS. So this is probably one of the cases when TP
         // misinterprets the behavior of threads created by some of the Windows
         // subsystems (DirectX is historically its weak place).
-        m_uRequestedNumberOfThreads = tbb::task_scheduler_init::default_num_threads();
+        requestedNumberOfThreads = tbb::task_scheduler_init::default_num_threads();
     }
 
     m_pStallPoolParent = NULL;
-    m_hStallPoolSemaphore = std::make_shared<boost::interprocess::named_semaphore>(
-            boost::interprocess::create_only_t(), semaphoreName, m_uRequestedNumberOfThreads
+    boost::interprocess::named_semaphore::remove(semaphoreName);
+    m_hStallPoolSemaphore = new boost::interprocess::named_semaphore(
+            boost::interprocess::create_only_t(), semaphoreName, requestedNumberOfThreads
     );
 #if defined(USE_THREAD_PROFILER)
     ISettingService* settingService = IServiceManager::get()->getSettingService();
@@ -133,14 +135,14 @@ void TaskManager::Init() {
 
     m_tpSystemTaskSpawn = __itt_event_createA("SystemTaskSpawn", 15);
 #endif /* USE_THREAD_PROFILER */
-    m_uMaxNumberOfThreads = m_uRequestedNumberOfThreads;
-    m_uTargetNumberOfThreads = m_uRequestedNumberOfThreads;
-    m_uNumberOfThreads = m_uRequestedNumberOfThreads;
-    m_pTbbScheduler = new tbb::task_scheduler_init(m_uRequestedNumberOfThreads);
+    m_uMaxNumberOfThreads = requestedNumberOfThreads;
+    m_uTargetNumberOfThreads = requestedNumberOfThreads;
+    m_uNumberOfThreads = requestedNumberOfThreads;
+    m_pTbbScheduler = new tbb::task_scheduler_init(requestedNumberOfThreads);
     m_pSystemTasksRoot = new(tbb::task::allocate_root()) tbb::empty_task;
     NonStandardPerThreadCallback(InitAffinityData, this);
 #ifdef STATISTICS_BY_JOB_TYPE
-    m_instrumentation->setActiveThreadCount(m_uRequestedNumberOfThreads);
+    m_instrumentation->setActiveThreadCount(requestedNumberOfThreads);
 #endif
 }
 
@@ -156,6 +158,7 @@ void TaskManager::Shutdown() {
     boost::interprocess::named_semaphore::remove(semaphoreName);
     m_pSystemTasksRoot->destroy(*m_pSystemTasksRoot);
     delete m_pTbbScheduler;
+    delete m_hStallPoolSemaphore;
     // now get rid of all the events
 #ifdef USE_THREAD_PROFILER
     m_SupportForSystemTasks.clear();
@@ -231,7 +234,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     // only one at a time here
     SCOPED_SPIN_LOCK(m_tSynchronizedCallbackMutex);
     __ITT_EVENT_START(m_tSynchronizeTPEvent, PROFILE_TASKMANAGER);
-    u32 uNumberOfThreads = m_uNumberOfThreads;
+    int uNumberOfThreads = m_uNumberOfThreads;
 
     if (uNumberOfThreads != m_uMaxNumberOfThreads) {
         m_uTargetNumberOfThreads = m_uMaxNumberOfThreads;
@@ -245,7 +248,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     pBroadcastParent->set_ref_count(m_uMaxNumberOfThreads + 1);
     tbb::task_list tList;
 
-    for (u32 i = 0; i < m_uMaxNumberOfThreads; i++) {
+    for (int i = 0; i < m_uMaxNumberOfThreads; i++) {
         // Add a SynchronizedTasks for each thread in the TBB pool (workers + this master)
         tbb::task* pNewTask = new(pBroadcastParent->allocate_child()) SynchronizeTask;
         ASSERT(pNewTask != NULL);

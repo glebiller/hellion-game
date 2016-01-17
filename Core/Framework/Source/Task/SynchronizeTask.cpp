@@ -35,7 +35,7 @@ tbb::task* SynchronizeTask::execute() {
     m_fCallback(m_pCallbackParam);
 
     std::unique_lock<std::mutex> lock(m_allCallbacksMutex);
-    if (m_lCallbacksCount-- == 0) {
+    if (--m_lCallbacksCount == 0) {
         m_hAllCallbacksInvokedEvent.notify_all();
     } else {
         m_hAllCallbacksInvokedEvent.wait(lock);

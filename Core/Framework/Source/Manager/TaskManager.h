@@ -14,9 +14,9 @@
 
 #pragma once
 
-#include "Defines.h"
 #include <vector>
 #include <boost/interprocess/sync/named_semaphore.hpp>
+#include "Defines.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4100 4189 4244 4512 4634 )
@@ -33,6 +33,9 @@
 #include "Generic/IttNotify.h"
 #include "Manager/ITaskManager.h"
 
+namespace Schema {
+    class Environment;
+}
 class Instrumentation;
 
 /**
@@ -45,7 +48,7 @@ public:
     /**
      * Constructor.
      */
-    TaskManager(u32 m_uRequestedNumberOfThreads);
+    TaskManager();
 
     /**
      * Destructor.
@@ -56,7 +59,7 @@ public:
      * Initialises this TaskManager.
      * Call this from the primary thread before calling any other <c>TaskManager</c> methods.
      */
-    void Init();
+    void Init(const Schema::Environment* environment);
 
     /**
      * Shuts down this TaskManager and frees any resources it is using.
@@ -179,7 +182,7 @@ private:
     Instrumentation* m_instrumentation;
 
     tbb::tbb_thread::id m_uPrimaryThreadID;
-    std::shared_ptr<boost::interprocess::named_semaphore> m_hStallPoolSemaphore;
+    boost::interprocess::named_semaphore* m_hStallPoolSemaphore;
     tbb::task* m_pStallPoolParent;
     DEFINE_SPIN_MUTEX(m_tSynchronizedCallbackMutex);
 
@@ -203,7 +206,6 @@ private:
     bool m_bTimeToQuit;
 
     // requested, maximum and current number of threads in use
-    int m_uRequestedNumberOfThreads;
     int m_uMaxNumberOfThreads;
     int m_uNumberOfThreads;
     int m_uTargetNumberOfThreads;

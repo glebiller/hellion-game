@@ -29,13 +29,6 @@ RuntimeService::RuntimeService() :
 ///
 /// @inhertiDoc.
 ///
-RuntimeService::~RuntimeService() {
-    
-}
-
-///
-/// @inhertiDoc.
-///
 RuntimeService::Status RuntimeService::getStatus() {
     return m_runtimeStatus;
 }

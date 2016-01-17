@@ -176,6 +176,8 @@ if(NOT OGRE_STATIC)
             /Library/Frameworks
             /System/Library/Frameworks
             /Network/Library/Frameworks
+            /usr/local/lib/macosx/Release/
+            /usr/local/lib/macosx/Debug/
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/macosx/Release
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/macosx/Debug
     )
@@ -575,6 +577,7 @@ set(OGRE_MEDIA_SEARCH_PATH
         ${OGRE_LIBRARY_DIR_REL}/../..
         ${OGRE_LIBRARY_DIR_DBG}/../..
         ${OGRE_PREFIX_SOURCE}
+        /usr/local/opt/ogre/
 )
 set(OGRE_MEDIA_SEARCH_SUFFIX
         Samples/Media

@@ -12,8 +12,15 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <fstream>
 
+#include <boost/system/error_code.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/dll/runtime_symbol_info.hpp>
+#include <boost/dll.hpp>
+#include <flatbuffers/util.h>
+
+#include "Environment_generated.h"
 #include "Defines.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
@@ -29,21 +36,15 @@
 #include "include/cef_base.h"
 #include "include/cef_app.h"
 
-///
-/// @inheritDoc.
-///
 Framework::Framework() :
-    m_serviceManager(new ServiceManager()), 
-    m_pScheduler(new Scheduler()),
+    m_serviceManager(new ServiceManager()),
     m_pSceneCCM(new ChangeManager()),
     m_pObjectCCM(new ChangeManager()),
     m_definitionService(new DefinitionService()),
+    m_pScheduler(new Scheduler()),
     m_pScene(nullptr) {
 }
 
-///
-/// @inheritDoc.
-///
 Framework::~Framework() {
     if (m_pScene != nullptr) {
         delete m_pScene;
@@ -53,31 +54,21 @@ Framework::~Framework() {
     delete m_pObjectCCM;
     delete m_definitionService;
     delete m_serviceManager;
+    delete m_environment;
 }
 
-inline bool load_file(const char* name, std::string* buf) {
-    std::ifstream ifs(name, std::ifstream::in);
-    if (!ifs.is_open())
-        return false;
-    *buf = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
-    return !ifs.bad();
-}
-
-///
-/// @inheritDoc.
-///
-Error Framework::Initialize() {
+boost::system::errc::errc_t Framework::Initialize() {
+    // Load settings
     std::string environmentFile;
-    load_file("Environment.json", &environmentFile);
+    flatbuffers::LoadFile("Environment.bin", true, &environmentFile);
     m_environment = Schema::GetEnvironment(environmentFile.c_str());
 
     //
     // Init CEF
-    // 
+    //
+    // TODO move to Main Client code
     CefMainArgs args;
     CefExecuteProcess(args, nullptr, NULL);
-
-    //m_definitionService->parseEnvironment();
     
     //
     // Init debugger
@@ -94,13 +85,28 @@ Error Framework::Initialize() {
     //
     //IServiceManager::get().RegisterSystemAccessProvider(this);
     
-    m_pScheduler->init();
+    m_pScheduler->init(m_environment);
 
     //
     // Complete the parsing of the GDF and the initial scene.
     //
-    m_definitionService->parseSystems();
-    IServiceManager::get()->getRuntimeService()->setNextScene(m_definitionService->getStartupScene());
+    for (auto system : *m_environment->systems()) {
+        boost::filesystem::path shared_library_path(boost::dll::program_location().parent_path());
+        shared_library_path /= "libGraphicSystem.dylib";
+        std::function<void (IServiceManager*)> fnInitSystemLib = boost::dll::import<void (IServiceManager*)>(
+                shared_library_path, "InitializeSystemLib"
+        );
+        fnInitSystemLib(IServiceManager::get());
+        std::function<ISystem* ()> fnCreateSystem = boost::dll::import<ISystem* ()>(
+                shared_library_path, "CreateSystem"
+        );
+        ISystem* iSystem = fnCreateSystem();
+        Schema::SystemType systemType = iSystem->GetSystemType();
+        ASSERT(m_systems.find(systemType) == m_systems.end());
+        m_systems[systemType] = iSystem;
+    }
+
+    IServiceManager::get()->getRuntimeService()->setNextScene(m_environment->startupScene()->c_str());
 
     //
     // Initialize resources necessary for parallel change distribution.
@@ -108,7 +114,9 @@ Error Framework::Initialize() {
     m_pObjectCCM->SetTaskManager(m_pScheduler->getTaskManager());
     m_pSceneCCM->SetTaskManager(m_pScheduler->getTaskManager());
 
-    return Errors::Success;
+    setNextScene(m_environment->startupScene()->c_str());
+
+    return boost::system::errc::success;
 }
 
 ///
@@ -174,7 +182,10 @@ void Framework::setNextScene(std::string nextSceneName) {
         delete m_pScene;
     }
     m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
-    m_definitionService->parseScene(m_pScene, nextSceneName);
+    for (auto it : m_systems) {
+        m_pScene->Extend(it.second);
+    }
+    //m_definitionService->parseScene(m_pScene, nextSceneName);
     m_pScheduler->setScene(m_pScene);
     m_pScene->init();
 }

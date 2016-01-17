@@ -16,6 +16,9 @@
 
 #include <boost/timer/timer.hpp>
 
+namespace Schema {
+    class Environment;
+}
 class RuntimeService;
 class TaskManager;
 
@@ -38,7 +41,7 @@ public:
     ///
     /// Initialises this object.
     ///
-    void init();
+    void init(const Schema::Environment* environment);
 
     ///
     /// Sets the UScene to schedule execution of.

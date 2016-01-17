@@ -20,10 +20,9 @@
 #include "Manager/TaskManager.h"
 #include "Task/StallTask.h"
 
-StallTask::StallTask(TaskManager* pTaskManager, std::shared_ptr<boost::interprocess::named_semaphore> hWaitFor)
+StallTask::StallTask(TaskManager* pTaskManager, boost::interprocess::named_semaphore* hWaitFor)
     : m_pTaskManager(pTaskManager)
     , m_hWaitFor(hWaitFor) {
-
 };
 
 tbb::task* StallTask::execute() {

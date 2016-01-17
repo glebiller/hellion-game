@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <flatbuffers/util.h>
+#include <Environment_generated.h>
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
@@ -19,7 +21,7 @@
 #include "Manager/ServiceManager.h"
 #include "Manager/IChangeManager.h"
 #include "System/ISystemObject.h"
-#include "../../../Generated/src/Common_generated.h"
+#include "Common_generated.h"
 
 /**
  * @inheritDoc
@@ -78,6 +80,11 @@ UScene::~UScene() {
  * @inheritDoc
  */
 void UScene::init() {
+    std::string sceneFile;
+    // TODO Load File
+    //flatbuffers::LoadFile("Environment.bin", true, &sceneFile);
+    //m_environment = Schema::Get(sceneFile.c_str());
+
     //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
     // The link needs to be established before any other messages come through.

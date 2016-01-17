@@ -32,11 +32,6 @@ public:
     RuntimeService();
 
     ///
-    /// Destructor.
-    ///
-    ~RuntimeService();
-
-    ///
     /// Gets the status.
     ///
     /// @return The status.

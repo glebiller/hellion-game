@@ -12,27 +12,27 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Defines.h"
-#include "Errors.h"
+#include <fstream>
+#include <iostream>
+#include <boost/system/error_code.hpp>
+
 #include "Generic/Framework.h"
 
-/**
- * @inheritDoc
- */
 void ExecuteFramework() {
 #ifndef DEBUG_BUILD
-    try
+    //try
 #endif
     {
-        Framework Framework;
-        if (Framework.Initialize() == Errors::Success) {
-            Framework.Execute();
-            Framework.Shutdown();
+        // Start framework
+        Framework* framework = new Framework();
+        if (framework->Initialize() == boost::system::errc::success) {
+            framework->Execute();
+            framework->Shutdown();
+            delete framework;
         }
     }
 #ifndef DEBUG_BUILD
-    catch (...) {
-
-    }
+    //catch (...) {
+    //}
 #endif
 }
