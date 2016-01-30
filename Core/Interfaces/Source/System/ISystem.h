@@ -14,8 +14,6 @@
 
 #pragma once
 
-#include <boost/function.hpp>
-
 #include "DataTypes.h"
 #include "Generic/IComponent.h"
 #include "Generic/IProperty.h"
@@ -46,7 +44,7 @@ public:
     /**
      * Creates a system scene for containing system objects.
      */
-    ISystemScene* createScene();
+    virtual ISystemScene* createScene() = 0;
 
     /**
      * Destroys a system scene.
@@ -77,9 +75,6 @@ public:
     }
 
 protected:
-    typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
-
-    SceneFactory                            m_SceneFactory;
     ISystemScene*                           m_pSystemScene;
 
 };

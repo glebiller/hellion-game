@@ -16,7 +16,9 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <boost/system/error_code.hpp>
+#include <boost/dll.hpp>
 
 #include "System/Types.h"
 #include "Manager/IServiceManager.h"
@@ -102,5 +104,6 @@ private:
     UScene*                                 m_pScene;
     const Schema::Environment*              m_environment;
     std::map<Schema::SystemType, ISystem*>  m_systems;
+    std::vector<boost::dll::shared_library>  m_systemLibraries;
 
 };

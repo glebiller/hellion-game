@@ -1,6 +1,6 @@
 {
   "systems": [
-    "GraphicSystem"
+    "libGraphicSystem"
   ],
   "scenes": [
     "Main"

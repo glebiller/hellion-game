@@ -14,6 +14,8 @@
 
 #pragma warning ( disable: 4718 )
 
+#include <boost/thread/tss.hpp>
+
 #include "Generic/ISubject.h"
 #include "Manager/ITaskManager.h"
 #include "Manager/ChangeManager.h"
@@ -22,8 +24,6 @@
 // Declare Thread Profiler events
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionTpEvent, "Change Distribution", 19);
-
-boost::thread_specific_ptr<std::vector<Notification>> ChangeManager::m_tlsNotifyList;
 
 ///////////////////////////////////////////////////////////////////////////////
 // ChangeManager - Default constructor
@@ -38,7 +38,7 @@ ChangeManager::ChangeManager()
     // Get ready to process changes in the main (this) thread
     m_tlsNotifyList.reset(new std::vector<Notification>());
     m_tlsNotifyList->reserve(8192);
-    m_NotifyLists.push_back(m_tlsNotifyList.get());
+    m_notifyLists.push_back(m_tlsNotifyList.get());
 }
 
 
@@ -58,11 +58,11 @@ ChangeManager::~ChangeManager() {
     }
 
     // Free thread local storage (tls)
-    if (m_tlsNotifyList.get()) {
+    if (m_tlsNotifyList.get() != nullptr) {
         m_tlsNotifyList.release();
     }
 
-    auto* pList = m_NotifyLists.back();
+    auto* pList = m_notifyLists.back();
     if (pList != nullptr) {
         delete pList;
     }
@@ -157,7 +157,7 @@ ChangeManager::Unregister(
 // RemoveSubject - Remove a subject
 Error ChangeManager::RemoveSubject(ISubject* pSubject
 ) {
-    Error curError = Errors::Undefined;
+    Error curError;
     std::vector<ObserverRequest> observersList;
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
@@ -206,7 +206,7 @@ ChangeManager::ChangeOccurred(
             // Frequent locking hurts incomparably more than even high percentage
             // of duplicated insertions, especially taking into account that the memory
             // is preallocated most of the time.
-            m_tlsNotifyList->push_back(Notification(pInChangedSubject, uInChangedBits));
+            m_tlsNotifyList.get()->push_back(Notification(pInChangedSubject, uInChangedBits));
             curError = Errors::Success;
         }
     }
@@ -232,7 +232,7 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
         // Make sure m_indexList is big enough to hold all subjects
         m_indexList.resize(m_subjectsList.size());
         // Loop through all list and build m_cumulativeNotifyList
-        for (auto itList = m_NotifyLists.begin(); itList != m_NotifyLists.end(); itList++) {
+        for (auto itList = m_notifyLists.begin(); itList != m_notifyLists.end(); itList++) {
             auto* pList = *itList;
             size_t nOrigSize = pList->size();
 
@@ -378,11 +378,11 @@ void ChangeManager::ResetTaskManager() {
 
     // Make each thread call FreeThreadLocalData
     m_pTaskManager->NonStandardPerThreadCallback(FreeThreadLocalData, this);
-    m_NotifyLists.clear();
+    m_notifyLists.clear();
     m_pTaskManager = nullptr;
     // Restore main (this) thread data
     m_tlsNotifyList->clear();
-    m_NotifyLists.push_back(m_tlsNotifyList.get());
+    m_notifyLists.push_back(m_tlsNotifyList.get());
 }
 
 
@@ -394,13 +394,13 @@ void ChangeManager::InitThreadLocalData(void* arg) {
 
     // Check if we have allocated a NotifyList for this thread.
     // The notify list is keep in tls (thread local storage).
-    if(!mgr->m_tlsNotifyList.get()) {
+    if(mgr->m_tlsNotifyList.get() == nullptr) {
         // Reserve some reasonable space to avoid delays because of multiple reallocations
         mgr->m_tlsNotifyList.reset(new std::vector<Notification>());
         mgr->m_tlsNotifyList->reserve(8192);
-        // Lock out the updates and add this NotifyList to m_NotifyLists
+        // Lock out the updates and add this NotifyList to m_notifyLists
         SCOPED_SPIN_LOCK(mgr->m_swUpdate);
-        mgr->m_NotifyLists.push_back(mgr->m_tlsNotifyList.get());
+        mgr->m_notifyLists.push_back(mgr->m_tlsNotifyList.get());
     } else {
         mgr->m_tlsNotifyList->clear();
     }

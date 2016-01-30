@@ -1,0 +1,19 @@
+{
+  "windowName": "HellionGame",
+  "resolution": {
+    "width": 800,
+    "height": 600
+  },
+  "fullscreen": false,
+  "antiAliasing": 0,
+  "antiAliasingQuality": 0,
+  "verticalSync": false,
+  "resources": [
+    {
+      "name": "../Assets/Media/Graphic",
+      "type": "FileSystem",
+      "group": "Default",
+      "recursive": true
+    }
+  ]
+}

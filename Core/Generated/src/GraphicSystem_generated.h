@@ -5,21 +5,27 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "Common_generated.h"
-
-namespace Schema {
-struct vector2;
-struct Property;
-struct SystemObject;
-struct Object;
-struct System;
-}  // namespace Schema
 
 namespace Schema {
 namespace Systems {
 
+struct Resolution;
 struct ResourceLocation;
 struct GraphicSystem;
+
+MANUALLY_ALIGNED_STRUCT(4) Resolution FLATBUFFERS_FINAL_CLASS {
+ private:
+  uint32_t width_;
+  uint32_t height_;
+
+ public:
+  Resolution(uint32_t width, uint32_t height)
+    : width_(flatbuffers::EndianScalar(width)), height_(flatbuffers::EndianScalar(height)) { }
+
+  uint32_t width() const { return flatbuffers::EndianScalar(width_); }
+  uint32_t height() const { return flatbuffers::EndianScalar(height_); }
+};
+STRUCT_END(Resolution, 8);
 
 struct ResourceLocation FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
@@ -69,20 +75,22 @@ inline flatbuffers::Offset<ResourceLocation> CreateResourceLocation(flatbuffers:
 
 struct GraphicSystem FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::String *windowName() const { return GetPointer<const flatbuffers::String *>(4); }
-  const Schema::vector2 *resolution() const { return GetStruct<const Schema::vector2 *>(6); }
-  const Schema::vector2 *shadowTexture() const { return GetStruct<const Schema::vector2 *>(8); }
-  const Schema::vector2 *fsAntiAliasing() const { return GetStruct<const Schema::vector2 *>(10); }
-  uint8_t verticalSync() const { return GetField<uint8_t>(12, 0); }
-  const flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>> *resources() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>> *>(14); }
+  const Resolution *resolution() const { return GetStruct<const Resolution *>(6); }
+  uint8_t fullscreen() const { return GetField<uint8_t>(8, 0); }
+  int16_t antiAliasing() const { return GetField<int16_t>(10, 0); }
+  int16_t antiAliasingQuality() const { return GetField<int16_t>(12, 0); }
+  uint8_t verticalSync() const { return GetField<uint8_t>(14, 0); }
+  const flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>> *resources() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>> *>(16); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* windowName */) &&
            verifier.Verify(windowName()) &&
-           VerifyField<Schema::vector2>(verifier, 6 /* resolution */) &&
-           VerifyField<Schema::vector2>(verifier, 8 /* shadowTexture */) &&
-           VerifyField<Schema::vector2>(verifier, 10 /* fsAntiAliasing */) &&
-           VerifyField<uint8_t>(verifier, 12 /* verticalSync */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* resources */) &&
+           VerifyField<Resolution>(verifier, 6 /* resolution */) &&
+           VerifyField<uint8_t>(verifier, 8 /* fullscreen */) &&
+           VerifyField<int16_t>(verifier, 10 /* antiAliasing */) &&
+           VerifyField<int16_t>(verifier, 12 /* antiAliasingQuality */) &&
+           VerifyField<uint8_t>(verifier, 14 /* verticalSync */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* resources */) &&
            verifier.Verify(resources()) &&
            verifier.VerifyVectorOfTables(resources()) &&
            verifier.EndTable();
@@ -93,35 +101,44 @@ struct GraphicSystemBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_windowName(flatbuffers::Offset<flatbuffers::String> windowName) { fbb_.AddOffset(4, windowName); }
-  void add_resolution(const Schema::vector2 *resolution) { fbb_.AddStruct(6, resolution); }
-  void add_shadowTexture(const Schema::vector2 *shadowTexture) { fbb_.AddStruct(8, shadowTexture); }
-  void add_fsAntiAliasing(const Schema::vector2 *fsAntiAliasing) { fbb_.AddStruct(10, fsAntiAliasing); }
-  void add_verticalSync(uint8_t verticalSync) { fbb_.AddElement<uint8_t>(12, verticalSync, 0); }
-  void add_resources(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>>> resources) { fbb_.AddOffset(14, resources); }
+  void add_resolution(const Resolution *resolution) { fbb_.AddStruct(6, resolution); }
+  void add_fullscreen(uint8_t fullscreen) { fbb_.AddElement<uint8_t>(8, fullscreen, 0); }
+  void add_antiAliasing(int16_t antiAliasing) { fbb_.AddElement<int16_t>(10, antiAliasing, 0); }
+  void add_antiAliasingQuality(int16_t antiAliasingQuality) { fbb_.AddElement<int16_t>(12, antiAliasingQuality, 0); }
+  void add_verticalSync(uint8_t verticalSync) { fbb_.AddElement<uint8_t>(14, verticalSync, 0); }
+  void add_resources(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>>> resources) { fbb_.AddOffset(16, resources); }
   GraphicSystemBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   GraphicSystemBuilder &operator=(const GraphicSystemBuilder &);
   flatbuffers::Offset<GraphicSystem> Finish() {
-    auto o = flatbuffers::Offset<GraphicSystem>(fbb_.EndTable(start_, 6));
+    auto o = flatbuffers::Offset<GraphicSystem>(fbb_.EndTable(start_, 7));
     return o;
   }
 };
 
 inline flatbuffers::Offset<GraphicSystem> CreateGraphicSystem(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::String> windowName = 0,
-   const Schema::vector2 *resolution = 0,
-   const Schema::vector2 *shadowTexture = 0,
-   const Schema::vector2 *fsAntiAliasing = 0,
+   const Resolution *resolution = 0,
+   uint8_t fullscreen = 0,
+   int16_t antiAliasing = 0,
+   int16_t antiAliasingQuality = 0,
    uint8_t verticalSync = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<ResourceLocation>>> resources = 0) {
   GraphicSystemBuilder builder_(_fbb);
   builder_.add_resources(resources);
-  builder_.add_fsAntiAliasing(fsAntiAliasing);
-  builder_.add_shadowTexture(shadowTexture);
   builder_.add_resolution(resolution);
   builder_.add_windowName(windowName);
+  builder_.add_antiAliasingQuality(antiAliasingQuality);
+  builder_.add_antiAliasing(antiAliasing);
   builder_.add_verticalSync(verticalSync);
+  builder_.add_fullscreen(fullscreen);
   return builder_.Finish();
 }
+
+inline const GraphicSystem *GetGraphicSystem(const void *buf) { return flatbuffers::GetRoot<GraphicSystem>(buf); }
+
+inline bool VerifyGraphicSystemBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<GraphicSystem>(); }
+
+inline void FinishGraphicSystemBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<GraphicSystem> root) { fbb.Finish(root); }
 
 }  // namespace Systems
 }  // namespace Schema

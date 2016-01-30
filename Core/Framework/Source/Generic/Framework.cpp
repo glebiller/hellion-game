@@ -91,16 +91,18 @@ boost::system::errc::errc_t Framework::Initialize() {
     // Complete the parsing of the GDF and the initial scene.
     //
     for (auto system : *m_environment->systems()) {
-        boost::filesystem::path shared_library_path(boost::dll::program_location().parent_path());
-        shared_library_path /= "libGraphicSystem.dylib";
-        std::function<void (IServiceManager*)> fnInitSystemLib = boost::dll::import<void (IServiceManager*)>(
-                shared_library_path, "InitializeSystemLib"
-        );
+        boost::filesystem::path sharedLibraryPath(boost::dll::program_location().parent_path());
+        sharedLibraryPath /= system->c_str() + boost::dll::shared_library::suffix().string();
+        boost::dll::shared_library systemLib(sharedLibraryPath);
+        m_systemLibraries.push_back(systemLib);
+
+        std::function<void (IServiceManager*)> fnInitSystemLib =
+                systemLib.get<void (IServiceManager*)>("InitializeSystemLib");
         fnInitSystemLib(IServiceManager::get());
-        std::function<ISystem* ()> fnCreateSystem = boost::dll::import<ISystem* ()>(
-                shared_library_path, "CreateSystem"
-        );
+        std::function<ISystem* ()> fnCreateSystem =
+                systemLib.get<ISystem* ()>("CreateSystem");
         ISystem* iSystem = fnCreateSystem();
+        iSystem->initialize();
         Schema::SystemType systemType = iSystem->GetSystemType();
         ASSERT(m_systems.find(systemType) == m_systems.end());
         m_systems[systemType] = iSystem;

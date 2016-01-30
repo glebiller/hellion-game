@@ -152,3 +152,11 @@ void GraphicScene::setAmbientLight(Schema::vector2* values) {
 void GraphicScene::createTask() {
     m_pSystemTask = new GraphicTask(this);
 }
+
+void GraphicScene::setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
+
+}
+
+flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* GraphicScene::getProperties() {
+    return nullptr;
+}

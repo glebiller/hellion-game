@@ -16,6 +16,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <include/cef_app.h>
+#include <flatbuffers/util.h>
+#include <GraphicSystem_generated.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #include <OgrePlugin.h>
@@ -41,7 +43,12 @@ GraphicSystem::GraphicSystem()
     , m_pRenderSystem(NULL)
     , m_pRenderWindow(NULL)
     , m_pMaterialManager(NULL) {
-    //m_SceneFactory = boost::factory<GraphicScene*>();
+
+
+    // Load settings
+    std::string graphicSystemFile;
+    flatbuffers::LoadFile("GraphicSystem.bin", true, &graphicSystemFile);
+    definition_ = Schema::Systems::GetGraphicSystem(graphicSystemFile.c_str());
 
     /*m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
     m_propertySetters["WindowName"] = boost::bind(&GraphicSystem::setWindowName, this, _1);
@@ -96,7 +103,7 @@ Error GraphicSystem::initialize() {
 #ifdef DEBUG_BUILD
     m_pRoot->loadPlugin("RenderSystem_Direct3D9_d");
 #else
-    m_pRoot->loadPlugin("RenderSystem_Direct3D9");
+    m_pRoot->loadPlugin("RenderSystem_GL");
 #endif
 
     Ogre::RenderSystemList pRenderList;
@@ -112,15 +119,17 @@ Error GraphicSystem::initialize() {
     m_pRoot->loadPlugin("Plugin_ParticleFX");
 #endif
 
-    // Note: createRenderWindow() is now called directly so that a render winow is created.  The old calling steps
-    // yielded a render system with no render window until after plugins load which causes assertions for CreateParticleSystem
-    // which requires a render window at the time the billboard renderer loads.
+    std::string name = definition_->windowName()->c_str();
+    Ogre::NameValuePairList miscParams;
+    miscParams["verticalSync"] = definition_->verticalSync();
+    miscParams["FSAA"] = definition_->antiAliasing();
+    miscParams["FSAAQuality"] = definition_->antiAliasingQuality();
     m_pRenderWindow = m_pRoot->createRenderWindow(
-        m_RenderWindowDescription.name,
-        m_RenderWindowDescription.width,
-        m_RenderWindowDescription.height,
-        m_RenderWindowDescription.useFullScreen,
-        &m_RenderWindowDescription.miscParams
+            name,
+            definition_->resolution()->width(),
+            definition_->resolution()->height(),
+            definition_->fullscreen(),
+            &miscParams
     );
     ASSERT(m_pRenderWindow != NULL);
     m_pRenderWindow->setDeactivateOnFocusChange(false);
@@ -159,6 +168,11 @@ Error GraphicSystem::initialize() {
     return Errors::Success;
 }
 
+ISystemScene* GraphicSystem::createScene() {
+    m_pSystemScene = new GraphicScene(this);
+    return m_pSystemScene;
+}
+
 /**
  * @inheritDoc
  */
@@ -177,7 +191,7 @@ void GraphicSystem::setResourceLocation(Schema::Systems::ResourceLocation* value
     const std::string resourceGroup = *(++value);
     bool recursive = boost::lexical_cast<bool>(*(++value));
     
-    /*m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
+    m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
     m_pResourceGroupManager->initialiseResourceGroup(resourceGroup);
     m_pResourceGroupManager->loadResourceGroup(resourceGroup);*/
 }

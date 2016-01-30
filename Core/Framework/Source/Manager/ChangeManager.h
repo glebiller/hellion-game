@@ -86,10 +86,10 @@ protected:
     std::vector<u32>                        m_indexList;
     std::vector<u32>                        m_freeIDsList;
     std::vector<SubjectInfo>                m_subjectsList;
-    std::list<std::vector<Notification>*>   m_NotifyLists;
+    std::list<std::vector<Notification>*>   m_notifyLists;
     std::vector<MappedNotification>         m_cumulativeNotifyList;
 
-    static boost::thread_specific_ptr<std::vector<Notification>> m_tlsNotifyList;
+    boost::thread_specific_ptr<std::vector<Notification>> m_tlsNotifyList;
 
     DEFINE_SPIN_MUTEX(m_swUpdate);
 

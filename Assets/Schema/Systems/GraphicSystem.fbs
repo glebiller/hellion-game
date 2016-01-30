@@ -1,6 +1,9 @@
-include "../Common.fbs";
-
 namespace Schema.Systems;
+
+struct Resolution {
+    width:uint;
+    height:uint;
+}
 
 table ResourceLocation {
     name:string;
@@ -11,9 +14,12 @@ table ResourceLocation {
 
 table GraphicSystem {
     windowName:string;
-    resolution:vector2;
-    shadowTexture:vector2;
-    fsAntiAliasing:vector2;
+    resolution:Resolution;
+    fullscreen:bool;
+    antiAliasing:short;
+    antiAliasingQuality:short;
     verticalSync:bool;
     resources:[ResourceLocation];
 }
+
+root_type GraphicSystem;

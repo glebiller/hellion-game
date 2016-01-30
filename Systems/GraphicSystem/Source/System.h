@@ -21,7 +21,7 @@
 #pragma warning( pop )
 
 #include <boost/dll.hpp>
-#include "GraphicSystem_generated.h"
+#include <GraphicSystem_generated.h>
 #include "Errors.h"
 #include "System.h" 
 #include "System/ISystem.h"
@@ -51,6 +51,8 @@ public:
     ~GraphicSystem();
 
     Error initialize() override;
+
+    ISystemScene* createScene() override;
 
     inline Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Graphic;
@@ -123,5 +125,7 @@ private:
 
     Ogre::RenderWindowDescription       m_RenderWindowDescription;
     Ogre::RenderWindow*                 m_pRenderWindow;
+
+    const Schema::Systems::GraphicSystem*     definition_;
 
 };

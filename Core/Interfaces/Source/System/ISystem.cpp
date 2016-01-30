@@ -36,14 +36,6 @@ ISystem::~ISystem() {
 /**
  * @inheritDoc
  */
-ISystemScene* ISystem::createScene() {
-    m_pSystemScene = m_SceneFactory(this);
-    return m_pSystemScene;
-}
-
-/**
- * @inheritDoc
- */
 Error ISystem::DestroyScene(ISystemScene* pSystemScene) {
     boost::checked_delete(pSystemScene);
     return Errors::Success;
