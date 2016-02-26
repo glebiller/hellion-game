@@ -24,7 +24,6 @@ IServiceManager*        g_serviceManager;
 
 extern "C" void BOOST_SYMBOL_EXPORT InitializeSystemLib(IServiceManager* serviceManager) {
     g_serviceManager = serviceManager;
-    g_serviceManager->getLogService()->initSystem(Schema::SystemType::Graphic);
 }
 
 extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem() {
@@ -33,6 +32,5 @@ extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem() {
 
 extern "C" void BOOST_SYMBOL_EXPORT DestroySystem(ISystem* pSystem) {
     delete reinterpret_cast<GraphicSystem*>(pSystem);
-    g_serviceManager->getLogService()->closeSystem(Schema::SystemType::Graphic);
 }
 

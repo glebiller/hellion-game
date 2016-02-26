@@ -55,13 +55,6 @@ public:
     virtual void setTaskManager(ITaskManager* taskManager) = 0;
 
     /**
-     * Gets runtime service.
-     *
-     * @return  null if it fails, else the runtime service.
-     */
-    virtual LogService* getLogService() = 0;
-
-    /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
