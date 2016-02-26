@@ -1,0 +1,14 @@
+namespace Schema.Scenes;
+
+struct Color {
+    red: float;
+    green: float;
+    blue: float;
+    alpha: float;
+}
+
+table GraphicScene {
+    ambientLight: Color;
+}
+
+root_type GraphicScene;

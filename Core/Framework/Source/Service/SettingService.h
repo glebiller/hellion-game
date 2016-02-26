@@ -15,14 +15,13 @@
 #pragma once
 
 #include <map>
-#include <Common_generated.h>
 
 /**
  * An interface for environment runtime functionality.
  */
 class SettingService {
 public:
-    void initialize(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties);
+    void initialize();
 
     /**
      * @inheritDoc
@@ -40,6 +39,5 @@ public:
     bool getBool(std::string propertyName);
 
 private:
-    const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>*         m_settings;
 
 };

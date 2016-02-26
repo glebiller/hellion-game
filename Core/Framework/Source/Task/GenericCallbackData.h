@@ -15,11 +15,11 @@
 #pragma once    
 
 #include <tbb/task.h>
+#include <SystemType_generated.h>
 
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
-#include "Common_generated.h"
 
 class Instrumentation;
 class TaskManager;

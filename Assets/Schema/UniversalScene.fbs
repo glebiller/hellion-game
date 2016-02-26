@@ -1,0 +1,27 @@
+include "SystemType.fbs";
+include "SystemComponentType.fbs";
+
+namespace Schema;
+
+table MetaData {
+  entityId:string;
+  prototype:string;
+  name:string;
+  comment:string;
+}
+
+table SystemComponent {
+    systemType: SystemType;
+    data:SystemComponentType;
+}
+
+table SceneEntity {
+    metaData: MetaData;
+    systemComponents:[SystemComponent];
+}
+
+table UniversalScene {
+    entities:[SceneEntity];
+}
+
+root_type UniversalScene;

@@ -12,7 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <include/cef_app.h>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
@@ -55,8 +54,6 @@ void GraphicTask::Update(f32 DeltaTime) {
     // we do not want it to be preempted. So temporarily boost up its thread priority.
     // TODO
     //SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
-    // Update GUI
-    CefDoMessageLoopWork();
     //
     // Render the scene
     //

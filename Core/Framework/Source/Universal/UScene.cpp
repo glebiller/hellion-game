@@ -17,19 +17,22 @@
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
+#include "System/ISystemScene.h"
 #include "Object/ISceneObject.h"
 #include "Manager/ServiceManager.h"
 #include "Manager/IChangeManager.h"
-#include "System/ISystemObject.h"
-#include "Common_generated.h"
 
 /**
  * @inheritDoc
  */
-UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) 
+UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM, std::map<Schema::SystemType, ISystem*>& systems)
     : m_pSceneCCM(pSceneCCM)
     , m_pObjectCCM(pObjectCCM) {
-
+    flatbuffers::LoadFile("UniversalScene.bin", true, &universalSceneData_);
+    universalSceneSchema_ = Schema::GetUniversalScene(universalSceneData_.c_str());
+    for (auto it : systems) {
+        Extend(*it.second);
+    }
 }
 
 /**
@@ -80,10 +83,10 @@ UScene::~UScene() {
  * @inheritDoc
  */
 void UScene::init() {
-    std::string sceneFile;
-    // TODO Load File
-    //flatbuffers::LoadFile("Environment.bin", true, &sceneFile);
-    //m_environment = Schema::Get(sceneFile.c_str());
+    // Create Entities
+    for (auto entity : *universalSceneSchema_->entities()) {
+        createSceneEntity(entity);
+    }
 
     //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
@@ -104,7 +107,7 @@ void UScene::init() {
  * @inheritDoc
  */
 void UScene::update() {
-    // Process first the object creation messages alone since it will 
+    // Process first the object creation messages alone since it will
     // generate some object messages that need to be processed by the object CCM.
     m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
     //
@@ -117,19 +120,19 @@ void UScene::update() {
 /**
  * @inheritDoc
  */
-ISystemScene* UScene::Extend(ISystem* pSystem) {
-    ASSERT(pSystem != NULL);
-    //
-    // Get the system's type.
-    //
-    Schema::SystemType SystemType = pSystem->GetSystemType();
-    ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
+ISystemScene* UScene::Extend(ISystem& system) {
+    BOOST_ASSERT_MSG(system != NULL, "Cannot extend Universal Scene with null system");
+
+    Schema::SystemType systemType = system.GetSystemType();
+    BOOST_LOG(logger_) << "Extend Universal Scene with system " << Schema::EnumNameSystemType(systemType);
+
+    BOOST_ASSERT_MSG(m_SystemScenes.find(systemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
 
     //
     // Have the system create it's scene.
     //
-    ISystemScene* pScene = pSystem->createScene();
+    ISystemScene* pScene = system.createScene();
     ASSERT(pScene != NULL);
     //
     // Create the associated task.
@@ -141,7 +144,7 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     //
     // Add the scene to the collection.
     //
-    m_SystemScenes[SystemType] = pScene;
+    m_SystemScenes[systemType] = pScene;
 
     return pScene;
 }
@@ -180,7 +183,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
 /**
  * @inheritDoc
  */
-void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::Object>>* templates) {
+void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::SceneEntity>>* templates) {
 /*    for (auto template_ : objects) {
         Templates::iterator it = m_templates.find(template_->name());
         ASSERTMSG(it == m_templates.end(), "The template to add to the scene already exists.");
@@ -195,16 +198,18 @@ void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::
 /**
  * @inheritDoc
  */
-UObject* UScene::createObject(const Schema::Object* objectProto) {
+UObject* UScene::createSceneEntity(const Schema::SceneEntity* sceneEntity) {
     IEntity* parent = nullptr;
-    if (objectProto->parent()) {
+    /*if (objectProto->parent()) {
         parent = FindObject(objectProto->parent()->c_str());
-    }
+    }*/
 
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, objectProto->id()->c_str(), objectProto->name()->c_str(), parent);
+    auto id = sceneEntity->metaData()->entityId()->c_str();
+    auto name = sceneEntity->metaData()->name()->c_str();
+    UObject* pObject = new UObject(this, id, name, parent);
     ASSERT(pObject != NULL);
     //
     // Add the object to the collection.
@@ -225,11 +230,12 @@ UObject* UScene::createObject(const Schema::Object* objectProto) {
         for (auto objectProto : *(*templateIt).second->systemObjects()) {
             createSystemObject(systemService, pObject, objectProto);
         }
-    }
-    for (auto objectProto : *objectProto->systemObjects()) {
-        createSystemObject(systemService, pObject, objectProto);
+    }*/
+    for (auto component : *sceneEntity->systemComponents()) {
+        createSystemObject(pObject, component);
     }
 
+    /*
     // 
     // Properties
     // 
@@ -244,27 +250,26 @@ UObject* UScene::createObject(const Schema::Object* objectProto) {
 
     //
     // Init everything
-    // 
+    //
+     */
     for (auto systemObject : pObject->GetExtensions()) {
         systemObject.second->initialize();
-    }*/
+    }
     return pObject;
 }
 
 /**
  * @inheritDoc
  */
-void UScene::createSystemObject(SystemService* systemService, UObject* pObject, const Schema::SystemObject* objectProto) {
+void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent* systemComponent) {
     UObject::SystemObjects extensions = pObject->GetExtensions();
-    if (extensions.find(objectProto->systemType()) != extensions.end()) {
+    if (extensions.find(systemComponent->systemType()) != extensions.end()) {
         return;
     }
 
-    ISystem* m_pSystem = systemService->get(objectProto->systemType());
-    ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
-    auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
-    ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-    ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto->type()->c_str());
+    const Schema::SystemType& type = systemComponent->systemType();
+    ISystemScene* systemScene = m_SystemScenes.find(type)->second;
+    ISystemObject* pSystemObject = pObject->Extend(systemScene, systemComponent);
     ASSERT(pSystemObject != NULL);
     m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
 };
@@ -355,14 +360,15 @@ void UScene::CreateObjectLink(UObject* pSubject, ISystemObject* pObserver) {
  * @inheritDoc
  */
 Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    switch (ChangeType) {
+    // TODO
+    /*switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             const ISceneObject::ObjectProtoQueue objectsToCreate = *pScene->getCreateObjects();
             for (auto objectProto : objectsToCreate) {
                 ASSERT(FindObject(objectProto.id()) == NULL);
-                UObject* pObject = createObject(objectProto);
-                ASSERT(pObject != NULL);
+                //UObject* pObject = createObject(objectProto);
+                //ASSERT(pObject != NULL);
             }
             pScene->resetCreateObjectQueues();
             break;
@@ -379,7 +385,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             pScene->resetDeleteObjectQueues();
             break;
         }
-    }
+    }*/
 
     return Errors::Success;
 }

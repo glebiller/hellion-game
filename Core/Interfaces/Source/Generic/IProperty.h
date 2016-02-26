@@ -21,7 +21,6 @@
 
 #include "DataTypes.h"
 #include "System/Changes.h"
-#include <Common_generated.h>
 
 namespace Math { struct Quaternion; }
 namespace Math { struct Vector3; }
@@ -38,10 +37,6 @@ public:
     virtual ~IProperty();
 
     virtual Error initialize();
-
-    virtual void setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) = 0;
-
-    virtual flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* getProperties() = 0;
 
     /**
      * Method called to notify the object that a property has been changed.

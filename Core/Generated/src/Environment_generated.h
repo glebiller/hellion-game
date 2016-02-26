@@ -12,29 +12,25 @@ struct Environment;
 
 struct Environment FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *systems() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(4); }
-  const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *scenes() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(6); }
-  const flatbuffers::String *startupScene() const { return GetPointer<const flatbuffers::String *>(8); }
-  uint8_t frameworkDebugWindow() const { return GetField<uint8_t>(10, 0); }
-  uint8_t schedulerBenchmarking() const { return GetField<uint8_t>(12, 0); }
-  int16_t taskManagerThreads() const { return GetField<int16_t>(14, 0); }
-  const flatbuffers::String *taskManagerTPEventsForTask() const { return GetPointer<const flatbuffers::String *>(16); }
-  const flatbuffers::String *taskManagerTPEventsForSynchronize() const { return GetPointer<const flatbuffers::String *>(18); }
+  const flatbuffers::String *startupScene() const { return GetPointer<const flatbuffers::String *>(6); }
+  uint8_t frameworkDebugWindow() const { return GetField<uint8_t>(8, 0); }
+  uint8_t schedulerBenchmarking() const { return GetField<uint8_t>(10, 0); }
+  int16_t taskManagerThreads() const { return GetField<int16_t>(12, 0); }
+  const flatbuffers::String *taskManagerTPEventsForTask() const { return GetPointer<const flatbuffers::String *>(14); }
+  const flatbuffers::String *taskManagerTPEventsForSynchronize() const { return GetPointer<const flatbuffers::String *>(16); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* systems */) &&
            verifier.Verify(systems()) &&
            verifier.VerifyVectorOfStrings(systems()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* scenes */) &&
-           verifier.Verify(scenes()) &&
-           verifier.VerifyVectorOfStrings(scenes()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* startupScene */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* startupScene */) &&
            verifier.Verify(startupScene()) &&
-           VerifyField<uint8_t>(verifier, 10 /* frameworkDebugWindow */) &&
-           VerifyField<uint8_t>(verifier, 12 /* schedulerBenchmarking */) &&
-           VerifyField<int16_t>(verifier, 14 /* taskManagerThreads */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* taskManagerTPEventsForTask */) &&
+           VerifyField<uint8_t>(verifier, 8 /* frameworkDebugWindow */) &&
+           VerifyField<uint8_t>(verifier, 10 /* schedulerBenchmarking */) &&
+           VerifyField<int16_t>(verifier, 12 /* taskManagerThreads */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* taskManagerTPEventsForTask */) &&
            verifier.Verify(taskManagerTPEventsForTask()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* taskManagerTPEventsForSynchronize */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* taskManagerTPEventsForSynchronize */) &&
            verifier.Verify(taskManagerTPEventsForSynchronize()) &&
            verifier.EndTable();
   }
@@ -44,24 +40,22 @@ struct EnvironmentBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_systems(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> systems) { fbb_.AddOffset(4, systems); }
-  void add_scenes(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> scenes) { fbb_.AddOffset(6, scenes); }
-  void add_startupScene(flatbuffers::Offset<flatbuffers::String> startupScene) { fbb_.AddOffset(8, startupScene); }
-  void add_frameworkDebugWindow(uint8_t frameworkDebugWindow) { fbb_.AddElement<uint8_t>(10, frameworkDebugWindow, 0); }
-  void add_schedulerBenchmarking(uint8_t schedulerBenchmarking) { fbb_.AddElement<uint8_t>(12, schedulerBenchmarking, 0); }
-  void add_taskManagerThreads(int16_t taskManagerThreads) { fbb_.AddElement<int16_t>(14, taskManagerThreads, 0); }
-  void add_taskManagerTPEventsForTask(flatbuffers::Offset<flatbuffers::String> taskManagerTPEventsForTask) { fbb_.AddOffset(16, taskManagerTPEventsForTask); }
-  void add_taskManagerTPEventsForSynchronize(flatbuffers::Offset<flatbuffers::String> taskManagerTPEventsForSynchronize) { fbb_.AddOffset(18, taskManagerTPEventsForSynchronize); }
+  void add_startupScene(flatbuffers::Offset<flatbuffers::String> startupScene) { fbb_.AddOffset(6, startupScene); }
+  void add_frameworkDebugWindow(uint8_t frameworkDebugWindow) { fbb_.AddElement<uint8_t>(8, frameworkDebugWindow, 0); }
+  void add_schedulerBenchmarking(uint8_t schedulerBenchmarking) { fbb_.AddElement<uint8_t>(10, schedulerBenchmarking, 0); }
+  void add_taskManagerThreads(int16_t taskManagerThreads) { fbb_.AddElement<int16_t>(12, taskManagerThreads, 0); }
+  void add_taskManagerTPEventsForTask(flatbuffers::Offset<flatbuffers::String> taskManagerTPEventsForTask) { fbb_.AddOffset(14, taskManagerTPEventsForTask); }
+  void add_taskManagerTPEventsForSynchronize(flatbuffers::Offset<flatbuffers::String> taskManagerTPEventsForSynchronize) { fbb_.AddOffset(16, taskManagerTPEventsForSynchronize); }
   EnvironmentBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   EnvironmentBuilder &operator=(const EnvironmentBuilder &);
   flatbuffers::Offset<Environment> Finish() {
-    auto o = flatbuffers::Offset<Environment>(fbb_.EndTable(start_, 8));
+    auto o = flatbuffers::Offset<Environment>(fbb_.EndTable(start_, 7));
     return o;
   }
 };
 
 inline flatbuffers::Offset<Environment> CreateEnvironment(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> systems = 0,
-   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> scenes = 0,
    flatbuffers::Offset<flatbuffers::String> startupScene = 0,
    uint8_t frameworkDebugWindow = 0,
    uint8_t schedulerBenchmarking = 0,
@@ -72,7 +66,6 @@ inline flatbuffers::Offset<Environment> CreateEnvironment(flatbuffers::FlatBuffe
   builder_.add_taskManagerTPEventsForSynchronize(taskManagerTPEventsForSynchronize);
   builder_.add_taskManagerTPEventsForTask(taskManagerTPEventsForTask);
   builder_.add_startupScene(startupScene);
-  builder_.add_scenes(scenes);
   builder_.add_systems(systems);
   builder_.add_taskManagerThreads(taskManagerThreads);
   builder_.add_schedulerBenchmarking(schedulerBenchmarking);
@@ -80,11 +73,11 @@ inline flatbuffers::Offset<Environment> CreateEnvironment(flatbuffers::FlatBuffe
   return builder_.Finish();
 }
 
-inline const Environment *GetEnvironment(const void *buf) { return flatbuffers::GetRoot<Environment>(buf); }
+inline const Schema::Environment *GetEnvironment(const void *buf) { return flatbuffers::GetRoot<Schema::Environment>(buf); }
 
-inline bool VerifyEnvironmentBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<Environment>(); }
+inline bool VerifyEnvironmentBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<Schema::Environment>(); }
 
-inline void FinishEnvironmentBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<Environment> root) { fbb.Finish(root); }
+inline void FinishEnvironmentBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<Schema::Environment> root) { fbb.Finish(root); }
 
 }  // namespace Schema
 

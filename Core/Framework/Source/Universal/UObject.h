@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <boost/uuid/uuid.hpp>
+
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "Generic/IEntity.h"
@@ -58,7 +60,7 @@ public:
      *
      * @return  null if it fails, else.
      */
-    ISystemObject* Extend(ISystemScene* pSystemScene, std::string pszSystemObjectType);
+    ISystemObject* Extend(ISystemScene* pSystemScene, const Schema::SystemComponent* component);
 
     /**
      * Used to unextend the objects functionality for a given system.

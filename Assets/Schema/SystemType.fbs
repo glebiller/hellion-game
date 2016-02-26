@@ -1,0 +1,19 @@
+namespace Schema;
+
+enum Color:byte (bit_flags) { Red = 0, Green, Blue = 3, }
+
+enum SystemType : uint {
+  Null,
+  AI,
+  Animation,
+  Audio,
+  Count,
+  Graphic,
+  Gui,
+  Input,
+  Network,
+  Physic,
+  Generic,
+}
+
+

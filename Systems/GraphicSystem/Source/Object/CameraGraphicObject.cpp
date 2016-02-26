@@ -28,10 +28,11 @@
 /**
  * @inheritDoc
  */
-CameraGraphicObject::CameraGraphicObject(ISystemScene* pSystemScene, IEntity* entity) : GraphicObject(pSystemScene, entity)
+CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, IEntity& entity, const Schema::SystemComponent& component)
+        : GraphicObject(&pSystemScene, &entity)
     , m_pViewport(nullptr)
     , m_vLookAt(Ogre::Vector3::ZERO)
-    , m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity->getName())) {
+    , m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
     //m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
     //m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
 }
@@ -97,9 +98,12 @@ Error CameraGraphicObject::initialize() {
     //
     // Set the far clip distance
     //
+    m_pCamera->setFarClipDistance(50000);
     if (m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
         m_pCamera->setFarClipDistance(0);   // enable infinite far clip distance if we can
     }
+    m_pCamera->setNearClipDistance(1);
+    m_pCamera->setPosition(10, 10, 10);
 
     m_bInitialized = true;
     return Errors::Success;
@@ -130,46 +134,4 @@ Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
     }
 
     return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
-void CameraGraphicObject::setFOVy(Schema::vector2* values) {
-    //auto value = values->begin();
-    //m_pCamera->setFOVy(Ogre::Radian(boost::lexical_cast<f32>(*value)));
-}
-
-/**
- * @inheritDoc
- */
-void CameraGraphicObject::setClipDistances(Schema::vector2* values) {
-    //auto value = values->begin();
-    //m_pCamera->setNearClipDistance(boost::lexical_cast<f32>(*value));
-    //m_pCamera->setFarClipDistance(boost::lexical_cast<f32>(*(++value)));
-}
-
-/**
- * @inheritDoc
- */
-void CameraGraphicObject::setPolygonMode(Schema::vector2* values) {
-    /*auto value = values->begin();
-
-    PolygonModes polygonMode = static_cast<PolygonModes>(boost::lexical_cast<i32>(*value));
-    ASSERT(polygonMode > PolygonMode_Invalid);
-    ASSERT(polygonMode < PolygonMode_Count);
-
-    switch (polygonMode) {
-        case PolygonMode_Points:
-            m_pCamera->setPolygonMode(Ogre::PM_POINTS);
-            break;
-
-        case PolygonMode_WireFrame:
-            m_pCamera->setPolygonMode(Ogre::PM_WIREFRAME);
-            break;
-
-        case PolygonMode_Solid:
-            m_pCamera->setPolygonMode(Ogre::PM_SOLID);
-            break;
-    }*/
 }

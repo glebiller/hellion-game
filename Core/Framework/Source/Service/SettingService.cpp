@@ -17,18 +17,13 @@
 #include "Defines.h"
 #include "Service/SettingService.h"
 
-void SettingService::initialize(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
-    m_settings = properties;
+void SettingService::initialize() {
 }
 
 /**
  * @inhertiDoc
  */
 std::string SettingService::getString(std::string propertyName) {
-    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
-    if (values->size() == 0) {
-        return "";
-    }
     return ""; //TODO property.value()->Get(0);
 }
 
@@ -36,11 +31,7 @@ std::string SettingService::getString(std::string propertyName) {
  * @inhertiDoc
  */
 int SettingService::getInt(std::string propertyName) {
-    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
-    if (values->size() == 0) {
-        return 0;
-    }
-    return boost::lexical_cast<int>(values->Get(0));
+    return 0;
 }
 
 
@@ -48,9 +39,5 @@ int SettingService::getInt(std::string propertyName) {
  * @inhertiDoc
  */
 bool SettingService::getBool(std::string propertyName) {
-    auto values = m_settings->LookupByKey(propertyName.c_str())->value();
-    if (values->size() == 0) {
-        return false;
-    }
-    return boost::lexical_cast<bool>(values->Get(0));
+    return false;
 }

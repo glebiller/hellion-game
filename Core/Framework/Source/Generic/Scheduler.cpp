@@ -83,7 +83,7 @@ void Scheduler::execute() {
     // Update instrumentation for this frame.
     // If we do this here, there's no thread sync to worry about since we're single-threaded here.
     //
-    m_pTaskManager->updatePeriodicData(deltaTime);
+    //m_pTaskManager->updatePeriodicData(deltaTime);
     
 #ifdef DEBUG_BUILD
     //Singletons::Debugger.update(DeltaTime);
@@ -97,7 +97,7 @@ void Scheduler::execute() {
     // Schedule the scenes that are ready for execution.
     //
     u32 cScenesToExecute = 0;
-    ISystemTask* aScenesToExecute[Schema::Count];
+    ISystemTask* aScenesToExecute[(int) Schema::SystemType::Count];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
@@ -111,7 +111,7 @@ void Scheduler::execute() {
 /// @inheritDoc
 ///
 void Scheduler::waitForScenes() {
-    ISystemTask* aScenesToWaitFor[Schema::Count];
+    ISystemTask* aScenesToWaitFor[(int) Schema::SystemType::Count];
     u32 cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {

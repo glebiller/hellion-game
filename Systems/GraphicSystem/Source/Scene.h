@@ -104,14 +104,7 @@ class GraphicScene : public ISystemScene {
 
     virtual void createTask() override;
 
-
-    virtual void setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) override;
-
-    virtual flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* getProperties() override;
-
 protected:
-
-        void setAmbientLight(Schema::vector2* values);
 
     protected:
         Ogre::SceneManager*                 m_pSceneManager;

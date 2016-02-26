@@ -1,0 +1,11 @@
+namespace Schema;
+
+table GraphicCamera {
+
+}
+
+table GraphicMesh {
+    name:string;
+}
+
+root_type GraphicMesh;

@@ -1,0 +1,36 @@
+{
+  "entities": [
+    {
+      "metaData": {
+        "entityId": "1",
+        "name": "PlayerCamera",
+        "comment": "The user control this object"
+      },
+      "systemComponents": [
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicCamera",
+          "data": {
+
+          }
+        }
+      ]
+    },
+    {
+      "metaData": {
+        "entityId": "2",
+        "name": "Cube",
+        "comment": "Display a cube"
+      },
+      "systemComponents": [
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicMesh",
+          "data": {
+            "name": "bloodelffemale/bloodelffemale.mesh"
+          }
+        }
+      ]
+    }
+  ]
+}

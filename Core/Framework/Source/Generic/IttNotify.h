@@ -16,7 +16,6 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Common_generated.h"
 
 #if defined(GCC_COMPILER)
 #include <cstdint>

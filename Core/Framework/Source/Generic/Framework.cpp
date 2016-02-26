@@ -15,26 +15,20 @@
 
 #include <boost/system/error_code.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/dll/runtime_symbol_info.hpp>
 #include <boost/dll.hpp>
 #include <flatbuffers/util.h>
 
 #include "Environment_generated.h"
+#include "UniversalScene_generated.h"
 #include "Defines.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
-#include "Debugger/Debugger.h"
 #include "Manager/ChangeManager.h"
 #include "Manager/ServiceManager.h"
-#include "Manager/TaskManager.h"
 #include "Service/DefinitionService.h"
 #include "Generic/Scheduler.h"
-#include "Generic/Instrumentation.h"
 #include "Generic/Framework.h"
-
-#include "include/cef_base.h"
-#include "include/cef_app.h"
 
 Framework::Framework() :
     m_serviceManager(new ServiceManager()),
@@ -62,13 +56,6 @@ boost::system::errc::errc_t Framework::Initialize() {
     std::string environmentFile;
     flatbuffers::LoadFile("Environment.bin", true, &environmentFile);
     m_environment = Schema::GetEnvironment(environmentFile.c_str());
-
-    //
-    // Init CEF
-    //
-    // TODO move to Main Client code
-    CefMainArgs args;
-    CefExecuteProcess(args, nullptr, NULL);
     
     //
     // Init debugger
@@ -183,10 +170,11 @@ void Framework::setNextScene(std::string nextSceneName) {
     if (m_pScene != nullptr) {
         delete m_pScene;
     }
-    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
-    for (auto it : m_systems) {
-        m_pScene->Extend(it.second);
-    }
+    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM, m_systems);
+    /*for (auto it : m_systems) {
+        m_pScene->Extend(*it.second);
+    }*/
+
     //m_definitionService->parseScene(m_pScene, nextSceneName);
     m_pScheduler->setScene(m_pScene);
     m_pScene->init();

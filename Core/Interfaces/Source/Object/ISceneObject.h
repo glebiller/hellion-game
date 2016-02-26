@@ -15,7 +15,7 @@
 #pragma once
 
 #include <list>
-#include "Common_generated.h"
+#include <SystemType_generated.h>
 
 /**
  * <c>IGenericScene</c> is an interface for providing generic scene related functionality. Any
@@ -24,7 +24,8 @@
 class ISceneObject {
 public:
 
-    typedef std::list<Schema::Object*> ObjectProtoQueue;
+    // TODO
+    typedef std::list<Schema::SystemType*> ObjectProtoQueue;
     
     /**
      * Default constructor.

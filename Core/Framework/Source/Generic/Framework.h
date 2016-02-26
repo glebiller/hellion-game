@@ -17,6 +17,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <boost/log/sources/logger.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/dll.hpp>
 
@@ -28,12 +29,19 @@ namespace Schema {
     class Environment;
 }
 class DefinitionService;
+
 class ServiceManager;
+
 class Scheduler;
+
 class ChangeManager;
+
 class UScene;
+
 class UObject;
+
 class Gdf;
+
 class ISystem;
 
 ///
@@ -43,67 +51,36 @@ class ISystem;
 class Framework {
 public:
 
-    ///
-    /// Default constructor.
-    ///
     Framework();
 
-    ///
-    /// Destructor.
-    ///
     ~Framework();
 
-    ///
-    /// Initializes this :.
-    ///
-    /// @return Error status.
-    ///
     boost::system::errc::errc_t Initialize();
 
-    ///
-    /// Shuts down this : and frees any resources it is using.
-    ///
     void Shutdown();
 
-    ///
-    /// Executes the framework..
-    ///
-    /// @return An error code.
-    ///
     Error Execute();
 
 protected:
 
-    ///
-    /// Process the messages.
-    ///
     void processMessages();
 
-    ///
-    /// Sets next scene.
-    ///
     void setNextScene(std::string nextSceneName);
 
-    /**
-     * Issues all the pending property changes.  This only occurs after the scheduler has
-     *  executed all the waiting items.
-     *
-     * @param   SystemTypes The system types of the system that can accept property changes.
-     */
     void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
-    
+
 private:
-    ServiceManager*                         m_serviceManager;
-    DefinitionService*                      m_definitionService;
+    boost::log::sources::logger logger_;
+    ServiceManager* m_serviceManager;
+    DefinitionService* m_definitionService;
 
-    Scheduler*                              m_pScheduler;
-    ChangeManager*                          m_pSceneCCM;
-    ChangeManager*                          m_pObjectCCM;
+    Scheduler* m_pScheduler;
+    ChangeManager* m_pSceneCCM;
+    ChangeManager* m_pObjectCCM;
 
-
-    UScene*                                 m_pScene;
-    const Schema::Environment*              m_environment;
-    std::map<Schema::SystemType, ISystem*>  m_systems;
-    std::vector<boost::dll::shared_library>  m_systemLibraries;
+    UScene* m_pScene;
+    const Schema::Environment* m_environment;
+    std::map<Schema::SystemType, ISystem*> m_systems;
+    std::vector<boost::dll::shared_library> m_systemLibraries;
 
 };

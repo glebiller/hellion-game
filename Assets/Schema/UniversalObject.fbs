@@ -1,0 +1,17 @@
+include "Objects/GraphicObject.fbs";
+
+namespace Schema;
+
+union SystemObject {
+    GraphicObject;
+}
+
+table UniversalObject {
+  id:string (required);
+  name:string;
+  parent:string;
+  templateObject:string;
+  systemObjects:[SystemObject];
+}
+
+

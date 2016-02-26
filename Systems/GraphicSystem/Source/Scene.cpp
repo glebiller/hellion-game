@@ -18,13 +18,14 @@
 #include <Ogre.h>
 #pragma warning( pop )
 
+#include <SystemComponentType_generated.h>
+
 #include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
 #include "Object/CameraGraphicObject.h"
-#include "Object/GuiGraphicObject.h"
 #include "Object/LightGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
 #include "Object/ParticleGraphicObject.h"
@@ -51,20 +52,36 @@ void ProcessObjects(void* Data);
 /**
  * @inheritDoc
  */
-GraphicScene::GraphicScene(ISystem* pSystem) 
+GraphicScene::GraphicScene(ISystem* pSystem)
     : ISystemScene(pSystem)
     , m_pSceneManager(nullptr)
-    , m_pRootNode(nullptr)
     , m_FogMode(Ogre::FOG_NONE) {
+    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
+    m_pRootNode = m_pSceneManager->getRootSceneNode();
+    m_ambientLight = Ogre::ColourValue(1, 1, 1, 0.3);
+    m_pSceneManager->setAmbientLight(m_ambientLight);
+    m_pSceneManager->setSkyBox(true, "nebula");
+    m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
+
     //m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
-    
+
+    m_ObjectFactories[Schema::SystemComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
+    m_ObjectFactories[Schema::SystemComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
     /*m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
-    m_ObjectFactories["Mesh"] = boost::factory<MeshGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
     m_ObjectFactories["Sky"] = boost::factory<SkyGraphicObject*>();
     m_ObjectFactories["Terrain"] = boost::factory<TerrainGraphicObject*>();*/
+
+    Ogre::Vector3 lightdir(0, 0, 0);
+
+    Ogre::Light* light = m_pSceneManager->createLight("TestLight");
+    light->setType(Ogre::Light::LT_SPOTLIGHT);
+    light->setDirection(lightdir);
+    light->setDiffuseColour(Ogre::ColourValue::Red);
+    light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
+    light->setPosition(15, 15, 0);
 }
 
 /**
@@ -80,21 +97,6 @@ GraphicScene::~GraphicScene() {
 Error GraphicScene::initialize() {
     ASSERT(!m_bInitialized);
 
-    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
-    ASSERT(m_pSceneManager != NULL);
-    if (!m_pSceneManager) {
-        return Errors::Failure;
-    }
-
-    m_pRootNode = m_pSceneManager->getRootSceneNode();
-    ASSERT(m_pRootNode != NULL);
-    //m_pRootNode->hideBoundingBox(true);
-
-    m_ambientLight = Ogre::ColourValue(1, 1, 1, 1);
-    m_pSceneManager->setAmbientLight(m_ambientLight);
-    //m_pSceneManager->setSkyBox(true, "nebula");
-    m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
-    
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -139,24 +141,6 @@ void GraphicScene::ProcessRange(u32 begin, u32 end) {
     }
 }
 
-/**
- * @inheritDoc
- */
-void GraphicScene::setAmbientLight(Schema::vector2* values) {
-    /*auto value = values->begin();
-    m_ambientLight.r = boost::lexical_cast<f32>(*value);
-    m_ambientLight.g = boost::lexical_cast<f32>(*(++value));
-    m_ambientLight.b = boost::lexical_cast<f32>(*(++value));*/
-}
-
 void GraphicScene::createTask() {
     m_pSystemTask = new GraphicTask(this);
-}
-
-void GraphicScene::setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
-
-}
-
-flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* GraphicScene::getProperties() {
-    return nullptr;
 }

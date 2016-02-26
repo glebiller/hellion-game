@@ -16,6 +16,9 @@
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include <Ogre.h>
+#include <UniversalScene_generated.h>
+#include <GraphicSystemComponents_generated.h>
+
 #pragma warning( pop )
 
 #pragma warning( push, 0 )
@@ -38,8 +41,8 @@ u32 MeshGraphicObject::sm_EntityId = 0;
 /**
  * @inheritDoc
  */
-MeshGraphicObject::MeshGraphicObject(ISystemScene* pSystemScene, IEntity* entity) 
-    : GraphicObject(pSystemScene, entity)
+MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, IEntity& entity, const Schema::SystemComponent& component)
+    : GraphicObject(&pSystemScene, &entity)
     , m_pEntity(NULL)
     , isProcedural(false)
     , m_strStaticGrpName("")
@@ -48,6 +51,9 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene* pSystemScene, IEntity* entity
     , m_Scale(Math::Vector3::One)
     , m_Dirty(true) {
     //m_propertySetters["Mesh"] = boost::bind(&MeshGraphicObject::setMeshName, this, _1);
+    auto mesh = Schema::GetGraphicMesh(component.data());
+    m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), mesh->name()->c_str());
+    m_pNode->setPosition(0, 0, 0);
 }
 
 
@@ -89,6 +95,7 @@ void MeshGraphicObject::Update(f32 DeltaTime) {
 Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
+    // TODO next step
     if (ChangeType & System::Changes::Physic::Position) {
         const Math::Vector3& Position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
         m_pNode->setPosition(Position.x, Position.y, Position.z);

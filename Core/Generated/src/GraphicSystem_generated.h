@@ -134,11 +134,11 @@ inline flatbuffers::Offset<GraphicSystem> CreateGraphicSystem(flatbuffers::FlatB
   return builder_.Finish();
 }
 
-inline const GraphicSystem *GetGraphicSystem(const void *buf) { return flatbuffers::GetRoot<GraphicSystem>(buf); }
+inline const Schema::Systems::GraphicSystem *GetGraphicSystem(const void *buf) { return flatbuffers::GetRoot<Schema::Systems::GraphicSystem>(buf); }
 
-inline bool VerifyGraphicSystemBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<GraphicSystem>(); }
+inline bool VerifyGraphicSystemBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<Schema::Systems::GraphicSystem>(); }
 
-inline void FinishGraphicSystemBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<GraphicSystem> root) { fbb.Finish(root); }
+inline void FinishGraphicSystemBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<Schema::Systems::GraphicSystem> root) { fbb.Finish(root); }
 
 }  // namespace Systems
 }  // namespace Schema

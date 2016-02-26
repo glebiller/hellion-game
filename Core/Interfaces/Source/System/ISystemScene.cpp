@@ -12,6 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <SystemComponentType_generated.h>
+#include <UniversalScene_generated.h>
+
 #include "System/ISystemScene.h"
 
 #include "Assert.h"
@@ -54,10 +57,11 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
 /**
  * @inheritDoc
  */
-ISystemObject* ISystemScene::CreateObject(IEntity* entity, std::string type) {
+ISystemObject* ISystemScene::CreateObject(IEntity* entity, const Schema::SystemComponent* component) {
     ASSERT(m_bInitialized);
 
-    ISystemObject* systemObject = m_ObjectFactories[type](this, entity);
+    ObjectFactory objectFactory = m_ObjectFactories[component->data_type()];
+    ISystemObject* systemObject = objectFactory(*this, *entity, *component);
 
     if (systemObject != nullptr) {
         m_pObjects[systemObject->getEntity()->getId()] = systemObject;

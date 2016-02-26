@@ -18,8 +18,6 @@
 
 #include "MathUtils.h"
 #include "Object/Object.h"
-#include "Browser/BrowserClient.h"
-#include "Browser/BrowserRenderHandler.h"
 
 class GraphicSystem;
 class GraphicScene;
@@ -74,8 +72,6 @@ class CursorGraphicObject : public GraphicObject {
         Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
     private:
-        CefRefPtr<CefBrowser>       m_browser;
-        CefRefPtr<BrowserClient>    m_browserClient;
 };
 
 

@@ -99,7 +99,7 @@ void DefinitionService::parseSystems() {
  * @inheritDoc
  */
 void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
-    const auto scenes = m_gdProto->scenes();
+    //const auto scenes = m_gdProto->scenes();
     /*auto sceneIt = std::find(scenes->begin(), scenes->end(), sceneName.c_str());
     if (sceneIt == scenes.end()) {
         return;
@@ -111,7 +111,7 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     // Create the initial scene for each system.
     //
     for (auto it : systemService->get()) {
-        scene->Extend(it.second);
+        scene->Extend(*it.second);
     }
 
     //

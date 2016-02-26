@@ -15,8 +15,8 @@
 #pragma once
 
 #include <vector>
-#include <Common_generated.h>
 #include <boost/log/trivial.hpp>
+#include <SystemType_generated.h>
 #include "Defines.h"
 
 /**

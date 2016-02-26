@@ -13,7 +13,6 @@
 // responsibility to update it.
 
 #include <boost/filesystem/operations.hpp>
-#include <Common_generated.h>
 
 #include "Service/LogService.h"
 

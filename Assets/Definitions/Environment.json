@@ -2,9 +2,6 @@
   "systems": [
     "libGraphicSystem"
   ],
-  "scenes": [
-    "Main"
-  ],
   "startupScene": "Main",
   "frameworkDebugWindow": false,
   "schedulerBenchmarking": false,

@@ -17,6 +17,8 @@
 #include <OgreVector3.h>
 
 #include "Object/Object.h"
+#include "System/ISystemScene.h"
+#include "Generic/IEntity.h"
 
 class GraphicSystem;
 class GraphicScene;
@@ -35,7 +37,7 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        CameraGraphicObject(ISystemScene* pSystemScene, IEntity* entity);
+        CameraGraphicObject(ISystemScene& pSystemScene, IEntity& entity, const Schema::SystemComponent& component);
         
         /**
          * @inheritDoc
@@ -71,13 +73,7 @@ class CameraGraphicObject : public GraphicObject {
          */
         virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-    protected:
-
-        void setFOVy(Schema::vector2* values);
-
-        void setClipDistances(Schema::vector2* values);
-
-        void setPolygonMode(Schema::vector2* values);
+protected:
 
     private:
 

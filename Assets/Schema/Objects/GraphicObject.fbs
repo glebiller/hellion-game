@@ -1,0 +1,10 @@
+namespace Schema.Objects;
+
+table Camera {
+    FOVy: float;
+}
+
+union GraphicObject {
+    Camera;
+}
+

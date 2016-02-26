@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <Common_generated.h>
 #include "System/Types.h"
 
 /**
@@ -167,7 +166,8 @@ public:
      *                      getJobCount.
      */
     void getJobRatios(f32* jobRatios) {
-        for (int i = 0; i < Schema::SystemType::Count; i++) {
+        int systemCount = static_cast<unsigned int> (Schema::SystemType::Count);
+        for (int i = 0; i < systemCount; i++) {
             jobRatios[i] = m_pLastFrameRatio[i];
         }
     }

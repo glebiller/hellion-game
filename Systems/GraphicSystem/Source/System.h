@@ -14,20 +14,24 @@
 
 #pragma once
 
+#include <boost/log/sources/logger.hpp>
+#include <boost/dll.hpp>
+
 #pragma warning( push, 0 )
+
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
 #include <Overlay/OgreOverlaySystem.h>
+
 #pragma warning( pop )
 
-#include <boost/dll.hpp>
 #include <GraphicSystem_generated.h>
 #include "Errors.h"
 #include "System.h" 
 #include "System/ISystem.h"
-#include "Common_generated.h"
 
 class GraphicScene;
+
 class GraphicTask;
 
 /**
@@ -96,36 +100,29 @@ public:
      */
     void windowClosed(Ogre::RenderWindow* pRenderWindow);
 
-
-    void setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties);
-
-    flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* getProperties();
-
 protected:
 
     void setResourceLocation(Schema::Systems::ResourceLocation* values);
 
     void setWindowName(std::string* values);
 
-    void setResolution(Schema::vector2* values);
-
     void setFullScreen(bool values);
 
     void setVerticalSync(bool values);
 
-    void setAntiAliasing(Schema::vector2* values);
-
 private:
-    Ogre::Root*                         m_pRoot;
+    boost::log::sources::logger logger_;
+    Ogre::Root* m_pRoot;
 
-    Ogre::ResourceGroupManager*         m_pResourceGroupManager;
-    Ogre::MaterialManager*              m_pMaterialManager;
-    Ogre::RenderSystem*                 m_pRenderSystem;
-    Ogre::OverlaySystem*                m_pOverlaySystem;
+    Ogre::ResourceGroupManager* m_pResourceGroupManager;
+    Ogre::MaterialManager* m_pMaterialManager;
+    Ogre::RenderSystem* m_pRenderSystem;
+    Ogre::OverlaySystem* m_pOverlaySystem;
 
-    Ogre::RenderWindowDescription       m_RenderWindowDescription;
-    Ogre::RenderWindow*                 m_pRenderWindow;
+    Ogre::RenderWindowDescription m_RenderWindowDescription;
+    Ogre::RenderWindow* m_pRenderWindow;
 
-    const Schema::Systems::GraphicSystem*     definition_;
+    std::string definitionData_;
+    const Schema::Systems::GraphicSystem* definition_;
 
 };

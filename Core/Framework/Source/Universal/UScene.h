@@ -14,9 +14,12 @@
 
 #pragma once
 
+#include <boost/log/sources/logger.hpp>
+
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 #include "Object/IGeometryObject.h"
+#include "UniversalScene_generated.h"
 
 class UObject;
 class IChangeManager;
@@ -32,7 +35,7 @@ class UScene : public IObserver {
 public:
 
     // TODO move
-    typedef std::map<std::string, Schema::Object*>                       Templates;
+    typedef std::map<std::string, Schema::SceneEntity*>                       Templates;
     typedef std::map<Schema::SystemType, ISystem*>                       Systems;
     typedef std::map<Schema::SystemType, ISystemScene*>                  SystemScenes;
     typedef std::list<UObject*>                                         Objects;
@@ -45,28 +48,12 @@ public:
 
 public:
 
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  systemService   If non-null, the system service.
-     * @param [in,out]  pUSceneCCM      If non-null, the u scene ccm.
-     * @param [in,out]  pUObjectCCM     If non-null, the u object ccm.
-     */
-    UScene(IChangeManager* pUSceneCCM, IChangeManager* pUObjectCCM);
+    UScene(IChangeManager* pUSceneCCM, IChangeManager* pUObjectCCM, std::map<Schema::SystemType, ISystem*>& systems);
 
-    /**
-     * Destructor.
-     */
     ~UScene();
 
-    /**
-     * Initialises this object.
-     */
     void init();
 
-    /**
-     * Updates this object.
-     */
     void update();
 
     /**
@@ -76,7 +63,7 @@ public:
      *
      * @return  The newly ISystemScene.
      */
-    ISystemScene* Extend(ISystem* pSystem);
+    ISystemScene* Extend(ISystem& system);
 
     /**
      * Destroys a ISystemScene removing it from the UScene.
@@ -101,7 +88,7 @@ public:
      *
      * @param   objects If non-null, the objects.
      */
-    void addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::Object>>* objects);
+    void addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::SceneEntity>>* objects);
 
     /**
      * Creates a new UObject that gets attached to this scene.
@@ -111,7 +98,7 @@ public:
      *
      * @return  The newly created object that has consequently been added to the scene.
      */
-    UObject* createObject(const Schema::Object* objectProto);
+    UObject* createSceneEntity(const Schema::SceneEntity* objectProto);
 
     /**
      * Destroys a UObject removing it from the scene.  It also deletes it's CCM.
@@ -179,18 +166,16 @@ public:
 
 private:
 
-    /**
-     * Creates system object.
-     *
-     * @param [in,out]  systemService   If non-null, the system service.
-     * @param [in,out]  pObject         If non-null, the object.
-     * @param   objectProto             The object prototype.
-     */
-    void createSystemObject(SystemService* systemService, UObject* pObject, const Schema::SystemObject* objectProto);
+    void createSystemObject(UObject* pObject, const Schema::SystemComponent* objectProto);
 
 protected:
+    boost::log::sources::logger             logger_;
+
     IChangeManager*                         m_pSceneCCM;
     IChangeManager*                         m_pObjectCCM;
+
+    std::string                             universalSceneData_;
+    const Schema::UniversalScene*           universalSceneSchema_;
 
     SystemScenes                            m_SystemScenes;
     Templates                               m_templates;

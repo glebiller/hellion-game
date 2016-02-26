@@ -16,7 +16,7 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Common_generated.h"
+#include "SystemType_generated.h"
 
 #if defined( MSC_COMPILER )
 #include <intrin.h>
@@ -47,7 +47,7 @@ namespace System {
 #if defined(MSC_COMPILER)
             _BitScanForward((unsigned long*)&Index, systemType);
 #elif defined(GCC_COMPILER)
-            Index = __builtin_ffs(systemType);
+            Index = __builtin_ffs(static_cast<unsigned int>(systemType));
 #endif
             return Index;
         };

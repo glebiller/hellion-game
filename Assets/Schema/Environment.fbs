@@ -2,7 +2,6 @@ namespace Schema;
 
 table Environment {
     systems:[string];
-    scenes:[string];
     startupScene:string;
     frameworkDebugWindow:bool;
     schedulerBenchmarking:bool;

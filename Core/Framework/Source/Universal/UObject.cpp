@@ -20,25 +20,19 @@
 #include "Manager/IServiceManager.h"
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
-#include "../../../Generated/src/Common_generated.h"
+#include "SystemComponentType_generated.h"
 
 /**
  * @inheritDoc
  */
 UObject::UObject(UScene* pScene, std::string id, std::string name, IEntity* parent)
-    : ISubject()
-    , IEntity(id, name, parent)
-    , m_pObjectCCM(pScene->getObjectCCM())
-    , m_pScene(pScene) {
+        : ISubject(), IEntity(id, name, parent), m_pObjectCCM(pScene->getObjectCCM()), m_pScene(pScene) {
 }
 
 /**
  * @inheritDoc
  */
 UObject::~UObject() {
-    //
-    // Remove all the extensions.
-    //
     SystemObjects SysObjs = m_ObjectExtensions;
 
     for (auto it = SysObjs.begin(); it != SysObjs.end(); it++) {
@@ -51,14 +45,11 @@ UObject::~UObject() {
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObjectType) {
+ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemComponent* component) {
     ASSERT(pSystemScene != NULL);
     ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
 
-    //
-    // Create the system object.
-    //
-    ISystemObject* pSystemObject = pSystemScene->CreateObject(this, systemObjectType);
+    ISystemObject* pSystemObject = pSystemScene->CreateObject(this, component);
     ASSERT(pSystemObject != NULL);
 
     //
@@ -150,7 +141,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
         ISystemScene* pScene = it->second;
 
         if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Unregister(pSystemObject,  pScene);
+            m_pObjectCCM->Unregister(pSystemObject, pScene);
         }
     }
 

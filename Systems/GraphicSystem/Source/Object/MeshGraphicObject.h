@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OgreMesh.h>
+#include <UniversalScene_generated.h>
 
 #include "MathUtils.h"
 #include "Object/Object.h"
@@ -35,7 +36,7 @@ class MeshGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        MeshGraphicObject(ISystemScene* pSystemScene, IEntity* entity);
+        MeshGraphicObject(ISystemScene& pSystemScene, IEntity& entity, const Schema::SystemComponent& component);
         
         /**
          * @inheritDoc

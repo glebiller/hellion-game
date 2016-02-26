@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <boost/uuid/uuid.hpp>
 #include "Generic/IComponent.h"
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
@@ -61,11 +62,6 @@ public:
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
 
-    /**
-     * Gets the entity of this object.
-     *
-     * @return  A pointer to the entity.
-     */
     inline IEntity* getEntity() {
         return m_entity;
     }

@@ -1,0 +1,8 @@
+include "Component/GraphicSystemComponents.fbs";
+
+namespace Schema;
+
+union SystemComponentType {
+  GraphicCamera,
+  GraphicMesh
+}

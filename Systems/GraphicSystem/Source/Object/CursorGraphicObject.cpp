@@ -44,8 +44,6 @@ CursorGraphicObject::CursorGraphicObject(ISystemScene* pSystemScene, IEntity* en
  * @inheritDoc
  */
 CursorGraphicObject::~CursorGraphicObject() {
-    m_browser = nullptr;
-    m_browserClient = nullptr;
 }
 
 /**

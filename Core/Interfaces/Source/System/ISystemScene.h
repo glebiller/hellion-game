@@ -18,6 +18,7 @@
 #include <boost/function.hpp>
 #include <map>
 #include <string>
+#include <UniversalScene_generated.h>
 
 #include "DataTypes.h"
 #include "Generic/IComponent.h"
@@ -25,11 +26,12 @@
 #include "Generic/IProperty.h"
 #include "Generic/ISubject.h"
 #include "Generic/IUpdatable.h"
+#include "Generic/IEntity.h"
 #include "System/Changes.h"
+#include "System/ISystem.h"
+#include "System/ISystemScene.h"
+#include "System/ISystemObject.h"
 
-class IEntity;
-class ISystem;
-class ISystemObject;
 class ISystemTask;
 
 #include "ISystemObject.h"
@@ -92,7 +94,7 @@ public:
      * @param   type The object type to create.
      * @return  The newly created system object.
      */
-    ISystemObject* CreateObject(IEntity* entity, std::string type);
+    ISystemObject* CreateObject(IEntity* entity, const Schema::SystemComponent* component);
 
     /**
      * Destroys a system object.
@@ -129,12 +131,12 @@ public:
 
 protected:
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
-    typedef std::function<ISystemObject*(ISystemScene* pSystemScene, IEntity* entity)> ObjectFactory;
+    typedef std::function<ISystemObject*(ISystemScene& pSystemScene, IEntity& entity, const Schema::SystemComponent& component)> ObjectFactory;
 
     ISystem*                                        m_pSystem;
     ISystemTask*							        m_pSystemTask;
     ObjectsList                                     m_pObjects;
 
-    std::map<std::string, ObjectFactory>            m_ObjectFactories;
+    std::map<Schema::SystemComponentType, ObjectFactory>  m_ObjectFactories;
 
 };
