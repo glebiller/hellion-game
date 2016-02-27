@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
 #include <flatbuffers/util.h>
 #include <Environment_generated.h>
 #include "Generic/Framework.h"
@@ -85,7 +87,7 @@ UScene::~UScene() {
 void UScene::init() {
     // Create Entities
     for (auto entity : *universalSceneSchema_->entities()) {
-        createSceneEntity(entity);
+        createSceneEntity(*entity);
     }
 
     //
@@ -198,7 +200,7 @@ void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::
 /**
  * @inheritDoc
  */
-UObject* UScene::createSceneEntity(const Schema::SceneEntity* sceneEntity) {
+UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     IEntity* parent = nullptr;
     /*if (objectProto->parent()) {
         parent = FindObject(objectProto->parent()->c_str());
@@ -207,9 +209,7 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity* sceneEntity) {
     //
     // Create the new object.
     //
-    auto id = sceneEntity->metaData()->entityId()->c_str();
-    auto name = sceneEntity->metaData()->name()->c_str();
-    UObject* pObject = new UObject(this, id, name, parent);
+    UObject* pObject = new UObject(this, sceneEntity, parent);
     ASSERT(pObject != NULL);
     //
     // Add the object to the collection.

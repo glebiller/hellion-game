@@ -13,6 +13,7 @@
 // responsibility to update it.
 
 #include <boost/log/sources/logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>

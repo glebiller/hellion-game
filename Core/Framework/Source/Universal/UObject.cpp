@@ -25,8 +25,8 @@
 /**
  * @inheritDoc
  */
-UObject::UObject(UScene* pScene, std::string id, std::string name, IEntity* parent)
-        : ISubject(), IEntity(id, name, parent), m_pObjectCCM(pScene->getObjectCCM()), m_pScene(pScene) {
+UObject::UObject(UScene* pScene, const Schema::SceneEntity sceneEntity, IEntity* parent)
+        : ISubject(), IEntity(nullptr, nullptr, parent), m_pObjectCCM(pScene->getObjectCCM()), m_pScene(pScene) {
 }
 
 /**

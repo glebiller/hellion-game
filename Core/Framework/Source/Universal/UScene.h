@@ -98,7 +98,7 @@ public:
      *
      * @return  The newly created object that has consequently been added to the scene.
      */
-    UObject* createSceneEntity(const Schema::SceneEntity* objectProto);
+    UObject* createSceneEntity(const Schema::SceneEntity& objectProto);
 
     /**
      * Destroys a UObject removing it from the scene.  It also deletes it's CCM.

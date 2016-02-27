@@ -34,7 +34,7 @@
 #include "Manager/ITaskManager.h"
 
 namespace Schema {
-    class Environment;
+    struct Environment;
 }
 class Instrumentation;
 
