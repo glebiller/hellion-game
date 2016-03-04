@@ -25,7 +25,7 @@
 /**
  * @inheritDoc
  */
-PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, UObject* entity)
     : NetworkObject(pSystemScene, entity)
     , m_velocityDirty(true)
     , m_rotationDirty(true)

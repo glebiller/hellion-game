@@ -13,13 +13,13 @@
 // responsibility to update it.
 
 #include "Scene.h"
-#include "Generic/IEntity.h"
+#include "Generic/UObject.h"
 #include "Object/Object.h"
 
 /**
  * @inheritDoc
  */
-NetworkObject::NetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+NetworkObject::NetworkObject(ISystemScene* pSystemScene, UObject* entity)
     : ISystemObject(pSystemScene, entity) {
 
 }

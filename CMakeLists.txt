@@ -1,39 +1,62 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(HellionGame LANGUAGES CXX)
 
-project("HellionGame")
+LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR} CACHE PATH "Directory for Libraries")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR} CACHE PATH "Directory for Executables.")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR} CACHE PATH "Directory for Static Libraries.")
-
-if(UNIX)
-    add_definitions(-Wall -Wno-unknown-pragmas -std=c++14)
-endif(UNIX)
-if(APPLE)
-    add_definitions(-std=c++14)
-endif(APPLE)
-if(MSVC)
-    add_definitions("/wd4099 /nologo")
-endif(MSVC)
-
+# Include Boost
 set(Boost_FIND_QUIETLY ON)
-#set(Boost_USE_STATIC_LIBS ON)
 add_definitions(-DBOOST_LOG_DYN_LINK)
-add_definitions(-stdlib=libc++)
+find_package(Boost REQUIRED COMPONENTS log timer thread system filesystem)
+add_library(Boost INTERFACE IMPORTED)
+set_property(TARGET Boost PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR})
 
-include("ProjectUtils")
-find_package("Boost" COMPONENTS "thread" REQUIRED "log" REQUIRED "timer" REQUIRED "filesystem" REQUIRED "system" REQUIRED)
-find_package("FlatBuffers" REQUIRED)
-find_package("TBB" REQUIRED)
-find_package("Protobuf" REQUIRED)
+add_library(Boost-log SHARED IMPORTED)
+set_property(TARGET Boost-log PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+set_property(TARGET Boost-log PROPERTY
+        IMPORTED_LOCATION ${Boost_LOG_LIBRARY})
 
-include_directories(${Boost_INCLUDE_DIRS} ${TBB_INCLUDE_DIRS} 
-    ${PROTOBUF_INCLUDE_DIRS} ${FLATBUFFERS_INCLUDE_DIR} ${LOGOG_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS} ${TBB_LIBRARY_DIRS})
+add_library(Boost-timer SHARED IMPORTED)
+set_property(TARGET Boost-timer PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+set_property(TARGET Boost-timer PROPERTY
+        IMPORTED_LOCATION ${Boost_TIMER_LIBRARY})
 
-add_subdirectory("Core")
-add_subdirectory("Systems")
-add_subdirectory("Main")
+add_library(Boost-thread SHARED IMPORTED)
+set_property(TARGET Boost-thread PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+set_property(TARGET Boost-thread PROPERTY
+        IMPORTED_LOCATION ${Boost_THREAD_LIBRARY})
+
+add_library(Boost-system SHARED IMPORTED)
+set_property(TARGET Boost-system PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+set_property(TARGET Boost-system PROPERTY
+        IMPORTED_LOCATION ${Boost_SYSTEM_LIBRARY})
+
+add_library(Boost-filesystem SHARED IMPORTED)
+set_property(TARGET Boost-filesystem PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIRS})
+set_property(TARGET Boost-filesystem PROPERTY
+        IMPORTED_LOCATION ${Boost_FILESYSTEM_LIBRARY})
+
+# Include FlatBuffers
+find_package(FlatBuffers REQUIRED)
+add_library(FlatBuffers INTERFACE IMPORTED)
+set_property(TARGET FlatBuffers PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${FLATBUFFERS_INCLUDE_DIR})
+
+# Include TBB
+find_package(TBB REQUIRED)
+add_library(TBB INTERFACE IMPORTED)
+set_property(TARGET TBB PROPERTY
+        INTERFACE_INCLUDE_DIRECTORIES ${TBB_INCLUDE_DIR})
+set_property(TARGET TBB PROPERTY
+        INTERFACE_LINK_LIBRARIES ${TBB_LIBRARIES})
+
+#enable_testing()
+add_subdirectory(Core)
+add_subdirectory(Main)
+add_subdirectory(Systems)
 

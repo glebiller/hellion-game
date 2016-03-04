@@ -5,7 +5,5 @@ table GraphicCamera {
 }
 
 table GraphicMesh {
-    name:string;
+    name:string (required);
 }
-
-root_type GraphicMesh;

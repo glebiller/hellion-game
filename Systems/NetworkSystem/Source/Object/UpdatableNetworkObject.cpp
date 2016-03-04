@@ -16,7 +16,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Scene.h"
-#include "Generic/IEntity.h"
+#include "Generic/UObject.h"
 #include "Object/Object.h"
 #include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
@@ -25,7 +25,7 @@
 /**
  * @inheritDoc
  */
-UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, UObject* entity)
     : NetworkObject(pSystemScene, entity)
     , IGeometryObject() {
     m_propertySetters["Position"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Position, &m_position, _1);

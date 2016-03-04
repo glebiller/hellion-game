@@ -25,7 +25,7 @@
 /**
  * @inheritDoc
  */
-ReplicableNetworkObject::ReplicableNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+ReplicableNetworkObject::ReplicableNetworkObject(ISystemScene* pSystemScene, UObject* entity)
     : NetworkObject(pSystemScene, entity)
     , m_velocityDirty(true)
     , m_rotationDirty(true)

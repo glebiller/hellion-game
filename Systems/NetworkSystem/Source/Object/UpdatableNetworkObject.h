@@ -18,7 +18,7 @@
 
 #include "MathUtils.h"
 #include "System.h"
-#include "Generic/IEntity.h"
+#include "Generic/UObject.h"
 #include "Object/IGeometryObject.h"
 #include "Object/IMoveObject.h"
 #include "Object/Object.h"
@@ -37,7 +37,7 @@ public:
     /**
      * @inheritDoc
      */
-    UpdatableNetworkObject(ISystemScene* pSystemScene, IEntity* entity);
+    UpdatableNetworkObject(ISystemScene* pSystemScene, UObject* entity);
 
     /**
      * @inheritDoc

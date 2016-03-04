@@ -1,78 +1,88 @@
-# FindOIS
-# ------------
+#-------------------------------------------------------------------
+# This file is part of the CMake build system for OGRE
+#     (Object-oriented Graphics Rendering Engine)
+# For the latest info, see http://www.ogre3d.org/
 #
-# Locate and configure the OIS library.
-#
-# The following variables can be set and are optional:
-#
-#    OIS_SRC_ROOT_FOLDER - When compiling with MSVC, if this cache variable is set
-#                               the ois-default VS project build locations
-#                               (vsprojects/Debug & vsprojects/Release) will be searched
-#                               for libraries and binaries.
-#
-#    OIS_IMPORT_DIRS     - List of additional directories to be searched for
-#                               imported .proto files. (New in CMake 2.8.8)
-#
-# Defines the following variables:
-#
-#    OIS_FOUND - Found the OIS library (libois & header files)
-#    OIS_INCLUDE_DIRS - Include directories for OIS
-#    OIS_LIBRARIES - The ois libraries
-#
-# The following cache variables are also available to set or use:
-#
-#    OIS_LIBRARY - The ois library
-#    OIS_INCLUDE_DIR - The include directory for ois
-#    OIS_LIBRARY_DEBUG - The ois library (debug)
-#
-#   ====================================================================
-#   Example:
-#
-#    find_package(OIS REQUIRED)
-#    include_directories(${OIS_INCLUDE_DIRS})
-#
-#   ====================================================================
+# The contents of this file are placed in the public domain. Feel
+# free to make use of it in any way you like.
+#-------------------------------------------------------------------
 
-include(FindPackageHandleStandardArgs)
+# - Try to find OIS
+# Once done, this will define
+#
+#  OIS_FOUND - system has OIS
+#  OIS_INCLUDE_DIRS - the OIS include directories
+#  OIS_LIBRARIES - link these to use OIS
+#  OIS_BINARY_REL / OIS_BINARY_DBG - DLL names (windows only)
 
-if(NOT OIS_SRC_ROOT_FOLDER)
-    set(OIS_SRC_ROOT_FOLDER OIS_SRC_ROOT_FOLDER_NOT_FOUND
-        CACHE PATH "OIS root folder")
-endif(NOT OIS_SRC_ROOT_FOLDER)
+include(FindPkgMacros)
+findpkg_begin(OIS)
 
-# The OIS library
-find_library(OIS_LIBRARY
-   NAMES "OIS"
-   PATHS ${OIS_SRC_ROOT_FOLDER}/lib/Release)
-mark_as_advanced(OIS_LIBRARY)
+# Get path, convert backslashes as ${ENV_${var}}
+getenv_path(OIS_HOME)
+getenv_path(OGRE_SDK)
+getenv_path(OGRE_HOME)
+getenv_path(OGRE_SOURCE)
+getenv_path(OGRE_DEPENDENCIES_DIR)
 
-find_library(OIS_LIBRARY_DEBUG
-   NAMES "OIS_d"
-   PATHS ${OIS_SRC_ROOT_FOLDER}/lib/Debug)
-mark_as_advanced(OIS_LIBRARY_DEBUG)
+# construct search paths
+set(OIS_PREFIX_PATH ${OIS_HOME} ${ENV_OIS_HOME}
+        ${OGRE_DEPENDENCIES_DIR} ${ENV_OGRE_DEPENDENCIES_DIR}
+        ${OGRE_SOURCE}/iOSDependencies ${ENV_OGRE_SOURCE}/iOSDependencies
+        ${OGRE_SOURCE}/Dependencies ${ENV_OGRE_SOURCE}/Dependencies
+        ${OGRE_SDK} ${ENV_OGRE_SDK}
+        ${OGRE_HOME} ${ENV_OGRE_HOME})
+create_search_paths(OIS)
+# redo search if prefix path changed
+clear_if_changed(OIS_PREFIX_PATH
+        OIS_LIBRARY_FWK
+        OIS_LIBRARY_REL
+        OIS_LIBRARY_DBG
+        OIS_INCLUDE_DIR
+        )
 
-if(NOT OIS_LIBRARY_DEBUG)
-  # There is no debug library
-  set(OIS_LIBRARY_DEBUG ${OIS_LIBRARY})
-  set(OIS_LIBRARIES     ${OIS_LIBRARY})
-else(NOT OIS_LIBRARY_DEBUG)
-  # There IS a debug library
-  set(OIS_LIBRARIES
-      optimized ${OIS_LIBRARY}
-      debug     ${OIS_LIBRARY_DEBUG}
-  )
-endif(NOT OIS_LIBRARY_DEBUG)
+set(OIS_LIBRARY_NAMES OIS)
+get_debug_names(OIS_LIBRARY_NAMES)
 
-# Find the include directory
-find_path(OIS_INCLUDE_DIR
-    OIS.h
-    PATHS ${OIS_SRC_ROOT_FOLDER}/include/OIS
-)
-mark_as_advanced(OIS_INCLUDE_DIR)
+use_pkgconfig(OIS_PKGC OIS)
 
-find_package_handle_standard_args(OIS DEFAULT_MSG
-    OIS_LIBRARY OIS_INCLUDE_DIR)
+# For OIS, prefer static library over framework (important when referencing OIS source build)
+set(CMAKE_FIND_FRAMEWORK "LAST")
 
-if(OIS_FOUND)
-    set(OIS_INCLUDE_DIRS ${OIS_INCLUDE_DIR})
-endif(OIS_FOUND)
+findpkg_framework(OIS)
+if (OIS_HOME)
+    # OIS uses the 'includes' path for its headers in the source release, not 'include'
+    set(OIS_INC_SEARCH_PATH ${OIS_INC_SEARCH_PATH} ${OIS_HOME}/includes)
+endif()
+if (APPLE AND OIS_HOME)
+    # OIS source build on Mac stores libs in a different location
+    # Also this is for static build
+    set(OIS_LIB_SEARCH_PATH ${OIS_LIB_SEARCH_PATH} ${OIS_HOME}/Mac/XCode-2.2/build)
+endif()
+find_path(OIS_INCLUDE_DIR NAMES OIS.h HINTS ${OIS_INC_SEARCH_PATH} ${OIS_PKGC_INCLUDE_DIRS} PATH_SUFFIXES OIS)
+find_library(OIS_LIBRARY_REL NAMES ${OIS_LIBRARY_NAMES} HINTS ${OIS_LIB_SEARCH_PATH} ${OIS_PKGC_LIBRARY_DIRS} PATH_SUFFIXES "" Release RelWithDebInfo MinSizeRel)
+find_library(OIS_LIBRARY_DBG NAMES ${OIS_LIBRARY_NAMES_DBG} HINTS ${OIS_LIB_SEARCH_PATH} ${OIS_PKGC_LIBRARY_DIRS} PATH_SUFFIXES "" Debug)
+
+make_library_set(OIS_LIBRARY)
+
+if (WIN32)
+    set(OIS_BIN_SEARCH_PATH ${OGRE_DEPENDENCIES_DIR}/bin ${CMAKE_SOURCE_DIR}/Dependencies/bin ${OIS_HOME}/dll
+            ${ENV_OIS_HOME}/dll ${ENV_OGRE_DEPENDENCIES_DIR}/bin
+            ${OGRE_SOURCE}/Dependencies/bin ${ENV_OGRE_SOURCE}/Dependencies/bin
+            ${OGRE_SDK}/bin ${ENV_OGRE_SDK}/bin
+            ${OGRE_HOME}/bin ${ENV_OGRE_HOME}/bin)
+    find_file(OIS_BINARY_REL NAMES "OIS.dll" HINTS ${OIS_BIN_SEARCH_PATH}
+            PATH_SUFFIXES "" Release RelWithDebInfo MinSizeRel)
+    find_file(OIS_BINARY_DBG NAMES "OIS_d.dll" HINTS ${OIS_BIN_SEARCH_PATH}
+            PATH_SUFFIXES "" Debug )
+endif()
+mark_as_advanced(OIS_BINARY_REL OIS_BINARY_DBG)
+
+
+findpkg_finish(OIS)
+
+# add parent of OIS folder to support OIS/OIS.h
+add_parent_dir(OIS_INCLUDE_DIRS OIS_INCLUDE_DIR)
+
+# Reset framework finding
+set(CMAKE_FIND_FRAMEWORK "FIRST")

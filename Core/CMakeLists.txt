@@ -1,10 +1,6 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(Core LANGUAGES CXX)
 
-project("Core")
-
-check_root_module()
-
-add_project_module("BaseTypes")
-add_project_module("Framework")
-add_project_module("Generated")
-add_project_module("Interfaces")
+add_subdirectory(BaseTypes)
+add_subdirectory(Framework)
+add_subdirectory(Generated)

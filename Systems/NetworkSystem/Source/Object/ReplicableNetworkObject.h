@@ -31,7 +31,7 @@ public:
     /**
      * @inheritDoc
      */
-    ReplicableNetworkObject(ISystemScene* pSystemScene, IEntity* entity);
+    ReplicableNetworkObject(ISystemScene* pSystemScene, UObject* entity);
 
     /**
      * @inheritDoc

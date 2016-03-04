@@ -1,14 +1,12 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(Generated LANGUAGES CXX)
 
-project("Generated")
+add_library(Generated INTERFACE)
 
-if(MSVC)
-    add_definitions("/wd4996")
-endif(MSVC)
+target_include_directories(Generated INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>)
 
-check_root_module()
+install(DIRECTORY include/ DESTINATION include)
 
-
-add_project_sources("src")
-add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCES})
-set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+export(TARGETS Generated FILE GeneratedConfig.cmake)

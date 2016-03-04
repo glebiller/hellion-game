@@ -16,7 +16,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "Scene.h"
-#include "Generic/IEntity.h"
+#include "Generic/UObject.h"
 #include "System/ISystemScene.h"
 #include "ConnectNetworkObject.h"
 #include "Object/IKeyboardObject.h"
@@ -24,7 +24,7 @@
 /**
  * @inheritDoc
  */
-ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, UObject* entity)
     : NetworkObject(pSystemScene, entity) {
     m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::None, &m_username, _1);
     m_propertyGetters["Username"] = boost::bind(&IProperty::getString, this, &m_username, _1);

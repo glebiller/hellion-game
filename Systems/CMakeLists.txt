@@ -1,10 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(Systems LANGUAGES CXX)
 
-project("Systems")
+add_subdirectory(GraphicSystem)
+add_subdirectory(InputSystem)
+#add_subdirectory(NetworkSystem)
+add_subdirectory(PhysicSystem)
 
-check_root_module()
-
-add_project_module("GraphicSystem")
-#add_project_module("InputSystem")
-#add_project_module("NetworkSystem")
-#add_project_module("PhysicSystem")

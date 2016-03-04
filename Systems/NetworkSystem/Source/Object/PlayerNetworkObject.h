@@ -34,7 +34,7 @@ public:
     /**
      * @inheritDoc
      */
-    PlayerNetworkObject(ISystemScene* pSystemScene, IEntity* entity);
+    PlayerNetworkObject(ISystemScene* pSystemScene, UObject* entity);
 
     /**
      * @inheritDoc

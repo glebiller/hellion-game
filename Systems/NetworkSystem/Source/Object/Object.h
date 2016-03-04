@@ -15,7 +15,7 @@
 #pragma once
 
 #include "System.h"
-#include "Generic/IEntity.h"
+#include "Generic/UObject.h"
 #include "System/ISystemObject.h"
 
 class NetworkSystem;
@@ -34,7 +34,7 @@ class NetworkObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        NetworkObject(ISystemScene* pSystemScene, IEntity* entity);
+        NetworkObject(ISystemScene* pSystemScene, UObject* entity);
         
         /**
          * @inheritDoc

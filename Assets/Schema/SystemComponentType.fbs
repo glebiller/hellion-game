@@ -1,8 +1,11 @@
 include "Component/GraphicSystemComponents.fbs";
+include "Component/PhysicSystemComponents.fbs";
 
 namespace Schema;
 
 union SystemComponentType {
   GraphicCamera,
-  GraphicMesh
+  GraphicMesh,
+
+  PhysicPosition
 }

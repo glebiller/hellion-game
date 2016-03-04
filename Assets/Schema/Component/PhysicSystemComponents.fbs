@@ -1,0 +1,7 @@
+namespace Schema;
+
+table PhysicPosition {
+    x:float;
+    y:float;
+    z:float;
+}

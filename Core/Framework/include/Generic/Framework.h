@@ -1,0 +1,87 @@
+// Copyright � 2008-2009 Intel Corporation
+// All Rights Reserved
+//
+// Permission is granted to use, copy, distribute and prepare derivative works of this
+// software for any purpose and without fee, provided, that the above copyright notice
+// and this statement appear in all copies.  Intel makes no representations about the
+// suitability of this software for any purpose.  THIS SOFTWARE IS PROVIDED "AS IS."
+// INTEL SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, AND ALL LIABILITY,
+// INCLUDING CONSEQUENTIAL AND OTHER INDIRECT DAMAGES, FOR THE USE OF THIS SOFTWARE,
+// INCLUDING LIABILITY FOR INFRINGEMENT OF ANY PROPRIETARY RIGHTS, AND INCLUDING THE
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  Intel does not
+// assume any responsibility for any errors which may appear in this software nor any
+// responsibility to update it.
+
+#pragma once
+
+#include <map>
+#include <string>
+#include <vector>
+#include <boost/log/sources/logger.hpp>
+#include <boost/system/error_code.hpp>
+#include <boost/dll.hpp>
+#include <SystemType_generated.h>
+
+#include "System/Types.h"
+#include "Manager/IServiceManager.h"
+#include "Service/RuntimeService.h"
+
+namespace Schema {
+    class Environment;
+}
+class DefinitionService;
+
+class ServiceManager;
+
+class Scheduler;
+
+class ChangeManager;
+
+class UScene;
+
+class UObject;
+
+class Gdf;
+
+class ISystem;
+
+///
+/// Framework. Responsible for tying in all the different managers and systems.  Also handles
+/// loading and parsing of the global definition file (gdf).
+///
+class Framework {
+public:
+
+    Framework();
+
+    ~Framework();
+
+    boost::system::errc::errc_t Initialize();
+
+    void Shutdown();
+
+    Error Execute();
+
+protected:
+
+    void processMessages();
+
+    void setNextScene(std::string nextSceneName);
+
+    void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
+
+private:
+    boost::log::sources::logger logger_;
+    ServiceManager* m_serviceManager;
+    DefinitionService* m_definitionService;
+
+    Scheduler* m_pScheduler;
+    ChangeManager* m_pSceneCCM;
+    ChangeManager* m_pObjectCCM;
+
+    UScene* m_pScene;
+    const Schema::Environment* m_environment;
+    std::map<Schema::SystemType, ISystem*> m_systems;
+    std::vector<boost::dll::shared_library> m_systemLibraries;
+
+};

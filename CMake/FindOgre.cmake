@@ -180,6 +180,8 @@ if(NOT OGRE_STATIC)
             /usr/local/lib/macosx/Debug/
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/macosx/Release
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/macosx/Debug
+            ${ENV_OGRE_HOME}/lib/macosx/Release
+            ${ENV_OGRE_HOME}/lib/macosx/Debug
     )
 else()
     set(OGRE_LIBRARY_FWK "")

@@ -1,16 +1,49 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(GraphicSystem LANGUAGES CXX)
 
-project("GraphicSystem")
+find_package(Ogre REQUIRED COMPONENTS Overlay Terrain)
 
-check_root_module()
+add_library(GraphicSystem SHARED
+        src/Listener/CustomLogListener.cpp
+        src/Object/CameraGraphicObject.cpp
+        src/Object/CursorGraphicObject.cpp
+        src/Object/LightGraphicObject.cpp
+        src/Object/MeshGraphicObject.cpp
+        src/Object/Object.cpp
+        src/Object/ParticleGraphicObject.cpp
+        src/Object/SkyGraphicObject.cpp
+        src/Object/TerrainGraphicObject.cpp
+        src/GraphicSystem.cpp
+        src/Scene.cpp
+        src/System.cpp
+        src/Task.cpp
+        )
 
-find_package("Ogre" COMPONENTS "Overlay" REQUIRED "Terrain" REQUIRED)
-include_directories(${OGRE_INCLUDE_DIR})
+target_include_directories(GraphicSystem PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE
+        ${OGRE_INCLUDE_DIR}
+        )
 
-add_project_dependency("Framework")
-add_project_sources("Source")
-add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCES} "${PROJECT_NAME}.def")
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_DEPENDENCIES})
-target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_DEPENDENCIES}
-                                      ${Boost_LOG_LIBRARY}
-                                      ${OGRE_LIBRARIES} ${OGRE_Terrain_LIBRARIES} ${OGRE_Overlay_LIBRARIES})
+target_compile_features(GraphicSystem
+        PUBLIC cxx_auto_type
+        PRIVATE cxx_variadic_templates
+        )
+
+target_link_libraries(GraphicSystem
+        Boost
+        Boost-log
+        Framework
+        ${OGRE_LIBRARIES}
+        ${OGRE_Overlay_LIBRARIES}
+        ${OGRE_Terrain_LIBRARIES}
+        )
+
+install(TARGETS GraphicSystem
+        ARCHIVE  DESTINATION lib
+        LIBRARY  DESTINATION lib
+        RUNTIME  DESTINATION bin)  # This is for Windows
+install(DIRECTORY include/ DESTINATION include)
+
+export(TARGETS GraphicSystem FILE GraphicSystemConfig.cmake)

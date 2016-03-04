@@ -1,25 +1,39 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(PhysicSystem LANGUAGES CXX)
 
-project("PhysicSystem")
+find_package(Bullet REQUIRED)
 
-check_root_module()
+add_library(PhysicSystem SHARED
+        src/Object/PhysicObject.cpp
+        src/PhysicSystem.cpp
+        src/Scene.cpp
+        src/System.cpp
+        src/Task.cpp
+        )
 
-add_definitions("-DHK_PLATFORM_SIM")
+target_include_directories(PhysicSystem PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE
+        ${BULLET_INCLUDE_DIRS}
+        )
 
-find_package("Ogre" REQUIRED)
-find_package("Havok" REQUIRED COMPONENTS "hkCompat" REQUIRED "hkSceneData" REQUIRED 
-    "hkSerialize" REQUIRED "hkInternal" REQUIRED "hkGeometryUtilities" REQUIRED 
-    "hkVisualize" REQUIRED "hkcdInternal" REQUIRED "hkcdCollide" REQUIRED 
-    "hkpCollide" REQUIRED "hkpConstraint" REQUIRED "hkpConstraintSolver" REQUIRED 
-    "hkpDynamics" REQUIRED "hkpInternal" REQUIRED "hkpUtilities" REQUIRED 
-    "hkpVehicle" REQUIRED)
-include_directories(${OGRE_INCLUDE_DIRS} ${HAVOK_INCLUDE_DIRS})
+target_compile_features(PhysicSystem
+        PUBLIC cxx_auto_type
+        PRIVATE cxx_variadic_templates
+        )
 
-add_project_dependency("Framework")
-add_project_sources("Source")
-add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCES}
-    "${PROJECT_NAME}.def")
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_DEPENDENCIES})
-target_link_libraries(${PROJECT_NAME} ${${PROJECT_NAME}_DEPENDENCIES} 
-    ${PROTOBUF_LIBRARIES} ${LOGOG_LIBRARIES}
-    ${OGRE_LIBRARIES} ${HAVOK_LIBRARIES})
+target_link_libraries(PhysicSystem
+        Boost
+        Boost-log
+        Framework
+        ${BULLET_LIBRARIES}
+        )
+
+install(TARGETS PhysicSystem
+        ARCHIVE  DESTINATION lib
+        LIBRARY  DESTINATION lib
+        RUNTIME  DESTINATION bin)  # This is for Windows
+install(DIRECTORY include/ DESTINATION include)
+
+export(TARGETS PhysicSystem FILE PhysicSystemConfig.cmake)
