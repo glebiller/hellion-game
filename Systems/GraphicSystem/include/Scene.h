@@ -15,7 +15,7 @@
 #pragma once
 
 #pragma warning( push, 0 )
-#include <Overlay/OgreOverlaySystem.h>
+#include <OgreOverlaySystem.h>
 #pragma warning( pop )
 
 #include "DataTypes.h"

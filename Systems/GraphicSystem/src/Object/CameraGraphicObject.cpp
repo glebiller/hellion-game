@@ -13,10 +13,13 @@
 // responsibility to update it.
 
 #include <boost/lexical_cast.hpp>
+
 #pragma warning( push, 0 )
 #pragma warning( disable : 6326 6385 )
+
 #include <Ogre.h>
-#include <OgreSceneManager.h>
+#include <Compositor/OgreCompositorManager2.h>
+
 #pragma warning( pop )
 
 #include "System.h"
@@ -28,11 +31,10 @@
 /**
  * @inheritDoc
  */
-CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
-        : GraphicObject(&pSystemScene, &entity)
-    , m_pViewport(nullptr)
-    , m_vLookAt(Ogre::Vector3::ZERO)
-    , m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
+CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                                         const Schema::SystemComponent& component)
+        : GraphicObject(&pSystemScene, &entity), m_pViewport(nullptr), m_vLookAt(Ogre::Vector3::ZERO),
+          m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
     //m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
     //m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
 }
@@ -42,10 +44,10 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
  */
 CameraGraphicObject::~CameraGraphicObject() {
     if (m_bInitialized) {
-        GetSystemScene<GraphicScene>()->GetSystem<GraphicSystem>()->getRenderWindow()->removeViewport(m_pViewport->getZOrder());
+        //GetSystemScene<GraphicScene>()->GetSystem<GraphicSystem>()->getRenderWindow()->removeViewport(m_pViewport);
         m_pCameraNode->detachObject(m_pCamera);
     }
-    
+
     GetSystemScene<GraphicScene>()->getSceneManager()->destroyCamera(m_pCamera);
 }
 
@@ -62,28 +64,29 @@ Error CameraGraphicObject::initialize() {
     //
     // Custom init function for the camera
     //
-    m_pCameraNode = m_pNode->createChildSceneNode(m_entity->getId() + "Camera_SceneNode");
+    m_pCameraNode = m_pNode->createChildSceneNode();
+    m_pCameraNode->setName(m_entity->getId() + "Camera_SceneNode");
     ASSERT(m_pCameraNode != NULL);
 
     //
     // Create the viewport.
     //
     Ogre::RenderWindow* pRenderWindow = m_pSystemScene->GetSystem<GraphicSystem>()->getRenderWindow();
-    m_pViewport = pRenderWindow->addViewport(m_pCamera);
-    ASSERT(m_pViewport != NULL);
-        
+    //m_pViewport = pRenderWindow->addViewport();
+    //ASSERT(m_pViewport != NULL);
+
     m_pCamera->setPolygonMode(Ogre::PM_SOLID);
 
-    if (m_pViewport == NULL) {
-        return Errors::Failure;
-    }
+    //if (m_pViewport == NULL) {
+    //    return Errors::Failure;
+    //}
 
-    m_pViewport->setBackgroundColour(Ogre::ColourValue(0.25, 0.25, 0.25));
+    //m_pViewport->setBackgroundColour(Ogre::ColourValue(0.25, 0.25, 0.25));
     //
     // Set the camera's aspect ratio to the dimensions of the viewport.
     //
-    m_pCamera->setAspectRatio(Ogre::Real(m_pViewport->getActualWidth()) /
-                                Ogre::Real(m_pViewport->getActualHeight()));
+    //m_pCamera->setAspectRatio(Ogre::Real(m_pViewport->getActualWidth()) /
+    //                            Ogre::Real(m_pViewport->getActualHeight()));
     //
     // Set auto tracking
     //
@@ -92,18 +95,31 @@ Error CameraGraphicObject::initialize() {
     //
     // Attach the camera to the Ogre scene node.
     //
-    m_pCameraNode->attachObject(m_pCamera);
+    //m_pCamera->detachFromParent();
+    //m_pCameraNode->attachObject(m_pCamera);
     //m_pCameraNode->hideBoundingBox(true);
 
     //
     // Set the far clip distance
     //
     m_pCamera->setFarClipDistance(50000);
-    if (m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE)) {
+    if (m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getRenderSystem()->getCapabilities()->hasCapability(
+            Ogre::RSC_INFINITE_FAR_PLANE)) {
         m_pCamera->setFarClipDistance(0);   // enable infinite far clip distance if we can
     }
     m_pCamera->setNearClipDistance(1);
     m_pCamera->setPosition(10, 10, 10);
+
+
+    const Ogre::String workspaceName = "SampleBrowserWorkspace";
+    Ogre::CompositorManager2* compositorManager = m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getCompositorManager2();
+    if (!compositorManager->hasWorkspaceDefinition(workspaceName)) {
+        compositorManager->createBasicWorkspaceDef(workspaceName, Ogre::ColourValue(0.6f, 0.0f, 0.6f));
+    }
+    compositorManager->addWorkspace(
+            GetSystemScene<GraphicScene>()->getSceneManager(),
+            m_pSystemScene->GetSystem<GraphicSystem>()->getRenderWindow(),
+            m_pCamera, workspaceName, true);
 
     m_bInitialized = true;
     return Errors::Success;

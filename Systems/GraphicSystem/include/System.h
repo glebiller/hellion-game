@@ -21,7 +21,7 @@
 
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
-#include <Overlay/OgreOverlaySystem.h>
+#include <OgreOverlaySystem.h>
 
 #pragma warning( pop )
 

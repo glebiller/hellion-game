@@ -24,6 +24,8 @@ target_include_directories(GraphicSystem PUBLIC
         $<INSTALL_INTERFACE:include>
         PRIVATE
         ${OGRE_INCLUDE_DIR}
+        ${OGRE_Terrain_INCLUDE_DIR}
+        ${OGRE_Overlay_INCLUDE_DIR}
         )
 
 target_compile_features(GraphicSystem

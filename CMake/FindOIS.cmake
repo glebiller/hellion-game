@@ -50,14 +50,14 @@ use_pkgconfig(OIS_PKGC OIS)
 set(CMAKE_FIND_FRAMEWORK "LAST")
 
 findpkg_framework(OIS)
-if (OIS_HOME)
+if (ENV_OIS_HOME)
     # OIS uses the 'includes' path for its headers in the source release, not 'include'
-    set(OIS_INC_SEARCH_PATH ${OIS_INC_SEARCH_PATH} ${OIS_HOME}/includes)
+    set(OIS_INC_SEARCH_PATH ${OIS_INC_SEARCH_PATH} ${ENV_OIS_HOME}/includes)
 endif()
-if (APPLE AND OIS_HOME)
+if (APPLE AND ENV_OIS_HOME)
     # OIS source build on Mac stores libs in a different location
     # Also this is for static build
-    set(OIS_LIB_SEARCH_PATH ${OIS_LIB_SEARCH_PATH} ${OIS_HOME}/Mac/XCode-2.2/build)
+    set(OIS_LIB_SEARCH_PATH ${OIS_LIB_SEARCH_PATH} ${ENV_OIS_HOME}/Mac/XCode-2.2/build)
 endif()
 find_path(OIS_INCLUDE_DIR NAMES OIS.h HINTS ${OIS_INC_SEARCH_PATH} ${OIS_PKGC_INCLUDE_DIRS} PATH_SUFFIXES OIS)
 find_library(OIS_LIBRARY_REL NAMES ${OIS_LIBRARY_NAMES} HINTS ${OIS_LIB_SEARCH_PATH} ${OIS_PKGC_LIBRARY_DIRS} PATH_SUFFIXES "" Release RelWithDebInfo MinSizeRel)

@@ -16,6 +16,7 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning( push, 0 )
 #include <Ogre.h>
+#include <Compositor/OgreCompositorManager2.h>
 #pragma warning( pop )
 
 #include <SystemComponentType_generated.h>
@@ -56,7 +57,7 @@ GraphicScene::GraphicScene(ISystem* pSystem)
     : ISystemScene(pSystem)
     , m_pSceneManager(nullptr)
     , m_FogMode(Ogre::FOG_NONE) {
-    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
+    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);
     m_pRootNode = m_pSceneManager->getRootSceneNode();
     m_ambientLight = Ogre::ColourValue(1, 1, 1, 0.3);
     m_pSceneManager->setAmbientLight(m_ambientLight);
@@ -76,12 +77,15 @@ GraphicScene::GraphicScene(ISystem* pSystem)
 
     Ogre::Vector3 lightdir(0, 0, 0);
 
-    Ogre::Light* light = m_pSceneManager->createLight("TestLight");
+    Ogre::SceneNode* node = m_pSceneManager->createSceneNode();
+    Ogre::Light* light = m_pSceneManager->createLight();
+    node->setName("TestLight");
+    node->attachObject(light);
+    node->setPosition(15, 15, 0);
     light->setType(Ogre::Light::LT_SPOTLIGHT);
     light->setDirection(lightdir);
     light->setDiffuseColour(Ogre::ColourValue::Red);
     light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
-    light->setPosition(15, 15, 0);
 }
 
 /**

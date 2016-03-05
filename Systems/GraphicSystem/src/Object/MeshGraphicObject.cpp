@@ -43,7 +43,8 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity
     , m_Scale(Math::Vector3::One)
     , m_Dirty(true) {
     auto mesh = reinterpret_cast<const Schema::GraphicMesh *>(component.data());
-    m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), mesh->name()->c_str());
+    m_pEntity = POGRESCENEMGR->createEntity(mesh->name()->c_str());
+    m_pNode->setName(m_entity->getName());
     m_pNode->attachObject(m_pEntity);
     m_pNode->setPosition(0, 0, 0);
 }

@@ -16,8 +16,8 @@
 
 #pragma warning( push, 0 )
 #pragma warning( disable : 6326 6385 )
-#include <Terrain/OgreTerrain.h>
-#include <Terrain/OgreTerrainGroup.h>
+#include <OgreTerrain.h>
+#include <OgreTerrainGroup.h>
 #pragma warning( pop )
 
 #include "Scene.h"
@@ -103,14 +103,14 @@ Error TerrainGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::
 
 
 void TerrainGraphicObject::configureTerrainDefaults() {
-    Ogre::Light* light = GetSystemScene<GraphicScene>()->getSceneManager()->getLight("Sun");
+    //Ogre::Light* light = GetSystemScene<GraphicScene>()->getSceneManager()->getAmbientLight();
     // Configure global
     mTerrainGlobals->setMaxPixelError(8);
     // testing composite map
     mTerrainGlobals->setCompositeMapDistance(3000);
     // Important to set these so that the terrain knows what to use for derived (non-realtime) data
-    mTerrainGlobals->setLightMapDirection(light->getDerivedDirection());
-    mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
+    //mTerrainGlobals->setLightMapDirection(light->getDerivedDirection());
+    //mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
     mTerrainGlobals->setCompositeMapAmbient(GetSystemScene<GraphicScene>()->getSceneManager()->getAmbientLight());
     // Configure default import settings for if we use imported image
     Ogre::Terrain::ImportData& defaultimp = mTerrainGroup->getDefaultImportSettings();

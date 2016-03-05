@@ -32,6 +32,9 @@
 LightGraphicObject::LightGraphicObject(ISystemScene* pSystemScene, UObject* entity)
     : GraphicObject(pSystemScene, entity)
     , m_pLight(NULL) {
+    m_pLight = POGRESCENEMGR->createLight();
+    m_pNode->attachObject(m_pLight);
+    m_pNode->setPosition(0, 0, 0);
 }
 
 /**
@@ -39,7 +42,7 @@ LightGraphicObject::LightGraphicObject(ISystemScene* pSystemScene, UObject* enti
  */
 LightGraphicObject::~LightGraphicObject() {
     if (m_pLight != NULL) {
-        //m_pNode->detachObject(m_pLight);
+        m_pNode->detachObject(m_pLight);
         POGRESCENEMGR->destroyLight(m_pLight);
     }
 }
@@ -49,12 +52,10 @@ LightGraphicObject::~LightGraphicObject() {
  */
 Error LightGraphicObject::initialize() {
     ASSERT(!m_bInitialized);
-
-    m_pLight = POGRESCENEMGR->createLight(m_entity->getName());
     
     // TODO make it properties
+    m_pNode->setPosition(Ogre::Vector3(200, 200, 200));
     m_pLight->setType(Ogre::Light::LightTypes::LT_POINT);
-    m_pLight->setPosition(Ogre::Vector3(200, 200, 200));
     m_pLight->setDiffuseColour(Ogre::ColourValue(0.862745f, 0.0f, 0.0f));
     m_pLight->setSpecularColour(Ogre::ColourValue(0.862745f, 0.0f, 0.0f));
 

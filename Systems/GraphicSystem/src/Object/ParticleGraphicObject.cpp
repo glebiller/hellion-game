@@ -23,7 +23,7 @@
  */
 ParticleGraphicObject::ParticleGraphicObject(ISystemScene* pSystemScene, UObject* entity) 
     : GraphicObject(pSystemScene, entity) {
-    m_particleSystem = m_sceneManager->createParticleSystem(entity->getId(), "LaserShot");
+    m_particleSystem = m_sceneManager->createParticleSystem("LaserShot");
     m_pNode->attachObject(m_particleSystem);
 }
 
