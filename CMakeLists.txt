@@ -57,6 +57,7 @@ set_property(TARGET TBB PROPERTY
 
 #enable_testing()
 add_subdirectory(Core)
+add_subdirectory(Deps)
 add_subdirectory(Main)
 add_subdirectory(Systems)
 

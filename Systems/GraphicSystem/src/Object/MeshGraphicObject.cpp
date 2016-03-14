@@ -14,7 +14,6 @@
 
 #include <Ogre.h>
 #include <UniversalScene_generated.h>
-#include <GraphicSystemComponents_generated.h>
 #include <PhysicSystemComponents_generated.h>
 
 #include "Scene.h"

@@ -19,8 +19,8 @@
     {
       "metaData": {
         "entityId": "2",
-        "name": "Cube",
-        "comment": "Display a cube"
+        "name": "Player",
+        "comment": "Display a player"
       },
       "systemComponents": [
         {
@@ -37,6 +37,22 @@
             "x": 1,
             "y": 1,
             "z": 1
+          }
+        },
+        {
+          "systemType": "Input",
+          "data_type": "InputVelocity",
+          "data": {
+            "scalar": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "angular": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
           }
         }
       ]

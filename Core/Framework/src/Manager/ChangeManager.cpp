@@ -15,6 +15,8 @@
 #pragma warning ( disable: 4718 )
 
 #include <boost/thread/tss.hpp>
+#include <boost/log/sources/logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
 
 #include "Generic/ISubject.h"
 #include "Manager/ITaskManager.h"
@@ -69,6 +71,13 @@ ChangeManager::~ChangeManager() {
 }
 
 
+/*
+ISystemObject -> ISystemScene -> not used
+ISystemObject -> ISystemObject ->
+ISystemObject -> UScene -> create & delete object
+ISystemScene -> UScene -> create & delete object
+UObject -> ISystemObject -> ?? really useful ?
+*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
@@ -76,6 +85,8 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
     Error curError = Errors::Failure;
 
     if (pInSubject && pInObserver) {
+        BOOST_LOG(logger_) << "Registering " << pInSubject << " with " << pInObserver;
+
         // Lock out updates while we register a subjext
         SCOPED_SPIN_LOCK(m_swUpdate);
         u32 uID = pInSubject->getObserverId(this);

@@ -255,6 +255,14 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     for (auto systemObject : pObject->GetExtensions()) {
         systemObject.second->initialize();
     }
+
+    for (auto systemObject : pObject->GetExtensions()) {
+        ISystemObject* pObj = systemObject.second;
+        pObj->PostChanges(pObj->GetPotentialSystemChanges());
+    }
+
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+
     return pObject;
 }
 

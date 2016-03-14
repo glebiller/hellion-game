@@ -17,12 +17,14 @@
 #include <tbb/concurrent_hash_map.h>
 #include <tbb/atomic.h>
 #include <SystemType_generated.h>
+#include <btBulletDynamicsCommon.h>
 
 #include "DataTypes.h"
 #include "Errors.h"
 #include "System/ISystem.h"
 
 class PhysicScene;
+
 class PhysicTask;
 
 ///
@@ -37,25 +39,37 @@ public:
     /// @inheritDoc.
     ///
     PhysicSystem();
-        
+
     ///
     /// @inheritDoc.
     ///
     ~PhysicSystem();
-        
+
     ///
     /// @inheritDoc.
     ///
     Error initialize();
 
     virtual ISystemScene* createScene() override;
-        
+
     ///
     /// @inheritDoc.
     ///
     Schema::SystemType GetSystemType() {
         return Schema::SystemType::Physic;
     };
+
+    btDefaultCollisionConfiguration* getCollisionConfiguration() {
+        return collisionConfiguration_;
+    }
+
+    btCollisionDispatcher* getCollisionDispatcher() {
+        return collisionDispatcher_;
+    }
+
+    btBroadphaseInterface* getBroadphaseInterface() {
+        return broadphaseInterface_;
+    }
 
 private:
     ///
@@ -81,8 +95,12 @@ private:
     static void ErrorReport(const char* pString, void* pErrorOutputObject);
 
 private:
-    static u32                                                  s_idMainThread;
-    static tbb::atomic<u32>                                     s_threadNumberCount;
+    btDefaultCollisionConfiguration* collisionConfiguration_;
+    btCollisionDispatcher* collisionDispatcher_;
+    btBroadphaseInterface* broadphaseInterface_;
+
+    static u32 s_idMainThread;
+    static tbb::atomic<u32> s_threadNumberCount;
 
 };
 

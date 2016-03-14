@@ -4,11 +4,6 @@ project(InputSystem LANGUAGES CXX)
 find_package(OIS REQUIRED)
 find_package(OISB REQUIRED)
 
-find_library(COCOA_LIBRARY Cocoa)
-find_library(IOKIT_LIBRARY IOKit)
-
-add_definitions("-DOISB_STATIC_LIB")
-
 add_library(InputSystem SHARED
         src/Object/Object.cpp
         src/Object/PlayerObject.cpp
@@ -21,8 +16,6 @@ add_library(InputSystem SHARED
 target_include_directories(InputSystem PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
-        PRIVATE
-        ${OIS_INCLUDE_DIR}
         )
 
 target_compile_features(InputSystem
@@ -31,12 +24,10 @@ target_compile_features(InputSystem
         )
 
 target_link_libraries(InputSystem
-        ${COCOA_LIBRARY}
-        ${IOKIT_LIBRARY}
         Boost
         Boost-log
         Framework
-        ${OIS_LIBRARIES}
+        OIS
         OISB
         )
 

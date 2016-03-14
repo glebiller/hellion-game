@@ -4,6 +4,7 @@ project(PhysicSystem LANGUAGES CXX)
 find_package(Bullet REQUIRED)
 
 add_library(PhysicSystem SHARED
+        include/Scene.h
         src/Object/PhysicObject.cpp
         src/PhysicSystem.cpp
         src/Scene.cpp

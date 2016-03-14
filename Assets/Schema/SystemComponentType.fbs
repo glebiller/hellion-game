@@ -1,4 +1,5 @@
 include "Component/GraphicSystemComponents.fbs";
+include "Component/InputSystemComponents.fbs";
 include "Component/PhysicSystemComponents.fbs";
 
 namespace Schema;
@@ -6,6 +7,8 @@ namespace Schema;
 union SystemComponentType {
   GraphicCamera,
   GraphicMesh,
+
+  InputVelocity,
 
   PhysicPosition
 }

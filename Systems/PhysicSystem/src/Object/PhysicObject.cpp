@@ -12,10 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Object/PhysicObject.h"
 
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
+#include <BulletCollision/CollisionShapes/btCapsuleShape.h>
+
+#include "Object/PhysicObject.h"
+
 
 #include "Scene.h"
 
@@ -26,6 +29,17 @@ PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Sc
     : ISystemObject(&pSystemScene, &entity)
     , m_bStatic(false) {
     position_ = const_cast<Schema::PhysicPosition*>(static_cast<const Schema::PhysicPosition*>(component.data()));
+
+    btCollisionShape* playerShape = new btCapsuleShape(1 ,2);
+    btDefaultMotionState* fallMotionState =
+            new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 2, 0)));
+    btScalar mass = 1;
+    btVector3 fallInertia(0, 0, 0);
+    playerShape->calculateLocalInertia(mass, fallInertia);
+    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, playerShape, fallInertia);
+    rigidBody_ = new btRigidBody(fallRigidBodyCI);
+    rigidBody_->setAngularFactor(0);
+    GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
 }
 
 /**
@@ -51,6 +65,12 @@ Error PhysicObject::initialize() {
 Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
+    if (ChangeType & System::Changes::Input::Velocity) {
+        auto scalar = pSubject->getVelocity()->scalar();
+        rigidBody_->setLinearVelocity(btVector3(scalar->x(), scalar->y(), scalar->z()));
+        velocity_ = pSubject->getVelocity();
+    }
+
     return Errors::Success;
 }
 
@@ -60,12 +80,15 @@ Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
 void PhysicObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
-    float newX = position_->x() + (1 * DeltaTime);
-    if (newX >= 20) {
-        newX = 0;
-    }
-    bool result = position_->mutate_x(newX);
-    ASSERT(result);
+    //position_->mutate_x(position_->x() + (velocity_->scalar()->x() * DeltaTime));
+    //position_->mutate_y(position_->y() + (velocity_->scalar()->y() * DeltaTime));
+    //position_->mutate_z(position_->z() + (velocity_->scalar()->z() * DeltaTime));
+
+    btTransform trans;
+    rigidBody_->getMotionState()->getWorldTransform(trans);
+    position_->mutate_x(trans.getOrigin().getX());
+    position_->mutate_y(trans.getOrigin().getY());
+    position_->mutate_z(trans.getOrigin().getZ());
 
     PostChanges(System::Changes::Physic::Position);
 }

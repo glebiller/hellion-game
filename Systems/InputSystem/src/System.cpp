@@ -103,12 +103,15 @@ Error InputSystem::initialize() {
         paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
         paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
         paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    #elif defined OIS_APPLE_PLATFORM
+
     #endif
 
     OIS::InputManager* inputManager = OIS::InputManager::createInputSystem(paramList);
+    auto name = inputManager->inputSystemName().data();
     OISB::System::getSingleton().initialize(inputManager);
-    OISB::System::getSingleton().getOISMouse()->setEventCallback(new MouseCallback());
-    OISB::System::getSingleton().getOISKeyboard()->setEventCallback(new KeyCallback());
+    //OISB::System::getSingleton().getOISMouse()->setEventCallback(new MouseCallback());
+    //OISB::System::getSingleton().getOISKeyboard()->setEventCallback(new KeyCallback());
 
     m_bInitialized = true;
     return Errors::Success;

@@ -1,7 +1,8 @@
 {
   "systems": [
     "libGraphicSystem",
-    "libPhysicSystem"
+    "libPhysicSystem",
+    "libInputSystem"
   ],
   "startupScene": "Main",
   "frameworkDebugWindow": false,

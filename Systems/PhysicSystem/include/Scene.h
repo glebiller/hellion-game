@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <btBulletDynamicsCommon.h>
+
 #include "MathUtils.h"
 #include "System/ISystemScene.h"
 #include "Object/ISceneObject.h"
@@ -68,11 +70,17 @@ public:
 
     void createTask() override;
 
+    btDiscreteDynamicsWorld* getDynamicsWorld_() const {
+        return dynamicsWorld_;
+    }
+
 protected:
+    btSequentialImpulseConstraintSolver* constraintSolver_;
+    btDiscreteDynamicsWorld* dynamicsWorld_;
+
     static const Math::Vector3          sm_kDefaultGravity;
     static const Math::Vector3          sm_kDefaultUp;
 
     Math::Vector3                       m_Gravity;
 
 };
-

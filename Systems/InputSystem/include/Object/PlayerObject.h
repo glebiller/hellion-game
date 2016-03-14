@@ -36,7 +36,7 @@ public:
     /**
      * @inheritDoc
      */
-    PlayerInputObject(ISystemScene* pSystemScene, UObject* entity);
+    PlayerInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
 
     /**
      * @inheritDoc
@@ -85,7 +85,14 @@ public:
      */
     void createShot();
 
+
+    Schema::InputVelocity* getVelocity() override {
+        return velocity_;
+    }
+
 private:
+    Schema::InputVelocity* velocity_;
+
     OISB::TriggerAction*    m_forwardInputAction;
     OISB::TriggerAction*    m_backwardInputAction;
     OISB::TriggerAction*    m_strafeRightInputAction;

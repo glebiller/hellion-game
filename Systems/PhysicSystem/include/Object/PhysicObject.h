@@ -18,6 +18,8 @@
 #include "System/ISystemObject.h"
 #include "Object/IGeometryObject.h"
 
+class btRigidBody;
+
 ///
 /// <c>HavokObject</c> Implementation of the ISystemObject interface. This is the base object
 /// created by the HavokPhysics Scene.
@@ -89,6 +91,8 @@ public:
 
 protected:
     Schema::PhysicPosition* position_;
+    const Schema::InputVelocity* velocity_;
+    btRigidBody* rigidBody_;
     bool                m_bStatic;
 
 };

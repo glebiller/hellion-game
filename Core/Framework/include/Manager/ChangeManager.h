@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <boost/log/sources/logger.hpp>
 #include <boost/thread/tss.hpp>
 #include <set>
 
@@ -94,6 +95,8 @@ protected:
     DEFINE_SPIN_MUTEX(m_swUpdate);
 
 private:
+    boost::log::sources::logger logger_;
+
     static void InitThreadLocalData(void* mgr);
     static void FreeThreadLocalData(void* mgr);
 

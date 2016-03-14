@@ -12,7 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #include <boost/system/error_code.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/dll/runtime_symbol_info.hpp>
@@ -131,7 +130,7 @@ void Framework::Shutdown() {
 ///
 Error Framework::Execute() {
     RuntimeService* runtimeService = IServiceManager::get()->getRuntimeService();
-    while (true) {    
+    //while (true) {
         if (runtimeService->isNextScene()) {
             setNextScene(runtimeService->getSceneName());
             runtimeService->setStatus(RuntimeService::Status::Running);
@@ -142,9 +141,9 @@ Error Framework::Execute() {
         m_pScene->update();
         
         if (runtimeService->isQuit()) {
-            break;
+            //break;
         }
-    }
+    //}
 
     return Errors::Success;
 }

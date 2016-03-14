@@ -12,9 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Scene.h"
-
 #include <boost/functional/factory.hpp>
+#include <BulletCollision/CollisionShapes/btStaticPlaneShape.h>
+
+#include "Scene.h"
 
 #include "System.h"
 #include "Task.h"
@@ -28,8 +29,22 @@ const Math::Vector3 PhysicScene::sm_kDefaultUp(0.0f, 1.0f, 0.0f);
 ///////////////////////////////////////////////////////////////////////////////
 // HavokPhysicsScene - Default constructor
 PhysicScene::PhysicScene(ISystem* pSystem)
-    : ISystemScene(pSystem) {
-    //m_TaskFactory = boost::factory<PhysicTask*>();
+        : ISystemScene(pSystem),
+          constraintSolver_(new btSequentialImpulseConstraintSolver()) {
+    dynamicsWorld_ = new btDiscreteDynamicsWorld(GetSystem<PhysicSystem>()->getCollisionDispatcher(),
+                                                 GetSystem<PhysicSystem>()->getBroadphaseInterface(),
+                                                 constraintSolver_,
+                                                 GetSystem<PhysicSystem>()->getCollisionConfiguration());
+
+    dynamicsWorld_->setGravity(btVector3(0, -1, 0));
+
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+    btDefaultMotionState* groundMotionState =
+            new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+    btRigidBody::btRigidBodyConstructionInfo
+            groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    dynamicsWorld_->addRigidBody(groundRigidBody);
 
     m_ObjectFactories[Schema::SystemComponentType::PhysicPosition] = boost::factory<PhysicObject*>();
     //m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
@@ -40,6 +55,8 @@ PhysicScene::PhysicScene(ISystem* pSystem)
 ///////////////////////////////////////////////////////////////////////////////
 // ~HavokPhysicsScene - Default destructor
 PhysicScene::~PhysicScene() {
+    delete dynamicsWorld_;
+    delete constraintSolver_;
     if (m_bInitialized) {
     }
 }

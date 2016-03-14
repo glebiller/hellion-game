@@ -12,16 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/system/error_code.hpp>
-#include "Generic/Framework.h"
+#include "Defines.h"
+#include <windows.h>
+#include <tchar.h>
 
-int main( int argc, char* argv[] ) {
+#include "Main.h"
+
+int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
     // Start framework
-    Framework* framework = new Framework();
-    if (framework->Initialize() == boost::system::errc::success) {
-        framework->Execute();
-        framework->Shutdown();
-        delete framework;
-    }
+    ExecuteFramework();
     return 0;
 }

@@ -50,6 +50,7 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
 ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemComponent* component) {
     ASSERT(m_bInitialized);
 
+    // TODO handle unkown factory
     ObjectFactory objectFactory = m_ObjectFactories[component->data_type()];
     ISystemObject* systemObject = objectFactory(*this, *entity, *component);
 

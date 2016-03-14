@@ -12,11 +12,12 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "System.h"
-
 #include <boost/functional/factory.hpp>
 #include <boost/bind.hpp>
 
+#include <btBulletDynamicsCommon.h>
+
+#include "System.h"
 #include "Manager/ServiceManager.h"
 #include "Scene.h"
 
@@ -28,16 +29,20 @@ tbb::atomic<u32> PhysicSystem::s_threadNumberCount;
 /**
  * @inheritDoc
  */
-PhysicSystem::PhysicSystem() : ISystem() {
-    //m_SceneFactory = boost::factory<PhysicScene*>();
-
-    //m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
+PhysicSystem::PhysicSystem() : ISystem(),
+                               collisionConfiguration_(new btDefaultCollisionConfiguration()),
+                               collisionDispatcher_(new btCollisionDispatcher(collisionConfiguration_)),
+                               broadphaseInterface_(new btDbvtBroadphase()) {
+//m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
 }
 
 /**
  * @inheritDoc
  */
 PhysicSystem::~PhysicSystem() {
+    delete broadphaseInterface_;
+    delete collisionDispatcher_;
+    delete collisionConfiguration_;
     if (m_bInitialized) {
     }
 }

@@ -56,6 +56,8 @@ void PhysicTask::Update(f32 DeltaTime) {
     if (DeltaTime > 0.0f) {
         m_DeltaTime = DeltaTime;
 
+        GetSystemScene<PhysicScene>()->getDynamicsWorld_()->stepSimulation(DeltaTime);
+
         // Update scene
         m_pSystemScene->Update(DeltaTime);
     }

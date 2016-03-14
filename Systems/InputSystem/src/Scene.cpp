@@ -14,6 +14,7 @@
 
 #include <boost/functional/factory.hpp>
 #include <OISB.h>
+#include <InputSystemComponents_generated.h>
 
 #include "Manager/ServiceManager.h"
 #include "System.h"
@@ -35,12 +36,12 @@ InputScene::InputScene(ISystem* pSystem)
     : ISystemScene(pSystem)
     , ISceneObject() {
     //m_TaskFactory = boost::factory<InputTask*>();
-    
+
     /*m_ObjectFactories["Camera"] = boost::factory<CameraInputObject*>();
     m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
     m_ObjectFactories["Cursor"] = boost::factory<CursorInputObject*>();
-    m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();
-    m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();*/
+    m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();*/
+    m_ObjectFactories[Schema::SystemComponentType::InputVelocity] = boost::factory<PlayerInputObject*>();
     
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");
@@ -60,7 +61,7 @@ InputScene::~InputScene() {
 Error InputScene::initialize() {
     ASSERT(!m_bInitialized);
     
-    m_quitInputAction->bind("Keyboard/ECHAP");
+    m_quitInputAction->bind("Keyboard/Escape");
     
     m_bInitialized = true;
     return Errors::Success;

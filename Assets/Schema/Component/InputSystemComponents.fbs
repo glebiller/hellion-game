@@ -1,0 +1,12 @@
+namespace Schema;
+
+struct VelocityVector {
+  x: float;
+  y: float;
+  z: float;
+}
+
+table InputVelocity {
+    scalar: VelocityVector;
+    angular: VelocityVector;
+}
