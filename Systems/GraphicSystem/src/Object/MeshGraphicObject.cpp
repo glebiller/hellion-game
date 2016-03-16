@@ -65,16 +65,6 @@ MeshGraphicObject::~MeshGraphicObject() {
 /**
  * @inheritDoc
  */
-Error MeshGraphicObject::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
 void MeshGraphicObject::Update(f32 DeltaTime) {
 
 }

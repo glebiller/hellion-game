@@ -35,23 +35,12 @@ extern IServiceManager* g_serviceManager;
  */
 CursorGraphicObject::CursorGraphicObject(ISystemScene* pSystemScene, UObject* entity) 
     : GraphicObject(pSystemScene, entity) {
-    //m_propertySetters["Mesh"] = boost::bind(&MeshGraphicObject::setMeshName, this, _1);
 }
 
 /**
  * @inheritDoc
  */
 CursorGraphicObject::~CursorGraphicObject() {
-}
-
-/**
- * @inheritDoc
- */
-Error CursorGraphicObject::initialize() {
-    ASSERT(!m_bInitialized);
-    
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 /**

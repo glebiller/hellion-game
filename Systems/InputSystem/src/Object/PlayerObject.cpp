@@ -34,21 +34,7 @@ PlayerInputObject::PlayerInputObject(ISystemScene& pSystemScene, UObject& entity
     m_turnRightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_TurnRight");
     m_turnLeftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_TurnLeft");
     m_jumpInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_Jump");
-}
 
-/**
- * @inheritDoc
- */
-PlayerInputObject::~PlayerInputObject() {
-    
-}
-
-/**
- * @inheritDoc
- */
-Error PlayerInputObject::initialize() {
-    ASSERT(!m_bInitialized);
-    
     m_forwardInputAction->bind("Keyboard/w");
     m_backwardInputAction->bind("Keyboard/s");
     m_strafeRightInputAction->bind("Keyboard/d");
@@ -56,9 +42,13 @@ Error PlayerInputObject::initialize() {
     m_turnRightInputAction->bind("Keyboard/e");
     m_turnLeftInputAction->bind("Keyboard/q");
     m_jumpInputAction->bind("Keyboard/Space");
+}
 
-    m_bInitialized = true;
-    return Errors::Success;
+/**
+ * @inheritDoc
+ */
+PlayerInputObject::~PlayerInputObject() {
+    
 }
 
 /**

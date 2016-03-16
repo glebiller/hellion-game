@@ -39,12 +39,7 @@ class LightGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         ~LightGraphicObject();
-        
-        /**
-         * @inheritDoc
-         */
-        Error initialize();
-        
+
         /**
          * @inheritDoc
          */

@@ -248,14 +248,9 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
         pObject->GetExtension(objectProto->systemType())->setProperties(objectProto->properties());
     }
 
-    //
-    // Init everything
-    //
      */
-    for (auto systemObject : pObject->GetExtensions()) {
-        systemObject.second->initialize();
-    }
 
+    // Initialize
     for (auto systemObject : pObject->GetExtensions()) {
         ISystemObject* pObj = systemObject.second;
         pObj->PostChanges(pObj->GetPotentialSystemChanges());

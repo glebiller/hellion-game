@@ -42,12 +42,7 @@ class CameraGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         ~CameraGraphicObject();
-        
-        /**
-         * @inheritDoc
-         */
-        Error initialize();
-        
+
         /**
          * @inheritDoc
          */

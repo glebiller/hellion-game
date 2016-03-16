@@ -1,2 +1,2 @@
-shoot-em-up-project
+hellion-game
 ============

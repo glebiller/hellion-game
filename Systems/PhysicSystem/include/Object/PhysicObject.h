@@ -42,7 +42,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    inline Schema::SystemType GetSystemType() {
+    inline Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Physic;
     };
 
@@ -55,35 +55,29 @@ public:
         return m_bStatic;
     };
 
-
     /**
      * @inheritDoc
      */
-    Error initialize();
-
-    /**
-     * @inheritDoc
-     */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    System::Changes::BitMask GetPotentialSystemChanges() override {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() {
+    System::Types::BitMask GetDesiredSystemChanges() override {
         return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) override;
 
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
+    void Update(f32 DeltaTime) override;
 
     Schema::PhysicPosition* getPosition() override {
         return position_;

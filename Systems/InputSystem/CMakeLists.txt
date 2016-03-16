@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(InputSystem LANGUAGES CXX)
 
-find_package(OIS REQUIRED)
-find_package(OISB REQUIRED)
-
 add_library(InputSystem SHARED
         src/Object/Object.cpp
         src/Object/PlayerObject.cpp

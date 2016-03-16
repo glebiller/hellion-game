@@ -52,16 +52,6 @@ PhysicObject::~PhysicObject() {
 /**
  * @inheritDoc
  */
-Error PhysicObject::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
 Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 

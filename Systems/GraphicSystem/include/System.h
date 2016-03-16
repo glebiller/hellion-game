@@ -54,8 +54,6 @@ public:
      */
     ~GraphicSystem();
 
-    Error initialize() override;
-
     ISystemScene* createScene() override;
 
     inline Schema::SystemType GetSystemType() override {
@@ -98,7 +96,7 @@ public:
      *
      * @param   pRenderWindow   Ogre::RenderWindow* - A pointer to Ogre render window that closed.
      */
-    void windowClosed(Ogre::RenderWindow* pRenderWindow);
+    void windowClosed(Ogre::RenderWindow* pRenderWindow) override;
 
 protected:
 

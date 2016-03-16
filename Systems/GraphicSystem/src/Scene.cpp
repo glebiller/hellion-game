@@ -98,16 +98,6 @@ GraphicScene::~GraphicScene() {
 /**
  * @inheritDoc
  */
-Error GraphicScene::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
 void GraphicScene::Update(f32 DeltaTime) {
     m_bPause = g_serviceManager->getRuntimeService()->isPaused();
     m_fDeltaTime = DeltaTime;

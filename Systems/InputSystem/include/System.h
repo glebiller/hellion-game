@@ -38,17 +38,12 @@ public:
      */
     ~InputSystem();
 
-    /**
-     * @inheritDoc
-     */
-    Error initialize();
-
     ISystemScene* createScene() override;
 
     /**
      * @inheritDoc
      */
-    Schema::SystemType GetSystemType() {
+    Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Input;
     }
 };

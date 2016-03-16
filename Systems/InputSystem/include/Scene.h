@@ -47,31 +47,26 @@ public:
     /**
      * @inheritDoc
      */
-    Error initialize();
+    void Update(f32 DeltaTime) override;
 
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
-
-    /**
-     * @inheritDoc
-     */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    System::Changes::BitMask GetPotentialSystemChanges() override {
         return System::Changes::Generic::DeleteObject;
     };
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetDesiredSystemChanges() {
+    System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    Schema::SystemType GetSystemType() {
+    Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Input;
     };
 

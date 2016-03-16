@@ -20,7 +20,7 @@
  * @inheritDoc
  */
 ISystemScene::ISystemScene(ISystem* pSystem)
-        : ISubject(), IProperty(), m_pSystem(pSystem) {
+        : ISubject(), m_pSystem(pSystem) {
     ASSERT(m_pSystem != nullptr);
 }
 

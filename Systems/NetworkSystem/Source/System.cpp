@@ -28,6 +28,9 @@ extern IServiceManager* g_serviceManager;
 NetworkSystem::NetworkSystem() : ISystem() {
     m_SceneFactory = boost::factory<NetworkScene*>();
     m_networkService = new NetworkService(static_cast<NetworkSystem*>(this));
+
+    // TODO connect on click
+    m_networkService->connect("localhost", "26000");
 }
 
 /**
@@ -35,17 +38,4 @@ NetworkSystem::NetworkSystem() : ISystem() {
  */
 NetworkSystem::~NetworkSystem() {
     boost::checked_delete(m_networkService);
-}
-
-/**
- * @inheritDoc
- */
-Error NetworkSystem::initialize() {
-    ASSERT(!m_bInitialized);
-    
-    m_networkService->connect("localhost", "26000");
-
-    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
-    m_bInitialized = true;
-    return Errors::Success;
 }

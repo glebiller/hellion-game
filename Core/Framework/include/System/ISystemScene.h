@@ -24,7 +24,6 @@
 #include "DataTypes.h"
 #include "Generic/IComponent.h"
 #include "Generic/IObserver.h"
-#include "Generic/IProperty.h"
 #include "Generic/ISubject.h"
 #include "Generic/IUpdatable.h"
 #include "System/Changes.h"
@@ -38,7 +37,7 @@ class ISystemTask;
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
  */
-class ISystemScene : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable {
+class ISystemScene : public IComponent, public ISubject, public IObserver, public IUpdatable {
 
 public:
 

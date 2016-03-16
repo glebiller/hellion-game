@@ -41,11 +41,6 @@ class CursorGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         ~CursorGraphicObject();
-
-        /**
-         * @inheritDoc
-         */
-        Error initialize();
         
         /**
          * @inheritDoc

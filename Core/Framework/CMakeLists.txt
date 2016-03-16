@@ -2,6 +2,34 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(Framework LANGUAGES CXX)
 
 add_library(Framework
+        include/Debugger/Debugger.h
+        include/Debugger/ObjectChangesDebugger.h
+        include/Debugger/SceneChangesDebugger.h
+        include/Generic/Framework.h
+        include/Generic/Instrumentation.h
+        include/Generic/IProperty.h
+        include/Generic/ISubject.h
+        include/Generic/Scheduler.h
+        include/Manager/ChangeManager.h
+        include/Manager/ServiceManager.h
+        include/Manager/TaskManager.h
+        include/Object/ISceneObject.h
+        include/Service/DefinitionService.h
+        include/Service/RuntimeService.h
+        include/Service/SettingService.h
+        include/Service/SystemService.h
+        include/Service/WindowService.h
+        include/System/ISystem.h
+        include/System/ISystemObject.h
+        include/System/ISystemScene.h
+        include/System/ISystemTask.h
+        include/Task/GenericCallbackData.h
+        include/Task/ParallelForBody.h
+        include/Task/StallTask.h
+        include/Task/SynchronizeTask.h
+        include/Universal/UObject.h
+        include/Universal/UScene.h
+        include/Main.h
         src/Debugger/Debugger.cpp
         src/Debugger/ObjectChangesDebugger.cpp
         src/Debugger/SceneChangesDebugger.cpp

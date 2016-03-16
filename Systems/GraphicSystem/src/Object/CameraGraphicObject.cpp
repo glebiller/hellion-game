@@ -35,69 +35,10 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
                                          const Schema::SystemComponent& component)
         : GraphicObject(&pSystemScene, &entity), m_pViewport(nullptr), m_vLookAt(Ogre::Vector3::ZERO),
           m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
-    //m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
-    //m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
-}
-
-/**
- * @inheritDoc
- */
-CameraGraphicObject::~CameraGraphicObject() {
-    if (m_bInitialized) {
-        //GetSystemScene<GraphicScene>()->GetSystem<GraphicSystem>()->getRenderWindow()->removeViewport(m_pViewport);
-        m_pCameraNode->detachObject(m_pCamera);
-    }
-
-    GetSystemScene<GraphicScene>()->getSceneManager()->destroyCamera(m_pCamera);
-}
-
-/**
- * @inheritDoc
- */
-Error CameraGraphicObject::initialize() {
-    ASSERT(!m_bInitialized);
-
-    if (m_pCamera == NULL) {
-        return Errors::Failure;
-    }
-
-    //
-    // Custom init function for the camera
-    //
     m_pCameraNode = m_pNode->createChildSceneNode();
     m_pCameraNode->setName(m_entity->getId() + "Camera_SceneNode");
-    ASSERT(m_pCameraNode != NULL);
-
-    //
-    // Create the viewport.
-    //
-    Ogre::RenderWindow* pRenderWindow = m_pSystemScene->GetSystem<GraphicSystem>()->getRenderWindow();
-    //m_pViewport = pRenderWindow->addViewport();
-    //ASSERT(m_pViewport != NULL);
 
     m_pCamera->setPolygonMode(Ogre::PM_SOLID);
-
-    //if (m_pViewport == NULL) {
-    //    return Errors::Failure;
-    //}
-
-    //m_pViewport->setBackgroundColour(Ogre::ColourValue(0.25, 0.25, 0.25));
-    //
-    // Set the camera's aspect ratio to the dimensions of the viewport.
-    //
-    //m_pCamera->setAspectRatio(Ogre::Real(m_pViewport->getActualWidth()) /
-    //                            Ogre::Real(m_pViewport->getActualHeight()));
-    //
-    // Set auto tracking
-    //
-    //m_pCamera->setAutoTracking(true, m_pNode);
-    //m_pCamera->setFixedYawAxis(true);
-    //
-    // Attach the camera to the Ogre scene node.
-    //
-    //m_pCamera->detachFromParent();
-    //m_pCameraNode->attachObject(m_pCamera);
-    //m_pCameraNode->hideBoundingBox(true);
 
     //
     // Set the far clip distance
@@ -121,8 +62,15 @@ Error CameraGraphicObject::initialize() {
             m_pSystemScene->GetSystem<GraphicSystem>()->getRenderWindow(),
             m_pCamera, workspaceName, true);
 
-    m_bInitialized = true;
-    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+CameraGraphicObject::~CameraGraphicObject() {
+    m_pCameraNode->detachObject(m_pCamera);
+
+    GetSystemScene<GraphicScene>()->getSceneManager()->destroyCamera(m_pCamera);
 }
 
 /**

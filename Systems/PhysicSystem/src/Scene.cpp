@@ -57,18 +57,6 @@ PhysicScene::PhysicScene(ISystem* pSystem)
 PhysicScene::~PhysicScene() {
     delete dynamicsWorld_;
     delete constraintSolver_;
-    if (m_bInitialized) {
-    }
-}
-
-///
-/// @inheritDoc
-///
-Error PhysicScene::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 /**

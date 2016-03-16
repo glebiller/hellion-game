@@ -55,16 +55,6 @@ NetworkScene::~NetworkScene() {
 /**
  * @inheritDoc
  */
-Error NetworkScene::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
 void NetworkScene::Update(f32 DeltaTime) {
     for (auto object : m_pObjects) {
         NetworkObject* pObject = static_cast<NetworkObject*>(object.second);

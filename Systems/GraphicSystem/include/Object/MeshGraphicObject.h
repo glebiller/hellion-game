@@ -46,11 +46,6 @@ class MeshGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        Error initialize();
-        
-        /**
-         * @inheritDoc
-         */
         void Update(f32 DeltaTime);
         
         /**

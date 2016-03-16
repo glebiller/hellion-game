@@ -88,7 +88,7 @@ boost::system::errc::errc_t Framework::Initialize() {
         std::function<ISystem* ()> fnCreateSystem =
                 systemLib.get<ISystem* ()>("CreateSystem");
         ISystem* iSystem = fnCreateSystem();
-        iSystem->initialize();
+        //iSystem->initialize();
         Schema::SystemType systemType = iSystem->GetSystemType();
         ASSERT(m_systems.find(systemType) == m_systems.end());
         m_systems[systemType] = iSystem;

@@ -12,9 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/functional/factory.hpp>
-#include <boost/bind.hpp>
-
 #include <btBulletDynamicsCommon.h>
 
 #include "System.h"
@@ -33,7 +30,6 @@ PhysicSystem::PhysicSystem() : ISystem(),
                                collisionConfiguration_(new btDefaultCollisionConfiguration()),
                                collisionDispatcher_(new btCollisionDispatcher(collisionConfiguration_)),
                                broadphaseInterface_(new btDbvtBroadphase()) {
-//m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
 }
 
 /**
@@ -43,18 +39,6 @@ PhysicSystem::~PhysicSystem() {
     delete broadphaseInterface_;
     delete collisionDispatcher_;
     delete collisionConfiguration_;
-    if (m_bInitialized) {
-    }
-}
-
-/**
- * @inheritDoc
- */
-Error PhysicSystem::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 ISystemScene* PhysicSystem::createScene() {

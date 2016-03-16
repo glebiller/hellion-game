@@ -28,63 +28,8 @@ extern IServiceManager* g_serviceManager;
 InputSystem::InputSystem()
     : ISystem() {
     new OISB::System();
-}
 
-/**
- * @inheritDoc
- */
-InputSystem::~InputSystem() {
-    delete OISB::System::getSingletonPtr();
-}
-
-class MouseCallback : public OIS::MouseListener {
-
-    virtual ~MouseCallback() {}
-    virtual bool mouseMoved( const OIS::MouseEvent &arg) {
-
-        return true;
-    }
-    virtual bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
-
-        return true;
-    }
-    virtual bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
-
-        return true;
-    }
-};
-class KeyCallback : public OIS::KeyListener {
-
-    virtual ~KeyCallback() {}
-    virtual bool keyPressed(const OIS::KeyEvent &arg) {
-        if (arg.text == 0) {
-            return true;
-        }
-
-        const OIS::Keyboard* device = static_cast<const OIS::Keyboard*>(arg.device);
-        int modifiers = 0;
-        if (device->isModifierDown(OIS::Keyboard::Modifier::Shift)) {
-            //modifiers |= EVENTFLAG_SHIFT_DOWN;
-        }
-
-        return true;
-    }
-
-    virtual bool keyReleased(const OIS::KeyEvent &arg) {
-        if (arg.text == 0) {
-            return true;
-        }
-
-        return true;
-    }
-};
-
-/**
- * @inheritDoc
- */
-Error InputSystem::initialize() {
-    ASSERT(!m_bInitialized);
-    
+    // TODO use change occurred ?
     size_t hWnd = g_serviceManager->getWindowService()->getHandle();
     ASSERTMSG(hWnd != 0, "Window handle should not be null !");
 
@@ -93,28 +38,30 @@ Error InputSystem::initialize() {
     windowHndStr << hWnd;
     paramList.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
-    #if defined OIS_WIN32_PLATFORM
-        paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
+#if defined OIS_WIN32_PLATFORM
+    paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
         paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
         paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
         paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
-    #elif defined OIS_LINUX_PLATFORM
-        paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+#elif defined OIS_LINUX_PLATFORM
+    paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
         paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
         paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
         paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
-    #elif defined OIS_APPLE_PLATFORM
+#elif defined OIS_APPLE_PLATFORM
 
-    #endif
+#endif
 
     OIS::InputManager* inputManager = OIS::InputManager::createInputSystem(paramList);
     auto name = inputManager->inputSystemName().data();
     OISB::System::getSingleton().initialize(inputManager);
-    //OISB::System::getSingleton().getOISMouse()->setEventCallback(new MouseCallback());
-    //OISB::System::getSingleton().getOISKeyboard()->setEventCallback(new KeyCallback());
+}
 
-    m_bInitialized = true;
-    return Errors::Success;
+/**
+ * @inheritDoc
+ */
+InputSystem::~InputSystem() {
+    delete OISB::System::getSingletonPtr();
 }
 
 ISystemScene* InputSystem::createScene() {

@@ -45,6 +45,7 @@ InputScene::InputScene(ISystem* pSystem)
     
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");
+    m_quitInputAction->bind("Keyboard/Escape");
 }
 
 /**
@@ -52,19 +53,6 @@ InputScene::InputScene(ISystem* pSystem)
  */
 InputScene::~InputScene() {
     OISB::System::getSingleton().destroyActionSchema(m_defaultSchema);
-
-}
-
-/**
- * @inheritDoc
- */
-Error InputScene::initialize() {
-    ASSERT(!m_bInitialized);
-    
-    m_quitInputAction->bind("Keyboard/Escape");
-    
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 /**

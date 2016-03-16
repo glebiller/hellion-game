@@ -53,28 +53,23 @@ class GraphicScene : public ISystemScene {
          * @inheritDoc
          */
         ~GraphicScene();
-                
+
         /**
          * @inheritDoc
          */
-        Error initialize();
+        void Update(f32 DeltaTime) override;
         
         /**
          * @inheritDoc
          */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges() {
+        System::Changes::BitMask GetPotentialSystemChanges() override {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        System::Changes::BitMask GetDesiredSystemChanges() {
+        System::Changes::BitMask GetDesiredSystemChanges() override {
             return System::Changes::None;
         };
         

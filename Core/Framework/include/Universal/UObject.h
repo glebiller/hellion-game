@@ -91,19 +91,19 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges) override;
     
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges() {
+    inline System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
     }
     
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetPotentialSystemChanges() {
+    inline System::Changes::BitMask GetPotentialSystemChanges() override {
         return System::Changes::None;
     }
 

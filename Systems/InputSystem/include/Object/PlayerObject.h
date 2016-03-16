@@ -46,12 +46,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error initialize();
-
-    /**
-     * @inheritDoc
-     */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    System::Changes::BitMask GetPotentialSystemChanges() override {
         return System::Changes::Generic::CreateObject | System::Changes::Input::Action 
              | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
@@ -59,19 +54,19 @@ public:
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() {
+    System::Types::BitMask GetDesiredSystemChanges() override {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) override;
 
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
+    void Update(f32 DeltaTime) override;
 
     /**
      * @inheritDoc

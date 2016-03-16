@@ -45,17 +45,12 @@ public:
     ///
     ~PhysicSystem();
 
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
-
     virtual ISystemScene* createScene() override;
 
     ///
     /// @inheritDoc.
     ///
-    Schema::SystemType GetSystemType() {
+    Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Physic;
     };
 
