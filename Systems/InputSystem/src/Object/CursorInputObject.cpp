@@ -39,7 +39,7 @@ CursorInputObject::~CursorInputObject() {
 /// @inheritDoc
 ///
 Error CursorInputObject::initialize() {
-    ASSERT(!m_bInitialized);
+
 
     m_mouse = OISB::System::getSingleton().getOISMouse();
     m_mouse->getMouseState().width = 1024;

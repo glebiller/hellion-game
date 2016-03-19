@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/assert.hpp>
 #include <SystemComponentType_generated.h>
 #include <UniversalScene_generated.h>
 #include <Universal/UObject.h>
@@ -23,7 +24,7 @@ ISystemScene::ISystemScene(ISystem* pSystem, const Schema::SystemScene* systemSc
         : ISubject()
         , m_pSystem(pSystem),
           systemScene(systemScene) {
-    ASSERT(m_pSystem != nullptr);
+    BOOST_ASSERT(m_pSystem != nullptr);
 }
 
 /**
@@ -50,18 +51,11 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
  * @inheritDoc
  */
 ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemComponent* component) {
-
-
     // TODO handle unkown factory
     ObjectFactory objectFactory = m_ObjectFactories[component->data_type()];
     ISystemObject* systemObject = objectFactory(*this, *entity, *component);
-
-    if (systemObject != nullptr) {
-        m_pObjects[systemObject->getEntity()->getId()] = systemObject;
-    } else {
-        ASSERTMSG2(false, "Impossible to create the object with name %s and type %s", entity->getName(), type);
-    }
-
+    BOOST_ASSERT_MSG(systemObject != nullptr, "Impossible to create the object");
+    m_pObjects[systemObject->getEntity()->getId()] = systemObject;
     return systemObject;
 }
 
@@ -70,7 +64,7 @@ ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemC
  */
 Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
 
-    ASSERT(pSystemObject != nullptr);
+    BOOST_ASSERT(pSystemObject != nullptr);
 
     if (pSystemObject != nullptr) {
         m_pObjects.erase(pSystemObject->getEntity()->getId());

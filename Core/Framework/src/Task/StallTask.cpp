@@ -15,7 +15,6 @@
 #include <tbb/task.h>
 #include <condition_variable>
 
-#include "Assert.h"
 #include "DataTypes.h"
 #include "Manager/TaskManager.h"
 #include "Task/StallTask.h"
@@ -32,7 +31,7 @@ tbb::task* StallTask::execute() {
         // wait for a tenth of a second to encourage somebody else to grab the stall task
         tbb::this_tbb_thread::sleep(tbb::tick_count::interval_t(0.1));
     } else {
-        ASSERT(m_hWaitFor != NULL);
+        BOOST_ASSERT(m_hWaitFor != NULL);
         m_hWaitFor->wait();
     }
 

@@ -35,7 +35,7 @@ const f32 Instrumentation::m_secondsPerUpdate = 1.0f;
 class ProcessorCounter {
     public:
         ProcessorCounter(TCHAR* szCounterPath) : m_hQuery(NULL), m_szCounterPath(NULL) {
-            ASSERT(szCounterPath != NULL);
+            BOOST_ASSERT(szCounterPath != NULL);
             size_t pathSize = _tcslen(szCounterPath) + 1;
             m_szCounterPath = new TCHAR[pathSize];
             _tcscpy_s(m_szCounterPath, pathSize, szCounterPath);

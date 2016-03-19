@@ -12,13 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/assert.hpp>
 #include "MathUtils.h"
 
 #include <stdlib.h>
 #include <cmath>
 
 #include "DataTypes.h"
-#include "Assert.h"
 
 using namespace Math;
 
@@ -59,7 +59,7 @@ const Color4 Color4::White = { 1.0f, 1.0f, 1.0f, 1.0f };
  * @return	.
  */
 const Quaternion& Quaternion::Set(const Vector3& Axis, const f32 Angle) {
-    ASSERTMSG(1.0f - Axis.Magnitude() < 0.0001f,
+    BOOST_ASSERT_MSG(1.0f - Axis.Magnitude() < 0.0001f,
         "This function requires the vector to be normalized upon entry.");
     const f32 Sin = Angle::Sin(Angle / 2.0f);
     x = Axis.x * Sin;

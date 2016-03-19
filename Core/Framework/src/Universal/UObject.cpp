@@ -50,11 +50,11 @@ UObject::~UObject() {
  * @inheritDoc
  */
 ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemComponent* component) {
-    ASSERT(pSystemScene != NULL);
-    ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
+    BOOST_ASSERT(pSystemScene != NULL);
+    BOOST_ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
 
     ISystemObject* pSystemObject = pSystemScene->CreateObject(this, component);
-    ASSERT(pSystemObject != NULL);
+    BOOST_ASSERT(pSystemObject != NULL);
 
     //
     // Get the changes this object will make and is looking for.
@@ -102,7 +102,7 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemC
     // TODO is it really usefull ?
     /*if (SystemType == Proto::SystemType::Physic) {
         m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
-        ASSERT(m_pGeometryObject != NULL);
+        BOOST_ASSERT(m_pGeometryObject != NULL);
     }*/
 
     return pSystemObject;
@@ -112,13 +112,13 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemC
  * @inheritDoc
  */
 void UObject::Unextend(ISystemScene* pSystemScene) {
-    ASSERT(pSystemScene != NULL);
+    BOOST_ASSERT(pSystemScene != NULL);
     //
     // Get the iterator for the object.
     //
     Schema::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
     auto SysObjIt = m_ObjectExtensions.find(SystemType);
-    ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
+    BOOST_ASSERT_MSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;
 
     //

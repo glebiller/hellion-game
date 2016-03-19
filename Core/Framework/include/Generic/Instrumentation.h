@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <boost/assert.hpp>
 #include "System/Types.h"
 
 /**
@@ -88,7 +89,7 @@ public:
      *                      Instrumentation::getNumCounters().
      */
     void getCPUCounters(f64* CPUPercent) {
-        ASSERT(CPUPercent != NULL);
+        BOOST_ASSERT(CPUPercent != NULL);
 
         if (CPUPercent != NULL) {
             for (int i = 0; i < m_numCounters; i++) {

@@ -50,7 +50,7 @@ public:
      * @return  null if it fails, else.
      */
     virtual tbb::task* execute() {
-        ASSERT(m_fFunc != NULL);
+        BOOST_ASSERT(m_fFunc != NULL);
         JOB_TASK_STARTED(m_jobType, m_tpEvent);
         m_fFunc(m_pParam);
         JOB_TASK_FINISHED(m_jobType, m_tpEvent);

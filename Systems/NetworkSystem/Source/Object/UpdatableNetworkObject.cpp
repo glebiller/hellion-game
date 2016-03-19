@@ -52,7 +52,7 @@ UpdatableNetworkObject::~UpdatableNetworkObject() {
  * @inheritDoc
  */
 Error UpdatableNetworkObject::initialize() {
-    ASSERT(!m_bInitialized);
+
     
     m_bInitialized = true;
     return Errors::Success;

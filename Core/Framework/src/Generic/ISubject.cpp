@@ -12,12 +12,11 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <algorithm>
+#include <boost/assert.hpp>
+
 #include "Generic/ISubject.h"
 
-#include <algorithm>
-
-#include "Assert.h"
-#include "Defines.h"
 #include "Errors.h"
 #include "Generic/IObserver.h"
 #include "System/Types.h"
@@ -76,16 +75,16 @@ Error ISubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, 
     // was modified to start using "shifts". Please update the code of this class
     // appropriately (original version did not have any meaningful support except
     // shifting inInterest on entry)
-    ASSERT(!shift && "ISubject::Attach: Interest bits are shifted. Read the comment to this assertion");
+    BOOST_ASSERT(!shift && "ISubject::Attach: Interest bits are shifted. Read the comment to this assertion");
     // Since the intended usage model is to use this method from CCMs only, and
     // their implementation provided by this framework ensures that pObs in nonzero
     // the following assertion should suffice.
-    ASSERT(pObserver && "ISubject::Attach: Valid pointer to observer object must be specified");
+    BOOST_ASSERT(pObserver && "ISubject::Attach: Valid pointer to observer object must be specified");
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
     SCOPED_SPIN_LOCK(m_observerListMutex);
 #endif
     // Framework's CCM implementation ensures that the following assertion always holds
-    ASSERT(std::find(m_observerList.begin(), m_observerList.end(), pObserver) == m_observerList.end() &&
+    BOOST_ASSERT(std::find(m_observerList.begin(), m_observerList.end(), pObserver) == m_observerList.end() &&
            "ISubject::Attach: Observer has already been attached. Use ISubject::UpdateInterestBits instead.");
     // Add the observer to our list of observers
     m_observerList.push_back(ObserverRequest(pObserver, inInterest, uID));

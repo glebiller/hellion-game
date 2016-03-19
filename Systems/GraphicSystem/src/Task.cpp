@@ -30,7 +30,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 GraphicTask::GraphicTask(ISystemScene* pScene) 
     : ISystemTask(pScene) {
     m_pRoot = pScene->GetSystem<GraphicSystem>()->getRoot();
-    ASSERT(m_pRoot != NULL);
+    BOOST_ASSERT(m_pRoot != NULL);
 }
 
 ///

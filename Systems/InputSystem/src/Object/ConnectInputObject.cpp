@@ -43,7 +43,7 @@ ConnectInputObject::~ConnectInputObject() {
  * @inheritDoc
  */
 Error ConnectInputObject::initialize() {
-    ASSERT(!m_bInitialized);
+
     
     m_connectInputAction->bind(m_key);
 

@@ -39,7 +39,7 @@
 DefinitionService::DefinitionService() {
     std::string applicationFile;
     Error result = loadProto("Application.adf.bin", &applicationFile);
-    ASSERT(result == Errors::Success);
+    BOOST_ASSERT(result == Errors::Success);
     m_gdProto = nullptr; // TODO
 }
 
@@ -84,14 +84,15 @@ void DefinitionService::parseSystems() {
     BOOST_ASSERT(m_gdProto->systems()->size() > 0);
     for (auto system : *m_gdProto->systems()) {
         loadSystemLibrary(system->c_str());
-        ASSERT(m_pSystem != NULL);
+        BOOST_ASSERT(m_pSystem != NULL);
 
         // Get the default properties from system, then Initialize it
         // TODO
         //m_pSystem->setProperties(system->properties());
         //m_pSystem->initialize();
-        ASSERTMSG1(system.type() == m_pSystem->GetSystemType(),
+        /*ASSERTMSG1(system.type() == m_pSystem->GetSystemType(),
                    "Parser identified an incorrect system type. It should be %s.", Proto::SystemType_Name(m_pSystem->GetSystemType()));
+                   */
     }
 }
 
@@ -121,7 +122,7 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     Error result = loadProto(sceneName + ".sdf.bin", &sceneFile);
     // TODO
     /*const Schema::Scene* sceneProto = Schema::CreateScene(sceneFile.c_str()) nullptr;
-    ASSERT(result == Errors::Success);
+    BOOST_ASSERT(result == Errors::Success);
 
     //
     // Initialize the scene templates.
@@ -139,7 +140,7 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
             auto it = scene->GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != scene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", Proto::SystemType_Name(system.type()));
             m_pSystemScene = it->second;
-            ASSERT(m_pSystemScene != NULL);
+            BOOST_ASSERT(m_pSystemScene != NULL);
             // Initialize system scene properties
             m_pSystemScene->setProperties(system->properties());
             m_pSystemScene->initialize();

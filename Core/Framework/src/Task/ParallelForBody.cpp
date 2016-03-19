@@ -15,8 +15,6 @@
 #include <tbb/task.h>
 #include <tbb/blocked_range.h>
 
-#include "Assert.h"
-#include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
 #include "Generic/Instrumentation.h"

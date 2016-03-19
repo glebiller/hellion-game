@@ -48,7 +48,7 @@ PlayerNetworkObject::~PlayerNetworkObject() {
  * @inheritDoc
  */
 Error PlayerNetworkObject::initialize() {
-    ASSERT(!m_bInitialized);
+
     
     m_bInitialized = true;
     return Errors::Success;

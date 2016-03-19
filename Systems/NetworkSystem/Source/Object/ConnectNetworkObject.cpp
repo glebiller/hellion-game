@@ -40,7 +40,7 @@ ConnectNetworkObject::~ConnectNetworkObject() {
  * @inheritDoc
  */
 Error ConnectNetworkObject::initialize() {
-    ASSERT(!m_bInitialized);
+
     
     m_bInitialized = true;
     return Errors::Success;

@@ -85,7 +85,7 @@ GraphicSystem::GraphicSystem()
             definition_->fullscreen(),
             &miscParams
     );
-    ASSERT(m_pRenderWindow != NULL);
+    BOOST_ASSERT(m_pRenderWindow != NULL);
     m_pRenderWindow->setDeactivateOnFocusChange(false);
 
 
@@ -145,7 +145,7 @@ void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
  * @inheritDoc
  */
 void GraphicSystem::setResourceLocation(Schema::Systems::ResourceLocation* values) {
-    ASSERT(!m_bInitialized);
+
     /*
     const std::string name = *value;
     const std::string locationType = *(++value);
@@ -161,7 +161,7 @@ void GraphicSystem::setResourceLocation(Schema::Systems::ResourceLocation* value
  * @inheritDoc
  */
 void GraphicSystem::setWindowName(std::string* values) {
-    ASSERT(!m_bInitialized);
+
     auto value = values->begin();
     m_RenderWindowDescription.name = *value;
 }
@@ -170,7 +170,7 @@ void GraphicSystem::setWindowName(std::string* values) {
  * @inheritDoc
  */
 void GraphicSystem::setFullScreen(bool values) {
-    ASSERT(!m_bInitialized);
+
     m_RenderWindowDescription.useFullScreen = values;
 }
 
@@ -178,14 +178,14 @@ void GraphicSystem::setFullScreen(bool values) {
  * @inheritDoc
  */
 void GraphicSystem::setVerticalSync(bool values) {
-    ASSERT(!m_bInitialized);
+
     m_RenderWindowDescription.miscParams["verticalSync"] = values;
 }
 
 /**
  * @inheritDoc
 void GraphicSystem::setAntiAliasing(Schema::vector2* values) {
-    ASSERT(!m_bInitialized);
+
     m_RenderWindowDescription.miscParams["FSAA"] = values->x();
     m_RenderWindowDescription.miscParams["FSAAQuality"] = values->y();
 }

@@ -18,7 +18,6 @@
 #include <vector>
 
 #include "Environment_generated.h"
-#include "Assert.h"
 #include "System/ISystem.h"
 #include "System/ISystemObject.h"
 

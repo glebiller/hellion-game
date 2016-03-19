@@ -15,8 +15,6 @@
 #include <mutex>
 #include <tbb/task.h>
 
-#include "Assert.h"
-#include "DataTypes.h"
 #include "Manager/TaskManager.h"
 #include "Task/SynchronizeTask.h"
 
@@ -30,8 +28,8 @@ SynchronizeTask::SynchronizeTask() {
 };
 
 tbb::task* SynchronizeTask::execute() {
-    ASSERT(m_fCallback != NULL);
-    ASSERT(m_hAllCallbacksInvokedEvent != NULL);
+    BOOST_ASSERT(m_fCallback != NULL);
+    //BOOST_ASSERT(m_hAllCallbacksInvokedEvent != NULL);
     m_fCallback(m_pCallbackParam);
 
     std::unique_lock<std::mutex> lock(m_allCallbacksMutex);

@@ -48,7 +48,7 @@ TerrainGraphicObject::~TerrainGraphicObject() {
 ///
 Error TerrainGraphicObject::initialize() {
     Error Err = Errors::Success;
-    ASSERT(!m_bInitialized);
+
 
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
     Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);

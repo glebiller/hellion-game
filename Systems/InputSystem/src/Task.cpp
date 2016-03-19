@@ -23,7 +23,7 @@
 /// @inheritDoc
 ///
 InputTask::InputTask(ISystemScene* pScene) : ISystemTask(pScene) {
-    ASSERT(m_pSystemScene != NULL);
+    BOOST_ASSERT(m_pSystemScene != NULL);
 }
 
 ///

@@ -74,10 +74,10 @@ CharacterPhysicObject::~CharacterPhysicObject() {
 /// @inheritDoc
 ///
 Error CharacterPhysicObject::initialize() {
-        ASSERT(!m_bInitialized);
+
 
         hkpWorld* pWorld = GetSystemScene<PhysicScene>()->getWorld();
-        ASSERT(pWorld != NULL);
+        BOOST_ASSERT(pWorld != NULL);
         pWorld->lock();
 
         hkVector4 VertexA(m_CapsuleA.x, m_CapsuleA.y, m_CapsuleA.z);
@@ -154,7 +154,7 @@ void CharacterPhysicObject::Update(f32 DeltaTime) {
     }
 
     hkpWorld* pWorld = GetSystemScene<PhysicScene>()->getWorld();
-    ASSERT(pWorld != NULL);
+    BOOST_ASSERT(pWorld != NULL);
 
     pWorld->markForWrite();
     

@@ -24,7 +24,7 @@ GraphicObject::GraphicObject(ISystemScene* pSystemScene, UObject* entity,
     , m_sceneManager(reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager()) {
     m_pNode = m_sceneManager->createSceneNode();
     m_pNode->setName(m_entity->getId() + "_SceneNode");
-    ASSERT(m_pNode != NULL);
+    BOOST_ASSERT(m_pNode != NULL);
     m_sceneManager->getRootSceneNode()->addChild(m_pNode);
 }
 

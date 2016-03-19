@@ -31,7 +31,7 @@ InputSystem::InputSystem()
 
     // TODO use change occurred ?
     size_t hWnd = g_serviceManager->getWindowService()->getHandle();
-    ASSERTMSG(hWnd != 0, "Window handle should not be null !");
+    BOOST_ASSERT_MSG(hWnd != 0, "Window handle should not be null !");
 
     OIS::ParamList paramList;
     std::ostringstream windowHndStr;

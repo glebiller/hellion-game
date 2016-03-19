@@ -19,7 +19,6 @@
 #include <sstream>
 #include <utility>
 
-#include "Assert.h"
 #include "Errors.h"
 #include "MathUtils.h"
 #include "System/Changes.h"
@@ -44,7 +43,7 @@ IProperty::~IProperty() {
  * @inheritDoc
  */
 Error IProperty::initialize() {
-    ASSERT(!m_bInitialized);
+
     m_bInitialized = true;
     return Errors::Success;
 };

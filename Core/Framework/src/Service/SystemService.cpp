@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/assert.hpp>
+
 #include "Service/SystemService.h"
 
 /**
@@ -31,7 +33,7 @@ SystemService::~SystemService() {
  */
 Error SystemService::add(ISystem* pSystem) {
     Schema::SystemType systemType = pSystem->GetSystemType();
-    ASSERT(m_systems.find(systemType) == m_systems.end());
+    BOOST_ASSERT(m_systems.find(systemType) == m_systems.end());
     m_systems[systemType] = pSystem;
     return Errors::Success;
 }

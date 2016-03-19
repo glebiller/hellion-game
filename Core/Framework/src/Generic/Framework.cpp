@@ -90,7 +90,7 @@ boost::system::errc::errc_t Framework::Initialize() {
         ISystem* iSystem = fnCreateSystem();
         //iSystem->initialize();
         Schema::SystemType systemType = iSystem->GetSystemType();
-        ASSERT(m_systems.find(systemType) == m_systems.end());
+        BOOST_ASSERT(m_systems.find(systemType) == m_systems.end());
         m_systems[systemType] = iSystem;
     }
 

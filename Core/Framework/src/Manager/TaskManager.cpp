@@ -75,10 +75,10 @@ TaskManager::~TaskManager() {
  * @inhertiDoc
  */
 void TaskManager::AddStallTask() {
-    ASSERT(m_pStallPoolParent != NULL);
+    BOOST_ASSERT(m_pStallPoolParent != NULL);
     tbb::task* pStallTask = new(m_pStallPoolParent->allocate_additional_child_of(*m_pStallPoolParent))
     StallTask(this, m_hStallPoolSemaphore);
-    ASSERT(pStallTask != NULL);
+    BOOST_ASSERT(pStallTask != NULL);
     m_pStallPoolParent->spawn(*pStallTask);
 }
 
@@ -151,7 +151,7 @@ void TaskManager::Init(const Schema::Environment* environment) {
  */
 void TaskManager::Shutdown() {
     // Call this from the primary thread as the last TaskManager call.
-    ASSERT(IsPrimaryThread());
+    BOOST_ASSERT(IsPrimaryThread());
     // get the callback thread to exit
     m_bTimeToQuit = true;
     // trigger the release of the stall pool
@@ -179,12 +179,12 @@ void TaskManager::updatePeriodicData(f32 deltaTime) {
  */
 void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, f32 fDeltaTime) {
     // Call this from the primary thread to schedule system work.
-    ASSERT(IsPrimaryThread());
+    BOOST_ASSERT(IsPrimaryThread());
     __ITT_EVENT_START(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
-    ASSERT(uTaskCount > 0);
+    BOOST_ASSERT(uTaskCount > 0);
     m_fDeltaTime = fDeltaTime;
     UpdateThreadPoolSize();
-    ASSERT(m_pSystemTasksRoot != NULL);
+    BOOST_ASSERT(m_pSystemTasksRoot != NULL);
     // We'll be adding tasks to the m_pSystemTasksRoot, and we will eventually call wait_for_all on it.
     // Support the eventual wait_for_all by setting reference count to 1 now.
     m_pSystemTasksRoot->set_ref_count(1);
@@ -211,7 +211,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
                         PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
                     // affinity will increase the chances that each SystemTask will be assigned
                     // to a unique thread, regardless of PerformanceHint
-                    ASSERT(pSystemTask != NULL);
+                    BOOST_ASSERT(pSystemTask != NULL);
                     pSystemTask->set_affinity(m_affinityIDs[i % uAffinityCount]);
                     tTaskList.push_back(*pSystemTask);
                 }
@@ -243,7 +243,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
 
     SynchronizeTask::PrepareCallback(pfnCallback, pData, m_uMaxNumberOfThreads);
     tbb::task* pBroadcastParent = new(tbb::task::allocate_root()) tbb::empty_task;
-    ASSERT(pBroadcastParent != NULL);
+    BOOST_ASSERT(pBroadcastParent != NULL);
     // we have one reference for each thread, plus one for the wait_for_all below
     pBroadcastParent->set_ref_count(m_uMaxNumberOfThreads + 1);
     tbb::task_list tList;
@@ -251,7 +251,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     for (int i = 0; i < m_uMaxNumberOfThreads; i++) {
         // Add a SynchronizedTasks for each thread in the TBB pool (workers + this master)
         tbb::task* pNewTask = new(pBroadcastParent->allocate_child()) SynchronizeTask;
-        ASSERT(pNewTask != NULL);
+        BOOST_ASSERT(pNewTask != NULL);
         tList.push_back(*pNewTask);
     }
 
@@ -307,9 +307,9 @@ void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJ
 void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
     // Call this from the primary thread to wait until specified tasks spawned with IssueJobsForSystemTasks
     // and all of their subtasks are complete.
-    ASSERT(IsPrimaryThread());
-    ASSERT(uTaskCount > 0);
-    ASSERT(uTaskCount <= System::Types::MAX);
+    BOOST_ASSERT(IsPrimaryThread());
+    BOOST_ASSERT(uTaskCount > 0);
+    BOOST_ASSERT(uTaskCount <= System::Types::MAX);
     // if we are waiting for any of the tasks dedicated to the primary thread,
     // then execute them now
     // if we issued primary thread tasks that we're not waiting for this time,
@@ -483,13 +483,13 @@ void TaskManager::UpdateThreadPoolSize() {
             m_pStallPoolParent = new(tbb::task::allocate_root()) tbb::empty_task;
         }
 
-        ASSERT(m_pStallPoolParent != NULL);
+        BOOST_ASSERT(m_pStallPoolParent != NULL);
         m_pStallPoolParent->set_ref_count(uNumThreadsToWait + 1);
         tbb::task_list tList;
 
         for (u32 i = 0; i < uNumThreadsToWait; i++) {
             tbb::task* pStallTask = new(m_pStallPoolParent->allocate_child()) StallTask(this, m_hStallPoolSemaphore);
-            ASSERT(pStallTask != NULL);
+            BOOST_ASSERT(pStallTask != NULL);
             tList.push_back(*pStallTask);
         }
 

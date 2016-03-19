@@ -106,7 +106,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
             if (m_freeIDsList.empty()) {
                 // No zero ID should ever be assigned, so use pre-increment
                 uID = ++m_lastID;
-                ASSERT(uID == m_subjectsList.size());
+                BOOST_ASSERT(uID == m_subjectsList.size());
                 m_subjectsList.resize(uID + 1);
             } else {
                 uID = m_freeIDsList.back();
@@ -144,7 +144,7 @@ ChangeManager::Unregister(
             return Errors::Failure;
         }
 
-        ASSERT(m_subjectsList[uID].m_pSubject == pInSubject);
+        BOOST_ASSERT(m_subjectsList[uID].m_pSubject == pInSubject);
         auto& observersList = m_subjectsList[uID].m_observersList;
         auto itObs = std::find(observersList.begin(), observersList.end(), pInObserver);
         if (itObs != observersList.end()) {
@@ -173,8 +173,8 @@ Error ChangeManager::RemoveSubject(ISubject* pSubject
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
         u32 uID = pSubject->getObserverId(this);
-        ASSERT(uID != ISubject::InvalidObserverID);
-        ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
+        BOOST_ASSERT(uID != ISubject::InvalidObserverID);
+        BOOST_ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
 
         if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pSubject) {
             return Errors::Failure;
@@ -202,7 +202,7 @@ ChangeManager::ChangeOccurred(
     System::Changes::BitMask uInChangedBits
 ) {
     Error curError = Errors::Undefined;
-    ASSERT(pInChangedSubject);
+    BOOST_ASSERT(pInChangedSubject);
 
     if (pInChangedSubject) {
         if (!uInChangedBits) {
@@ -252,7 +252,7 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
                 Notification& notif = pList->at(i);
                 // Get subject for notification
                 u32 uID = notif.m_pSubject->getObserverId(this);
-                ASSERT(uID != ISubject::InvalidObserverID);
+                BOOST_ASSERT(uID != ISubject::InvalidObserverID);
 
                 if (uID != ISubject::InvalidObserverID) {
                     // Get the index for this subject
@@ -367,8 +367,8 @@ ChangeManager::DistributeRange(u32 begin, u32 end) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetTaskManager - Set TaskManager and init associated data
 Error ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
-    ASSERT(pTaskManager && "Cannot set the task manager to null");
-    ASSERT(!m_pTaskManager && "ChangeManager: Call ResetTaskManager before using SetTaskManager to set the new task manager");
+    BOOST_ASSERT(pTaskManager && "Cannot set the task manager to null");
+    BOOST_ASSERT(!m_pTaskManager && "ChangeManager: Call ResetTaskManager before using SetTaskManager to set the new task manager");
     
     // Store TaskManager
     m_pTaskManager = pTaskManager;
@@ -400,7 +400,7 @@ void ChangeManager::ResetTaskManager() {
 ///////////////////////////////////////////////////////////////////////////////
 // InitThreadLocalData - Init thread specific data
 void ChangeManager::InitThreadLocalData(void* arg) {
-    ASSERT(arg && "ChangeManager: No manager pointer passed to InitThreadLocalNotifyList");
+    BOOST_ASSERT(arg && "ChangeManager: No manager pointer passed to InitThreadLocalNotifyList");
     ChangeManager* mgr = (ChangeManager*)arg;
 
     // Check if we have allocated a NotifyList for this thread.
@@ -421,7 +421,7 @@ void ChangeManager::InitThreadLocalData(void* arg) {
 ///////////////////////////////////////////////////////////////////////////////
 // FreeThreadLocalData - Free thread specific data
 void ChangeManager::FreeThreadLocalData(void* arg) {
-    ASSERT(arg && "ChangeManager: No manager pointer passed to FreeThreadLocalNotifyList");
+    BOOST_ASSERT(arg && "ChangeManager: No manager pointer passed to FreeThreadLocalNotifyList");
     ChangeManager* mgr = (ChangeManager*)arg;
 
     if (mgr->m_tlsNotifyList.get()) {

@@ -94,7 +94,7 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 void MeshGraphicObject::setMeshName(std::string values) {
         /*auto value = values->begin();
         m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), *value);
-        ASSERT(m_pEntity != NULL);*/
+        BOOST_ASSERT(m_pEntity != NULL);*/
 }
 
 #pragma warning( pop )

@@ -72,7 +72,7 @@ TerrainPhysicObject::~TerrainPhysicObject() {
 /// @inheritDoc
 ///
 Error TerrainPhysicObject::initialize() {
-    ASSERT(!m_bInitialized);
+
 
     //
     // Generate terrain

@@ -99,7 +99,7 @@ void Scheduler::execute() {
     u32 cScenesToExecute = 0;
     ISystemTask* aScenesToExecute[(int) Schema::SystemType::Count];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToExecute < Proto::SystemType_MAX);
+        //BOOST_ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
     }
 
@@ -115,7 +115,7 @@ void Scheduler::waitForScenes() {
     u32 cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
+        //BOOST_ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
         aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
     }
 

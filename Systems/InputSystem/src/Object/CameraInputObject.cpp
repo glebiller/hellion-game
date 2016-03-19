@@ -41,7 +41,7 @@ CameraInputObject::~CameraInputObject() {
 /// @inheritDoc
 ///
 Error CameraInputObject::initialize() {
-    ASSERT(!m_bInitialized);
+
 
     m_rotateUpDownAction->setUseAbsoluteValues(true);
     m_rotateUpDownAction->setAnalogEmulator(nullptr);

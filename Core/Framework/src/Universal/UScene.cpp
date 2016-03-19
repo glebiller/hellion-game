@@ -12,15 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/assert.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 #include <flatbuffers/util.h>
 #include <Environment_generated.h>
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
-#include "Universal/UObject.h"
-#include "System/ISystemScene.h"
-#include "Object/ISceneObject.h"
 #include "Manager/ServiceManager.h"
 #include "Manager/IChangeManager.h"
 
@@ -124,8 +122,6 @@ void UScene::update() {
  * @inheritDoc
  */
 ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemScene) {
-    BOOST_ASSERT_MSG(system != NULL, "Cannot extend Universal Scene with null system");
-
     Schema::SystemType systemType = systemScene->systemType();
     BOOST_LOG(logger_) << "Extend Universal Scene with system " << Schema::EnumNameSystemType(systemType);
 
@@ -136,7 +132,7 @@ ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemS
     // Have the system create it's scene.
     //
     ISystemScene* pScene = system.createScene(systemScene);
-    ASSERT(pScene != NULL);
+    BOOST_ASSERT(pScene != NULL);
     //
     // Create the associated task.
     // TODO move to SceneConstructor
@@ -157,12 +153,12 @@ ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemS
  * @inheritDoc
  */
 Error UScene::Unextend(ISystemScene* pScene) {
-    ASSERT(pScene != NULL);
+    BOOST_ASSERT(pScene != NULL);
     //
     // Get the system.
     //
     ISystem* pSystem = pScene->GetSystem<ISystem>();
-    ASSERT(pSystem != NULL);
+    BOOST_ASSERT(pSystem != NULL);
     //
     // Get the system's type.
     //
@@ -171,7 +167,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     // Find the system scene in the collection and remove it.
     //
     auto it = m_SystemScenes.find(SystemType);
-    ASSERTMSG(it != m_SystemScenes.end(), "The scene to delete for its system type doesn't exist.");
+    BOOST_ASSERT_MSG(it != m_SystemScenes.end(), "The scene to delete for its system type doesn't exist.");
     m_SystemScenes.erase(it);
     //
     // Unregister the scene from the CCM.
@@ -190,7 +186,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
 void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::SceneEntity>>* templates) {
 /*    for (auto template_ : objects) {
         Templates::iterator it = m_templates.find(template_->name());
-        ASSERTMSG(it == m_templates.end(), "The template to add to the scene already exists.");
+        BOOST_ASSERT_MSG(it == m_templates.end(), "The template to add to the scene already exists.");
         if (it != m_templates.end()) {
             continue;
         }
@@ -212,7 +208,7 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     // Create the new object.
     //
     UObject* pObject = new UObject(this, sceneEntity, parent);
-    ASSERT(pObject != NULL);
+    BOOST_ASSERT(pObject != NULL);
     //
     // Add the object to the collection.
     //
@@ -275,7 +271,7 @@ void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent*
     const Schema::SystemType& type = systemComponent->systemType();
     ISystemScene* systemScene = m_SystemScenes.find(type)->second;
     ISystemObject* pSystemObject = pObject->Extend(systemScene, systemComponent);
-    ASSERT(pSystemObject != NULL);
+    BOOST_ASSERT(pSystemObject != NULL);
     m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
 };
 
@@ -283,7 +279,7 @@ void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent*
  * @inheritDoc
  */
 Error UScene::DestroyObject(UObject* pObject) {
-    ASSERT(pObject != nullptr);
+    BOOST_ASSERT(pObject != nullptr);
     // Delete all childrens
     for (auto children : pObject->getChildren()) {
         UObject* object = FindObject(children->getId());
@@ -371,9 +367,9 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             const ISceneObject::ObjectProtoQueue objectsToCreate = *pScene->getCreateObjects();
             for (auto objectProto : objectsToCreate) {
-                ASSERT(FindObject(objectProto.id()) == NULL);
+                BOOST_ASSERT(FindObject(objectProto.id()) == NULL);
                 //UObject* pObject = createObject(objectProto);
-                //ASSERT(pObject != NULL);
+                //BOOST_ASSERT(pObject != NULL);
             }
             pScene->resetCreateObjectQueues();
             break;
@@ -384,7 +380,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             const ISceneObject::ObjectProtoQueue objectsToDestroy = *pScene->getDeleteObjects();
             for (auto objectProto : objectsToDestroy) {
                 UObject* pObject = FindObject(objectProto->id()->c_str());
-                ASSERT(pObject != NULL);
+                BOOST_ASSERT(pObject != NULL);
                 DestroyObject(pObject);
             }
             pScene->resetDeleteObjectQueues();

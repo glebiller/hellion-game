@@ -14,7 +14,6 @@
 
 #include <tbb/task.h>
 
-#include "Assert.h"
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
