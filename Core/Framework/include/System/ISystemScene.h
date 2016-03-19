@@ -24,7 +24,6 @@
 #include "DataTypes.h"
 #include "Generic/IObserver.h"
 #include "Generic/ISubject.h"
-#include "Generic/IUpdatable.h"
 #include "System/Changes.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
@@ -36,7 +35,7 @@ class ISystemTask;
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
  */
-class ISystemScene : public ISubject, public IObserver, public IUpdatable {
+class ISystemScene : public ISubject, public IObserver {
 
 public:
 
@@ -81,6 +80,8 @@ public:
      * @return A pointer to the system task.
      */
     virtual void createTask() = 0;
+
+    virtual void Update(f32 DeltaTime) = 0;
 
     /**
      * Creates a system object used to extend a UObject.

@@ -20,7 +20,6 @@
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
 #include "Generic/ISubject.h"
-#include "Generic/IUpdatable.h"
 #include "System/Changes.h"
 
 class ISystemScene;
@@ -35,7 +34,7 @@ class UObject;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public IComponent, public ISubject, public IObserver, public IUpdatable {
+class ISystemObject : public IComponent, public ISubject, public IObserver {
 public:
 
     /**
@@ -47,6 +46,8 @@ public:
      * @inheritDoc
      */
     virtual ~ISystemObject();
+
+    virtual void Update(f32 DeltaTime) = 0;
 
     /**
      * @inheritDoc

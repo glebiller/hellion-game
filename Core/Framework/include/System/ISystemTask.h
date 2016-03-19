@@ -16,7 +16,6 @@
 
 #include "Errors.h"
 #include "Generic/IComponent.h"
-#include "Generic/IUpdatable.h"
 
 class ISystemScene;
 
@@ -24,7 +23,7 @@ class ISystemScene;
  * <c>ISystemTask</c> is an interface class designed to work with a task manager for starting the
  *  system's task and spawning off new tasks as need be.
  */
-class ISystemTask : public IComponent, public IUpdatable {
+class ISystemTask : public IComponent {
 public:
 
     ///
@@ -43,6 +42,8 @@ public:
     /// @inheritDoc.
     ///
     virtual Error initialize() = 0;
+
+    virtual void Update(f32 DeltaTime) = 0;
 
     ///
     /// Query if this ISystemTask is primary thread only. Implementing tasks should return true
