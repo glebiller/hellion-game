@@ -73,7 +73,7 @@ void MeshGraphicObject::Update(f32 DeltaTime) {
  * @inheritDoc
  */
 Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     // TODO next step
     if (ChangeType & System::Changes::Physic::Position) {

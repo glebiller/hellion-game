@@ -46,7 +46,7 @@ void ParticleGraphicObject::Update(f32 DeltaTime) {
  * @inheritDoc
  */
 Error ParticleGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     if (ChangeType & System::Changes::Physic::Position) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);

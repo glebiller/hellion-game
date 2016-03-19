@@ -58,7 +58,7 @@ Error PlayerNetworkObject::initialize() {
  * @inheritDoc
  */
 Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
     
     if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
@@ -82,7 +82,7 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
  * @inheritDoc
  */
 void PlayerNetworkObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
     // Send the packet everytime it's dirty or for a heartbeat
     bool heartbeat_triggered = !m_heartbeat.is_stopped() && m_heartbeat.elapsed().wall >= m_heartbeat_delay;

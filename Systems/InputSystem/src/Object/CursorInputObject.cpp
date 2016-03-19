@@ -70,6 +70,6 @@ void CursorInputObject::Update(f32 DeltaTime) {
 /// @inheritDoc
 ///
 Error CursorInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
     return Errors::Success;
 }

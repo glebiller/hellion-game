@@ -58,7 +58,7 @@ Error MovablePhysicObject::initialize() {
  * @inheritDoc
  */
 Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     if (ChangeType & System::Changes::Input::Velocity) {
         m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
@@ -74,7 +74,7 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
  * @inheritDoc
  */
 void MovablePhysicObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
     m_modified = 0;
 
     // Rotation

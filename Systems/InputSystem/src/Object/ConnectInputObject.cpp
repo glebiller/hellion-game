@@ -55,13 +55,13 @@ Error ConnectInputObject::initialize() {
  * @inheritDoc
  */
 Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     return Errors::Success;
 }
 
 void ConnectInputObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
     m_modified = 0;
 
     if (m_connectInputAction->hasChanged()) {

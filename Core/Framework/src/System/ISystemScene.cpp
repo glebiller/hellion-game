@@ -50,7 +50,7 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
  * @inheritDoc
  */
 ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemComponent* component) {
-    ASSERT(m_bInitialized);
+
 
     // TODO handle unkown factory
     ObjectFactory objectFactory = m_ObjectFactories[component->data_type()];
@@ -69,7 +69,7 @@ ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemC
  * @inheritDoc
  */
 Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
-    ASSERT(m_bInitialized);
+
     ASSERT(pSystemObject != nullptr);
 
     if (pSystemObject != nullptr) {

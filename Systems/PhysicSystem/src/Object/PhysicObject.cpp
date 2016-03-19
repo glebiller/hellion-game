@@ -53,7 +53,7 @@ PhysicObject::~PhysicObject() {
  * @inheritDoc
  */
 Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     if (ChangeType & System::Changes::Input::Velocity) {
         auto scalar = pSubject->getVelocity()->scalar();
@@ -68,7 +68,7 @@ Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
  * @inheritDoc
  */
 void PhysicObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
     //position_->mutate_x(position_->x() + (velocity_->scalar()->x() * DeltaTime));
     //position_->mutate_y(position_->y() + (velocity_->scalar()->y() * DeltaTime));

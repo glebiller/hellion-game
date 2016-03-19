@@ -56,7 +56,7 @@ Error ReplicableNetworkObject::initialize() {
  * @inheritDoc
  */
 Error ReplicableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
     
     if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
@@ -80,7 +80,7 @@ Error ReplicableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Change
  * @inheritDoc
  */
 void ReplicableNetworkObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
     // Send the packet everytime it's dirty
     if (m_velocityDirty || m_rotationDirty) {

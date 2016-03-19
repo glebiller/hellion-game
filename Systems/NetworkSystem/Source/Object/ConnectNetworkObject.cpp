@@ -50,7 +50,7 @@ Error ConnectNetworkObject::initialize() {
  * @inheritDoc
  */
 Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     if (ChangeType & System::Changes::Input::Action) {
         const KeyboardButtonData* keyboardButtonData = dynamic_cast<IKeyboardObject*>(pSubject)->getKeyboardButtonData();
@@ -69,5 +69,5 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
  * @inheritDoc
  */
 void ConnectNetworkObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 }

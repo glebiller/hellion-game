@@ -62,7 +62,7 @@ Error UpdatableNetworkObject::initialize() {
  * @inheritDoc
  */
 Error UpdatableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     return Errors::Success;
 }
@@ -71,6 +71,6 @@ Error UpdatableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes
  * @inheritDoc
  */
 void UpdatableNetworkObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
 }

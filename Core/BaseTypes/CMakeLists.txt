@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(BaseTypes LANGUAGES CXX)
 
 add_library(BaseTypes
-        src/ObjectId/ObjectId.cpp
         src/MathUtils.cpp
         )
 

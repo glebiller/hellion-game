@@ -15,7 +15,6 @@
 #include "Scene.h"
 #include "Object/PlayerObject.h"
 #include "Object/IKeyboardObject.h"
-#include "ObjectId/ObjectId.h"
 
 /**
  * @inheritDoc
@@ -55,7 +54,7 @@ PlayerInputObject::~PlayerInputObject() {
  * @inheritDoc
  */
 Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
     
     /*if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
@@ -71,7 +70,7 @@ Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
  * @inheritDoc
  */
 void PlayerInputObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
     u32 mModified = 0;
 
@@ -123,6 +122,7 @@ void PlayerInputObject::Update(f32 DeltaTime) {
  */
 void PlayerInputObject::createShot() {
     /*Proto::Object shotProto;
+    // TODO use boost for object ID
     shotProto.set_id(ObjectId::gen().str());
     shotProto.set_name("Shot");
     shotProto.set_template_("ShotTemplate");

@@ -43,7 +43,7 @@ Error PassiveInputObject::initialize() {
  * @inheritDoc
  */
 Error PassiveInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     return Errors::Success;
 }
@@ -52,6 +52,6 @@ Error PassiveInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
  * @inheritDoc
  */
 void PassiveInputObject::Update(f32 DeltaTime) {
-    ASSERT(m_bInitialized);
+
 
 }

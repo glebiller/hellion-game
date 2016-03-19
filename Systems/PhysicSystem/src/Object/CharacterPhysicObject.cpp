@@ -131,7 +131,7 @@ Error CharacterPhysicObject::initialize() {
 /// @inheritDoc
 ///
 Error CharacterPhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
+
 
     if (ChangeType & System::Changes::Input::Velocity) {
         m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
