@@ -4,6 +4,15 @@ include "Component/PhysicSystemComponents.fbs";
 
 namespace Schema;
 
+enum SystemComponentChanges : uint (bit_flags) {
+    GraphicCamera,
+    GraphicMesh,
+
+    InputVelocity,
+
+    PhysicPosition
+}
+
 union SystemComponentType {
   GraphicCamera,
   GraphicMesh,

@@ -24,12 +24,30 @@ struct PhysicPosition;
 namespace Schema {
 
 
-enum class SystemComponentType {
+enum class SystemComponentChanges : uint32_t {
+  GraphicCamera = 1,
+  GraphicMesh = 2,
+  InputVelocity = 4,
+  PhysicPosition = 8,
+  MIN = GraphicCamera,
+  MAX = PhysicPosition
+};
+
+inline const char **EnumNamesSystemComponentChanges() {
+  static const char *names[] = { "GraphicCamera", "GraphicMesh", "", "InputVelocity", "", "", "", "PhysicPosition", nullptr };
+  return names;
+}
+
+inline const char *EnumNameSystemComponentChanges(SystemComponentChanges e) { return EnumNamesSystemComponentChanges()[static_cast<int>(e) - static_cast<int>(SystemComponentChanges::GraphicCamera)]; }
+
+enum class SystemComponentType : uint8_t {
   NONE = 0,
   GraphicCamera = 1,
   GraphicMesh = 2,
   InputVelocity = 3,
-  PhysicPosition = 4
+  PhysicPosition = 4,
+  MIN = NONE,
+  MAX = PhysicPosition
 };
 
 inline const char **EnumNamesSystemComponentType() {
