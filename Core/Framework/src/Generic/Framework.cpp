@@ -132,7 +132,7 @@ Error Framework::Execute() {
     RuntimeService* runtimeService = IServiceManager::get()->getRuntimeService();
     //while (true) {
         if (runtimeService->isNextScene()) {
-            setNextScene(runtimeService->getSceneName());
+            //setNextScene(runtimeService->getSceneName());
             runtimeService->setStatus(RuntimeService::Status::Running);
         }
 
@@ -141,7 +141,7 @@ Error Framework::Execute() {
         m_pScene->update();
         
         if (runtimeService->isQuit()) {
-            //break;
+            return Errors::Failure;
         }
     //}
 

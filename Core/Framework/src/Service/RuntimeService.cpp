@@ -14,11 +14,6 @@
 
 #include "Service/RuntimeService.h"
 
-#include "Defines.h"
-#if defined(MSC_COMPILER)
-#include <Windows.h>
-#endif
-
 ///
 /// @inhertiDoc.
 ///
@@ -37,9 +32,7 @@ RuntimeService::Status RuntimeService::getStatus() {
 /// @inhertiDoc.
 ///
 void RuntimeService::setStatus(Status Status) {
-#if defined(MSC_COMPILER)
-    InterlockedExchange((LONG*)&m_runtimeStatus, Status);
-#endif
+    m_runtimeStatus = Status;
 }
 
 ///
