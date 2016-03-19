@@ -41,8 +41,8 @@ PhysicSystem::~PhysicSystem() {
     delete collisionConfiguration_;
 }
 
-ISystemScene* PhysicSystem::createScene() {
-    m_pSystemScene = new PhysicScene(this);
+ISystemScene* PhysicSystem::createScene(const Schema::SystemScene* systemScene) {
+    m_pSystemScene = new PhysicScene(this, systemScene);
     return m_pSystemScene;
 }
 

@@ -40,7 +40,11 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-GraphicSystem::GraphicSystem() : ISystem(), m_pRenderSystem(NULL), m_pRenderWindow(NULL), m_pMaterialManager(NULL) {
+GraphicSystem::GraphicSystem()
+        : ISystem()
+        , m_pRenderSystem(NULL)
+        , m_pRenderWindow(NULL)
+        , m_pMaterialManager(NULL) {
     flatbuffers::LoadFile("GraphicSystem.bin", true, &definitionData_);
     definition_ = Schema::Systems::GetGraphicSystem(definitionData_.c_str());
 
@@ -101,8 +105,6 @@ GraphicSystem::GraphicSystem() : ISystem(), m_pRenderSystem(NULL), m_pRenderWind
     m_pResourceGroupManager->initialiseResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     m_pResourceGroupManager->loadResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
-    //g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
-
     BOOST_LOG(logger_) << "Graphic System created";
 }
 
@@ -110,18 +112,16 @@ GraphicSystem::GraphicSystem() : ISystem(), m_pRenderSystem(NULL), m_pRenderWind
  * @inheritDoc
  */
 GraphicSystem::~GraphicSystem() {
-    if (m_bInitialized) {
-        Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
+    Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
 
-        m_pResourceGroupManager->shutdownAll();
+    m_pResourceGroupManager->shutdownAll();
 
-        // Note: it appears that attempting to unload or uninstall the ParticleFX plugin at all with Ogre1.9
-        // will cause heap corruption around the guard pages allocated by the NT memory manager.  Luckily it seems
-        // like this is not leaking appreciable resources as the app will soon exit.  This should eventually be revisited
-        // should a new version of the ParticleFX plugin and/or Ogre become available.
-        // m_pRoot->unloadPlugin("Plugin_ParticleFX");
-        // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
-    }
+    // Note: it appears that attempting to unload or uninstall the ParticleFX plugin at all with Ogre1.9
+    // will cause heap corruption around the guard pages allocated by the NT memory manager.  Luckily it seems
+    // like this is not leaking appreciable resources as the app will soon exit.  This should eventually be revisited
+    // should a new version of the ParticleFX plugin and/or Ogre become available.
+    // m_pRoot->unloadPlugin("Plugin_ParticleFX");
+    // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
 
     m_pRoot->shutdown();
 
@@ -129,8 +129,8 @@ GraphicSystem::~GraphicSystem() {
     delete m_pRoot;
 }
 
-ISystemScene* GraphicSystem::createScene() {
-    m_pSystemScene = new GraphicScene(this);
+ISystemScene* GraphicSystem::createScene(const Schema::SystemScene* systemScene) {
+    m_pSystemScene = new GraphicScene(this, systemScene);
     return m_pSystemScene;
 }
 

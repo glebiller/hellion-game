@@ -19,8 +19,10 @@
 /**
  * @inheritDoc
  */
-ISystemScene::ISystemScene(ISystem* pSystem)
-        : ISubject(), m_pSystem(pSystem) {
+ISystemScene::ISystemScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
+        : ISubject()
+        , m_pSystem(pSystem),
+          systemScene(systemScene) {
     ASSERT(m_pSystem != nullptr);
 }
 
@@ -78,9 +80,6 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     return Errors::Success;
 }
 
-/**
- * @inheritDoc
- */
-void ISystemScene::propertyChanged(System::Changes::BitMask uInChangedBits) {
-    PostChanges(uInChangedBits);
+Schema::SystemType ISystemScene::GetSystemType() {
+    return systemScene->systemType();
 }

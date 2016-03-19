@@ -26,8 +26,9 @@
 ///
 /// @inheritDoc.
 ///
-TerrainGraphicObject::TerrainGraphicObject(ISystemScene* pSystemScene, UObject* entity)
-    : GraphicObject(pSystemScene, entity),
+TerrainGraphicObject::TerrainGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                                           const Schema::SystemComponent& component)
+    : GraphicObject(pSystemScene, entity, component),
       mTerrainGlobals(0),
       mTerrainGroup(0),
       mTerrainsImported(false) {

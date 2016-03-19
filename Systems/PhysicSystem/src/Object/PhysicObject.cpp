@@ -26,7 +26,7 @@
  * @inheritDoc
  */
 PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
-    : ISystemObject(&pSystemScene, &entity)
+    : ISystemObject(&pSystemScene, &entity, component)
     , m_bStatic(false) {
     position_ = const_cast<Schema::PhysicPosition*>(static_cast<const Schema::PhysicPosition*>(component.data()));
 

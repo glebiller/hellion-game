@@ -33,17 +33,10 @@ public:
     /**
      * @inheritDoc
      */
-    InputObject(ISystemScene* pSystemScene, UObject* entity);
+    InputObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component);
 
     /**
      * @inheritDoc
      */
     virtual ~InputObject();
-    
-    /**
-     * @inheritDoc
-     */
-    inline Schema::SystemType GetSystemType() {
-        return Schema::SystemType::Input;
-    }
 };

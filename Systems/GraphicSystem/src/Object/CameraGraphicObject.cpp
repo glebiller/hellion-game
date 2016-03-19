@@ -33,7 +33,8 @@
  */
 CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& entity,
                                          const Schema::SystemComponent& component)
-        : GraphicObject(&pSystemScene, &entity), m_pViewport(nullptr), m_vLookAt(Ogre::Vector3::ZERO),
+        : GraphicObject(&pSystemScene, &entity, component)
+        , m_pViewport(nullptr), m_vLookAt(Ogre::Vector3::ZERO),
           m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
     m_pCameraNode = m_pNode->createChildSceneNode();
     m_pCameraNode->setName(m_entity->getId() + "Camera_SceneNode");

@@ -32,8 +32,8 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-InputScene::InputScene(ISystem* pSystem)
-    : ISystemScene(pSystem)
+InputScene::InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
+    : ISystemScene(pSystem, systemScene)
     , ISceneObject() {
     //m_TaskFactory = boost::factory<InputTask*>();
 

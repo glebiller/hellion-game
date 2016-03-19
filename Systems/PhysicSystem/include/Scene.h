@@ -30,7 +30,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    PhysicScene(ISystem* pSystem);
+    PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
         
     ///
     /// @inheritDoc.
@@ -54,13 +54,6 @@ public:
     ///
     System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
-    };
-        
-    ///
-    /// @inheritDoc.
-    ///
-    Schema::SystemType GetSystemType() override {
-        return Schema::SystemType::Physic;
     };
 
     void createTask() override;

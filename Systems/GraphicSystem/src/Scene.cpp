@@ -53,8 +53,8 @@ void ProcessObjects(void* Data);
 /**
  * @inheritDoc
  */
-GraphicScene::GraphicScene(ISystem* pSystem)
-    : ISystemScene(pSystem)
+GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
+    : ISystemScene(pSystem, systemScene)
     , m_pSceneManager(nullptr)
     , m_FogMode(Ogre::FOG_NONE) {
     m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);

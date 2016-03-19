@@ -54,7 +54,7 @@ public:
      */
     ~GraphicSystem();
 
-    ISystemScene* createScene() override;
+    ISystemScene* createScene(const Schema::SystemScene* pScene) override;
 
     inline Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Graphic;

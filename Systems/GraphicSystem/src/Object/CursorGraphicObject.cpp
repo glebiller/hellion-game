@@ -33,8 +33,9 @@ extern IServiceManager* g_serviceManager;
 /**
  * @inheritDoc
  */
-CursorGraphicObject::CursorGraphicObject(ISystemScene* pSystemScene, UObject* entity) 
-    : GraphicObject(pSystemScene, entity) {
+CursorGraphicObject::CursorGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                                         const Schema::SystemComponent& component)
+    : GraphicObject(pSystemScene, entity, component) {
 }
 
 /**

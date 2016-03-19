@@ -14,9 +14,9 @@
 
 #pragma once
 
+#include <UniversalScene_generated.h>
 #include "DataTypes.h"
 #include "Generic/IComponent.h"
-#include "Generic/IProperty.h"
 
 class ISystemScene;
 
@@ -24,10 +24,8 @@ class ISystemScene;
  * <c>ISystem</c> is an interface class designed to be a method for adding functionality to the
  *  framework.  By default the framework does not have functionality for things like graphics,
  *  physics, etc.
- *
- * @sa  IProperty
  */
-class ISystem : public IComponent, public IProperty {
+class ISystem : public IComponent {
 public:
 
     /**
@@ -44,7 +42,7 @@ public:
     /**
      * Creates a system scene for containing system objects.
      */
-    virtual ISystemScene* createScene() = 0;
+    virtual ISystemScene* createScene(const Schema::SystemScene* pScene) = 0;
 
     /**
      * Destroys a system scene.

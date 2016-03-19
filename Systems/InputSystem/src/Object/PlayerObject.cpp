@@ -21,7 +21,7 @@
  * @inheritDoc
  */
 PlayerInputObject::PlayerInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
-    : InputObject(&pSystemScene, &entity)
+    : InputObject(&pSystemScene, &entity, component)
     , ISceneObject()
     , IGeometryObject() {
     velocity_ = const_cast<Schema::InputVelocity*>(static_cast<const Schema::InputVelocity*>(component.data()));

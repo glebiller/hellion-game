@@ -37,7 +37,8 @@ class GraphicObjectLight : public GraphicObject {
         /**
          * @inheritDoc
          */
-        GraphicObjectLight(ISystemScene* pSystemScene, const char* pszName);
+        GraphicObjectLight(ISystemScene* pSystemScene, const char* pszName,
+                           const Schema::SystemComponent& component);
         
         /**
          * @inheritDoc

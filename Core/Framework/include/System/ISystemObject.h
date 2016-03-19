@@ -15,6 +15,7 @@
 #pragma once
 
 #include <boost/uuid/uuid.hpp>
+#include <UniversalScene_generated.h>
 #include "Generic/IComponent.h"
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
@@ -34,13 +35,13 @@ class UObject;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable {
+class ISystemObject : public IComponent, public ISubject, public IObserver, public IUpdatable {
 public:
 
     /**
      * @inheritDoc
      */
-    ISystemObject(ISystemScene* pSystemScene, UObject* entity);
+    ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component);
 
     /**
      * @inheritDoc
@@ -50,7 +51,9 @@ public:
     /**
      * @inheritDoc
      */
-    void propertyChanged(System::Changes::BitMask uInChangedBits);
+    inline Schema::SystemType GetSystemType() {
+        return component_.systemType();
+    }
 
     /**
      * Gets the system scene this object belongs to.
@@ -67,6 +70,7 @@ public:
     }
 
 protected:
+    const Schema::SystemComponent& component_;
     ISystemScene*               m_pSystemScene;
     UObject*                    m_entity;
 

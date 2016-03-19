@@ -12,8 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
+#include <UniversalScene_generated.h>
 
 #include "Object/Object.h"
 #include "System/ISystemObject.h"
@@ -21,15 +20,8 @@
 /**
  * @inheritDoc
  */
-InputObject::InputObject(ISystemScene* pSystemScene, UObject* entity)
-    : ISystemObject(pSystemScene, entity) {
-    /*
-    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector3, this, System::Changes::Input::Velocity, &m_velocity, _1);
-    m_propertyGetters["Velocity"] = boost::bind(&IProperty::getVector3, this, &m_velocity, _1);
-
-    m_propertySetters["Rotation"] = boost::bind(&IProperty::setVector3, this, System::Changes::Input::Rotation, &m_rotation, _1);
-    m_propertyGetters["Rotation"] = boost::bind(&IProperty::getVector3, this, &m_rotation, _1);
-     */
+InputObject::InputObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component)
+    : ISystemObject(pSystemScene, entity, component) {
 }
 
 

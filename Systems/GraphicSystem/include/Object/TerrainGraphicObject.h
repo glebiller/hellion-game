@@ -34,7 +34,8 @@ public:
     /// @param [in,out] pSystemScene    If non-null, the system scene.
     /// @param  pszName                 The name.
     ///
-    TerrainGraphicObject(ISystemScene* pSystemScene, UObject* entity);
+    TerrainGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                         const Schema::SystemComponent& component);
 
     ///
     /// Destructor.

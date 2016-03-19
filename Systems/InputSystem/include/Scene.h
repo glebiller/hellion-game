@@ -37,7 +37,7 @@ public:
     /**
      * @inheritDoc
      */
-    InputScene(ISystem* pSystem);
+    InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
 
     /**
      * @inheritDoc
@@ -61,13 +61,6 @@ public:
      */
     System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    Schema::SystemType GetSystemType() override {
-        return Schema::SystemType::Input;
     };
 
     /**

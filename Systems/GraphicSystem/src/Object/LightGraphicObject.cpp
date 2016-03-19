@@ -29,8 +29,9 @@
 /**
  * @inheritDoc
  */
-LightGraphicObject::LightGraphicObject(ISystemScene* pSystemScene, UObject* entity)
-    : GraphicObject(pSystemScene, entity)
+LightGraphicObject::LightGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                                       const Schema::SystemComponent& component)
+    : GraphicObject(pSystemScene, entity, component)
     , m_pLight(NULL) {
     m_pLight = POGRESCENEMGR->createLight();
     m_pNode->attachObject(m_pLight);

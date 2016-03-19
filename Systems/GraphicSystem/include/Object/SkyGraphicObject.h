@@ -27,17 +27,13 @@ public:
     /// @param [in,out] pSystemScene    If non-null, the system scene.
     /// @param  pszName                 The name.
     ///
-    SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity);
+    SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                     const Schema::SystemComponent& component);
 
     ///
     /// Destructor.
     ///
     ~SkyGraphicObject();
-
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
         
     ///
     /// @inheritDoc.

@@ -24,17 +24,13 @@ public:
     /**
      * Default constructor.
      */
-    ParticleGraphicObject(ISystemScene* pSystemScene, UObject* entity);
+    ParticleGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                          const Schema::SystemComponent& component);
 
     /**
      * Destructor.
      */
     ~ParticleGraphicObject();
-
-    /**
-     * @inheritDoc
-     */
-    Error initialize();
 
     /**
      * @inheritDoc

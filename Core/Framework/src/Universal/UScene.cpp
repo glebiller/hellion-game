@@ -32,8 +32,9 @@ UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM, std::map<S
     , m_pObjectCCM(pObjectCCM) {
     flatbuffers::LoadFile("UniversalScene.bin", true, &universalSceneData_);
     universalSceneSchema_ = Schema::GetUniversalScene(universalSceneData_.c_str());
-    for (auto it : systems) {
-        Extend(*it.second);
+    for (auto scene : *universalSceneSchema_->scenes()) {
+        auto system = systems.find(scene->systemType())->second;
+        Extend(*system, scene);
     }
 }
 
@@ -122,10 +123,10 @@ void UScene::update() {
 /**
  * @inheritDoc
  */
-ISystemScene* UScene::Extend(ISystem& system) {
+ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemScene) {
     BOOST_ASSERT_MSG(system != NULL, "Cannot extend Universal Scene with null system");
 
-    Schema::SystemType systemType = system.GetSystemType();
+    Schema::SystemType systemType = systemScene->systemType();
     BOOST_LOG(logger_) << "Extend Universal Scene with system " << Schema::EnumNameSystemType(systemType);
 
     BOOST_ASSERT_MSG(m_SystemScenes.find(systemType) == m_SystemScenes.end(),
@@ -134,10 +135,11 @@ ISystemScene* UScene::Extend(ISystem& system) {
     //
     // Have the system create it's scene.
     //
-    ISystemScene* pScene = system.createScene();
+    ISystemScene* pScene = system.createScene(systemScene);
     ASSERT(pScene != NULL);
     //
     // Create the associated task.
+    // TODO move to SceneConstructor
     pScene->createTask();
     //
     // Register all changes made by the scene.

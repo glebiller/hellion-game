@@ -31,19 +31,12 @@ public:
     /**
      * @inheritDoc
      */
-    GraphicObject(ISystemScene* pSystemScene, UObject* entity);
+    GraphicObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component);
 
     /**
      * @inheritDoc
      */
     virtual ~GraphicObject();
-
-    /**
-     * @inheritDoc
-     */
-    inline Schema::SystemType GetSystemType() {
-        return Schema::SystemType::Graphic;
-    }
 
 protected:
     Ogre::SceneManager*                 m_sceneManager;

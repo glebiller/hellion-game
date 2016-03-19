@@ -21,8 +21,9 @@
 /**
  * @inheritDoc
  */
-ParticleGraphicObject::ParticleGraphicObject(ISystemScene* pSystemScene, UObject* entity) 
-    : GraphicObject(pSystemScene, entity) {
+ParticleGraphicObject::ParticleGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                                             const Schema::SystemComponent& component)
+    : GraphicObject(pSystemScene, entity, component) {
     m_particleSystem = m_sceneManager->createParticleSystem("LaserShot");
     m_pNode->attachObject(m_particleSystem);
 }
@@ -32,16 +33,6 @@ ParticleGraphicObject::ParticleGraphicObject(ISystemScene* pSystemScene, UObject
  * @inheritDoc
  */
 ParticleGraphicObject::~ParticleGraphicObject() {
-}
-
-/**
- * @inheritDoc
- */
-Error ParticleGraphicObject::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 /**

@@ -1,4 +1,15 @@
 {
+  "scenes": [
+    {
+      "systemType": "Graphic"
+    },
+    {
+      "systemType": "Physic"
+    },
+    {
+      "systemType": "Input"
+    }
+  ],
   "entities": [
     {
       "metaData": {

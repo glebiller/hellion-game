@@ -22,7 +22,6 @@
 #include <Universal/UObject.h>
 
 #include "DataTypes.h"
-#include "Generic/IComponent.h"
 #include "Generic/IObserver.h"
 #include "Generic/ISubject.h"
 #include "Generic/IUpdatable.h"
@@ -37,7 +36,7 @@ class ISystemTask;
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
  */
-class ISystemScene : public IComponent, public ISubject, public IObserver, public IUpdatable {
+class ISystemScene : public ISubject, public IObserver, public IUpdatable {
 
 public:
 
@@ -57,8 +56,8 @@ public:
      *
      * @param   pSystem The system this scene belongs to.
      */
-    ISystemScene(ISystem* pSystem);
-        
+    ISystemScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
+
     /**
      * @inheritDoc
      */
@@ -100,17 +99,14 @@ public:
      */
     Error DestroyObject(ISystemObject* pSystemObject);
 
-    /**
-     * @inheritDoc
-     */
-    void propertyChanged(System::Changes::BitMask uInChangedBits);
-     
+    virtual Schema::SystemType GetSystemType();
+
     /**
      * Gets the system this object belongs to.
      *
      * @return  A pointer to the system.
      */
-    template <typename TSystem>
+    template<typename TSystem>
     TSystem* GetSystem() {
         return static_cast<TSystem*>(m_pSystem);
     }
@@ -120,19 +116,21 @@ public:
      *
      * @return  The task for this scene.
      */
-    template <typename TSystemTask>
+    template<typename TSystemTask>
     TSystemTask* GetSystemTask() {
         return static_cast<TSystemTask*>(m_pSystemTask);
     }
 
 protected:
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
-    typedef std::function<ISystemObject*(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)> ObjectFactory;
+    typedef std::function<ISystemObject*(ISystemScene &pSystemScene, UObject &entity,
+                                         const Schema::SystemComponent &component)> ObjectFactory;
 
-    ISystem*                                        m_pSystem;
-    ISystemTask*							        m_pSystemTask;
-    ObjectsList                                     m_pObjects;
+    const Schema::SystemScene* systemScene;
+    ISystem* m_pSystem;
+    ISystemTask* m_pSystemTask;
+    ObjectsList m_pObjects;
 
-    std::map<Schema::SystemComponentType, ObjectFactory>  m_ObjectFactories;
+    std::map<Schema::SystemComponentType, ObjectFactory> m_ObjectFactories;
 
 };

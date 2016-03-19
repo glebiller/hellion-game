@@ -40,13 +40,6 @@ public:
     virtual ~PhysicObject();
 
     ///
-    /// @inheritDoc.
-    ///
-    inline Schema::SystemType GetSystemType() override {
-        return Schema::SystemType::Physic;
-    };
-
-    ///
     /// Query if this object is static.
     ///
     /// @return true if static, false if not.

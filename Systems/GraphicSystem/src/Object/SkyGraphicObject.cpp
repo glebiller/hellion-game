@@ -24,8 +24,9 @@
 ///
 /// @inheritDoc.
 ///
-SkyGraphicObject::SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity)
-    : GraphicObject(pSystemScene, entity),
+SkyGraphicObject::SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                                   const Schema::SystemComponent& component)
+    : GraphicObject(pSystemScene, entity, component),
       mSkysImported(false) {
     
 }
@@ -34,16 +35,6 @@ SkyGraphicObject::SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity)
 /// @inheritDoc.
 ///
 SkyGraphicObject::~SkyGraphicObject() {
-}
-
-///
-/// @inheritDoc.
-///
-Error SkyGraphicObject::initialize() {
-    ASSERT(!m_bInitialized);
-
-    m_bInitialized = true;
-    return Errors::Success;
 }
 
 ///

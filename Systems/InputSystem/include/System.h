@@ -38,7 +38,7 @@ public:
      */
     ~InputSystem();
 
-    ISystemScene* createScene() override;
+    ISystemScene* createScene(const Schema::SystemScene* pScene) override;
 
     /**
      * @inheritDoc

@@ -22,8 +22,8 @@ class UObject;
 /**
  * @inheritDoc
  */
-ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity) 
-    : IProperty()
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component)
+    : component_(component)
     , m_pSystemScene(pSystemScene)
     , m_entity(entity)  {
 }
@@ -35,9 +35,3 @@ ISystemObject::~ISystemObject() {
     
 }
 
-/**
- * @inheritDoc
- */
-void ISystemObject::propertyChanged(System::Changes::BitMask uInChangedBits) {
-    PostChanges(uInChangedBits);
-}

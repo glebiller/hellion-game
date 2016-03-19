@@ -45,11 +45,8 @@ public:
     ///
     ~PhysicSystem();
 
-    virtual ISystemScene* createScene() override;
+    virtual ISystemScene* createScene(const Schema::SystemScene* pScene) override;
 
-    ///
-    /// @inheritDoc.
-    ///
     Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Physic;
     };

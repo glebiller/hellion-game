@@ -35,7 +35,8 @@ class CursorGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        CursorGraphicObject(ISystemScene* pSystemScene, UObject* entity);
+        CursorGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                            const Schema::SystemComponent& component);
         
         /**
          * @inheritDoc

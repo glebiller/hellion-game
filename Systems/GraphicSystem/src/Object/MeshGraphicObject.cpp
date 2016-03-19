@@ -15,6 +15,7 @@
 #include <Ogre.h>
 #include <UniversalScene_generated.h>
 #include <PhysicSystemComponents_generated.h>
+#include <System/ISystemObject.h>
 
 #include "Scene.h"
 #include "System.h"
@@ -32,9 +33,9 @@ u32 MeshGraphicObject::sm_EntityId = 0;
 /**
  * @inheritDoc
  */
-MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
-    : GraphicObject(&pSystemScene, &entity)
-    , m_pEntity(NULL)
+MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                                     const Schema::SystemComponent& component)
+    : GraphicObject(&pSystemScene, &entity, component)
     , isProcedural(false)
     , m_strStaticGrpName("")
     , m_Position(Math::Vector3::Zero)
@@ -45,7 +46,6 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity
     m_pEntity = POGRESCENEMGR->createEntity(mesh->name()->c_str());
     m_pNode->setName(m_entity->getName());
     m_pNode->attachObject(m_pEntity);
-    m_pNode->setPosition(0, 0, 0);
 }
 
 
@@ -92,11 +92,9 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
  * @inheritDoc
  */
 void MeshGraphicObject::setMeshName(std::string values) {
-    if (!m_bInitialized) {
         /*auto value = values->begin();
         m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), *value);
         ASSERT(m_pEntity != NULL);*/
-    }
 }
 
 #pragma warning( pop )

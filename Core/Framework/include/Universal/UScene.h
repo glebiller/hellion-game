@@ -63,7 +63,7 @@ public:
      *
      * @return  The newly ISystemScene.
      */
-    ISystemScene* Extend(ISystem& system);
+    ISystemScene* Extend(ISystem& system, const Schema::SystemScene* pScene);
 
     /**
      * Destroys a ISystemScene removing it from the UScene.

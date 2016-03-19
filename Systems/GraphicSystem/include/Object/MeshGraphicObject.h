@@ -21,7 +21,9 @@
 #include "Object/Object.h"
 
 class GraphicSystem;
+
 class GraphicScene;
+
 class GraphicTask;
 
 /**
@@ -31,76 +33,77 @@ class GraphicTask;
  * @sa  GuiObject
  */
 class MeshGraphicObject : public GraphicObject {
-    public:
-        
-        /**
-         * @inheritDoc
-         */
-        MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
-        
-        /**
-         * @inheritDoc
-         */
-        ~MeshGraphicObject();
+public:
 
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges() {
-            return System::Changes::None;
-        };
+    /**
+     * @inheritDoc
+     */
+    MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                      const Schema::SystemComponent& component);
 
-        /**
-         * @inheritDoc
-         */
-        System::Types::BitMask GetDesiredSystemChanges() {
-            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    /**
+     * @inheritDoc
+     */
+    ~MeshGraphicObject();
 
-    protected:
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-        void setMeshName(std::string value);
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges() {
+        return System::Changes::None;
+    };
 
-    private:
-        static u32                          sm_EntityId;
+    /**
+     * @inheritDoc
+     */
+    System::Types::BitMask GetDesiredSystemChanges() {
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+    };
 
-        Math::Vector3                       m_Position;
-        Math::Quaternion                    m_Orientation;
-        Math::Vector3                       m_Scale;
+    /**
+     * @inheritDoc
+     */
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-        Ogre::Entity*                       m_pEntity;
+protected:
 
-        std::vector<Ogre::String>           m_MaterialNames;
+    void setMeshName(std::string value);
 
-        std::string                         m_strStaticGrpName;
-        // Index of the InstancedGeometry Object having this entity
-        u32                                 m_InstancedGeomIdx;
-        // Index of this entity in the list of entities in its InstancedGeom object
-        u32                                 m_ObjectIdxinInstGeom;
+private:
+    static u32 sm_EntityId;
+
+    Math::Vector3 m_Position;
+    Math::Quaternion m_Orientation;
+    Math::Vector3 m_Scale;
+
+    Ogre::Entity* m_pEntity;
+
+    std::vector<Ogre::String> m_MaterialNames;
+
+    std::string m_strStaticGrpName;
+    // Index of the InstancedGeometry Object having this entity
+    u32 m_InstancedGeomIdx;
+    // Index of this entity in the list of entities in its InstancedGeom object
+    u32 m_ObjectIdxinInstGeom;
 
 
-        // Indicates whether the Instanced Geometry object should update its contents
-        // for a change in position, orientation or scale of any of its parts.
-        bool                                m_Dirty;
+    // Indicates whether the Instanced Geometry object should update its contents
+    // for a change in position, orientation or scale of any of its parts.
+    bool m_Dirty;
 
-        std::string                         sMaterialName;
-        bool                                bCastShadows;
-        Ogre::MeshPtr                       pMesh;
+    std::string sMaterialName;
+    bool bCastShadows;
+    Ogre::MeshPtr pMesh;
 
-        // Bitmask indicating vertex streams in use. Max of 32 streams.
-        u32                                 m_StreamMask;
+    // Bitmask indicating vertex streams in use. Max of 32 streams.
+    u32 m_StreamMask;
 
-        bool                                isProcedural;
+    bool isProcedural;
 };
 
 

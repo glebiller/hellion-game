@@ -28,8 +28,8 @@ const Math::Vector3 PhysicScene::sm_kDefaultUp(0.0f, 1.0f, 0.0f);
 
 ///////////////////////////////////////////////////////////////////////////////
 // HavokPhysicsScene - Default constructor
-PhysicScene::PhysicScene(ISystem* pSystem)
-        : ISystemScene(pSystem),
+PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
+        : ISystemScene(pSystem, systemScene),
           constraintSolver_(new btSequentialImpulseConstraintSolver()) {
     dynamicsWorld_ = new btDiscreteDynamicsWorld(GetSystem<PhysicSystem>()->getCollisionDispatcher(),
                                                  GetSystem<PhysicSystem>()->getBroadphaseInterface(),

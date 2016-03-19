@@ -111,7 +111,7 @@ void DefinitionService::parseScene(UScene* scene, std::string sceneName) {
     // Create the initial scene for each system.
     //
     for (auto it : systemService->get()) {
-        scene->Extend(*it.second);
+        scene->Extend(*it.second, nullptr);
     }
 
     //

@@ -33,7 +33,8 @@ class LightGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        LightGraphicObject(ISystemScene* pSystemScene, UObject* entity);
+        LightGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                           const Schema::SystemComponent& component);
         
         /**
          * @inheritDoc

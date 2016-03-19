@@ -22,7 +22,7 @@
 /**
  * @inheritDoc
  */
-ISystem::ISystem() : IProperty() {
+ISystem::ISystem() {
 
 }
 

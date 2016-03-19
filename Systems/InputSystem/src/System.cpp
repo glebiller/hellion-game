@@ -64,8 +64,8 @@ InputSystem::~InputSystem() {
     delete OISB::System::getSingletonPtr();
 }
 
-ISystemScene* InputSystem::createScene() {
-    m_pSystemScene = new InputScene(this);
+ISystemScene* InputSystem::createScene(const Schema::SystemScene* systemScene) {
+    m_pSystemScene = new InputScene(this, systemScene);
     return m_pSystemScene;
 }
 

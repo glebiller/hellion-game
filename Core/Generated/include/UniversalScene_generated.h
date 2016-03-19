@@ -6,6 +6,8 @@
 #include "flatbuffers/flatbuffers.h"
 
 #include "GraphicSystemComponents_generated.h"
+#include "InputSystemComponents_generated.h"
+#include "PhysicSystemComponents_generated.h"
 #include "SystemComponentType_generated.h"
 #include "SystemType_generated.h"
 
@@ -13,28 +15,42 @@ namespace Schema {
 struct GraphicCamera;
 struct GraphicMesh;
 }  // namespace Schema
+namespace Schema {
+struct VelocityVector;
+struct InputVelocity;
+}  // namespace Schema
+namespace Schema {
+struct PhysicPosition;
+}  // namespace Schema
 
 namespace Schema {
 
 struct MetaData;
 struct SystemComponent;
 struct SceneEntity;
+struct SystemScene;
 struct UniversalScene;
 
 struct MetaData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  const flatbuffers::String *entityId() const { return GetPointer<const flatbuffers::String *>(4); }
-  const flatbuffers::String *prototype() const { return GetPointer<const flatbuffers::String *>(6); }
-  const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(8); }
-  const flatbuffers::String *comment() const { return GetPointer<const flatbuffers::String *>(10); }
+  enum {
+    VT_ENTITYID = 4,
+    VT_PROTOTYPE = 6,
+    VT_NAME = 8,
+    VT_COMMENT = 10
+  };
+  const flatbuffers::String *entityId() const { return GetPointer<const flatbuffers::String *>(VT_ENTITYID); }
+  const flatbuffers::String *prototype() const { return GetPointer<const flatbuffers::String *>(VT_PROTOTYPE); }
+  const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(VT_NAME); }
+  const flatbuffers::String *comment() const { return GetPointer<const flatbuffers::String *>(VT_COMMENT); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* entityId */) &&
+           VerifyFieldRequired<flatbuffers::uoffset_t>(verifier, VT_ENTITYID) &&
            verifier.Verify(entityId()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* prototype */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_PROTOTYPE) &&
            verifier.Verify(prototype()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* name */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NAME) &&
            verifier.Verify(name()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* comment */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_COMMENT) &&
            verifier.Verify(comment()) &&
            verifier.EndTable();
   }
@@ -43,14 +59,15 @@ struct MetaData FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct MetaDataBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_entityId(flatbuffers::Offset<flatbuffers::String> entityId) { fbb_.AddOffset(4, entityId); }
-  void add_prototype(flatbuffers::Offset<flatbuffers::String> prototype) { fbb_.AddOffset(6, prototype); }
-  void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(8, name); }
-  void add_comment(flatbuffers::Offset<flatbuffers::String> comment) { fbb_.AddOffset(10, comment); }
+  void add_entityId(flatbuffers::Offset<flatbuffers::String> entityId) { fbb_.AddOffset(MetaData::VT_ENTITYID, entityId); }
+  void add_prototype(flatbuffers::Offset<flatbuffers::String> prototype) { fbb_.AddOffset(MetaData::VT_PROTOTYPE, prototype); }
+  void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(MetaData::VT_NAME, name); }
+  void add_comment(flatbuffers::Offset<flatbuffers::String> comment) { fbb_.AddOffset(MetaData::VT_COMMENT, comment); }
   MetaDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   MetaDataBuilder &operator=(const MetaDataBuilder &);
   flatbuffers::Offset<MetaData> Finish() {
     auto o = flatbuffers::Offset<MetaData>(fbb_.EndTable(start_, 4));
+    fbb_.Required(o, MetaData::VT_ENTITYID);  // entityId
     return o;
   }
 };
@@ -69,14 +86,19 @@ inline flatbuffers::Offset<MetaData> CreateMetaData(flatbuffers::FlatBufferBuild
 }
 
 struct SystemComponent FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  Schema::SystemType systemType() const { return static_cast<Schema::SystemType>(GetField<uint32_t>(4, 0)); }
-  Schema::SystemComponentType data_type() const { return static_cast<Schema::SystemComponentType>(GetField<uint8_t>(6, 0)); }
-  const void *data() const { return GetPointer<const void *>(8); }
+  enum {
+    VT_SYSTEMTYPE = 4,
+    VT_DATA_TYPE = 6,
+    VT_DATA = 8
+  };
+  Schema::SystemType systemType() const { return static_cast<Schema::SystemType>(GetField<uint32_t>(VT_SYSTEMTYPE, 0)); }
+  Schema::SystemComponentType data_type() const { return static_cast<Schema::SystemComponentType>(GetField<uint8_t>(VT_DATA_TYPE, 0)); }
+  const void *data() const { return GetPointer<const void *>(VT_DATA); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<uint32_t>(verifier, 4 /* systemType */) &&
-           VerifyField<uint8_t>(verifier, 6 /* data_type */) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* data */) &&
+           VerifyField<uint32_t>(verifier, VT_SYSTEMTYPE) &&
+           VerifyField<uint8_t>(verifier, VT_DATA_TYPE) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_DATA) &&
            VerifySystemComponentType(verifier, data(), data_type()) &&
            verifier.EndTable();
   }
@@ -85,9 +107,9 @@ struct SystemComponent FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SystemComponentBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_systemType(Schema::SystemType systemType) { fbb_.AddElement<uint32_t>(4, static_cast<uint32_t>(systemType), 0); }
-  void add_data_type(Schema::SystemComponentType data_type) { fbb_.AddElement<uint8_t>(6, static_cast<uint8_t>(data_type), 0); }
-  void add_data(flatbuffers::Offset<void> data) { fbb_.AddOffset(8, data); }
+  void add_systemType(Schema::SystemType systemType) { fbb_.AddElement<uint32_t>(SystemComponent::VT_SYSTEMTYPE, static_cast<uint32_t>(systemType), 0); }
+  void add_data_type(Schema::SystemComponentType data_type) { fbb_.AddElement<uint8_t>(SystemComponent::VT_DATA_TYPE, static_cast<uint8_t>(data_type), 0); }
+  void add_data(flatbuffers::Offset<void> data) { fbb_.AddOffset(SystemComponent::VT_DATA, data); }
   SystemComponentBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   SystemComponentBuilder &operator=(const SystemComponentBuilder &);
   flatbuffers::Offset<SystemComponent> Finish() {
@@ -108,13 +130,17 @@ inline flatbuffers::Offset<SystemComponent> CreateSystemComponent(flatbuffers::F
 }
 
 struct SceneEntity FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  const MetaData *metaData() const { return GetPointer<const MetaData *>(4); }
-  const flatbuffers::Vector<flatbuffers::Offset<SystemComponent>> *systemComponents() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SystemComponent>> *>(6); }
+  enum {
+    VT_METADATA = 4,
+    VT_SYSTEMCOMPONENTS = 6
+  };
+  const MetaData *metaData() const { return GetPointer<const MetaData *>(VT_METADATA); }
+  const flatbuffers::Vector<flatbuffers::Offset<SystemComponent>> *systemComponents() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SystemComponent>> *>(VT_SYSTEMCOMPONENTS); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* metaData */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_METADATA) &&
            verifier.VerifyTable(metaData()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* systemComponents */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_SYSTEMCOMPONENTS) &&
            verifier.Verify(systemComponents()) &&
            verifier.VerifyVectorOfTables(systemComponents()) &&
            verifier.EndTable();
@@ -124,8 +150,8 @@ struct SceneEntity FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct SceneEntityBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_metaData(flatbuffers::Offset<MetaData> metaData) { fbb_.AddOffset(4, metaData); }
-  void add_systemComponents(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SystemComponent>>> systemComponents) { fbb_.AddOffset(6, systemComponents); }
+  void add_metaData(flatbuffers::Offset<MetaData> metaData) { fbb_.AddOffset(SceneEntity::VT_METADATA, metaData); }
+  void add_systemComponents(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SystemComponent>>> systemComponents) { fbb_.AddOffset(SceneEntity::VT_SYSTEMCOMPONENTS, systemComponents); }
   SceneEntityBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   SceneEntityBuilder &operator=(const SceneEntityBuilder &);
   flatbuffers::Offset<SceneEntity> Finish() {
@@ -143,11 +169,50 @@ inline flatbuffers::Offset<SceneEntity> CreateSceneEntity(flatbuffers::FlatBuffe
   return builder_.Finish();
 }
 
-struct UniversalScene FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  const flatbuffers::Vector<flatbuffers::Offset<SceneEntity>> *entities() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SceneEntity>> *>(4); }
+struct SystemScene FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_SYSTEMTYPE = 4
+  };
+  Schema::SystemType systemType() const { return static_cast<Schema::SystemType>(GetField<uint32_t>(VT_SYSTEMTYPE, 0)); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* entities */) &&
+           VerifyField<uint32_t>(verifier, VT_SYSTEMTYPE) &&
+           verifier.EndTable();
+  }
+};
+
+struct SystemSceneBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_systemType(Schema::SystemType systemType) { fbb_.AddElement<uint32_t>(SystemScene::VT_SYSTEMTYPE, static_cast<uint32_t>(systemType), 0); }
+  SystemSceneBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  SystemSceneBuilder &operator=(const SystemSceneBuilder &);
+  flatbuffers::Offset<SystemScene> Finish() {
+    auto o = flatbuffers::Offset<SystemScene>(fbb_.EndTable(start_, 1));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<SystemScene> CreateSystemScene(flatbuffers::FlatBufferBuilder &_fbb,
+   Schema::SystemType systemType = Schema::SystemType::Null) {
+  SystemSceneBuilder builder_(_fbb);
+  builder_.add_systemType(systemType);
+  return builder_.Finish();
+}
+
+struct UniversalScene FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_SCENES = 4,
+    VT_ENTITIES = 6
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<SystemScene>> *scenes() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SystemScene>> *>(VT_SCENES); }
+  const flatbuffers::Vector<flatbuffers::Offset<SceneEntity>> *entities() const { return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<SceneEntity>> *>(VT_ENTITIES); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_SCENES) &&
+           verifier.Verify(scenes()) &&
+           verifier.VerifyVectorOfTables(scenes()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ENTITIES) &&
            verifier.Verify(entities()) &&
            verifier.VerifyVectorOfTables(entities()) &&
            verifier.EndTable();
@@ -157,19 +222,22 @@ struct UniversalScene FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct UniversalSceneBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_entities(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SceneEntity>>> entities) { fbb_.AddOffset(4, entities); }
+  void add_scenes(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SystemScene>>> scenes) { fbb_.AddOffset(UniversalScene::VT_SCENES, scenes); }
+  void add_entities(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SceneEntity>>> entities) { fbb_.AddOffset(UniversalScene::VT_ENTITIES, entities); }
   UniversalSceneBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   UniversalSceneBuilder &operator=(const UniversalSceneBuilder &);
   flatbuffers::Offset<UniversalScene> Finish() {
-    auto o = flatbuffers::Offset<UniversalScene>(fbb_.EndTable(start_, 1));
+    auto o = flatbuffers::Offset<UniversalScene>(fbb_.EndTable(start_, 2));
     return o;
   }
 };
 
 inline flatbuffers::Offset<UniversalScene> CreateUniversalScene(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SystemScene>>> scenes = 0,
    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<SceneEntity>>> entities = 0) {
   UniversalSceneBuilder builder_(_fbb);
   builder_.add_entities(entities);
+  builder_.add_scenes(scenes);
   return builder_.Finish();
 }
 

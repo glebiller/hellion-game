@@ -18,8 +18,9 @@
 /**
  * @inheritDoc
  */
-GraphicObject::GraphicObject(ISystemScene* pSystemScene, UObject* entity) 
-    : ISystemObject(pSystemScene, entity)
+GraphicObject::GraphicObject(ISystemScene* pSystemScene, UObject* entity,
+                             const Schema::SystemComponent& component)
+    : ISystemObject(pSystemScene, entity, component)
     , m_sceneManager(reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager()) {
     m_pNode = m_sceneManager->createSceneNode();
     m_pNode->setName(m_entity->getId() + "_SceneNode");

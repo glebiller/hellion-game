@@ -20,7 +20,12 @@ table SceneEntity {
     systemComponents:[SystemComponent];
 }
 
+table SystemScene {
+    systemType: SystemType;
+}
+
 table UniversalScene {
+    scenes:[SystemScene];
     entities:[SceneEntity];
 }
 
