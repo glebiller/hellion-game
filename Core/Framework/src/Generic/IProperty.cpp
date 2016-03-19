@@ -14,14 +14,7 @@
 
 #include "Generic/IProperty.h"
 
-#include <flatbuffers/flatbuffers.h>
-#include <boost/lexical_cast.hpp>
-#include <sstream>
-#include <utility>
-
 #include "Errors.h"
-#include "MathUtils.h"
-#include "System/Changes.h"
 
 /**
  * @inheritDoc

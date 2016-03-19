@@ -37,18 +37,8 @@ class UObject : public ISubject, public IObserver {
 public:
     typedef std::map<Schema::SystemType, ISystemObject*>      SystemObjects;
 
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  pScene  If non-null, the scene.
-     * @param   id      The universal id of the object.
-     * @param   name      The name of the object.
-     */
     UObject(UScene* pScene, const Schema::SceneEntity& sceneEntity, UObject* parent);
 
-    /**
-     * Destructor.
-     */
     ~UObject();
 
     /**

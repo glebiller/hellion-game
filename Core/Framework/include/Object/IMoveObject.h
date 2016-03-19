@@ -15,7 +15,6 @@
 #pragma once
 
 #include "DataTypes.h"
-#include "MathUtils.h"
 
 /**
  * <c>IMoveObject</c> is an interface for providing Move related functionality.  Any
@@ -27,9 +26,7 @@ public:
     /**
      * Default constructor.
      */
-    IMoveObject()
-        : m_velocity(Math::Vector3::Zero)
-        , m_rotation(Math::Vector3::Zero) {
+    IMoveObject() {
     }
 
     /**
@@ -44,7 +41,7 @@ public:
      * @return  A constant pointer to the velocity.
      */
     inline const Math::Vector3* getVelocity() {
-        return &m_velocity;
+        return nullptr;
     }
 
     /**
@@ -53,11 +50,10 @@ public:
      * @return  null if it fails, else the rotation.
      */
     inline const Math::Vector3* getRotation() {
-        return &m_rotation;
+        return nullptr;
     }
 
 protected:
-    Math::Vector3       m_velocity;
-    Math::Vector3       m_rotation;
+
 
 };

@@ -16,7 +16,6 @@
 
 #include <btBulletDynamicsCommon.h>
 
-#include "MathUtils.h"
 #include "System/ISystemScene.h"
 
 class PhysicSystem;
@@ -26,14 +25,8 @@ class ISystem;
 class PhysicScene : public ISystemScene {
 public:
 
-    ///
-    /// @inheritDoc.
-    ///
     PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
-        
-    ///
-    /// @inheritDoc.
-    ///
+
     ~PhysicScene();
         
     ///
@@ -64,10 +57,5 @@ public:
 protected:
     btSequentialImpulseConstraintSolver* constraintSolver_;
     btDiscreteDynamicsWorld* dynamicsWorld_;
-
-    static const Math::Vector3          sm_kDefaultGravity;
-    static const Math::Vector3          sm_kDefaultUp;
-
-    Math::Vector3                       m_Gravity;
 
 };

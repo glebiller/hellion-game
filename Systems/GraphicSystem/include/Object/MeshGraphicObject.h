@@ -18,7 +18,6 @@
 #include <System/Types.h>
 #include <UniversalScene_generated.h>
 
-#include "MathUtils.h"
 #include "Object/Object.h"
 
 class GraphicSystem;
@@ -77,10 +76,6 @@ protected:
 
 private:
     static u32 sm_EntityId;
-
-    Math::Vector3 m_Position;
-    Math::Quaternion m_Orientation;
-    Math::Vector3 m_Scale;
 
     Ogre::Entity* m_pEntity;
 

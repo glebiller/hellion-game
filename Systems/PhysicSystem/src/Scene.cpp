@@ -23,9 +23,6 @@
 #include "Object/MovablePhysicObject.h"
 #include "Object/TerrainPhysicObject.h"
 
-const Math::Vector3 PhysicScene::sm_kDefaultGravity(0.0f, -9.8f, 0.0f);
-const Math::Vector3 PhysicScene::sm_kDefaultUp(0.0f, 1.0f, 0.0f);
-
 ///////////////////////////////////////////////////////////////////////////////
 // HavokPhysicsScene - Default constructor
 PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene)

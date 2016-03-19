@@ -15,7 +15,6 @@
 #pragma once
 
 #include "DataTypes.h"
-#include "MathUtils.h"
 
 struct KeyboardButtonData {
     int type;

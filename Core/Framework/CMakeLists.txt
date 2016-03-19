@@ -78,7 +78,6 @@ target_link_libraries(Framework
         Boost-filesystem
         TBB
         Generated
-        BaseTypes
         )
 
 install(TARGETS Framework

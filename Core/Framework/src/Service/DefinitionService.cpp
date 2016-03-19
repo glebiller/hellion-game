@@ -38,9 +38,9 @@
  */
 DefinitionService::DefinitionService() {
     std::string applicationFile;
-    Error result = loadProto("Application.adf.bin", &applicationFile);
-    BOOST_ASSERT(result == Errors::Success);
-    m_gdProto = nullptr; // TODO
+    //Error result = loadProto("Application.adf.bin", &applicationFile);
+    //BOOST_ASSERT(result == Errors::Success);
+    //m_gdProto = nullptr; // TODO
 }
 
 /**

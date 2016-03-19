@@ -38,9 +38,6 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity
     : GraphicObject(&pSystemScene, &entity, component)
     , isProcedural(false)
     , m_strStaticGrpName("")
-    , m_Position(Math::Vector3::Zero)
-    , m_Orientation(Math::Quaternion::Zero)
-    , m_Scale(Math::Vector3::One)
     , m_Dirty(true) {
     auto mesh = reinterpret_cast<const Schema::GraphicMesh *>(component.data());
     m_pEntity = POGRESCENEMGR->createEntity(mesh->name()->c_str());
@@ -77,7 +74,7 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 
     // TODO next step
     if (ChangeType & System::Changes::Physic::Position) {
-        Schema::PhysicPosition* position = pSubject->getPosition();
+        auto position = pSubject->getPosition();
         m_pNode->setPosition(position->x(), position->y(), position->z());
     }
     /*if (ChangeType & System::Changes::Physic::Orientation) {

@@ -22,14 +22,8 @@
 class ConnectInputObject : public InputObject, public IKeyboardObject {
 public:
 
-    /**
-     * Default constructor.
-     */
     ConnectInputObject(ISystemScene* pSystemScene, UObject* entity);
 
-    /**
-     * Destructor.
-     */
     ~ConnectInputObject();
 
     /**

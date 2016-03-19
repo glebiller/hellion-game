@@ -30,17 +30,8 @@ class IgnorePhantomOverlapListener;
 ///
 class CharacterPhysicObject : public PhysicObject, public IMoveObject {
 public:
-    ///
-    /// Constructor.
-    ///
-    /// @param [in,out] pSystemScene    If non-null, the system scene.
-    /// @param [in,out] entity          If non-null, the entity.
-    ///
     CharacterPhysicObject(ISystemScene* pSystemScene, UObject* entity);
 
-    ///
-    /// Destructor.
-    ///
     ~CharacterPhysicObject();
     
     ///
@@ -76,8 +67,6 @@ private:
     hkpCharacterProxy*              m_CharacterProxy;
     hkpCharacterContext*            m_characterContext;
 
-    Math::Vector3                   m_CapsuleA;
-    Math::Vector3                   m_CapsuleB;
     f32                             m_Radius;
 
 };

@@ -28,15 +28,8 @@ class ISystemScene;
 class ISystem {
 public:
 
-    /**
-     * Constructor.
-     */
     ISystem();
 
-    /**
-     * Destructor.
-     * Interface have virtual destructors.
-     */
     virtual ~ISystem();
 
     /**

@@ -16,7 +16,6 @@
 
 #include <OgreMesh.h>
 
-#include "MathUtils.h"
 #include "Object/Object.h"
 
 class GraphicSystem;
