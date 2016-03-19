@@ -27,14 +27,14 @@ MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, UObject* en
     , m_constraint_position(true)
     , m_velocity_multiplier(40)
     , m_rotation_multiplier(400) {
-    m_propertySetters["VelocityMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_velocity_multiplier, _1);
+    /*m_propertySetters["VelocityMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_velocity_multiplier, _1);
     m_propertyGetters["VelocityMultiplier"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_velocity_multiplier, _1);
 
     m_propertySetters["RotationMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_rotation_multiplier, _1);
     m_propertyGetters["RotationMultiplier"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_rotation_multiplier, _1);
 
     m_propertySetters["ConstraintPosition"] = boost::bind(&IProperty::setSimpleType<bool>, this, System::Changes::None, &m_constraint_position, _1);
-    m_propertyGetters["ConstraintPosition"] = boost::bind(&IProperty::getSimpleType<bool>, this, &m_constraint_position, _1);
+    m_propertyGetters["ConstraintPosition"] = boost::bind(&IProperty::getSimpleType<bool>, this, &m_constraint_position, _1);*/
 }
 
 /**
@@ -80,7 +80,7 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     // Rotation
     if (m_rotation != Math::Vector3::Zero) {
         Math::Quaternion additionalOrientation;
-        additionalOrientation.Set(m_rotation, Math::Angle::Deg2Rad(m_rotation_multiplier * DeltaTime));
+        //additionalOrientation.Set(m_rotation, Math::Angle::Deg2Rad(m_rotation_multiplier * DeltaTime));
         m_orientation *= additionalOrientation;
 
         m_modified |= System::Changes::Physic::Orientation;

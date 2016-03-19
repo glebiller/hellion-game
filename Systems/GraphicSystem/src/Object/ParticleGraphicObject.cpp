@@ -48,7 +48,7 @@ void ParticleGraphicObject::Update(f32 DeltaTime) {
 Error ParticleGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
 
 
-    if (ChangeType & System::Changes::Physic::Position) {
+    /*if (ChangeType & System::Changes::Physic::Position) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Vector3& Position = *pGeometryObject->GetPosition();
         m_pNode->setPosition(Position.x, Position.y, Position.z);
@@ -57,7 +57,7 @@ Error ParticleGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes:
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();
         m_pNode->setOrientation(Orientation.w, Orientation.x, Orientation.y, Orientation.z);
-    }
+    }*/
 
     return Errors::Success;
 }
