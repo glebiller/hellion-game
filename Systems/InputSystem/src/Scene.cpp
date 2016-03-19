@@ -33,8 +33,7 @@ extern IServiceManager* g_serviceManager;
  * @inheritDoc
  */
 InputScene::InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
-    : ISystemScene(pSystem, systemScene)
-    , ISceneObject() {
+    : ISystemScene(pSystem, systemScene) {
     //m_TaskFactory = boost::factory<InputTask*>();
 
     /*m_ObjectFactories["Camera"] = boost::factory<CameraInputObject*>();

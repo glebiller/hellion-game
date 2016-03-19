@@ -21,7 +21,6 @@
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
-#include "Object/IGeometryObject.h"
 
 class IChangeManager;
 class UScene;

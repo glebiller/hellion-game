@@ -18,13 +18,12 @@
 
 #include "MathUtils.h"
 #include "System/ISystemScene.h"
-#include "Object/ISceneObject.h"
 
 class PhysicSystem;
 class PhysicObject;
 class ISystem;
 
-class PhysicScene : public ISystemScene, public ISceneObject {
+class PhysicScene : public ISystemScene {
 public:
 
     ///

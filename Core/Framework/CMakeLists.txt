@@ -13,7 +13,6 @@ add_library(Framework
         include/Manager/ChangeManager.h
         include/Manager/ServiceManager.h
         include/Manager/TaskManager.h
-        include/Object/ISceneObject.h
         include/Service/DefinitionService.h
         include/Service/RuntimeService.h
         include/Service/SettingService.h
@@ -41,7 +40,6 @@ add_library(Framework
         src/Manager/ChangeManager.cpp
         src/Manager/ServiceManager.cpp
         src/Manager/TaskManager.cpp
-        src/Object/ISceneObject.cpp
         src/Service/DefinitionService.cpp
         src/Service/RuntimeService.cpp
         src/Service/SettingService.cpp

@@ -20,9 +20,7 @@
  * @inheritDoc
  */
 PlayerInputObject::PlayerInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
-    : InputObject(&pSystemScene, &entity, component)
-    , ISceneObject()
-    , IGeometryObject() {
+    : InputObject(&pSystemScene, &entity, component) {
     velocity_ = const_cast<Schema::InputVelocity*>(static_cast<const Schema::InputVelocity*>(component.data()));
     m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = GetSystemScene<InputScene>();

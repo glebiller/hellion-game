@@ -18,7 +18,6 @@
 
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
-#include "Object/IGeometryObject.h"
 
 class btRigidBody;
 

@@ -18,7 +18,6 @@
 
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
-#include "Object/IGeometryObject.h"
 #include "UniversalScene_generated.h"
 
 class UObject;

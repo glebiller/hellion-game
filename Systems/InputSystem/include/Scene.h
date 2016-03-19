@@ -19,7 +19,6 @@
 #include "Errors.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
-#include "Object/ISceneObject.h"
 
 class InputTask;
 class InputObject;
@@ -31,7 +30,7 @@ class InputAction;
  *
  * @sa  ISystemScene
  */
-class InputScene : public ISystemScene, public ISceneObject {
+class InputScene : public ISystemScene {
 public:
 
     /**

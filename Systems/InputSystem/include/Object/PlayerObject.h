@@ -18,8 +18,6 @@
 #include <System/Types.h>
 
 #include "System.h"
-#include "Object/IGeometryObject.h"
-#include "Object/ISceneObject.h"
 #include "Object/Object.h"
 
 class ISystemScene;
@@ -31,7 +29,7 @@ struct KeyboardButtonData;
  *
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public ISceneObject, public IGeometryObject {
+class PlayerInputObject : public InputObject {
 public:
 
     /**

@@ -26,7 +26,6 @@
 #include "Scene.h"
 #include "Object/Object.h"
 #include "Object/CameraGraphicObject.h"
-#include "Object/IGeometryObject.h"
 
 /**
  * @inheritDoc

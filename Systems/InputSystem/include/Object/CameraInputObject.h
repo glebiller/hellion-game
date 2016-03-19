@@ -17,7 +17,6 @@
 #include <OISB.h>
 
 #include "Object/Object.h"
-#include "Object/IGeometryObject.h"
 
 class UObject;
 
