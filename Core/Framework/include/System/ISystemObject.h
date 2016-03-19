@@ -16,7 +16,7 @@
 
 #include <boost/uuid/uuid.hpp>
 #include <UniversalScene_generated.h>
-#include "Generic/IComponent.h"
+#include <SystemType_generated.h>
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
 #include "Generic/ISubject.h"
@@ -34,7 +34,7 @@ class UObject;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public IComponent, public ISubject, public IObserver {
+class ISystemObject : public ISubject, public IObserver {
 public:
 
     /**

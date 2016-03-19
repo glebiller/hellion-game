@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OgreParticleSystem.h>
+#include <System/Types.h>
 
 #include "object.h"
 

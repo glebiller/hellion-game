@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OISB.h>
+#include <System/Types.h>
 
 #include "System.h"
 #include "Object/IGeometryObject.h"

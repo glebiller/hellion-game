@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OgreMesh.h>
+#include <System/Types.h>
 #include <UniversalScene_generated.h>
 
 #include "MathUtils.h"

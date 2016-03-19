@@ -14,8 +14,8 @@
 
 #pragma once
 
+#include <SystemType_generated.h>
 #include "Errors.h"
-#include "Generic/IComponent.h"
 
 class ISystemScene;
 
@@ -23,7 +23,7 @@ class ISystemScene;
  * <c>ISystemTask</c> is an interface class designed to work with a task manager for starting the
  *  system's task and spawning off new tasks as need be.
  */
-class ISystemTask : public IComponent {
+class ISystemTask {
 public:
 
     ///
@@ -53,6 +53,8 @@ public:
     /// @return true if primary thread only, false if not.
     ///
     virtual bool IsPrimaryThreadOnly() = 0;
+
+    virtual Schema::SystemType GetSystemType() = 0;
 
     ///
     /// Gets the system scene. Gets the scene for this task.

@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OgreVector3.h>
+#include <System/Types.h>
 
 #include "Object/Object.h"
 #include "System/ISystemScene.h"

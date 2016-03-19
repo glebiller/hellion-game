@@ -15,8 +15,8 @@
 #pragma once
 
 #include <UniversalScene_generated.h>
+#include <SystemType_generated.h>
 #include "DataTypes.h"
-#include "Generic/IComponent.h"
 
 class ISystemScene;
 
@@ -25,7 +25,7 @@ class ISystemScene;
  *  framework.  By default the framework does not have functionality for things like graphics,
  *  physics, etc.
  */
-class ISystem : public IComponent {
+class ISystem {
 public:
 
     /**
@@ -52,6 +52,8 @@ public:
      * @return  An error code.
      */
     Error DestroyScene(ISystemScene* pSystemScene);
+
+    virtual Schema::SystemType GetSystemType() = 0;
 
     /**
      * Gets system scene.

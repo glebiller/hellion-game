@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <System/Types.h>
+
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
 #include "Object/IGeometryObject.h"
