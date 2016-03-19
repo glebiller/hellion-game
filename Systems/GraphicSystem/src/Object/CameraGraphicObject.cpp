@@ -76,7 +76,7 @@ CameraGraphicObject::~CameraGraphicObject() {
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::Update(f32 DeltaTime) {
+void CameraGraphicObject::Update(float DeltaTime) {
     m_pCamera->lookAt(m_vLookAt);
 }
 

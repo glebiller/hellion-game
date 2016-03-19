@@ -84,7 +84,7 @@ Error TerrainGraphicObject::initialize() {
 ///
 /// @inheritDoc.
 ///
-void TerrainGraphicObject::Update(f32 DeltaTime) {
+void TerrainGraphicObject::Update(float DeltaTime) {
     if (!mTerrainGroup->isDerivedDataUpdateInProgress()) {
         if (mTerrainsImported) {
             mTerrainGroup->saveAllTerrains(false);

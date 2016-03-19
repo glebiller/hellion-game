@@ -35,12 +35,12 @@ public:
      * This type defines the callback used for generic job completions by the <c>ITaskManager</c>.
      * ### return   the number of jobs issued by this function.
      */
-    typedef u32(*JobCompletionFunction)(void*);
+    typedef unsigned int(*JobCompletionFunction)(void*);
 
     /**
      * Defines an alias representing the end.
      */
-    typedef void (*ParallelForFunction)(void* param, u32 begin, u32 end);
+    typedef void (*ParallelForFunction)(void* param, unsigned int begin, unsigned int end);
 
     /**
      * Callback, called when the non standard per thread.
@@ -72,7 +72,7 @@ public:
      * @return  the number of jobs which is optimal for the type of work specified by
      *          <paramref name="Hints"/>
      */
-    virtual u32 GetRecommendedJobCount(JobCountInstructionHints Hints = None) = 0;
+    virtual unsigned int GetRecommendedJobCount(JobCountInstructionHints Hints = None) = 0;
 
     /**
      * Sets a number of threads.
@@ -80,7 +80,7 @@ public:
      *
      * @param   uNumberOfThreads    the limit of the number of threads to use.
      */
-    virtual void SetNumberOfThreads(u32 uNumberOfThreads) = 0;
+    virtual void SetNumberOfThreads(unsigned int uNumberOfThreads) = 0;
 
     /**
      * Gets the number of threads.
@@ -89,7 +89,7 @@ public:
      *
      * @return  the number of threads being used.
      */
-    virtual u32 GetNumberOfThreads() = 0;
+    virtual unsigned int GetNumberOfThreads() = 0;
 
     /**
      * Parallel for virtual function.
@@ -101,6 +101,6 @@ public:
      * @param   end                 The end.
      * @param   minGrain            (optional) the minimum grain.
      */
-    virtual void ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrain = 1) = 0;
+    virtual void ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, unsigned int begin, unsigned int end, unsigned int minGrain = 1) = 0;
 
 };

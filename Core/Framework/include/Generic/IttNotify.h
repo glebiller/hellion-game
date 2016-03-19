@@ -20,10 +20,10 @@
 #if defined(GCC_COMPILER)
 #include <cstdint>
 
-__inline__ u64 __rdtsc() {
-    u32 lo, hi;
+__inline__ unsigned long long __rdtsc() {
+    unsigned int lo, hi;
     __asm__ __volatile__("rdtscp" : "=a"(lo), "=d"(hi) :: "ecx" );
-    return (u64)hi << 32 | lo;
+    return (unsigned long long) hi << 32 | lo;
 }
 #endif
 
@@ -90,7 +90,7 @@ __inline__ u64 __rdtsc() {
 #define JOB_TASK_STARTED(jobType, tpEvent)                              \
      __ITT_EVENT_START(tpEvent, PROFILE_TASKMANAGER);                   \
      {                                                                  \
-         i64 counter = __rdtsc();
+         long long counter = __rdtsc();
     
 #define JOB_TASK_FINISHED(jobType, tpEvent)                             \
          counter = __rdtsc() - counter;                                 \

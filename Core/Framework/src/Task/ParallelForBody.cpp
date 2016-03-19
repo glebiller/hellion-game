@@ -26,7 +26,7 @@ ParallelForBody::ParallelForBody(Instrumentation* instrumentation, ITaskManager:
         , m_pfnCallback(pfn) {
 };
 
-void ParallelForBody::operator() (const tbb::blocked_range<u32>& r) const {
+void ParallelForBody::operator() (const tbb::blocked_range<unsigned int>& r) const {
     JOB_TASK_STARTED(m_jobType, m_tpEvent);
     m_pfnCallback(m_pParam, r.begin(), r.end());
     JOB_TASK_FINISHED(m_jobType, m_tpEvent);

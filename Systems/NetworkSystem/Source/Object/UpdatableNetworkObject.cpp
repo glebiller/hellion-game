@@ -70,7 +70,7 @@ Error UpdatableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes
 /**
  * @inheritDoc
  */
-void UpdatableNetworkObject::Update(f32 DeltaTime) {
+void UpdatableNetworkObject::Update(float DeltaTime) {
 
 
 }

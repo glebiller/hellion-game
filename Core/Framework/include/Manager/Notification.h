@@ -22,11 +22,11 @@ class ISubject;
 /// Notification.
 ///
 struct Notification {
-    Notification(ISubject* pSubject, u32 changedBits)
+    Notification(ISubject* pSubject, unsigned int changedBits)
         : m_pSubject(pSubject)
         , m_changedBits(changedBits)
     {}
 
     ISubject*   m_pSubject;
-    u32         m_changedBits;
+    unsigned int         m_changedBits;
 };

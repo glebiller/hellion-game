@@ -91,8 +91,8 @@ private:
     btCollisionDispatcher* collisionDispatcher_;
     btBroadphaseInterface* broadphaseInterface_;
 
-    static u32 s_idMainThread;
-    static tbb::atomic<u32> s_threadNumberCount;
+    static unsigned int s_idMainThread;
+    static tbb::atomic<unsigned int> s_threadNumberCount;
 
 };
 

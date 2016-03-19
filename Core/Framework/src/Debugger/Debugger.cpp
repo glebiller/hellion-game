@@ -129,7 +129,7 @@ void Debugger::clean() {
 /**
  * @inheritDoc
  */
-void Debugger::update(f32 deltaTime) {
+void Debugger::update(float deltaTime) {
     if (!m_bDebuggerActive) {
         return;
     }

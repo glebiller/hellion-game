@@ -32,18 +32,18 @@ namespace System {
      * The Types namespace contains specifics about the system types.
      */
     namespace Types {
-        static const u32 All = static_cast<u32>(-1);
-        static const u32 MAX = 32;
+        static const unsigned int All = static_cast<unsigned int>(-1);
+        static const unsigned int MAX = 32;
 
         /**
          * Get the index of the system with the given type ID.  Useful for looking up indexed properties.
          * This function works on both predefined and custom system type IDs.
          *
          * @param   SystemType  Type - The type ID of a system.
-         * @return  u32 - Index of this system.
+         * @return  unsigned int - Index of this system.
          */
-        inline u32 GetIndex(const Schema::SystemType systemType) {
-            u32 Index = All;
+        inline unsigned int GetIndex(const Schema::SystemType systemType) {
+            unsigned int Index = All;
 #if defined(MSC_COMPILER)
             _BitScanForward((unsigned long*)&Index, systemType);
 #elif defined(GCC_COMPILER)
@@ -58,10 +58,10 @@ namespace System {
          * @param   SystemType  Type of the system.
          * @return  The type.
          */
-        inline Schema::SystemType GetType(const u32 index) {
+        inline Schema::SystemType GetType(const unsigned int index) {
             return (Schema::SystemType) (1 << index);
         }
 
-        typedef u32 BitMask;
+        typedef unsigned int BitMask;
     }
 }

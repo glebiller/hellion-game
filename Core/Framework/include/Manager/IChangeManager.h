@@ -46,7 +46,7 @@ class IChangeManager : public IObserver {
          *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
          *          available to resolve the change.
          */
-        virtual Error Register(ISubject* pInSubject, u32 uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All) = 0;
+        virtual Error Register(ISubject* pInSubject, unsigned int uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All) = 0;
 
         /**
          * Disassociates the provided IObserver from the supplied ISubject.

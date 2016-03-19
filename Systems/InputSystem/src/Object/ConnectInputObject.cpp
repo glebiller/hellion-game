@@ -60,7 +60,7 @@ Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
     return Errors::Success;
 }
 
-void ConnectInputObject::Update(f32 DeltaTime) {
+void ConnectInputObject::Update(float DeltaTime) {
 
     m_modified = 0;
 

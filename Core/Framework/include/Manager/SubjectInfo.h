@@ -34,6 +34,6 @@ struct SubjectInfo {
     }
 
     ISubject*       m_pSubject;
-    u32             m_interestBits;
+    unsigned int             m_interestBits;
     ObserversList       m_observersList;
 };

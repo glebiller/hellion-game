@@ -61,7 +61,7 @@ Error CameraInputObject::initialize() {
 ///
 /// @inheritDoc
 ///
-void CameraInputObject::Update(f32 DeltaTime) {
+void CameraInputObject::Update(float DeltaTime) {
     m_rotation.y = m_rotateUpDownAction->getRelativeValue();
     m_rotation.x = m_rotateRightLeftAction->getRelativeValue();
     if (m_rotation != Math::Vector3::Zero) {

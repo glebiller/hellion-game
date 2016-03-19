@@ -79,7 +79,7 @@ Error ReplicableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Change
 /**
  * @inheritDoc
  */
-void ReplicableNetworkObject::Update(f32 DeltaTime) {
+void ReplicableNetworkObject::Update(float DeltaTime) {
 
 
     // Send the packet everytime it's dirty

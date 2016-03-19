@@ -81,7 +81,7 @@ public:
     /**
      * Update the debugger.
      */
-    void update(f32 deltaTime);
+    void update(float deltaTime);
 
     /**
      * Send this message.

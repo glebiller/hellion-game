@@ -47,7 +47,7 @@ public:
      */
     virtual ~ISystemObject();
 
-    virtual void Update(f32 DeltaTime) = 0;
+    virtual void Update(float DeltaTime) = 0;
 
     /**
      * @inheritDoc

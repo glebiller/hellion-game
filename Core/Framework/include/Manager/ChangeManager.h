@@ -68,24 +68,24 @@ public:
     // Must be called before the previously set task manager has been shut down
     void ResetTaskManager();
 
-    inline std::vector<Notification>& GetNotifyList(u32 tlsIndex);
+    inline std::vector<Notification>& GetNotifyList(unsigned int tlsIndex);
 
 protected:
     ITaskManager*       m_pTaskManager;
 
     struct MappedNotification {
-        MappedNotification(u32 uID, u32 changedBits)
+        MappedNotification(unsigned int uID, unsigned int changedBits)
             : m_subjectID(uID)
             , m_changedBits(changedBits)
         {}
 
-        u32 m_subjectID;
-        u32 m_changedBits;
+        unsigned int m_subjectID;
+        unsigned int m_changedBits;
     };
 
-    u32                                     m_lastID;
-    std::vector<u32>                        m_indexList;
-    std::vector<u32>                        m_freeIDsList;
+    unsigned int                                     m_lastID;
+    std::vector<unsigned int>                        m_indexList;
+    std::vector<unsigned int>                        m_freeIDsList;
     std::vector<SubjectInfo>                m_subjectsList;
     std::list<std::vector<Notification>*>   m_notifyLists;
     std::vector<MappedNotification>         m_cumulativeNotifyList;
@@ -102,8 +102,8 @@ private:
 
     Error RemoveSubject(ISubject* pSubject);
 
-    static void DistributionCallback(void* param, u32 begin, u32 end);
-    void DistributeRange(u32 begin, u32 end);
+    static void DistributionCallback(void* param, unsigned int begin, unsigned int end);
+    void DistributeRange(unsigned int begin, unsigned int end);
 
     System::Types::BitMask      m_systems2BeNotified;
     System::Changes::BitMask    m_ChangesToDist;

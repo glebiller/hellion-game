@@ -34,7 +34,7 @@ class IObserver;
 class ISubject {
 public:
 
-    static const u32 InvalidObserverID = u32(-1);
+    static const unsigned int InvalidObserverID = (const unsigned int) -1;
 
     /**
      * Default constructor.
@@ -53,7 +53,7 @@ public:
      * @param [in,out]  pObserver   If non-null, the observer.
      * @return  The identifier.
      */
-    u32 getObserverId(IObserver* pObserver) const;
+    unsigned int getObserverId(IObserver* pObserver) const;
 
     /**
      * Associates the provided IObserver with the given ISubject aspects of interest.
@@ -70,7 +70,7 @@ public:
      *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
      *          available to resolve the change.
      */
-    virtual Error Attach(IObserver* pInObserver, u32 uInIntrestBits, u32 uID, u32 shiftBits = 0);
+    virtual Error Attach(IObserver* pInObserver, unsigned int uInIntrestBits, unsigned int uID, unsigned int shiftBits = 0);
 
     /**
      * Disassociates the provided Observer with the Subject.This method is typically called from @e ChangeManager::Register()
@@ -89,7 +89,7 @@ public:
      * @param   uInIntrestBits      The in intrest bits.
      * @return  The Error code. Error::Success No error.
      */
-    virtual Error UpdateInterestBits(IObserver* pInObserver, u32 uInIntrestBits);
+    virtual Error UpdateInterestBits(IObserver* pInObserver, unsigned int uInIntrestBits);
 
     /**
      * Identifies the system changes that this subject could possibly make.
@@ -103,7 +103,7 @@ public:
      * This method is typically called from @e ChangeManager::Register()
      * or the IObserver, if used without a ChangeManager.
      *
-     * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
+     * @param   uInChangedBits  The unsigned int bit field that describes the conceptual change with respect
      *                          to the published interests.
      */
     void PostChanges(System::Changes::BitMask uInChangedBits);
@@ -131,15 +131,15 @@ protected:
      * notifications (CCMs).
      */
     struct ObserverRequest {
-        ObserverRequest(IObserver* pObserver = NULL, u32 Interests = 0, u32 myID = 0)
+        ObserverRequest(IObserver* pObserver = NULL, unsigned int Interests = 0, unsigned int myID = 0)
             : m_pObserver(pObserver)
             , m_interestBits(Interests)
             , m_myID(myID) {
         }
 
         IObserver*  m_pObserver;
-        u32         m_interestBits;
-        u32         m_myID;
+        unsigned int         m_interestBits;
+        unsigned int         m_myID;
 
         bool operator == (IObserver* rhs) const {
             return m_pObserver == rhs;
@@ -153,7 +153,7 @@ protected:
      * @param   parameter2          The second parameter.
      * @return  The bits to post.
      */
-    inline u32 GetBitsToPost(ISubject::ObserverRequest& req, System::Changes::BitMask changedBits) {
+    inline unsigned int GetBitsToPost(ISubject::ObserverRequest& req, System::Changes::BitMask changedBits) {
         return req.m_interestBits & changedBits;
     }
 

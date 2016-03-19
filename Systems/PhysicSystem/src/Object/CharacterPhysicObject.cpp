@@ -48,8 +48,8 @@ CharacterPhysicObject::CharacterPhysicObject(ISystemScene* pSystemScene, UObject
     m_propertyGetters["CapsuleA"] = boost::bind(&IProperty::getVector3, this, &m_CapsuleA, _1);
     m_propertySetters["CapsuleB"] = boost::bind(&IProperty::setVector3, this, System::Changes::None, &m_CapsuleB, _1);
     m_propertyGetters["CapsuleB"] = boost::bind(&IProperty::getVector3, this, &m_CapsuleB, _1);
-    m_propertySetters["Radius"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_Radius, _1);
-    m_propertyGetters["Radius"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_Radius, _1);
+    m_propertySetters["Radius"] = boost::bind(&IProperty::setSimpleType<float>, this, System::Changes::None, &m_Radius, _1);
+    m_propertyGetters["Radius"] = boost::bind(&IProperty::getSimpleType<float>, this, &m_Radius, _1);
 }
 
 ///
@@ -146,7 +146,7 @@ Error CharacterPhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes:
 ///
 /// @inheritDoc
 ///
-void CharacterPhysicObject::Update(f32 DeltaTime) {
+void CharacterPhysicObject::Update(float DeltaTime) {
     if (m_rotation != Math::Vector3::Zero) {
         Math::Quaternion rotation = Math::Quaternion();
         rotation.Set(Math::Vector3::UnitY, m_rotation.y * DeltaTime * 5);

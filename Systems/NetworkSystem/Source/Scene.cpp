@@ -55,7 +55,7 @@ NetworkScene::~NetworkScene() {
 /**
  * @inheritDoc
  */
-void NetworkScene::Update(f32 DeltaTime) {
+void NetworkScene::Update(float DeltaTime) {
     for (auto object : m_pObjects) {
         NetworkObject* pObject = static_cast<NetworkObject*>(object.second);
         pObject->Update(DeltaTime);

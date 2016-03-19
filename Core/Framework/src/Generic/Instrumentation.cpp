@@ -28,7 +28,7 @@
 
 
 // Constant number of seconds per update.
-const f32 Instrumentation::m_secondsPerUpdate = 1.0f;
+const float Instrumentation::m_secondsPerUpdate = 1.0f;
 
 #if defined(_MSC_VER)
 // Local helper class, to hold details of one processor counter.
@@ -204,7 +204,7 @@ Instrumentation::Instrumentation() :
         m_CPUCount = 1;
     }
 
-    m_CPUPercentCounters = new f64[m_numCounters];
+    m_CPUPercentCounters = new double[m_numCounters];
 
     for (int i = 0; i < m_numCounters; i++) {
         m_CPUPercentCounters[i] = 0.0f;
@@ -233,7 +233,7 @@ Instrumentation::Instrumentation() :
 
     // Allocate arrays for job types.
     m_pAccumulatingFrameTicks = new i64[System::Types::MAX];
-    m_pLastFrameRatio = new f32[System::Types::MAX];
+    m_pLastFrameRatio = new float[System::Types::MAX];
     ASSERT((m_pAccumulatingFrameTicks != NULL) && (m_pLastFrameRatio != NULL));
 
     for (int i = 0; i < System::Types::MAX; i++) {
@@ -280,14 +280,14 @@ Instrumentation::~Instrumentation() {
 // variables that are read later in the frame from within the graphics system.
 // Thus, there is no need to make either the read or write code thread-safe.
 // If this calling pattern is ever changed, make both ends thread-safe.
-void Instrumentation::UpdatePeriodicData(f32 deltaTime) {
+void Instrumentation::UpdatePeriodicData(float deltaTime) {
 #if defined(_MSC_VER)
     // Only get it if it has been a while.
     m_framesSinceLastUpdate++;
     m_secondsSinceLastUpdate += deltaTime;
 
     if (m_secondsSinceLastUpdate > m_secondsPerUpdate) {
-        m_currentFPS = (f32)m_framesSinceLastUpdate / m_secondsSinceLastUpdate;
+        m_currentFPS = (float)m_framesSinceLastUpdate / m_secondsSinceLastUpdate;
         std::vector< void* >::iterator voidIter;
 
         if (m_vecProcessorCounters.empty()) {
@@ -327,7 +327,7 @@ void Instrumentation::UpdatePeriodicData(f32 deltaTime) {
                     if (status == ERROR_SUCCESS &&
                             (value.CStatus == PDH_CSTATUS_NEW_DATA ||
                              value.CStatus == PDH_CSTATUS_VALID_DATA)) {
-                        m_CPUPercentCounters[i] = (f64)value.doubleValue;
+                        m_CPUPercentCounters[i] = (double)value.doubleValue;
                     }
                 }
             }
@@ -353,7 +353,7 @@ void Instrumentation::UpdatePeriodicData(f32 deltaTime) {
             if (tickDiff == 0) {
                 m_pLastFrameRatio[i] = 0.0f;
             } else {
-                m_pLastFrameRatio[i] = (f32)m_pAccumulatingFrameTicks[i] / (f32)tickDiff;
+                m_pLastFrameRatio[i] = (float)m_pAccumulatingFrameTicks[i] / (float)tickDiff;
             }
 
             // Clear the accumulator so we can start accumulating again.

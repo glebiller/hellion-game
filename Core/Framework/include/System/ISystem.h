@@ -63,7 +63,7 @@ public:
      *
      * @return  CPU Utilization (0-100f)
      */
-    virtual f32 GetCPUUsage() {
+    virtual float GetCPUUsage() {
         return 0;
     }
 

@@ -50,7 +50,7 @@ public:
      * @param [in,out]  pParam  If non-null, the parameter.
      * @param   uCount          Number of.
      */
-    static void PrepareCallback(ITaskManager::JobFunction fFunc, void* pParam, u32 uCount) {
+    static void PrepareCallback(ITaskManager::JobFunction fFunc, void* pParam, unsigned int uCount) {
         m_fCallback = fFunc;
         m_pCallbackParam = pParam;
         m_lCallbacksCount = uCount;

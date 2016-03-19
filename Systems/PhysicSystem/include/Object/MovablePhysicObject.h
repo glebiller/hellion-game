@@ -66,11 +66,11 @@ public:
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
+    void Update(float DeltaTime);
 
 private:
     bool    m_constraint_position;
-    f32     m_velocity_multiplier;
-    f32     m_rotation_multiplier;
+    float     m_velocity_multiplier;
+    float     m_rotation_multiplier;
 
 };

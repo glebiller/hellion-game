@@ -67,10 +67,10 @@ Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 /**
  * @inheritDoc
  */
-void PlayerInputObject::Update(f32 DeltaTime) {
+void PlayerInputObject::Update(float DeltaTime) {
 
 
-    u32 mModified = 0;
+    unsigned int mModified = 0;
 
     if (m_forwardInputAction->hasChanged() || m_backwardInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;

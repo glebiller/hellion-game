@@ -81,7 +81,7 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 /**
  * @inheritDoc
  */
-void PlayerNetworkObject::Update(f32 DeltaTime) {
+void PlayerNetworkObject::Update(float DeltaTime) {
 
 
     // Send the packet everytime it's dirty or for a heartbeat

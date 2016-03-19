@@ -112,37 +112,37 @@
                  * called, this function will make sure that the cached stats used by the instrumentation are up
                  * to date; if they've gotten too old, it will refresh those stats.
                  *
-                 * @param   deltaTime   f32 - Elapsed wall-clock time since the last call to this function.
+                 * @param   deltaTime   float - Elapsed wall-clock time since the last call to this function.
                  */
-                virtual void UpdatePeriodicData(f32 deltaTime) = 0;
+                virtual void UpdatePeriodicData(float deltaTime) = 0;
 
                 /**
                  * Instrumentation::getCPUCount>
                  * Get the number of available CPUs in the system, including physical and logical CPUs.
                  *
-                 * @return  i32 - Number of available CPUs in the system.
+                 * @return  int - Number of available CPUs in the system.
                  */
-                virtual i32 getCPUCount() = 0;
+                virtual int getCPUCount() = 0;
 
                 /**
                  * Instrumentation::getNumCounters>
                  * Get the number of CPU performance counters that we're using.  There will be one for each
                  * available CPU, and one more for the total.
                  *
-                 * @return  i32 - Number of CPU performance counters, which will be returned by the
+                 * @return  int - Number of CPU performance counters, which will be returned by the
                  *          getCPUCounters call.
                  */
-                virtual i32 getNumCounters() = 0;
+                virtual int getNumCounters() = 0;
 
                 /**
                  * Instrumentation::getCPUCounters>
                  * Get the most recently measured CPU counters.  This value is automatically refreshed.
                  *
-                 * @param   CPUCounters f64* - Array, filled by this call, of CPU counters showing percent CPU
+                 * @param   CPUCounters double* - Array, filled by this call, of CPU counters showing percent CPU
                  *                      load. Must be big enough to hold all counters, see
                  *                      Instrumentation::getNumCounters().
                  */
-                virtual void getCPUCounters(f64* CPUCounters) = 0;
+                virtual void getCPUCounters(double* CPUCounters) = 0;
 
                 /**
                  * Instrumentation::getCurrentFPS>
@@ -150,25 +150,25 @@
                  * automatically refreshed.  It is averaged over the last few frames (defined by the update
                  * interval in this class).
                  *
-                 * @return  f32 - Frame rate, in frames per second.
+                 * @return  float - Frame rate, in frames per second.
                  */
-                virtual f32  getCurrentFPS() = 0;
+                virtual float  getCurrentFPS() = 0;
 
                 /**
                  * Instrumentation::setActiveThreadCount>
                  * Set the number of threads the application will now run.
                  *
-                 * @param   activeThreadCount   i32 - Number of active threads the app should use now.
+                 * @param   activeThreadCount   int - Number of active threads the app should use now.
                  */
-                virtual void setActiveThreadCount(i32 activeThreadCount) = 0;
+                virtual void setActiveThreadCount(int activeThreadCount) = 0;
 
                 /**
                  * Instrumentation::getActiveThreadCount>
                  * Get the number of threads that we're currently using in this application.
                  *
-                 * @return  i32 - Current active thread count.
+                 * @return  int - Current active thread count.
                  */
-                virtual i32 getActiveThreadCount() = 0;
+                virtual int getActiveThreadCount() = 0;
 
                 /**
                  * Instrumentation::CaptureJobCounterTicks>
@@ -188,19 +188,19 @@
                  * Get the max number of job types possible in the system, so the caller can allocate the right
                  * sized array.
                  *
-                 * @return  i32 - Max number of job types.
+                 * @return  int - Max number of job types.
                  */
-                virtual i32 getJobCount() = 0;
+                virtual int getJobCount() = 0;
 
                 /**
                  * Instrumentation::getJobRatios>
                  * Get the ratios of job work done in this most recent frame.
                  *
-                 * @param   jobRatios   f32* - Array that this function should fill with the ratios of time spent
+                 * @param   jobRatios   float* - Array that this function should fill with the ratios of time spent
                  *                      in each workload on this frame. Must be the right length; call
                  *                      getJobCount.
                  */
-                virtual void getJobRatios(f32* jobRatios) = 0;
+                virtual void getJobRatios(float* jobRatios) = 0;
 
         };
 

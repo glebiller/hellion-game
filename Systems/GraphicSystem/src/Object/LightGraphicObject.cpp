@@ -55,7 +55,7 @@ LightGraphicObject::~LightGraphicObject() {
 /**
  * @inheritDoc
  */
-void LightGraphicObject::Update(f32 DeltaTime) {
+void LightGraphicObject::Update(float DeltaTime) {
 
 }
 

@@ -24,7 +24,7 @@ extern IServiceManager* g_serviceManager;
 
 // Grain sizes of the parallel jobs. The less is the grainsize the better is
 // the load balance, and the higher is the parallel overhead.
-static const u32    PhysicSystemTaskGrainSize = 8;
+static const unsigned int    PhysicSystemTaskGrainSize = 8;
 
 ///
 /// @inheritDoc
@@ -52,7 +52,7 @@ Error PhysicTask::initialize() {
 ///
 /// @inheritDoc
 ///
-void PhysicTask::Update(f32 DeltaTime) {
+void PhysicTask::Update(float DeltaTime) {
     if (DeltaTime > 0.0f) {
         m_DeltaTime = DeltaTime;
 
@@ -66,7 +66,7 @@ void PhysicTask::Update(f32 DeltaTime) {
 ///
 /// @inheritDoc
 ///
-void PhysicTask::stepUpdateS(PhysicTask* pTask, u32 uStart, u32 uEnd) {
+void PhysicTask::stepUpdateS(PhysicTask* pTask, unsigned int uStart, unsigned int uEnd) {
     pTask->stepUpdate();
 }
 

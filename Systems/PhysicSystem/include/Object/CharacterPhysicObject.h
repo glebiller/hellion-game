@@ -61,12 +61,12 @@ public:
     ///
     /// @inheritDoc.
     ///
-    void Update(f32 DeltaTime);
+    void Update(float DeltaTime);
 
 private:
     hkpCharacterProxy*              m_CharacterProxy;
     hkpCharacterContext*            m_characterContext;
 
-    f32                             m_Radius;
+    float                             m_Radius;
 
 };

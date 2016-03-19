@@ -68,6 +68,6 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
 /**
  * @inheritDoc
  */
-void ConnectNetworkObject::Update(f32 DeltaTime) {
+void ConnectNetworkObject::Update(float DeltaTime) {
 
 }

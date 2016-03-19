@@ -47,7 +47,7 @@ CursorGraphicObject::~CursorGraphicObject() {
 /**
  * @inheritDoc
  */
-void CursorGraphicObject::Update(f32 DeltaTime) {
+void CursorGraphicObject::Update(float DeltaTime) {
 
 }
 

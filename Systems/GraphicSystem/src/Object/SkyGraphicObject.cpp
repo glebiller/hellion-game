@@ -40,7 +40,7 @@ SkyGraphicObject::~SkyGraphicObject() {
 ///
 /// @inheritDoc.
 ///
-void SkyGraphicObject::Update(f32 DeltaTime) {
+void SkyGraphicObject::Update(float DeltaTime) {
 
 }
 

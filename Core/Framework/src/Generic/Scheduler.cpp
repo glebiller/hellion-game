@@ -76,7 +76,7 @@ void Scheduler::execute() {
             boost::this_thread::sleep_for(waitFor);
         }
     }
-    f32 deltaTime = boost::chrono::duration<f32>(boost::chrono::nanoseconds(m_executionTimer.elapsed().wall)).count();
+    float deltaTime = boost::chrono::duration<float>(boost::chrono::nanoseconds(m_executionTimer.elapsed().wall)).count();
     m_executionTimer.start();
 
     //
@@ -96,7 +96,7 @@ void Scheduler::execute() {
     //
     // Schedule the scenes that are ready for execution.
     //
-    u32 cScenesToExecute = 0;
+    unsigned int cScenesToExecute = 0;
     ISystemTask* aScenesToExecute[(int) Schema::SystemType::Count];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         //BOOST_ASSERT(cScenesToExecute < Proto::SystemType_MAX);
@@ -112,7 +112,7 @@ void Scheduler::execute() {
 ///
 void Scheduler::waitForScenes() {
     ISystemTask* aScenesToWaitFor[(int) Schema::SystemType::Count];
-    u32 cScenesToWaitFor = 0;
+    unsigned int cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         //BOOST_ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);

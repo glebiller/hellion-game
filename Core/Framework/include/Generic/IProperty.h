@@ -41,7 +41,7 @@ public:
     /**
      * Method called to notify the object that a property has been changed.
      *
-     * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
+     * @param   uInChangedBits  The unsigned int bit field that describes the conceptual change with respect
      *                          to the published interests.
      */
     virtual void propertyChanged(System::Changes::BitMask uInChangedBits);

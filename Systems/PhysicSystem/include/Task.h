@@ -48,7 +48,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    void Update(f32 DeltaTime);
+    void Update(float DeltaTime);
     
     ///
     /// @inheritDoc.
@@ -72,7 +72,7 @@ public:
     /// @param  uStart          Start time (currently unused)
     /// @param  uEnd            The end.
     ///
-    static void stepUpdateS(PhysicTask* pTask, u32 uStart, u32 uEnd);
+    static void stepUpdateS(PhysicTask* pTask, unsigned int uStart, unsigned int uEnd);
 
     ///
     /// Gets active objects.
@@ -99,8 +99,8 @@ private:
 private:
     std::list<PhysicObject*>                m_ActiveObjects;
 
-    u32                                     m_cJobs;
-    f32                                     m_DeltaTime;
+    unsigned int                                     m_cJobs;
+    float                                     m_DeltaTime;
 
 };
 

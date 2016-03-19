@@ -43,7 +43,7 @@ Error InputTask::initialize() {
 ///
 /// @inheritDoc
 ///
-void InputTask::Update(f32 DeltaTime) {
+void InputTask::Update(float DeltaTime) {
     OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);
 }

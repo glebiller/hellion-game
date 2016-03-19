@@ -51,7 +51,7 @@ Error PassiveInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 /**
  * @inheritDoc
  */
-void PassiveInputObject::Update(f32 DeltaTime) {
+void PassiveInputObject::Update(float DeltaTime) {
 
 
 }

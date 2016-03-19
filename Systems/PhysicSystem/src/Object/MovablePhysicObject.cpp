@@ -27,11 +27,11 @@ MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, UObject* en
     , m_constraint_position(true)
     , m_velocity_multiplier(40)
     , m_rotation_multiplier(400) {
-    /*m_propertySetters["VelocityMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_velocity_multiplier, _1);
-    m_propertyGetters["VelocityMultiplier"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_velocity_multiplier, _1);
+    /*m_propertySetters["VelocityMultiplier"] = boost::bind(&IProperty::setSimpleType<float>, this, System::Changes::None, &m_velocity_multiplier, _1);
+    m_propertyGetters["VelocityMultiplier"] = boost::bind(&IProperty::getSimpleType<float>, this, &m_velocity_multiplier, _1);
 
-    m_propertySetters["RotationMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_rotation_multiplier, _1);
-    m_propertyGetters["RotationMultiplier"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_rotation_multiplier, _1);
+    m_propertySetters["RotationMultiplier"] = boost::bind(&IProperty::setSimpleType<float>, this, System::Changes::None, &m_rotation_multiplier, _1);
+    m_propertyGetters["RotationMultiplier"] = boost::bind(&IProperty::getSimpleType<float>, this, &m_rotation_multiplier, _1);
 
     m_propertySetters["ConstraintPosition"] = boost::bind(&IProperty::setSimpleType<bool>, this, System::Changes::None, &m_constraint_position, _1);
     m_propertyGetters["ConstraintPosition"] = boost::bind(&IProperty::getSimpleType<bool>, this, &m_constraint_position, _1);*/
@@ -73,7 +73,7 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 /**
  * @inheritDoc
  */
-void MovablePhysicObject::Update(f32 DeltaTime) {
+void MovablePhysicObject::Update(float DeltaTime) {
 
     m_modified = 0;
 

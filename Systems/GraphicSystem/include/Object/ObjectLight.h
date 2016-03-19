@@ -53,7 +53,7 @@ class GraphicObjectLight : public GraphicObject {
         /**
          * @inheritDoc
          */
-        void Update(f32 DeltaTime);
+        void Update(float DeltaTime);
         
         /**
          * @inheritDoc

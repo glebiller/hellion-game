@@ -49,7 +49,7 @@ public:
     /**
      *  casting operator.
      */
-    void operator() (const tbb::blocked_range<u32>& r) const;
+    void operator() (const tbb::blocked_range<unsigned int>& r) const;
 
 private:
     ITaskManager::ParallelForFunction m_pfnCallback;

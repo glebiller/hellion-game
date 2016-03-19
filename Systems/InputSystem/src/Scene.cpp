@@ -57,7 +57,7 @@ InputScene::~InputScene() {
 /**
  * @inheritDoc
  */
-void InputScene::Update(f32 DeltaTime) {
+void InputScene::Update(float DeltaTime) {
     if (m_quitInputAction->isActive()) {
         g_serviceManager->getRuntimeService()->setStatus(RuntimeService::Status::Quit);
         return;

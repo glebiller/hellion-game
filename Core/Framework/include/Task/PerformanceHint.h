@@ -69,7 +69,7 @@ namespace Task {
             Task_NoPerformanceHint, // 30: Not used
             Task_NoPerformanceHint  // 31: Not used
         };
-        u32 jobIndex = System::Types::GetIndex(systemType);
+        unsigned int jobIndex = System::Types::GetIndex(systemType);
         return hints[jobIndex];
     };
 }

@@ -22,42 +22,42 @@
  * and various enums, datatypes and helper functions for system types.
  */
 namespace System {
-    typedef u32 Change;
+    typedef unsigned int Change;
 
     /**
      * Defines the different changes as a bit mask that the systems can request
      * for other systems to perform. Custom changes are not allowed.
      */
     namespace Changes {
-        typedef u32 BitMask;
+        typedef unsigned int BitMask;
         
-        static const u32 None                   = 0;
+        static const unsigned int None                   = 0;
 
         namespace Generic {
-            static const u32 CreateObject       = (1 <<  0);
-            static const u32 DeleteObject       = (1 <<  1);
-            static const u32 All                = CreateObject | DeleteObject;
+            static const unsigned int CreateObject       = (1 <<  0);
+            static const unsigned int DeleteObject       = (1 <<  1);
+            static const unsigned int All                = CreateObject | DeleteObject;
         }
 
         namespace Graphic {
         }
 
         namespace Input {
-            static const u32 Velocity           = (1 << 10);
-            static const u32 Rotation           = (1 << 11);
-            static const u32 Action             = (1 << 12);
+            static const unsigned int Velocity           = (1 << 10);
+            static const unsigned int Rotation           = (1 << 11);
+            static const unsigned int Action             = (1 << 12);
         }
 
         namespace Network {
         }
 
         namespace Physic {
-            static const u32 Position           = (1 << 21);
-            static const u32 Orientation        = (1 << 22);
+            static const unsigned int Position           = (1 << 21);
+            static const unsigned int Orientation        = (1 << 22);
         }
 
-        static const u32 Link                   = (1 << 30);
-        static const u32 ParentLink             = (1 << 31);
-        static const u32 All                    = static_cast<u32>(-1);
+        static const unsigned int Link                   = (1 << 30);
+        static const unsigned int ParentLink             = (1 << 31);
+        static const unsigned int All                    = static_cast<unsigned int>(-1);
     }
 }

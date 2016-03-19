@@ -60,7 +60,7 @@ public:
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime) override;
+    void Update(float DeltaTime) override;
 
     /**
      * @inheritDoc
@@ -101,19 +101,19 @@ protected:
     float m_LinearEnd;
 
     bool m_bPause;
-    f32 m_fDeltaTime;
+    float m_fDeltaTime;
 
 private:
 
     /**
      * Invoked by ParalellFor algorithm to update a range of objects.
      */
-    static void UpdateCallback(void* param, u32 begin, u32 end);
+    static void UpdateCallback(void* param, unsigned int begin, unsigned int end);
 
     /**
      * Updates the given range of fire objects.
      */
-    void ProcessRange(u32 begin, u32 end);
+    void ProcessRange(unsigned int begin, unsigned int end);
 
 };
 

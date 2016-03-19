@@ -43,7 +43,7 @@ public:
     ///
     virtual Error initialize() = 0;
 
-    virtual void Update(f32 DeltaTime) = 0;
+    virtual void Update(float DeltaTime) = 0;
 
     ///
     /// Query if this ISystemTask is primary thread only. Implementing tasks should return true

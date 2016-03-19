@@ -38,7 +38,7 @@ ParticleGraphicObject::~ParticleGraphicObject() {
 /**
  * @inheritDoc
  */
-void ParticleGraphicObject::Update(f32 DeltaTime) {
+void ParticleGraphicObject::Update(float DeltaTime) {
 
 }
 

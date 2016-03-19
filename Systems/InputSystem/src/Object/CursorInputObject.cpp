@@ -51,7 +51,7 @@ Error CursorInputObject::initialize() {
 ///
 /// @inheritDoc
 ///
-void CursorInputObject::Update(f32 DeltaTime) {
+void CursorInputObject::Update(float DeltaTime) {
     OIS::Mouse* mouse = OISB::System::getSingleton().getOISMouse();
     m_velocity.x = mouse->getMouseState().X.abs;
     m_velocity.y = mouse->getMouseState().Y.abs;

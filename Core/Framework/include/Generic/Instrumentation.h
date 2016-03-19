@@ -44,16 +44,16 @@ public:
      * called, this function will make sure that the cached stats used by the instrumentation are up
      * to date; if they've gotten too old, it will refresh those stats.
      *
-     * @param   deltaTime   f32 - Elapsed wall-clock time since the last call to this function.
+     * @param   deltaTime   float - Elapsed wall-clock time since the last call to this function.
      */
-    void UpdatePeriodicData(f32 deltaTime);
+    void UpdatePeriodicData(float deltaTime);
 
     /**
      * Get the number of available CPUs in the system, including physical and logical CPUs.
      *
-     * @return  i32 - Number of available CPUs in the system.
+     * @return  int - Number of available CPUs in the system.
      */
-    i32 getCPUCount() {
+    int getCPUCount() {
         return m_CPUCount;
     };
 
@@ -62,11 +62,11 @@ public:
      * automatically refreshed.  It is averaged over the last few frames (defined by the update
      * interval in this class).
      *
-     * @return  f32 - Frame rate, in frames per second.
+     * @return  float - Frame rate, in frames per second.
      *
      * ### sa   Instrumentation::m_secondsPerUpdate .
      */
-    f32 getCurrentFPS() {
+    float getCurrentFPS() {
         return m_currentFPS;
     };
 
@@ -74,21 +74,21 @@ public:
      * Get the number of CPU performance counters that we're using.  There will be one for each
      * available CPU, and one more for the total.
      *
-     * @return  i32 - Number of CPU performance counters, which will be returned by the
+     * @return  int - Number of CPU performance counters, which will be returned by the
      *          getCPUCounters call.
      */
-    i32 getNumCounters() {
+    int getNumCounters() {
         return m_numCounters;
     };
 
     /**
      * Get the most recently measured CPU counters.  This value is automatically refreshed.
      *
-     * @param   CPUPercent  f64* - Array, filled by this call, of CPU counters showing percent CPU
+     * @param   CPUPercent  double* - Array, filled by this call, of CPU counters showing percent CPU
      *                      load. Must be big enough to hold all counters, see
      *                      Instrumentation::getNumCounters().
      */
-    void getCPUCounters(f64* CPUPercent) {
+    void getCPUCounters(double* CPUPercent) {
         BOOST_ASSERT(CPUPercent != NULL);
 
         if (CPUPercent != NULL) {
@@ -103,18 +103,18 @@ public:
     /**
      * Set the number of threads the application will now run.
      *
-     * @param   activeThreadCount   i32 - Number of active threads the app should use now.
+     * @param   activeThreadCount   int - Number of active threads the app should use now.
      */
-    void setActiveThreadCount(i32 activeThreadCount) {
+    void setActiveThreadCount(int activeThreadCount) {
         m_activeThreadCount = activeThreadCount;
     }
 
     /**
      * Get the number of threads that we're currently using in this application.
      *
-     * @return  i32 - Current active thread count.
+     * @return  int - Current active thread count.
      */
-    i32 getActiveThreadCount() {
+    int getActiveThreadCount() {
         return m_activeThreadCount;
     }
 
@@ -123,13 +123,13 @@ public:
      * frame. There may be many jobs of one type passed in during a single frame; their results will
      * be appended.
      *
-     * @param   jobType         u32 - The type of the job that has just completed; a member of
+     * @param   jobType         unsigned int - The type of the job that has just completed; a member of
      * 							Proto::SystemType.
      * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
      *                          during this frame.
      */
-    void CaptureJobCounterTicks(Schema::SystemType jobType, i64 jobCounterTicks) {
-        u32 jobIndex = System::Types::GetIndex(jobType);
+    void CaptureJobCounterTicks(Schema::SystemType jobType, long long jobCounterTicks) {
+        unsigned int jobIndex = System::Types::GetIndex(jobType);
 #if defined(_MSC_VER)
         if (jobIndex < Proto::SystemType) {
             //******************************
@@ -153,20 +153,20 @@ public:
      * Get the max number of job types possible in the system, so the caller can allocate the right
      * sized array.
      *
-     * @return  i32 - Max number of job types.
+     * @return  int - Max number of job types.
      */
-    i32 getJobCount() {
-        return (i32) Schema::SystemType::Count ;
+    int getJobCount() {
+        return (int) Schema::SystemType::Count ;
     }
 
     /**
      * Get the ratios of job work done in this most recent frame.
      *
-     * @param   jobRatios   f32* - Array that this function should fill with the ratios of time spent
+     * @param   jobRatios   float* - Array that this function should fill with the ratios of time spent
      *                      in each workload on this frame. Must be the right length; call
      *                      getJobCount.
      */
-    void getJobRatios(f32* jobRatios) {
+    void getJobRatios(float* jobRatios) {
         int systemCount = static_cast<unsigned int> (Schema::SystemType::Count);
         for (int i = 0; i < systemCount; i++) {
             jobRatios[i] = m_pLastFrameRatio[i];
@@ -174,31 +174,31 @@ public:
     }
 
 private:
-    f32         m_currentFPS;
-    i32         m_CPUCount;
-    i32         m_numCounters;
-    f64*        m_CPUPercentCounters;
-    i32         m_activeThreadCount;
+    float         m_currentFPS;
+    int         m_CPUCount;
+    int         m_numCounters;
+    double*        m_CPUPercentCounters;
+    int         m_activeThreadCount;
 
     /**
      * The seconds per update.
      * Update interval - this is how often this object will refresh its data from its sources.
      */
-    static const f32    m_secondsPerUpdate;
+    static const float    m_secondsPerUpdate;
 
-    f32         m_secondsSinceLastUpdate;
-    i32         m_framesSinceLastUpdate;
+    float         m_secondsSinceLastUpdate;
+    int         m_framesSinceLastUpdate;
 
-    i64         m_LastUpdateTick;
+    long long         m_LastUpdateTick;
 
-    i64*        m_pAccumulatingFrameTicks;
-    f32*        m_pLastFrameRatio;
+    long long*        m_pAccumulatingFrameTicks;
+    float*        m_pLastFrameRatio;
     std::vector<void*> m_vecProcessorCounters;
 
     // Index of the performance object called "Processor" in English.
     // From registry, in HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PerfLib\<your language ID>.
-    static const i32    m_processorObjectIndex = 238;
+    static const int    m_processorObjectIndex = 238;
 
     // Take a guess at how long the name could be in all languages of the "Processor" counter object.
-    static const i32    m_processorObjectNameMaxSize = 128;
+    static const int    m_processorObjectNameMaxSize = 128;
 };

@@ -59,7 +59,7 @@ PhysicScene::~PhysicScene() {
 /**
  * @inheritDoc
  */
-void PhysicScene::Update(f32 DeltaTime) {
+void PhysicScene::Update(float DeltaTime) {
     for (auto object : m_pObjects) {
         PhysicObject* pObject = static_cast<PhysicObject*>(object.second);
         pObject->Update(DeltaTime);

@@ -42,8 +42,8 @@ extern IServiceManager* g_serviceManager;
 // 40 float3x3 world inverse matrices   = 120 float3/4 constants
 // we have used 240 float4 constants. The rest 16 are saved to pass other information
 // to the instancing shader.
-static const u32 maxObjectsPerBatch = 40;
-static const u32 UpdateGrainSize = 120;
+static const unsigned int maxObjectsPerBatch = 40;
+static const unsigned int UpdateGrainSize = 120;
 
 DEFINE_SPIN_MUTEX(GraphicScene::m_mutex);
 
@@ -98,11 +98,11 @@ GraphicScene::~GraphicScene() {
 /**
  * @inheritDoc
  */
-void GraphicScene::Update(f32 DeltaTime) {
+void GraphicScene::Update(float DeltaTime) {
     m_bPause = g_serviceManager->getRuntimeService()->isPaused();
     m_fDeltaTime = DeltaTime;
 
-    u32 size = (u32)m_pObjects.size();
+    unsigned int size = (unsigned int)m_pObjects.size();
     if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
         g_serviceManager->getTaskManager()->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
     } else {
@@ -113,7 +113,7 @@ void GraphicScene::Update(f32 DeltaTime) {
 /**
  * @inheritDoc
  */
-void GraphicScene::UpdateCallback(void* param, u32 begin, u32 end) {
+void GraphicScene::UpdateCallback(void* param, unsigned int begin, unsigned int end) {
     GraphicScene* pThis = static_cast<GraphicScene*>(param);
     pThis->ProcessRange(begin, end);
 }
@@ -121,7 +121,7 @@ void GraphicScene::UpdateCallback(void* param, u32 begin, u32 end) {
 /**
  * @inheritDoc
  */
-void GraphicScene::ProcessRange(u32 begin, u32 end) {
+void GraphicScene::ProcessRange(unsigned int begin, unsigned int end) {
     auto start = m_pObjects.begin() + begin;
     for (auto iterator = start; iterator < start + end; iterator++) {
         GraphicObject* pObject = static_cast<GraphicObject*>(iterator->second);

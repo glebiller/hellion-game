@@ -49,7 +49,7 @@ public:
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
+    void Update(float DeltaTime);
 
     /**
      * @inheritDoc
@@ -75,7 +75,7 @@ protected:
     void setMeshName(std::string value);
 
 private:
-    static u32 sm_EntityId;
+    static unsigned int sm_EntityId;
 
     Ogre::Entity* m_pEntity;
 
@@ -83,9 +83,9 @@ private:
 
     std::string m_strStaticGrpName;
     // Index of the InstancedGeometry Object having this entity
-    u32 m_InstancedGeomIdx;
+    unsigned int m_InstancedGeomIdx;
     // Index of this entity in the list of entities in its InstancedGeom object
-    u32 m_ObjectIdxinInstGeom;
+    unsigned int m_ObjectIdxinInstGeom;
 
 
     // Indicates whether the Instanced Geometry object should update its contents
@@ -97,7 +97,7 @@ private:
     Ogre::MeshPtr pMesh;
 
     // Bitmask indicating vertex streams in use. Max of 32 streams.
-    u32 m_StreamMask;
+    unsigned int m_StreamMask;
 
     bool isProcedural;
 };

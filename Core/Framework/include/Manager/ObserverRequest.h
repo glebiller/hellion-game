@@ -31,7 +31,7 @@ public:
      * @param   Interests           (Optional) the interests.
      * @param   idBits              (Optional) the identifier bits.
      */
-    ObserverRequest(IObserver* pObserver = nullptr, u32 Interests = 0, u32 idBits = System::Changes::All)
+    ObserverRequest(IObserver* pObserver = nullptr, unsigned int Interests = 0, unsigned int idBits = System::Changes::All)
         : m_pObserver(pObserver)
         , m_interestBits(Interests)
         , m_observerIdBits(idBits) {
@@ -60,6 +60,6 @@ public:
     }
 
     IObserver*  m_pObserver;
-    u32         m_interestBits;
-    u32         m_observerIdBits;
+    unsigned int         m_interestBits;
+    unsigned int         m_observerIdBits;
 };

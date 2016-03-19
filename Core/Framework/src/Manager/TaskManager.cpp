@@ -168,7 +168,7 @@ void TaskManager::Shutdown() {
 /**
  * @inhertiDoc
  */
-void TaskManager::updatePeriodicData(f32 deltaTime) {
+void TaskManager::updatePeriodicData(float deltaTime) {
 #ifdef STATISTICS_BY_JOB_TYPE
     m_instrumentation->UpdatePeriodicData(deltaTime);
 #endif
@@ -177,7 +177,7 @@ void TaskManager::updatePeriodicData(f32 deltaTime) {
 /**
  * @inhertiDoc
  */
-void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, f32 fDeltaTime) {
+void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, unsigned int uTaskCount, float fDeltaTime) {
     // Call this from the primary thread to schedule system work.
     BOOST_ASSERT(IsPrimaryThread());
     __ITT_EVENT_START(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
@@ -190,10 +190,10 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
     m_pSystemTasksRoot->set_ref_count(1);
     // now schedule the tasks, based upon their PerformanceHint order
     tbb::task_list tTaskList;
-    u32 uAffinityCount = (u32)m_affinityIDs.size();
+    unsigned int uAffinityCount = (unsigned int)m_affinityIDs.size();
 
-    u32 h = 0;
-    u32 i = 0;
+    unsigned int h = 0;
+    unsigned int i = 0;
     for (h = 0; h < Task::Task_MAX; h++) {
         for (i = 0; i < uTaskCount; i++) {
             if (pTasks[i]->IsPrimaryThreadOnly()) {
@@ -270,7 +270,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
 /**
  * @inhertiDoc
  */
-u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints) {
+unsigned int TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints) {
     // Call this method to determine the ideal number of tasks to submit to the TaskManager
     // for maximum performance.
     //
@@ -282,7 +282,7 @@ u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints H
 /**
  * @inhertiDoc
  */
-void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize) {
+void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, unsigned int begin, unsigned int end, unsigned int minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
     Schema::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Schema::SystemType::Null;
@@ -294,17 +294,17 @@ void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJ
                          PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
 
     if (m_uNumberOfThreads != 1) {
-        tbb::parallel_for(tbb::blocked_range<u32>(begin, end, minGrainSize), body, tbb::auto_partitioner());
-        //tbb::parallel_for( tbb::blocked_range<u32>( begin, end, minGrainSize ), body, tbb::simple_partitioner() );
+        tbb::parallel_for(tbb::blocked_range<unsigned int>(begin, end, minGrainSize), body, tbb::auto_partitioner());
+        //tbb::parallel_for( tbb::blocked_range<unsigned int>( begin, end, minGrainSize ), body, tbb::simple_partitioner() );
     } else {
-        body(tbb::blocked_range<u32>(begin, end, minGrainSize));
+        body(tbb::blocked_range<unsigned int>(begin, end, minGrainSize));
     }
 }
 
 /**
  * @inhertiDoc
  */
-void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
+void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, unsigned int uTaskCount) {
     // Call this from the primary thread to wait until specified tasks spawned with IssueJobsForSystemTasks
     // and all of their subtasks are complete.
     BOOST_ASSERT(IsPrimaryThread());
@@ -346,9 +346,9 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
 /**
  * @inhertiDoc
  */
-void TaskManager::SetNumberOfThreads(u32 uNumberOfThreads) {
+void TaskManager::SetNumberOfThreads(unsigned int uNumberOfThreads) {
     // This method constrains the number of threads used by the TaskManager.
-    u32 uTargetNumberOfThreads = uNumberOfThreads;
+    unsigned int uTargetNumberOfThreads = uNumberOfThreads;
 
     if (uNumberOfThreads > m_uMaxNumberOfThreads || uTargetNumberOfThreads == 0) {
         uTargetNumberOfThreads = m_uMaxNumberOfThreads;
@@ -466,8 +466,8 @@ void TaskManager::UpdateThreadPoolSize() {
     // this is accomplished by creating some tasks which do not complete until signaled
     // see if we should adjust the WaitTasks in the stall pool
     if (m_uTargetNumberOfThreads != m_uNumberOfThreads) {
-        u32 uNumThreadsToWait = (m_uMaxNumberOfThreads - m_uTargetNumberOfThreads);
-        u32 uNumThreadsToFree = (m_uMaxNumberOfThreads - m_uNumberOfThreads);
+        unsigned int uNumThreadsToWait = (m_uMaxNumberOfThreads - m_uTargetNumberOfThreads);
+        unsigned int uNumThreadsToFree = (m_uMaxNumberOfThreads - m_uNumberOfThreads);
 
         // free up all the threads
         if (m_pStallPoolParent) {
@@ -487,7 +487,7 @@ void TaskManager::UpdateThreadPoolSize() {
         m_pStallPoolParent->set_ref_count(uNumThreadsToWait + 1);
         tbb::task_list tList;
 
-        for (u32 i = 0; i < uNumThreadsToWait; i++) {
+        for (unsigned int i = 0; i < uNumThreadsToWait; i++) {
             tbb::task* pStallTask = new(m_pStallPoolParent->allocate_child()) StallTask(this, m_hStallPoolSemaphore);
             BOOST_ASSERT(pStallTask != NULL);
             tList.push_back(*pStallTask);

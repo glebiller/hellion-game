@@ -72,7 +72,7 @@ public:
      *
      * @param   deltaTime   Time of the delta.
      */
-    void updatePeriodicData(f32 deltaTime);
+    void updatePeriodicData(float deltaTime);
 
     /**
      * Issue jobs for system tasks.
@@ -86,7 +86,7 @@ public:
      * @sa   TaskManager::WaitForSystemTasks .
      * @sa  ISystemTask::Update                 .
      */
-    void IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uCount, f32 fDeltaTime);
+    void IssueJobsForSystemTasks(ISystemTask** pTasks, unsigned int uCount, float fDeltaTime);
 
     /**
      * Callback, called when the non standard per thread.
@@ -110,7 +110,7 @@ public:
      * @return  the number of jobs which is optimal for the type of work specified by
      *          <paramref name="Hints"/>
      */
-    virtual u32 GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints);
+    virtual unsigned int GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints);
 
     /**
      * Parallel for.
@@ -123,8 +123,8 @@ public:
      * @param   minGrainSize        (Optional) size of the minimum grain.
      */
     virtual void ParallelFor(ISystemTask* pSystemTask,
-                             ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end,
-                             u32 minGrainSize = 1);
+                             ParallelForFunction pfnJobFunction, void* pParam, unsigned int begin, unsigned int end,
+                             unsigned int minGrainSize = 1);
 
     /**
      * Wait for system tasks.
@@ -137,7 +137,7 @@ public:
      *
      * @sa   TaskManager::IssueJobsForSystemTasks    .
      */
-    void WaitForSystemTasks(ISystemTask** pTasks, u32 uCount);
+    void WaitForSystemTasks(ISystemTask** pTasks, unsigned int uCount);
 
     /**
      * Gets the number of threads.
@@ -146,7 +146,7 @@ public:
      *
      * @return  the number of threads being used.
      */
-    inline u32 GetNumberOfThreads() {
+    inline unsigned int GetNumberOfThreads() {
         return m_uNumberOfThreads;
     };
 
@@ -156,7 +156,7 @@ public:
      *
      * @param   uNumberOfThreads    the limit of the number of threads to use.
      */
-    void SetNumberOfThreads(u32 uNumberOfThreads);
+    void SetNumberOfThreads(unsigned int uNumberOfThreads);
 
     /**
      * Query if this TaskManager is primary thread.
@@ -245,7 +245,7 @@ private:
     SystemTasksList m_primaryThreadSystemTaskList;
     SystemTasksList m_tmpTaskList;
 
-    f32 m_fDeltaTime;
+    float m_fDeltaTime;
 
     typedef std::vector<tbb::task::affinity_id> AffinityIDsList;
     AffinityIDsList m_affinityIDs;

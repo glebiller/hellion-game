@@ -67,7 +67,7 @@ Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
 /**
  * @inheritDoc
  */
-void PhysicObject::Update(f32 DeltaTime) {
+void PhysicObject::Update(float DeltaTime) {
 
 
     //position_->mutate_x(position_->x() + (velocity_->scalar()->x() * DeltaTime));

@@ -28,7 +28,7 @@
 
 __ITT_DEFINE_STATIC_EVENT(g_tpeChangeOccurred, "Graphics Mesh: ChangeOccurred", 29);
 
-u32 MeshGraphicObject::sm_EntityId = 0;
+unsigned int MeshGraphicObject::sm_EntityId = 0;
 
 /**
  * @inheritDoc
@@ -62,7 +62,7 @@ MeshGraphicObject::~MeshGraphicObject() {
 /**
  * @inheritDoc
  */
-void MeshGraphicObject::Update(f32 DeltaTime) {
+void MeshGraphicObject::Update(float DeltaTime) {
 
 }
 

@@ -81,7 +81,7 @@ public:
      */
     virtual void createTask() = 0;
 
-    virtual void Update(f32 DeltaTime) = 0;
+    virtual void Update(float DeltaTime) = 0;
 
     /**
      * Creates a system object used to extend a UObject.

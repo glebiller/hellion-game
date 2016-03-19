@@ -132,7 +132,7 @@ Error TerrainPhysicObject::initialize() {
 ///
 /// @inheritDoc
 ///
-void TerrainPhysicObject::Update(f32 DeltaTime) {
+void TerrainPhysicObject::Update(float DeltaTime) {
 
 }
 

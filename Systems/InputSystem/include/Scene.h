@@ -46,7 +46,7 @@ public:
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime) override;
+    void Update(float DeltaTime) override;
 
     /**
      * @inheritDoc

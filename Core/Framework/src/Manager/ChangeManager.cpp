@@ -89,7 +89,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
 
         // Lock out updates while we register a subjext
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pInSubject->getObserverId(this);
+        unsigned int uID = pInSubject->getObserverId(this);
 
         if (uID != ISubject::InvalidObserverID) {
             // Subject has already been registered. Add new observer to the list
@@ -138,7 +138,7 @@ ChangeManager::Unregister(
 
     if (pInSubject && pInObserver) {
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pInSubject->getObserverId(this);
+        unsigned int uID = pInSubject->getObserverId(this);
 
         if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pInSubject) {
             return Errors::Failure;
@@ -172,7 +172,7 @@ Error ChangeManager::RemoveSubject(ISubject* pSubject
     std::vector<ObserverRequest> observersList;
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pSubject->getObserverId(this);
+        unsigned int uID = pSubject->getObserverId(this);
         BOOST_ASSERT(uID != ISubject::InvalidObserverID);
         BOOST_ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
 
@@ -251,12 +251,12 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
                 // Get notification
                 Notification& notif = pList->at(i);
                 // Get subject for notification
-                u32 uID = notif.m_pSubject->getObserverId(this);
+                unsigned int uID = notif.m_pSubject->getObserverId(this);
                 BOOST_ASSERT(uID != ISubject::InvalidObserverID);
 
                 if (uID != ISubject::InvalidObserverID) {
                     // Get the index for this subject
-                    u32 index = m_indexList[uID];
+                    unsigned int index = m_indexList[uID];
 
                     // If index is set, then this subject is already part of the m_cumulativeNotifyList
                     if (index) {
@@ -265,7 +265,7 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
                         m_cumulativeNotifyList[ index ].m_changedBits |= notif.m_changedBits;
                     } else {
                         // Set the index for this subject
-                        m_indexList[uID] = (u32)m_cumulativeNotifyList.size();
+                        m_indexList[uID] = (unsigned int)m_cumulativeNotifyList.size();
                         // Add a new entry to m_cumulativeNotifyList
                         m_cumulativeNotifyList.push_back(MappedNotification(uID, notif.m_changedBits));
                     }
@@ -287,14 +287,14 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
         }
 
         // If we have a task manager and there are more than 50 notifications to process, let's do it parallel
-        static const u32 GrainSize = 50;
+        static const unsigned int GrainSize = 50;
 
-        if (m_pTaskManager != nullptr && (u32)NumberOfChanges > GrainSize) {
+        if (m_pTaskManager != nullptr && (unsigned int)NumberOfChanges > GrainSize) {
             // Process noticitions in parallel
-            m_pTaskManager->ParallelFor(nullptr, DistributionCallback, this, 0, (u32)NumberOfChanges, GrainSize);
+            m_pTaskManager->ParallelFor(nullptr, DistributionCallback, this, 0, (unsigned int)NumberOfChanges, GrainSize);
         } else {
             // Not enough notifications to worry about running in parallel, just distribute in this thread
-            DistributeRange(0, (u32)NumberOfChanges);
+            DistributeRange(0, (unsigned int)NumberOfChanges);
         }
 
         // Check if we are distributing all the notifications
@@ -321,8 +321,8 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
 void
 ChangeManager::DistributionCallback(
     void* param,
-    u32 begin,
-    u32 end
+    unsigned int begin,
+    unsigned int end
 ) {
     // Process the given range (this will be called from multiple threads)
     ChangeManager* pMgr = static_cast<ChangeManager*>(param);
@@ -333,14 +333,14 @@ ChangeManager::DistributionCallback(
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeRange - Process queued notifications for the given range
 void
-ChangeManager::DistributeRange(u32 begin, u32 end) {
+ChangeManager::DistributeRange(unsigned int begin, unsigned int end) {
     // Loop through all the noticatiosn in the given range
     for (size_t i = begin; i < end; ++i) {
         // Get the notification and the subject
         MappedNotification& notif = m_cumulativeNotifyList[ i ];
         SubjectInfo& subject = m_subjectsList[ notif.m_subjectID ];
         // Distribute any desired changes
-        u32 activeChanges = notif.m_changedBits & m_ChangesToDist;
+        unsigned int activeChanges = notif.m_changedBits & m_ChangesToDist;
 
         if (activeChanges) {
             // Clear the bit for the changes we are distributing
@@ -349,7 +349,7 @@ ChangeManager::DistributeRange(u32 begin, u32 end) {
             auto& obsList = subject.m_observersList;
             for (size_t j = 0; j != obsList.size(); ++j) {
                 // Determine if this observe is interested in this notification
-                u32 changesToSend = obsList[j].m_interestBits & activeChanges;
+                unsigned int changesToSend = obsList[j].m_interestBits & activeChanges;
 
                 if (changesToSend) {
                     // If this observer is part of the systems to be notified then we can pass it this notification

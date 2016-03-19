@@ -20,8 +20,8 @@
 
 extern IServiceManager* g_serviceManager;
 
-u32 PhysicSystem::s_idMainThread = 0;
-tbb::atomic<u32> PhysicSystem::s_threadNumberCount;
+unsigned int PhysicSystem::s_idMainThread = 0;
+tbb::atomic<unsigned int> PhysicSystem::s_threadNumberCount;
 
 /**
  * @inheritDoc
