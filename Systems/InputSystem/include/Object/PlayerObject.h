@@ -16,6 +16,8 @@
 
 #include <OISB.h>
 #include <System/Types.h>
+#include <schema/system_type_generated.h>
+#include <schema/entity_change_generated.h>
 
 #include "System.h"
 #include "Object/Object.h"
@@ -46,8 +48,9 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges() override {
-        return System::Changes::Generic::CreateObject | System::Changes::Input::Action 
-             | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
+        return /*System::Changes::Generic::CreateObject | System::Changes::Input::Action
+             | System::Changes::Input::Velocity | System::Changes::Input::Rotation*/
+                Schema::EntityChange::InputVelocity;
     };
 
     /**
@@ -80,12 +83,12 @@ public:
     void createShot();
 
 
-    Schema::InputVelocity* getVelocity() override {
+    Schema::Components::InputVelocity* getVelocity() override {
         return velocity_;
     }
 
 private:
-    Schema::InputVelocity* velocity_;
+    Schema::Components::InputVelocity* velocity_;
 
     OISB::TriggerAction*    m_forwardInputAction;
     OISB::TriggerAction*    m_backwardInputAction;

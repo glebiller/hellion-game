@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <SystemComponentType_generated.h>
+#include <schema/component_type_generated.h>
 
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
@@ -25,10 +25,8 @@
 /**
  * @inheritDoc
  */
-UObject::UObject(UScene* pScene, const Schema::SceneEntity& sceneEntity, UObject* parent)
-        : ISubject()
-        , m_pObjectCCM(pScene->getObjectCCM())
-        , m_pScene(pScene) {
+UObject::UObject(UScene* pScene, const Schema::SceneEntity &sceneEntity, UObject* parent)
+        : ISubject(), m_pObjectCCM(pScene->getObjectCCM()), m_pScene(pScene) {
     entitySchema_ = &sceneEntity;
 }
 
@@ -69,21 +67,18 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemC
         ISystemScene* pScene = it.second;
 
         if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Register(pSystemObject, pScene->GetDesiredSystemChanges(), pScene);
+            m_pObjectCCM->Register(pSystemObject, pScene);
         }
     }
 
     //
     // Register each of the systems with each other.
     //
-    System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
     for (auto it : m_ObjectExtensions) {
         ISystemObject* pObj = it.second;
-
         if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
-            m_pObjectCCM->Register(pObj, Changes, pSystemObject);
+            m_pObjectCCM->Register(pObj, pSystemObject->GetDesiredSystemChanges(), pSystemObject);
         }
-
         if (SysObjPotentialChanges & pObj->GetDesiredSystemChanges()) {
             m_pObjectCCM->Register(pSystemObject, pObj->GetDesiredSystemChanges(), pObj);
         }
@@ -161,7 +156,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
 /**
  * @inheritDoc
  */
-const UObject::SystemObjects& UObject::GetExtensions() {
+const UObject::SystemObjects &UObject::GetExtensions() {
     return m_ObjectExtensions;
 }
 

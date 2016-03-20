@@ -156,7 +156,7 @@ public:
      * @return  int - Max number of job types.
      */
     int getJobCount() {
-        return (int) Schema::SystemType::Count ;
+        return (int) Schema::SystemType::MAX ;
     }
 
     /**
@@ -167,7 +167,7 @@ public:
      *                      getJobCount.
      */
     void getJobRatios(float* jobRatios) {
-        int systemCount = static_cast<unsigned int> (Schema::SystemType::Count);
+        int systemCount = static_cast<unsigned int> (Schema::SystemType::MAX);
         for (int i = 0; i < systemCount; i++) {
             jobRatios[i] = m_pLastFrameRatio[i];
         }

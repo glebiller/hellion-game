@@ -18,8 +18,8 @@
 #include <boost/dll.hpp>
 #include <flatbuffers/util.h>
 
-#include "Environment_generated.h"
-#include "UniversalScene_generated.h"
+#include "schema/environment_generated.h"
+#include "schema/scene_generated.h"
 #include "Defines.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
@@ -33,7 +33,6 @@ Framework::Framework() :
     m_serviceManager(new ServiceManager()),
     m_pSceneCCM(new ChangeManager()),
     m_pObjectCCM(new ChangeManager()),
-    m_definitionService(new DefinitionService()),
     m_pScheduler(new Scheduler()),
     m_pScene(nullptr) {
 }
@@ -45,7 +44,6 @@ Framework::~Framework() {
     delete m_pScheduler;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
-    delete m_definitionService;
     delete m_serviceManager;
     delete m_environment;
 }
@@ -64,18 +62,9 @@ boost::system::errc::errc_t Framework::Initialize() {
     //Singletons::Debugger.initialize(debuggerActive);
     //Singletons::Debugger.setChangeManagers(m_pSceneCCM, m_pObjectCCM);
 #endif
-    
-    //
-    // Register the framework as the system access provider.  The system access provider gives the
-    //  ability for systems to set the properties in other systems.
-    //
-    //IServiceManager::get().RegisterSystemAccessProvider(this);
-    
+
     m_pScheduler->init(m_environment);
 
-    //
-    // Complete the parsing of the GDF and the initial scene.
-    //
     for (auto system : *m_environment->systems()) {
         boost::filesystem::path sharedLibraryPath(boost::dll::program_location().parent_path());
         sharedLibraryPath /= system->c_str() + boost::dll::shared_library::suffix().string();
@@ -88,7 +77,6 @@ boost::system::errc::errc_t Framework::Initialize() {
         std::function<ISystem* ()> fnCreateSystem =
                 systemLib.get<ISystem* ()>("CreateSystem");
         ISystem* iSystem = fnCreateSystem();
-        //iSystem->initialize();
         Schema::SystemType systemType = iSystem->GetSystemType();
         BOOST_ASSERT(m_systems.find(systemType) == m_systems.end());
         m_systems[systemType] = iSystem;
@@ -101,8 +89,6 @@ boost::system::errc::errc_t Framework::Initialize() {
     //
     m_pObjectCCM->SetTaskManager(m_pScheduler->getTaskManager());
     m_pSceneCCM->SetTaskManager(m_pScheduler->getTaskManager());
-
-    setNextScene(m_environment->startupScene()->c_str());
 
     return boost::system::errc::success;
 }
@@ -132,7 +118,7 @@ Error Framework::Execute() {
     RuntimeService* runtimeService = IServiceManager::get()->getRuntimeService();
     //while (true) {
         if (runtimeService->isNextScene()) {
-            //setNextScene(runtimeService->getSceneName());
+            setNextScene(runtimeService->getSceneName());
             runtimeService->setStatus(RuntimeService::Status::Running);
         }
 

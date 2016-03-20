@@ -20,7 +20,7 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/dll.hpp>
-#include <SystemType_generated.h>
+#include <schema/system_type_generated.h>
 
 #include "System/Types.h"
 #include "Manager/IServiceManager.h"
@@ -62,18 +62,15 @@ public:
 
     Error Execute();
 
-protected:
+private:
 
     void processMessages();
 
     void setNextScene(std::string nextSceneName);
 
-    void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
-
 private:
     boost::log::sources::logger logger_;
     ServiceManager* m_serviceManager;
-    DefinitionService* m_definitionService;
 
     Scheduler* m_pScheduler;
     ChangeManager* m_pSceneCCM;

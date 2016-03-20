@@ -19,7 +19,7 @@
 #include <Compositor/OgreCompositorManager2.h>
 #pragma warning( pop )
 
-#include <SystemComponentType_generated.h>
+#include <schema/component_type_generated.h>
 
 #include "Manager/ServiceManager.h"
 #include "System.h"
@@ -66,8 +66,8 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
 
     //m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
 
-    m_ObjectFactories[Schema::SystemComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
-    m_ObjectFactories[Schema::SystemComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
+    m_ObjectFactories[Schema::ComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
+    m_ObjectFactories[Schema::ComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
     /*m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();

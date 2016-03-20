@@ -13,9 +13,9 @@
 // responsibility to update it.
 
 
-#include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
 #include <BulletCollision/CollisionShapes/btCapsuleShape.h>
+#include <schema/entity_change_generated.h>
+#include <boost/core/ignore_unused.hpp>
 
 #include "Object/PhysicObject.h"
 
@@ -28,7 +28,7 @@
 PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
     : ISystemObject(&pSystemScene, &entity, component)
     , m_bStatic(false) {
-    position_ = const_cast<Schema::PhysicPosition*>(static_cast<const Schema::PhysicPosition*>(component.data()));
+    position_ = const_cast<Schema::Components::PhysicPosition*>(static_cast<const Schema::Components::PhysicPosition*>(component.data()));
 
     btCollisionShape* playerShape = new btCapsuleShape(1 ,2);
     btDefaultMotionState* fallMotionState =
@@ -53,14 +53,10 @@ PhysicObject::~PhysicObject() {
  * @inheritDoc
  */
 Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-
-
-    if (ChangeType & System::Changes::Input::Velocity) {
+    if (ChangeType & Schema::EntityChange::InputVelocity) {
         auto scalar = pSubject->getVelocity()->scalar();
         rigidBody_->setLinearVelocity(btVector3(scalar->x(), scalar->y(), scalar->z()));
-        velocity_ = pSubject->getVelocity();
     }
-
     return Errors::Success;
 }
 
@@ -68,17 +64,18 @@ Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
  * @inheritDoc
  */
 void PhysicObject::Update(float DeltaTime) {
+    boost::ignore_unused(DeltaTime);
 
+    btTransform transform;
+    rigidBody_->getMotionState()->getWorldTransform(transform);
+    if (transform_.getOrigin() == transform.getOrigin()) {
+        // TODO
+    //    return;
+    }
 
-    //position_->mutate_x(position_->x() + (velocity_->scalar()->x() * DeltaTime));
-    //position_->mutate_y(position_->y() + (velocity_->scalar()->y() * DeltaTime));
-    //position_->mutate_z(position_->z() + (velocity_->scalar()->z() * DeltaTime));
-
-    btTransform trans;
-    rigidBody_->getMotionState()->getWorldTransform(trans);
-    position_->mutate_x(trans.getOrigin().getX());
-    position_->mutate_y(trans.getOrigin().getY());
-    position_->mutate_z(trans.getOrigin().getZ());
-
-    PostChanges(System::Changes::Physic::Position);
+    transform_ = transform;
+    position_->mutate_x(transform_.getOrigin().getX());
+    position_->mutate_y(transform_.getOrigin().getY());
+    position_->mutate_z(transform_.getOrigin().getZ());
+    PostChanges(Schema::EntityChange::PhysicPosition);
 }

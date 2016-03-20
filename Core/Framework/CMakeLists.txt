@@ -18,6 +18,18 @@ add_library(Framework
         include/Service/SettingService.h
         include/Service/SystemService.h
         include/Service/WindowService.h
+        include/schema/component_type_generated.h
+        include/schema/graphic_components_generated.h
+        include/schema/input_components_generated.h
+        include/schema/physic_components_generated.h
+        include/schema/graphic_system_generated.h
+        include/schema/input_system_generated.h
+        include/schema/network_system_generated.h
+        include/schema/physic_system_generated.h
+        include/schema/system_type_generated.h
+        include/schema/entity_change_generated.h
+        include/schema/environment_generated.h
+        include/schema/scene_generated.h
         include/System/ISystem.h
         include/System/ISystemObject.h
         include/System/ISystemScene.h
@@ -60,9 +72,9 @@ add_library(Framework
 
 target_include_directories(Framework PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>
         )
-
 
 target_compile_features(Framework
         PUBLIC cxx_auto_type
@@ -89,3 +101,107 @@ install(DIRECTORY include/ DESTINATION include)
 
 export(TARGETS Framework FILE FrameworkConfig.cmake)
 
+
+# Schema Components Generation
+
+add_custom_command(
+        OUTPUT include/schema/component_type_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/component_type.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/component_type.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/graphic_components_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums --gen-mutable -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/graphic_components.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/graphic_components.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/input_components_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums --gen-mutable -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/input_components.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/input_components.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/physic_components_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums --gen-mutable -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/physic_components.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/components/physic_components.fbs
+)
+
+# Schema Entity Generation
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/entity_change_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --no-prefix -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/entity/entity_change.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/entity/entity_change.fbs
+)
+
+# Schema Systems Generation
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/graphic_system_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/graphic_system.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/graphic_system.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/input_system_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/input_system.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/input_system.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/network_system_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/network_system.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/network_system.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/physic_system_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/physic_system.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/physic_system.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/system_type_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/system_type.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/systems/system_type.fbs
+)
+
+# Schema Generation
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/environment_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/environment.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/environment.fbs
+)
+
+add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/schema/scene_generated.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        --cpp --scoped-enums -o include/schema/ -I ${CMAKE_CURRENT_SOURCE_DIR}/fbs/
+        ${CMAKE_CURRENT_SOURCE_DIR}/fbs/schema/scene.fbs
+        DEPENDS fbs/schema/scene.fbs
+)

@@ -16,7 +16,7 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "SystemType_generated.h"
+#include "schema/system_type_generated.h"
 
 #if defined( MSC_COMPILER )
 #include <intrin.h>

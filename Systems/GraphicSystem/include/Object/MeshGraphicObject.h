@@ -16,7 +16,8 @@
 
 #include <OgreMesh.h>
 #include <System/Types.h>
-#include <UniversalScene_generated.h>
+#include <schema/scene_generated.h>
+#include <schema/entity_change_generated.h>
 
 #include "Object/Object.h"
 
@@ -62,7 +63,7 @@ public:
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges() {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+        return Schema::EntityChange::PhysicPosition;
     };
 
     /**

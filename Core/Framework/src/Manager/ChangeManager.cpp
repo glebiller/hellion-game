@@ -70,6 +70,9 @@ ChangeManager::~ChangeManager() {
     }
 }
 
+Error ChangeManager::Register(ISubject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
+    return Register(pInSubject, pInObserver->GetDesiredSystemChanges(), pInObserver, observerIdBits);
+}
 
 /*
 ISystemObject -> ISystemScene -> not used
@@ -85,8 +88,6 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
     Error curError = Errors::Failure;
 
     if (pInSubject && pInObserver) {
-        BOOST_LOG(logger_) << "Registering " << pInSubject << " with " << pInObserver;
-
         // Lock out updates while we register a subjext
         SCOPED_SPIN_LOCK(m_swUpdate);
         unsigned int uID = pInSubject->getObserverId(this);

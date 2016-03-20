@@ -16,7 +16,7 @@
 
 #include <tbb/concurrent_hash_map.h>
 #include <tbb/atomic.h>
-#include <SystemType_generated.h>
+#include <schema/system_type_generated.h>
 #include <btBulletDynamicsCommon.h>
 
 #include "DataTypes.h"

@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <schema/entity_change_generated.h>
+#include <schema/physic_components_generated.h>
 #include <System/Types.h>
 
 #include "System/ISystemScene.h"
@@ -33,7 +35,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
+    PhysicObject(ISystemScene &pSystemScene, UObject &entity, const Schema::SystemComponent& component);
 
     ///
     /// @inheritDoc.
@@ -53,14 +55,14 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges() override {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+        return Schema::EntityChange::PhysicPosition;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges() override {
-        return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
+        return Schema::EntityChange::InputVelocity;
     };
 
     /**
@@ -73,14 +75,14 @@ public:
      */
     void Update(float DeltaTime) override;
 
-    Schema::PhysicPosition* getPosition() override {
+    Schema::Components::PhysicPosition* getPosition() override {
         return position_;
     }
 
 protected:
-    Schema::PhysicPosition* position_;
-    const Schema::InputVelocity* velocity_;
+    Schema::Components::PhysicPosition* position_;
     btRigidBody* rigidBody_;
-    bool                m_bStatic;
+    btTransform transform_;
+    bool m_bStatic;
 
 };

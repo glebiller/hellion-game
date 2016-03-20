@@ -15,7 +15,7 @@
 #pragma once    
 
 #include <tbb/task.h>
-#include <SystemType_generated.h>
+#include <schema/system_type_generated.h>
 
 #include "Defines.h"
 #include "DataTypes.h"

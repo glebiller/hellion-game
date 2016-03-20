@@ -15,7 +15,7 @@
 #pragma once
 
 #include <boost/uuid/uuid.hpp>
-#include <UniversalScene_generated.h>
+#include <schema/scene_generated.h>
 
 #include "System/ISystemObject.h"
 #include "Generic/ISubject.h"

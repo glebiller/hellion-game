@@ -13,8 +13,8 @@
 // responsibility to update it.
 
 #include <Ogre.h>
-#include <UniversalScene_generated.h>
-#include <PhysicSystemComponents_generated.h>
+#include <schema/scene_generated.h>
+#include <schema/physic_components_generated.h>
 #include <System/ISystemObject.h>
 
 #include "Scene.h"
@@ -39,7 +39,7 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity
     , isProcedural(false)
     , m_strStaticGrpName("")
     , m_Dirty(true) {
-    auto mesh = reinterpret_cast<const Schema::GraphicMesh *>(component.data());
+    auto mesh = reinterpret_cast<const Schema::Components::GraphicMesh *>(component.data());
     m_pEntity = POGRESCENEMGR->createEntity(mesh->name()->c_str());
     m_pNode->setName(m_entity->getName());
     m_pNode->attachObject(m_pEntity);
@@ -73,7 +73,7 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 
 
     // TODO next step
-    if (ChangeType & System::Changes::Physic::Position) {
+    if (ChangeType & Schema::EntityChange::PhysicPosition) {
         auto position = pSubject->getPosition();
         m_pNode->setPosition(position->x(), position->y(), position->z());
     }

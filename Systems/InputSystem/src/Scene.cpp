@@ -14,7 +14,7 @@
 
 #include <boost/functional/factory.hpp>
 #include <OISB.h>
-#include <InputSystemComponents_generated.h>
+#include <schema/input_components_generated.h>
 
 #include "Manager/ServiceManager.h"
 #include "System.h"
@@ -40,7 +40,7 @@ InputScene::InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
     m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
     m_ObjectFactories["Cursor"] = boost::factory<CursorInputObject*>();
     m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();*/
-    m_ObjectFactories[Schema::SystemComponentType::InputVelocity] = boost::factory<PlayerInputObject*>();
+    m_ObjectFactories[Schema::ComponentType::InputVelocity] = boost::factory<PlayerInputObject*>();
     
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");

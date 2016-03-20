@@ -13,7 +13,7 @@
 // responsibility to update it.
 
 #include <boost/interprocess/sync/named_semaphore.hpp>
-#include "Environment_generated.h"
+#include "schema/environment_generated.h"
 #include "Defines.h"
 #include "DataTypes.h"
 
@@ -285,7 +285,7 @@ unsigned int TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructi
 void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, unsigned int begin, unsigned int end, unsigned int minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
-    Schema::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Schema::SystemType::Null;
+    Schema::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Schema::SystemType::MIN;
 #endif
 #if defined(USE_THREAD_PROFILER)
     __itt_event tpEvent = GetSupportForSystemTask(pSystemTask).m_tpeSystemTaskJob;

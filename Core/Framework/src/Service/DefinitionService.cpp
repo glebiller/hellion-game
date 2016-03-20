@@ -23,7 +23,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 
-#include "Environment_generated.h"
+#include "schema/environment_generated.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "System/ISystemTask.h"
@@ -31,7 +31,7 @@
 #include "Service/SettingService.h"
 #include "Generic/SystemInterface.h"
 #include "Service/DefinitionService.h"
-#include "Environment_generated.h"
+#include "schema/environment_generated.h"
 
 /**
  * @inheritDoc

@@ -46,6 +46,7 @@ public:
     // Must be called after construction for a valid Change Manager
 
     // IChangeManager Functionality
+    Error Register(ISubject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
     Error Register(ISubject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
     Error Unregister(ISubject* pSubject, IObserver* pObserver);
     Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);

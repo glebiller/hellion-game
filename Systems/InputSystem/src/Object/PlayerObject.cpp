@@ -12,6 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <schema/entity_change_generated.h>
+#include <schema/input_components_generated.h>
+
 #include "Scene.h"
 #include "Object/PlayerObject.h"
 #include "Object/IKeyboardObject.h"
@@ -21,7 +24,7 @@
  */
 PlayerInputObject::PlayerInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
     : InputObject(&pSystemScene, &entity, component) {
-    velocity_ = const_cast<Schema::InputVelocity*>(static_cast<const Schema::InputVelocity*>(component.data()));
+    velocity_ = const_cast<Schema::Components::InputVelocity*>(static_cast<const Schema::Components::InputVelocity*>(component.data()));
     m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = GetSystemScene<InputScene>();
     m_forwardInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_Forward");
@@ -73,7 +76,7 @@ void PlayerInputObject::Update(float DeltaTime) {
     unsigned int mModified = 0;
 
     if (m_forwardInputAction->hasChanged() || m_backwardInputAction->hasChanged()) {
-        mModified |= System::Changes::Input::Velocity;
+        mModified |= (unsigned int) Schema::EntityChange::InputVelocity;
         int newValue = m_backwardInputAction->isActive() || m_forwardInputAction->isActive();
         if (!m_forwardInputAction->isActive()) {
             newValue = -newValue;
@@ -81,7 +84,7 @@ void PlayerInputObject::Update(float DeltaTime) {
         velocity_->mutable_scalar()->mutate_x(newValue);
     }
     if (m_strafeRightInputAction->hasChanged() || m_strafeLeftInputAction->hasChanged()) {
-        mModified |= System::Changes::Input::Velocity;
+        mModified |= (unsigned int) Schema::EntityChange::InputVelocity;
         int newValue = 0;
         if (m_strafeRightInputAction->isActive()) {
             newValue = 1;
@@ -119,6 +122,7 @@ void PlayerInputObject::Update(float DeltaTime) {
  * @inheritDoc
  */
 void PlayerInputObject::createShot() {
+    // TODO how create new object ?
     /*Proto::Object shotProto;
     // TODO use boost for object ID
     shotProto.set_id(ObjectId::gen().str());

@@ -13,8 +13,8 @@
 // responsibility to update it.
 
 #include <boost/assert.hpp>
-#include <SystemComponentType_generated.h>
-#include <UniversalScene_generated.h>
+#include <schema/component_type_generated.h>
+#include <schema/scene_generated.h>
 #include <Universal/UObject.h>
 
 /**

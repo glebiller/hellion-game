@@ -18,7 +18,7 @@
 
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
-#include "UniversalScene_generated.h"
+#include "schema/scene_generated.h"
 
 class UObject;
 class IChangeManager;

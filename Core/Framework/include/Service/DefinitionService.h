@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-#include "Environment_generated.h"
+#include "schema/environment_generated.h"
 #include "System/ISystem.h"
 #include "System/ISystemObject.h"
 

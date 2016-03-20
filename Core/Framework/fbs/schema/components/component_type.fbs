@@ -1,0 +1,14 @@
+include "schema/components/graphic_components.fbs";
+include "schema/components/input_components.fbs";
+include "schema/components/physic_components.fbs";
+
+namespace Schema;
+
+union ComponentType {
+  Components.GraphicCamera,
+  Components.GraphicMesh,
+
+  Components.InputVelocity,
+
+  Components.PhysicPosition
+}

@@ -32,44 +32,48 @@ class ISubject;
  * @sa  IObserver  
  */
 class IChangeManager : public IObserver {
-    public:
+public:
+    virtual Error Register(ISubject* pInSubject, IObserver* pInObserver,
+                           System::Types::BitMask observerIdBits = System::Types::All) = 0;
 
-        /**
-         * Associates the provided IObserver with the given ISubject aspects of interest.
-         *
-         * @param   pInSubject      A pointer to the ISubject.
-         * @param   uInIntrestBits  The aspects of interest that changed as defined by the supplied
-         *                          ISubject's published interest bits..
-         * @param   pInObserver     A pointer to the IObserver.
-         * @param   observerIdBits  Bitmask of the interest bits. (default = System::Types::All)
-         * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
-         *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
-         *          available to resolve the change.
-         */
-        virtual Error Register(ISubject* pInSubject, unsigned int uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All) = 0;
 
-        /**
-         * Disassociates the provided IObserver from the supplied ISubject.
-         *
-         * @param   pInSubject  A pointer to the ISubject.
-         * @param   pInObserver A pointer to the IObserver.
-         * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
-         *          pInObserver and/or pInSubject was NULL.
-         */
-        virtual Error Unregister(ISubject* pInSubject, IObserver* pInObserver) = 0;
+    /**
+     * Associates the provided IObserver with the given ISubject aspects of interest.
+     *
+     * @param   pInSubject      A pointer to the ISubject.
+     * @param   uInIntrestBits  The aspects of interest that changed as defined by the supplied
+     *                          ISubject's published interest bits..
+     * @param   pInObserver     A pointer to the IObserver.
+     * @param   observerIdBits  Bitmask of the interest bits. (default = System::Types::All)
+     * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
+     *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
+     *          available to resolve the change.
+     */
+    virtual Error Register(ISubject* pInSubject, unsigned int uInIntrestBits, IObserver* pInObserver,
+                           System::Types::BitMask observerIdBits = System::Types::All) = 0;
 
-        /**
-         * Distributes the queued changes.
-         * Intended to be called after all ISubject's have changed state to deliver relevant
-         * queued change notifications to registered IObservers via. IObserver::Update().
-         *
-         * @param   systems2BeNotified  (optional) the systems 2 be notified.
-         * @param   ChangesToDist       (optional) the changes to distance.
-         * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
-         *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
-         *          available to resolve the change.
-         */
-        virtual Error DistributeQueuedChanges(System::Types::BitMask systems2BeNotified = System::Types::All,
-                                              System::Changes::BitMask ChangesToDist = System::Changes::All) = 0;
+    /**
+     * Disassociates the provided IObserver from the supplied ISubject.
+     *
+     * @param   pInSubject  A pointer to the ISubject.
+     * @param   pInObserver A pointer to the IObserver.
+     * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
+     *          pInObserver and/or pInSubject was NULL.
+     */
+    virtual Error Unregister(ISubject* pInSubject, IObserver* pInObserver) = 0;
+
+    /**
+     * Distributes the queued changes.
+     * Intended to be called after all ISubject's have changed state to deliver relevant
+     * queued change notifications to registered IObservers via. IObserver::Update().
+     *
+     * @param   systems2BeNotified  (optional) the systems 2 be notified.
+     * @param   ChangesToDist       (optional) the changes to distance.
+     * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
+     *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
+     *          available to resolve the change.
+     */
+    virtual Error DistributeQueuedChanges(System::Types::BitMask systems2BeNotified = System::Types::All,
+                                          System::Changes::BitMask ChangesToDist = System::Changes::All) = 0;
 
 };

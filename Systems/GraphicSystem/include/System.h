@@ -25,7 +25,7 @@
 
 #pragma warning( pop )
 
-#include <GraphicSystem_generated.h>
+#include <schema/graphic_system_generated.h>
 #include "Errors.h"
 #include "System.h" 
 #include "System/ISystem.h"

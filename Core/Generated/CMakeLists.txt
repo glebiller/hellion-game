@@ -5,7 +5,14 @@ add_library(Generated INTERFACE)
 
 target_include_directories(Generated INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:include>
+        )
+
+add_custom_command(
+        OUTPUT include/schema/EntityChange.h
+        COMMAND ${FLATBUFFERS_FLATC_EXECUTABLE}
+        -c --no-prefix -o src/schema/entity_change.fbs
+        DEPENDS ${FLATBUFFERS_FLATC_EXECUTABLE})
 
 install(DIRECTORY include/ DESTINATION include)
 

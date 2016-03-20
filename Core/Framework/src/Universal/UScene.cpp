@@ -16,7 +16,7 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 #include <flatbuffers/util.h>
-#include <Environment_generated.h>
+#include <schema/environment_generated.h>
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
 #include "Manager/ServiceManager.h"

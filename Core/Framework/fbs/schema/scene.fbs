@@ -1,5 +1,5 @@
-include "SystemType.fbs";
-include "SystemComponentType.fbs";
+include "schema/systems/system_type.fbs";
+include "schema/components/component_type.fbs";
 
 namespace Schema;
 
@@ -12,7 +12,7 @@ table MetaData {
 
 table SystemComponent {
     systemType: SystemType;
-    data:SystemComponentType;
+    data:ComponentType;
 }
 
 table SceneEntity {

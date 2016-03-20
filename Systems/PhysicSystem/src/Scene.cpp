@@ -43,7 +43,7 @@ PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScen
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld_->addRigidBody(groundRigidBody);
 
-    m_ObjectFactories[Schema::SystemComponentType::PhysicPosition] = boost::factory<PhysicObject*>();
+    m_ObjectFactories[Schema::ComponentType::PhysicPosition] = boost::factory<PhysicObject*>();
     //m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
     //m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
     //m_ObjectFactories["Terrain"] = boost::factory<TerrainPhysicObject*>();

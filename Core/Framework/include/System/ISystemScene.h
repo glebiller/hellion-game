@@ -18,7 +18,7 @@
 #include <boost/function.hpp>
 #include <map>
 #include <string>
-#include <UniversalScene_generated.h>
+#include <schema/scene_generated.h>
 #include <Universal/UObject.h>
 
 #include "DataTypes.h"
@@ -132,6 +132,6 @@ protected:
     ISystemTask* m_pSystemTask;
     ObjectsList m_pObjects;
 
-    std::map<Schema::SystemComponentType, ObjectFactory> m_ObjectFactories;
+    std::map<Schema::ComponentType, ObjectFactory> m_ObjectFactories;
 
 };

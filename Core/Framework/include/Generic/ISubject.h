@@ -16,8 +16,8 @@
 
 #include <stddef.h>
 #include <list>
-#include <PhysicSystemComponents_generated.h>
-#include <InputSystemComponents_generated.h>
+#include <schema/physic_components_generated.h>
+#include <schema/input_components_generated.h>
 
 #include "DataTypes.h"
 #include "System/Changes.h"
@@ -108,11 +108,11 @@ public:
      */
     void PostChanges(System::Changes::BitMask uInChangedBits);
 
-    virtual Schema::PhysicPosition* getPosition() {
+    virtual Schema::Components::PhysicPosition* getPosition() {
         return nullptr;
     }
 
-    virtual Schema::InputVelocity* getVelocity() {
+    virtual Schema::Components::InputVelocity* getVelocity() {
         return nullptr;
     }
 

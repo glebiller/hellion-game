@@ -18,7 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <flatbuffers/util.h>
-#include <GraphicSystem_generated.h>
+#include <schema/graphic_system_generated.h>
 
 #pragma warning( push, 0 )
 
@@ -28,7 +28,6 @@
 
 #pragma warning( pop )
 
-#include "GraphicSystem_generated.h"
 #include "Manager/ServiceManager.h"
 #include "Listener/CustomLogListener.h"
 #include "Defines.h"

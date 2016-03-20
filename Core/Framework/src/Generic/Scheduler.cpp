@@ -15,7 +15,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/timer/timer.hpp>
 
-#include "Environment_generated.h"
+#include "schema/environment_generated.h"
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
 #include "Service/SettingService.h"
@@ -97,9 +97,8 @@ void Scheduler::execute() {
     // Schedule the scenes that are ready for execution.
     //
     unsigned int cScenesToExecute = 0;
-    ISystemTask* aScenesToExecute[(int) Schema::SystemType::Count];
+    ISystemTask* aScenesToExecute[m_SceneExecs.size()];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        //BOOST_ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
     }
 
@@ -111,11 +110,10 @@ void Scheduler::execute() {
 /// @inheritDoc
 ///
 void Scheduler::waitForScenes() {
-    ISystemTask* aScenesToWaitFor[(int) Schema::SystemType::Count];
+    ISystemTask* aScenesToWaitFor[m_SceneExecs.size()];
     unsigned int cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        //BOOST_ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
         aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
     }
 

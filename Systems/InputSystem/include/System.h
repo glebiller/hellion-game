@@ -15,7 +15,7 @@
 #pragma once
 
 #include <list>
-#include <SystemType_generated.h>
+#include <schema/system_type_generated.h>
 
 #include "Errors.h"
 #include "System/ISystem.h"

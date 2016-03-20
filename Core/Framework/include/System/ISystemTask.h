@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <SystemType_generated.h>
+#include <schema/system_type_generated.h>
 #include "Errors.h"
 
 class ISystemScene;
