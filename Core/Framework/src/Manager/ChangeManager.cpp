@@ -14,14 +14,16 @@
 
 #pragma warning ( disable: 4718 )
 
+#include "Manager/ChangeManager.h"
+
 #include <boost/thread/tss.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 
 #include "Generic/ISubject.h"
 #include "Manager/ITaskManager.h"
-#include "Manager/ChangeManager.h"
 #include "Generic/IttNotify.h"
+#include "Generic/IObserver.h"
 
 // Declare Thread Profiler events
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);
@@ -197,10 +199,7 @@ Error ChangeManager::RemoveSubject(ISubject* pSubject
 // ChangeOccurred - Process a change.  This stores all information needed to
 //                  process the change when DistributeQueuedChanges is called.
 Error
-ChangeManager::ChangeOccurred(
-    ISubject* pInChangedSubject,
-    System::Changes::BitMask uInChangedBits
-) {
+ChangeManager::ChangeOccurred(ISubject* pInChangedSubject, System::Changes::BitMask uInChangedBits) {
     Error curError = Errors::Undefined;
     BOOST_ASSERT(pInChangedSubject);
 

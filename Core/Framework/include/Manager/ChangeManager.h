@@ -17,8 +17,10 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/thread/tss.hpp>
 #include <set>
+#include <list>
+#include <System/Types.h>
 
-#include "Manager/IChangeManager.h"
+#include "Generic/IObserver.h"
 #include "Manager/Notification.h"
 #include "Manager/SubjectInfo.h"
 #include "SpinMutex.h"
@@ -29,9 +31,9 @@ class ITaskManager;
  * Responsible for queuing up changes requests and then issuing them to the system for modifying
  *  to the correct state.
  *
- * @sa  IChangeManager
+ * @sa  ChangeManager
  */
-class ChangeManager : public IChangeManager {
+class ChangeManager : IObserver {
 public:
     /**
      * Default constructor.
@@ -45,7 +47,7 @@ public:
 
     // Must be called after construction for a valid Change Manager
 
-    // IChangeManager Functionality
+    // ChangeManager Functionality
     Error Register(ISubject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
     Error Register(ISubject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
     Error Unregister(ISubject* pSubject, IObserver* pObserver);

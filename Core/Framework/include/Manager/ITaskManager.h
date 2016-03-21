@@ -21,6 +21,7 @@ class ISystemTask;
 /**
  * <c>ITaskManager</c> is an interface class for linking ISystemTasks to a TaskManager.
  */
+// TODO remove and use TaskManager
 class ITaskManager {
 public:
 

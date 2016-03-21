@@ -18,7 +18,6 @@
 #include <schema/scene_generated.h>
 #include <schema/system_type_generated.h>
 #include "Generic/IObserver.h"
-#include "Generic/IProperty.h"
 #include "Generic/ISubject.h"
 #include "System/Changes.h"
 
@@ -74,8 +73,6 @@ public:
     inline UObject* getEntity() {
         return m_entity;
     }
-
-    const void* getComponent(Schema::ComponentType componentType) override;
 
 protected:
     const Schema::SystemComponent& component_;

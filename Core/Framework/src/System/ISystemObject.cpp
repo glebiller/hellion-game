@@ -15,28 +15,19 @@
 #include <Universal/UObject.h>
 #include "System/ISystemObject.h"
 
-#include "Generic/IProperty.h"
-
 class UObject;
 
 /**
  * @inheritDoc
  */
-ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component)
-    : component_(component)
-    , m_pSystemScene(pSystemScene)
-    , m_entity(entity)  {
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent &component)
+        : ISubject(entity), component_(component), m_pSystemScene(pSystemScene), m_entity(entity) {
 }
 
 /**
  * @inheritDoc
  */
 ISystemObject::~ISystemObject() {
-    
-}
 
-const void* ISystemObject::getComponent(Schema::ComponentType componentType) {
- // TODO make the subject be the UObject instead
- return m_entity->GetExtension(componentType)->getComponentData();
 }
 

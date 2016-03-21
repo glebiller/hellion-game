@@ -12,31 +12,24 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Generic/ISubject.h"
+
 #include <algorithm>
 #include <boost/assert.hpp>
-
-#include "Generic/ISubject.h"
 
 #include "Errors.h"
 #include "Generic/IObserver.h"
 #include "System/Types.h"
+#include "Universal/UObject.h"
 
-/**
- * @inheritDoc
- */
-ISubject::ISubject() {
+ISubject::ISubject(UObject* entity)
+    : entity_(entity) {
 }
 
-/**
- * @inheritDoc
- */
 ISubject::~ISubject() {
     PreDestruct();
 }
 
-/**
- * @inheritDoc
- */
 unsigned int ISubject::getObserverId(IObserver* pObserver) const {
     for (auto observer : m_observerList) {
         if (observer.m_pObserver == pObserver) {
@@ -47,9 +40,6 @@ unsigned int ISubject::getObserverId(IObserver* pObserver) const {
     return InvalidObserverID;
 }
 
-/**
- * @inheritDoc
- */
 void ISubject::PreDestruct() {
     // THREAD SAFETY NOTE
     // Currently this method is called from the destructor only (that is it is
@@ -65,138 +55,48 @@ void ISubject::PreDestruct() {
     m_observerList.clear();
 }
 
-/**
- * @inheritDoc
- */
-Error ISubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, unsigned int uID, unsigned int shift) {
-    // To make compiler happy in release builds while keeping the next assertion
-    UNUSED_PARAM(shift);
-    // If the following assertion fails, it means that Change Control Manager (CCM)
-    // was modified to start using "shifts". Please update the code of this class
-    // appropriately (original version did not have any meaningful support except
-    // shifting inInterest on entry)
-    BOOST_ASSERT(!shift && "ISubject::Attach: Interest bits are shifted. Read the comment to this assertion");
-    // Since the intended usage model is to use this method from CCMs only, and
-    // their implementation provided by this framework ensures that pObs in nonzero
-    // the following assertion should suffice.
-    BOOST_ASSERT(pObserver && "ISubject::Attach: Valid pointer to observer object must be specified");
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-    SCOPED_SPIN_LOCK(m_observerListMutex);
-#endif
-    // Framework's CCM implementation ensures that the following assertion always holds
-    BOOST_ASSERT(std::find(m_observerList.begin(), m_observerList.end(), pObserver) == m_observerList.end() &&
+void ISubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, unsigned int uID) {
+    BOOST_ASSERT_MSG(pObserver, "ISubject::Attach: Valid pointer to observer object must be specified");
+    BOOST_ASSERT_MSG(std::find(m_observerList.begin(), m_observerList.end(), pObserver) == m_observerList.end(),
            "ISubject::Attach: Observer has already been attached. Use ISubject::UpdateInterestBits instead.");
-    // Add the observer to our list of observers
     m_observerList.push_back(ObserverRequest(pObserver, inInterest, uID));
-    return Errors::Success;
 }
 
 /**
  * @inheritDoc
  */
-Error ISubject::Detach(IObserver* pObserver) {
-    // No need to check for pObs being nonzero since the find below guarantees correct work in any case
-    Error curError = Errors::Failure;
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-    SCOPED_SPIN_LOCK(m_observerListMutex);
-#endif
-    // Remove the give observer from our list of observers
+void ISubject::Detach(IObserver* pObserver) {
     ObserverList::iterator it = std::find(m_observerList.begin(), m_observerList.end(), pObserver);
-
     if (it != m_observerList.end()) {
         m_observerList.erase(it);
-        curError = Errors::Success;
     }
-
-    return curError;
-} // ISubject::Detach
-
+}
 /**
  * @inheritDoc
  */
-Error ISubject::UpdateInterestBits(IObserver* pObserver, unsigned int uInIntrestBits) {
-    // No need to check for pObs being nonzero since the find below guarantees correct work in any case
-    Error curError = Errors::Failure;
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-    SCOPED_SPIN_LOCK(m_observerListMutex);
-#endif
-    // Find the given observer in our observer list
+void ISubject::UpdateInterestBits(IObserver* pObserver, unsigned int uInIntrestBits) {
     ObserverList::iterator it = std::find(m_observerList.begin(), m_observerList.end(), pObserver);
     if (it != m_observerList.end()) {
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-        // We are under the lock in this case
-        it->m_interestBits |= inInterest;
-#else
         // No lock is used, but updates can happen concurrently. So use interlocked operation
         long prevBits;
         long newBits = long(it->m_interestBits | uInIntrestBits);
-
         do {
             prevBits = it->m_interestBits;
         } while (AtomicCompareAndSwap((long*)&it->m_interestBits, newBits, prevBits) != prevBits);
-
-#endif
-        curError = Errors::Success;
     }
-
-    return curError;
 }
 
-// The following implementation could be used in case of concurrent initial attach
-// or detach operations. But it is commented out since it is unsafe without ref
-// counting on IObserver interface.
-// See the comment to SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS as well.
-#if 0
-
 /**
  * @inheritDoc
  */
 void ISubject::PostChanges(System::Changes::BitMask changedBits) {
-    if (m_observerList.empty()) {
-        return;
-    }
-
-    typedef std::pair<IObserver*, unsigned int> PostData;
-    PostData* aPostData = NULL;
-    unsigned int nNotificationsToPost = 0;
-    // Double check to avoid unnecessary lock acquisition
-    {
-        SCOPED_SPIN_LOCK(m_observerListMutex);
-        aPostData = (PostData*)alloca(m_observerList.size() * sizeof(PostData));
-        for (auto observerRequest : m_observerList) {
-            unsigned int changedBitsOfInterest = GetBitsToPost(observerRequest, changedBits);
-
-            if (changedBitsOfInterest) {
-                aPostData[nNotificationsToPost] = std::make_pair(observerRequest.m_pObserver, changedBitsOfInterest);
-                ++nNotificationsToPost;
-            }
-        }
-    }
-
-    // Posting is done outside of the lock
-    for (unsigned int i = 0; i < nNotificationsToPost; ++i) {
-        aPostData[i].first->ChangeOccurred(this, aPostData[i].second);
-    }
-} // ISubject::PostChanges
-
-#else
-
-/**
- * @inheritDoc
- */
-void ISubject::PostChanges(System::Changes::BitMask changedBits) {
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-    SCOPED_SPIN_LOCK(m_observerListMutex);
-#endif
     for (auto observerRequest : m_observerList) {
-        unsigned int changedBitsOfInterest = GetBitsToPost(observerRequest, changedBits);
+        unsigned int changedBitsOfInterest = observerRequest.m_interestBits & changedBits;
         if (changedBitsOfInterest) {
             observerRequest.m_pObserver->ChangeOccurred(this, changedBitsOfInterest);
         }
     }
 }
-
-#endif /* 0 */
 
 /**
  * @inheritDoc
@@ -208,3 +108,8 @@ long ISubject::AtomicCompareAndSwap(long* interestBits, long newBits, long prevB
     return __sync_val_compare_and_swap(interestBits, prevBits, newBits);
 #endif
 }
+
+const void* ISubject::getComponent(Schema::ComponentType componentType) {
+    return entity_->GetExtension(componentType)->getComponentData();
+}
+

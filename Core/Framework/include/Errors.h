@@ -16,6 +16,7 @@
 
 #include "DataTypes.h"
 
+// TODO replace with boost errors or remove
 namespace Errors {
     namespace System {
         static const unsigned int None                           = 0x0000;

@@ -25,6 +25,7 @@ class WindowService;
 /**
  * Interface class for providing services to the systems.
  */
+// TODO remove
 class IServiceManager {
 public:
     /**

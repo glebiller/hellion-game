@@ -14,6 +14,7 @@
 
 #pragma once
 
+// TODO remove
 
 #ifdef _MSC_VER
 typedef void*               Handle;

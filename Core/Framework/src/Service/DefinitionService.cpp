@@ -29,7 +29,6 @@
 #include "System/ISystemTask.h"
 #include "Manager/ServiceManager.h"
 #include "Service/SettingService.h"
-#include "Generic/SystemInterface.h"
 #include "Service/DefinitionService.h"
 #include "schema/environment_generated.h"
 

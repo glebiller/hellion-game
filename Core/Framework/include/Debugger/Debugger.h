@@ -28,7 +28,7 @@
 
 #include <zmq.hpp>
 
-class IChangeManager;
+class ChangeManager;
 class ISystemObject;
 class UScene;
 class UObject;
@@ -64,7 +64,7 @@ public:
      * @param [in,out]  pSceneCCM   If non-null, the scene ccm.
      * @param [in,out]  pObjectCCM  If non-null, the object ccm.
      */
-    void setChangeManagers(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
+    void setChangeManagers(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM);
 
     /**
      * Sets u scene.
@@ -123,8 +123,8 @@ public:
 
 private:
 
-    IChangeManager*         m_pSceneCCM;
-    IChangeManager*         m_pObjectCCM;
+    ChangeManager*         m_pSceneCCM;
+    ChangeManager*         m_pObjectCCM;
     
     SceneChangesDebugger*   m_pSceneChangesDebugger;
     ObjectChangesDebugger*  m_pObjectChangesDebugger;

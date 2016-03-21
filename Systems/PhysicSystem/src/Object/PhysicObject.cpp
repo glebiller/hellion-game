@@ -54,7 +54,8 @@ PhysicObject::~PhysicObject() {
  */
 Error PhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     if (ChangeType & Schema::EntityChange::InputVelocity) {
-        auto scalar = static_cast<const Schema::Components::InputVelocity *>(pSubject->getComponent(Schema::ComponentType::InputVelocity).data())->scalar();
+        auto component = pSubject->getComponent(Schema::ComponentType::InputVelocity);
+        auto scalar = static_cast<const Schema::Components::InputVelocity *>(component)->scalar();
         rigidBody_->setLinearVelocity(btVector3(scalar->x(), scalar->y(), scalar->z()));
     }
     return Errors::Success;

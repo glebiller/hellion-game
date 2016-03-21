@@ -17,7 +17,6 @@
 
 #include "Scene.h"
 #include "Object/PlayerObject.h"
-#include "Object/IKeyboardObject.h"
 
 /**
  * @inheritDoc
@@ -25,7 +24,6 @@
 PlayerInputObject::PlayerInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
     : InputObject(&pSystemScene, &entity, component) {
     velocity_ = const_cast<Schema::Components::InputVelocity*>(static_cast<const Schema::Components::InputVelocity*>(component.data()));
-    m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = GetSystemScene<InputScene>();
     m_forwardInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_Forward");
     m_backwardInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity.getName() + "_Backward");

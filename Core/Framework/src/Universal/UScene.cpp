@@ -20,12 +20,12 @@
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
 #include "Manager/ServiceManager.h"
-#include "Manager/IChangeManager.h"
+#include "Manager/ChangeManager.h"
 
 /**
  * @inheritDoc
  */
-UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM, std::map<Schema::SystemType, ISystem*>& systems)
+UScene::UScene(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM, std::map<Schema::SystemType, ISystem*>& systems)
     : m_pSceneCCM(pSceneCCM)
     , m_pObjectCCM(pObjectCCM) {
     flatbuffers::LoadFile("UniversalScene.bin", true, &universalSceneData_);

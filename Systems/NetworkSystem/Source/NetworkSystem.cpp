@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -17,7 +17,6 @@
 
 #include "System/ISystem.h"
 #include "Manager/ServiceManager.h"
-#include "Generic/SystemInterface.h"
 #include "System.h"
 
 IServiceManager*        g_serviceManager;

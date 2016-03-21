@@ -7,10 +7,12 @@ add_library(Framework
         include/Debugger/SceneChangesDebugger.h
         include/Generic/Framework.h
         include/Generic/Instrumentation.h
-        include/Generic/IProperty.h
+        include/Generic/IObserver.h
         include/Generic/ISubject.h
         include/Generic/Scheduler.h
         include/Manager/ChangeManager.h
+        include/Manager/Notification.h
+        include/Manager/ObserverRequest.h
         include/Manager/ServiceManager.h
         include/Manager/TaskManager.h
         include/Service/DefinitionService.h
@@ -40,13 +42,11 @@ add_library(Framework
         include/Task/SynchronizeTask.h
         include/Universal/UObject.h
         include/Universal/UScene.h
-        include/Main.h
         src/Debugger/Debugger.cpp
         src/Debugger/ObjectChangesDebugger.cpp
         src/Debugger/SceneChangesDebugger.cpp
         src/Generic/Framework.cpp
         src/Generic/Instrumentation.cpp
-        src/Generic/IProperty.cpp
         src/Generic/ISubject.cpp
         src/Generic/Scheduler.cpp
         src/Manager/ChangeManager.cpp
@@ -67,7 +67,6 @@ add_library(Framework
         src/Task/SynchronizeTask.cpp
         src/Universal/UObject.cpp
         src/Universal/UScene.cpp
-        src/Main.cpp
         )
 
 target_include_directories(Framework PUBLIC

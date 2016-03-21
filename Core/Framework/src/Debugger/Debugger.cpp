@@ -17,7 +17,7 @@
 #include "Debugger/Debugger.h"
 #include "Proto/Debug/DebugEntity.pb.h"
 
-#include "Manager/IChangeManager.h"
+#include "Manager/ChangeManager.h"
 #include "System/ISystemObject.h"
 #include "System/Components.h"
 #include "Universal/UScene.h"
@@ -67,7 +67,7 @@ void Debugger::initialize(bool debuggerActive) {
 /**
  * @inheritDoc
  */
-void Debugger::setChangeManagers(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) {
+void Debugger::setChangeManagers(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM) {
     m_pSceneCCM = pSceneCCM;
     m_pObjectCCM = pObjectCCM;
 }

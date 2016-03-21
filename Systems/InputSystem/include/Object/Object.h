@@ -16,7 +16,6 @@
 
 #include "System.h"
 #include "System/ISystemObject.h"
-#include "Object/IMoveObject.h"
 
 class InputSystem;
 class InputScene;
@@ -27,7 +26,7 @@ class InputScene;
  *
  * @sa  GuiObject
  */
-class InputObject : public ISystemObject, public IMoveObject {
+class InputObject : public ISystemObject {
 public:
     
     /**

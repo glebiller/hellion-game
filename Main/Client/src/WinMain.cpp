@@ -16,10 +16,24 @@
 #include <windows.h>
 #include <tchar.h>
 
-#include "Main.h"
+#include "Framework.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
-    // Start framework
-    ExecuteFramework();
+    #ifndef DEBUG_BUILD
+    //try
+    #endif
+    {
+        // Start framework
+        Framework* framework = new Framework();
+        if (framework->Initialize() == boost::system::errc::success) {
+            framework->Execute();
+            framework->Shutdown();
+            delete framework;
+        }
+    }
+    #ifndef DEBUG_BUILD
+    //catch (...) {
+    //}
+    #endif
     return 0;
 }

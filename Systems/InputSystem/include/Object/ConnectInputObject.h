@@ -17,9 +17,8 @@
 #include <OISB.h>
 
 #include "object.h"
-#include "Object/IKeyboardObject.h"
 
-class ConnectInputObject : public InputObject, public IKeyboardObject {
+class ConnectInputObject : public InputObject {
 public:
 
     ConnectInputObject(ISystemScene* pSystemScene, UObject* entity);
@@ -54,17 +53,9 @@ public:
      * @inheritDoc
      */
     void Update(float DeltaTime);
-    
-    /**
-     * @inheritDoc
-     */
-    const KeyboardButtonData* getKeyboardButtonData() {
-        return &m_keyboardButtonData;
-    }
 
 private:
     std::string                     m_key;
     OISB::TriggerAction*            m_connectInputAction;
-    KeyboardButtonData              m_keyboardButtonData;
 
 };

@@ -21,7 +21,7 @@
 #include "schema/scene_generated.h"
 
 class UObject;
-class IChangeManager;
+class ChangeManager;
 class SystemService;
 
 /**
@@ -47,7 +47,7 @@ public:
 
 public:
 
-    UScene(IChangeManager* pUSceneCCM, IChangeManager* pUObjectCCM, std::map<Schema::SystemType, ISystem*>& systems);
+    UScene(ChangeManager* pUSceneCCM, ChangeManager* pUObjectCCM, std::map<Schema::SystemType, ISystem*>& systems);
 
     ~UScene();
 
@@ -151,7 +151,7 @@ public:
      *
      * @return  null if it fails, else the object ccm.
      */
-    inline IChangeManager* getObjectCCM() {
+    inline ChangeManager* getObjectCCM() {
         return m_pObjectCCM;
     }
 
@@ -162,8 +162,8 @@ private:
 protected:
     boost::log::sources::logger             logger_;
 
-    IChangeManager*                         m_pSceneCCM;
-    IChangeManager*                         m_pObjectCCM;
+    ChangeManager*                         m_pSceneCCM;
+    ChangeManager*                         m_pObjectCCM;
 
     std::string                             universalSceneData_;
     const Schema::UniversalScene*           universalSceneSchema_;

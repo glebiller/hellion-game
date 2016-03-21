@@ -27,8 +27,9 @@ class ISubject;
  *  the Publish/Subscribe pattern, or the Dependents pattern.
  *
  * @sa  ISubject
- * @sa  IChangeManager
+ * @sa  ChangeManager
  */
+// TODO rename EntityObserver
 class IObserver {
 public:
     /**
@@ -47,9 +48,9 @@ public:
 
     /**
      * Lets the ISubject notify the IObserver in changes in registered aspects of interest.
-     *  This method is typically called from  IChangeManager::DistributeQueuedChanges()
+     *  This method is typically called from  ChangeManager::DistributeQueuedChanges()
      *  or ISubject::PostChanges() depending on whether the observer registered with an
-     *  IChangeManager or an ISubject respectively.
+     *  ChangeManager or an ISubject respectively.
      *
      * @param   pSubject    A pointer to the ISubject interface of the component that changed.
      * @param   ChangeType  The aspects of interest that changed as defined by the supplied

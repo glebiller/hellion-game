@@ -23,7 +23,6 @@
 #include "Object/Object.h"
 
 class ISystemScene;
-struct KeyboardButtonData;
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
@@ -71,13 +70,6 @@ public:
     void Update(float DeltaTime) override;
 
     /**
-     * @inheritDoc
-     */
-    inline const KeyboardButtonData* getKeyboardButtonData() {
-        return m_shotKeyboardButtonData;
-    }
-
-    /**
      * Create a new shot and queue it.
      */
     void createShot();
@@ -92,7 +84,5 @@ private:
     OISB::TriggerAction*    m_turnRightInputAction;
     OISB::TriggerAction*    m_turnLeftInputAction;
     OISB::TriggerAction*    m_jumpInputAction;
-
-    KeyboardButtonData*     m_shotKeyboardButtonData;
 
 };

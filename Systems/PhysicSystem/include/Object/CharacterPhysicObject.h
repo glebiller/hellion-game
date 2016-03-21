@@ -15,7 +15,6 @@
 #pragma once
 
 #include "Object/PhysicObject.h"
-#include "Object/IMoveObject.h"
 
 class ISystemScene;
 class hkpCharacterProxy;
@@ -28,7 +27,7 @@ class IgnorePhantomOverlapListener;
 ///
 /// @sa PhysicObject
 ///
-class CharacterPhysicObject : public PhysicObject, public IMoveObject {
+class CharacterPhysicObject : public PhysicObject {
 public:
     CharacterPhysicObject(ISystemScene* pSystemScene, UObject* entity);
 

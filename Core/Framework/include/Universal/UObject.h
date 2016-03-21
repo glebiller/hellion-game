@@ -16,13 +16,14 @@
 
 #include <boost/uuid/uuid.hpp>
 #include <schema/scene_generated.h>
+#include <schema/system_type_generated.h>
 
 #include "System/ISystemObject.h"
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 
-class IChangeManager;
+class ChangeManager;
 class UScene;
 
 /**
@@ -125,7 +126,7 @@ public:
 protected:
     const Schema::SceneEntity*                          entitySchema_;
 
-    IChangeManager*                                     m_pObjectCCM;
+    ChangeManager*                                     m_pObjectCCM;
 
     UScene*                                             m_pScene;
     std::map<Schema::ComponentType, ISystemObject*>     m_ObjectExtensions;

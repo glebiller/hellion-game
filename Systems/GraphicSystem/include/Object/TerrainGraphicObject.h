@@ -15,7 +15,6 @@
 #pragma once
 
 #include <System/Types.h>
-#include "Generic/IProperty.h"
 #include "Object/Object.h"
 
 class GraphicSystem;

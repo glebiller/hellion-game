@@ -14,6 +14,8 @@
 
 #pragma once
 
+// TODO Remove
+
 #include "Defines.h"
 
 #if USE_SPIN_MUTEX

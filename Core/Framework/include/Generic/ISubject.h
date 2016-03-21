@@ -20,10 +20,13 @@
 #include <schema/input_components_generated.h>
 #include <Core/Framework/include/schema/component_type_generated.h>
 #include <Core/Framework/include/schema/scene_generated.h>
+#include <System/Types.h>
 
 #include "DataTypes.h"
 #include "System/Changes.h"
+#include "../../../../../../Library/Caches/CLion2016.1/cmake/generated/hellion-game-b2780fa8/b2780fa8/Debug/Core/Framework/include/schema/component_type_generated.h"
 
+class UObject;
 class IObserver;
 
 /**
@@ -33,20 +36,14 @@ class IObserver;
  *     This interface follows the pattern commonly know as the Observer pattern, the
  *     Publish/Subscribe pattern, or the Dependents pattern.
  */
+// TODO Merge with UObject
 class ISubject {
 public:
 
     static const unsigned int InvalidObserverID = (const unsigned int) -1;
 
-    /**
-     * Default constructor.
-     */
-    ISubject();
+    ISubject(UObject* entity);
 
-    /**
-     * Destructor.
-     * All interfaces must have virtual destructors
-     */
     virtual ~ISubject();
 
     /**
@@ -72,7 +69,7 @@ public:
      *          pInObserver and/or pInSubject was NULL. Error::OutOfMemory Not enough memory is
      *          available to resolve the change.
      */
-    virtual Error Attach(IObserver* pInObserver, unsigned int uInIntrestBits, unsigned int uID, unsigned int shiftBits = 0);
+    virtual void Attach(IObserver* pInObserver, System::Types::BitMask uInIntrestBits, unsigned int uID);
 
     /**
      * Disassociates the provided Observer with the Subject.This method is typically called from @e ChangeManager::Register()
@@ -82,7 +79,7 @@ public:
      * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
      *          pInObserver and/or pInSubject was NULL.
      */
-    virtual Error Detach(IObserver* pInObserver);
+    virtual void Detach(IObserver* pInObserver);
 
     /**
      * Updates the interest bits.
@@ -91,14 +88,7 @@ public:
      * @param   uInIntrestBits      The in intrest bits.
      * @return  The Error code. Error::Success No error.
      */
-    virtual Error UpdateInterestBits(IObserver* pInObserver, unsigned int uInIntrestBits);
-
-    /**
-     * Identifies the system changes that this subject could possibly make.
-     *
-     * @return  A bitmask of the possible system changes.
-     */
-    virtual System::Changes::BitMask GetPotentialSystemChanges() = 0;
+    virtual void UpdateInterestBits(IObserver* pInObserver, unsigned int uInIntrestBits);
 
     /**
      * Publishes to attached Observers and ChanageManager that changes have occurred.
@@ -110,7 +100,14 @@ public:
      */
     void PostChanges(System::Changes::BitMask uInChangedBits);
 
-    virtual const void* getComponent(Schema::ComponentType componentType) = 0;
+    const void* getComponent(Schema::ComponentType componentType);
+
+    /**
+     * Identifies the system changes that this subject could possibly make.
+     *
+     * @return  A bitmask of the possible system changes.
+     */
+    virtual System::Changes::BitMask GetPotentialSystemChanges() = 0;
 
 protected:
 
@@ -128,30 +125,17 @@ protected:
      */
     struct ObserverRequest {
         ObserverRequest(IObserver* pObserver = NULL, unsigned int Interests = 0, unsigned int myID = 0)
-            : m_pObserver(pObserver)
-            , m_interestBits(Interests)
-            , m_myID(myID) {
+                : m_pObserver(pObserver), m_interestBits(Interests), m_myID(myID) {
         }
 
-        IObserver*  m_pObserver;
-        unsigned int         m_interestBits;
-        unsigned int         m_myID;
+        IObserver* m_pObserver;
+        unsigned int m_interestBits;
+        unsigned int m_myID;
 
-        bool operator == (IObserver* rhs) const {
+        bool operator==(IObserver* rhs) const {
             return m_pObserver == rhs;
         }
     }; // struct ISubject::ObserverRequest
-
-    /**
-     * Gets the bits to post.
-     *
-     * @param [in,out]  parameter1  The first parameter.
-     * @param   parameter2          The second parameter.
-     * @return  The bits to post.
-     */
-    inline unsigned int GetBitsToPost(ISubject::ObserverRequest& req, System::Changes::BitMask changedBits) {
-        return req.m_interestBits & changedBits;
-    }
 
 private:
 
@@ -173,12 +157,8 @@ private:
     // will suit fine here.
     typedef std::list<ObserverRequest> ObserverList;
 
+    UObject* entity_;
     // List of the observers (CCMs) that need notifications about changes in this subject
-    ObserverList    m_observerList;
-
-#if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
-    // Synchronization object to protect m_observerList
-    DEFINE_SPIN_MUTEX(m_observerListMutex);
-#endif /* SUPPORT_MULTIPLE_OBSERVERS_IN_POST_CHANGES */
+    std::list<ObserverRequest> m_observerList;
 
 };

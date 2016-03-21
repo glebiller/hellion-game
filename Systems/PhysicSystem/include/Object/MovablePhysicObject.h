@@ -16,7 +16,6 @@
 
 #include "System.h"
 #include "Object/PhysicObject.h"
-#include "Object/IMoveObject.h"
 
 class ISystemScene;
 
@@ -26,7 +25,7 @@ class ISystemScene;
 *
 * @sa  ISystemObject
 */
-class MovablePhysicObject : public PhysicObject, public IMoveObject {
+class MovablePhysicObject : public PhysicObject {
 public:
 
     /**
