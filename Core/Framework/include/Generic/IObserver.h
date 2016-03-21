@@ -17,7 +17,7 @@
 #include "Errors.h"
 #include "System/Changes.h"
 
-class ISubject;
+class ISystemObject;
 
 /**
  * The <c>IObserver</c> interface supplies loosely coupling systems with dependency.  It
@@ -26,7 +26,7 @@ class ISubject;
  * This interface follows the pattern commonly know as the Observer pattern,
  *  the Publish/Subscribe pattern, or the Dependents pattern.
  *
- * @sa  ISubject
+ * @sa  ISystemObject
  * @sa  ChangeManager
  */
 // TODO rename EntityObserver
@@ -47,19 +47,19 @@ public:
     virtual inline System::Changes::BitMask GetDesiredSystemChanges() = 0;
 
     /**
-     * Lets the ISubject notify the IObserver in changes in registered aspects of interest.
+     * Lets the ISystemObject notify the IObserver in changes in registered aspects of interest.
      *  This method is typically called from  ChangeManager::DistributeQueuedChanges()
-     *  or ISubject::PostChanges() depending on whether the observer registered with an
-     *  ChangeManager or an ISubject respectively.
+     *  or ISystemObject::PostChanges() depending on whether the observer registered with an
+     *  ChangeManager or an ISystemObject respectively.
      *
-     * @param   pSubject    A pointer to the ISubject interface of the component that changed.
+     * @param   pSubject    A pointer to the ISystemObject interface of the component that changed.
      * @param   ChangeType  The aspects of interest that changed as defined by the supplied
-     *                      ISubject's published interest bits. if uInChangeBits are 0, then the
+     *                      ISystemObject's published interest bits. if uInChangeBits are 0, then the
      *                      subject is shutting down, and should be released.
      * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
      *          pInSubject was NULL. Error::OutOfMemory Not enough memory is available to resolve the
      *          change.
      */
-    virtual inline Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) = 0;
+    virtual inline Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) = 0;
 
 };

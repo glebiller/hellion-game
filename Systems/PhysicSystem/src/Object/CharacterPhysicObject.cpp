@@ -130,7 +130,7 @@ Error CharacterPhysicObject::initialize() {
 ///
 /// @inheritDoc
 ///
-Error CharacterPhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error CharacterPhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     if (ChangeType & System::Changes::Input::Velocity) {

@@ -68,7 +68,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
 
     /**
      * @inheritDoc

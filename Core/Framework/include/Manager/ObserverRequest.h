@@ -31,10 +31,9 @@ public:
      * @param   Interests           (Optional) the interests.
      * @param   idBits              (Optional) the identifier bits.
      */
-    ObserverRequest(IObserver* pObserver = nullptr, unsigned int Interests = 0, unsigned int idBits = System::Changes::All)
-        : m_pObserver(pObserver)
-        , m_interestBits(Interests)
-        , m_observerIdBits(idBits) {
+    ObserverRequest(IObserver* pObserver = nullptr, unsigned int myID = 0, unsigned int Interests = 0,
+                    unsigned int idBits = System::Changes::All)
+            : m_pObserver(pObserver), m_myID(myID), m_interestBits(Interests), m_observerIdBits(idBits) {
     }
 
     /**
@@ -44,7 +43,7 @@ public:
      *
      * @return  true if the first parameter is less than the second.
      */
-    bool operator < (const ObserverRequest& rhs) const {
+    bool operator<(const ObserverRequest& rhs) const {
         return m_pObserver < rhs.m_pObserver;
     }
 
@@ -55,11 +54,12 @@ public:
      *
      * @return  true if the parameters are considered equivalent.
      */
-    bool operator == (IObserver* rhs) const {
+    bool operator==(IObserver* rhs) const {
         return m_pObserver == rhs;
     }
 
-    IObserver*  m_pObserver;
-    unsigned int         m_interestBits;
-    unsigned int         m_observerIdBits;
+    IObserver* m_pObserver;
+    unsigned int m_myID;
+    unsigned int m_interestBits;
+    unsigned int m_observerIdBits;
 };

@@ -173,7 +173,7 @@ void Debugger::addCreatedObjectIds(std::string objectId) {
 /**
  * @inheritDoc
  */
-void Debugger::addUpdatedObject(ISubject* object) {
+void Debugger::addUpdatedObject(ISystemObject* object) {
     m_updatedObjects.insert(object);
 }
 

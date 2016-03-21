@@ -14,7 +14,7 @@
 
 #pragma once
 
-class ISubject;
+class ISystemObject;
 class ObserversList;
 
 #include <vector>
@@ -33,7 +33,7 @@ struct SubjectInfo {
         , m_interestBits(0) {
     }
 
-    ISubject*       m_pSubject;
+    ISystemObject*       m_pSubject;
     unsigned int             m_interestBits;
     ObserversList       m_observersList;
 };

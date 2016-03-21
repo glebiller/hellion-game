@@ -54,7 +54,7 @@ Error ConnectInputObject::initialize() {
 /**
  * @inheritDoc
  */
-Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error ConnectInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

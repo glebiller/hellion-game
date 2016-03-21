@@ -14,14 +14,17 @@
 
 #pragma once
 
+#include <list>
 #include <boost/uuid/uuid.hpp>
 #include <schema/scene_generated.h>
 #include <schema/system_type_generated.h>
+#include <Manager/ObserverRequest.h>
 #include "Generic/IObserver.h"
-#include "Generic/ISubject.h"
 #include "System/Changes.h"
+#include "Types.h"
 
 class ISystemScene;
+
 class UObject;
 
 /**
@@ -33,8 +36,11 @@ class UObject;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public ISubject, public IObserver {
+// TODO rename SystemComponent
+class ISystemObject : public IObserver {
 public:
+
+    static const unsigned int InvalidObserverID = (const unsigned int) -1;
 
     /**
      * @inheritDoc
@@ -46,11 +52,62 @@ public:
      */
     virtual ~ISystemObject();
 
+    unsigned int getObserverId(IObserver* pObserver) const;
+
+    /**
+     * Associates the provided IObserver with the given ISystemObject aspects of interest.
+     * This method is typically called from @e ChangeManager::Register()
+     *  or the IObserver, if used without a ChangeManager.
+     *
+     * @param   pInObserver     A pointer to the IObserver.
+     * @param   uInIntrestBits  The aspects of interest that changed as defined by the supplied
+     *                          ISystemObject's published interest bits.
+     * @param   uID             ID assigned by pInObserver to this subject.
+     * @param   shiftBits       Used for components supporting multiply inherited interfaces each
+     *                          with subject interfaces.
+     */
+    void Attach(IObserver* pInObserver, System::Types::BitMask uInIntrestBits, unsigned int uID);
+
+    /**
+     * Disassociates the provided Observer with the Subject.This method is typically called from @e ChangeManager::Register()
+     *  or the IObserver, if used without a ChangeManager.
+     *
+     * @param   pInObserver A pointer to the IObserver that should be disassociated.
+     * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
+     *          pInObserver and/or pInSubject was NULL.
+     */
+    void Detach(IObserver* pInObserver);
+
+    /**
+     * Updates the interest bits.
+     *
+     * @param [in,out]  pInObserver If non-null, the in observer.
+     * @param   uInIntrestBits      The in intrest bits.
+     * @return  The Error code. Error::Success No error.
+     */
+    virtual void UpdateInterestBits(IObserver* pInObserver, unsigned int uInIntrestBits);
+
+    /**
+     * Publishes to attached Observers and ChanageManager that changes have occurred.
+     * This method is typically called from @e ChangeManager::Register()
+     * or the IObserver, if used without a ChangeManager.
+     *
+     * @param   uInChangedBits  The unsigned int bit field that describes the conceptual change with respect
+     *                          to the published interests.
+     */
+    void PostChanges(System::Changes::BitMask uInChangedBits);
+
+
+    /**
+     * Identifies the system changes that this subject could possibly make.
+     *
+     * @return  A bitmask of the possible system changes.
+     */
+    virtual System::Changes::BitMask GetPotentialSystemChanges() = 0;
+
     virtual void Update(float DeltaTime) = 0;
 
-    inline const void* getComponentData() {
-        return component_.data();
-    }
+    const void* getComponent();
 
     inline Schema::SystemType GetSystemType() {
         return component_.systemType();
@@ -65,7 +122,7 @@ public:
      *
      * @return  A pointer to the system.
      */
-    template <typename TSystemScene>
+    template<typename TSystemScene>
     inline TSystemScene* GetSystemScene() {
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
@@ -76,7 +133,27 @@ public:
 
 protected:
     const Schema::SystemComponent& component_;
-    ISystemScene*               m_pSystemScene;
-    UObject*                    m_entity;
+    // IMPLEMENTATION NOTE
+    // Since only Change Control Managers (CCM) are supposed to subscribe for
+    // notifications sent by PostChange, there are not many observers expected
+    // to be in the list. Another assumption is that repeated attaches are infrequent.
+    // Thus the most frequent operation is the traversal and thus the usual std::list
+    // will suit fine here.
+    std::list<ObserverRequest> observers_;
+    ISystemScene* m_pSystemScene;
+    UObject* m_entity;
+
+
+private:
+
+    /**
+     * Performs an Atomic Compare and Swap.
+     *
+     * @param [in,out]  interestBits  The value to compare and write to.
+     * @param   newBits          The new value to set if needed.
+     * @param   prevBits         The old value to compare to.
+     * @return  The new value if it was written to or original value.
+     */
+    long AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits);
 
 };

@@ -319,7 +319,7 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
 /**
  * @inheritDoc
  */
-Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error UScene::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
     // TODO
     /*switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {

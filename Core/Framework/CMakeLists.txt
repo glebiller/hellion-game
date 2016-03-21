@@ -8,7 +8,6 @@ add_library(Framework
         include/Generic/Framework.h
         include/Generic/Instrumentation.h
         include/Generic/IObserver.h
-        include/Generic/ISubject.h
         include/Generic/Scheduler.h
         include/Manager/ChangeManager.h
         include/Manager/Notification.h
@@ -47,7 +46,6 @@ add_library(Framework
         src/Debugger/SceneChangesDebugger.cpp
         src/Generic/Framework.cpp
         src/Generic/Instrumentation.cpp
-        src/Generic/ISubject.cpp
         src/Generic/Scheduler.cpp
         src/Manager/ChangeManager.cpp
         src/Manager/ServiceManager.cpp

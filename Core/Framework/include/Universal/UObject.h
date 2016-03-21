@@ -19,7 +19,6 @@
 #include <schema/system_type_generated.h>
 
 #include "System/ISystemObject.h"
-#include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 
@@ -30,7 +29,7 @@ class UScene;
  * Implements a universal object that can be extended to add functionality.  By default this
  * universal object does not have any system functionality.
  *
- * @sa  ISubject
+ * @sa  ISystemObject
  * @sa  IObserver
  * @sa  IGeometryObject
  */
@@ -81,7 +80,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges) override;
+    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask SystemChanges) override;
 
     /**
      * @inheritDoc

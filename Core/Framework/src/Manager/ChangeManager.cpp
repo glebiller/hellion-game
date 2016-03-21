@@ -20,10 +20,10 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 
-#include "Generic/ISubject.h"
 #include "Manager/ITaskManager.h"
 #include "Generic/IttNotify.h"
 #include "Generic/IObserver.h"
+#include "System/ISystemObject.h"
 
 // Declare Thread Profiler events
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);
@@ -72,7 +72,7 @@ ChangeManager::~ChangeManager() {
     }
 }
 
-Error ChangeManager::Register(ISubject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
+Error ChangeManager::Register(ISystemObject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
     return Register(pInSubject, pInObserver->GetDesiredSystemChanges(), pInObserver, observerIdBits);
 }
 
@@ -86,7 +86,7 @@ UObject -> ISystemObject -> ?? really useful ?
 
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
-Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
+Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
     BOOST_ASSERT_MSG(pInSubject != nullptr, "Subject cannot be null");
     BOOST_ASSERT_MSG(pInObserver != nullptr, "Observer cannot be null");
 
@@ -95,7 +95,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
         SCOPED_SPIN_LOCK(m_swUpdate);
         unsigned int uID = pInSubject->getObserverId(this);
 
-        if (uID != ISubject::InvalidObserverID) {
+        if (uID != ISystemObject::InvalidObserverID) {
             // Subject has already been registered. Add new observer to the list
             SubjectInfo &si = m_subjectsList[uID];
             si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
@@ -133,7 +133,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
 // Unregister - Remove a subject/observer relationsship
 Error
 ChangeManager::Unregister(
-    ISubject* pInSubject,
+    ISystemObject* pInSubject,
     IObserver* pInObserver
 ) {
     Error curError = Errors::Failure;
@@ -168,17 +168,17 @@ ChangeManager::Unregister(
 
 ///////////////////////////////////////////////////////////////////////////////
 // RemoveSubject - Remove a subject
-Error ChangeManager::RemoveSubject(ISubject* pSubject
+Error ChangeManager::RemoveSubject(ISystemObject* systemObject
 ) {
     Error curError;
     std::vector<ObserverRequest> observersList;
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
-        unsigned int uID = pSubject->getObserverId(this);
-        BOOST_ASSERT(uID != ISubject::InvalidObserverID);
-        BOOST_ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
+        unsigned int uID = systemObject->getObserverId(this);
+        BOOST_ASSERT(uID != ISystemObject::InvalidObserverID);
+        BOOST_ASSERT(m_subjectsList[uID].m_pSubject == systemObject);
 
-        if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pSubject) {
+        if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != systemObject) {
             return Errors::Failure;
         }
 
@@ -189,7 +189,7 @@ Error ChangeManager::RemoveSubject(ISubject* pSubject
     }
     
     for (auto itObs = observersList.begin() ; itObs != observersList.end(); ++itObs) {
-        pSubject->Detach(itObs->m_pObserver);
+        systemObject->Detach(itObs->m_pObserver);
     }
 
     return curError;
@@ -199,7 +199,7 @@ Error ChangeManager::RemoveSubject(ISubject* pSubject
 // ChangeOccurred - Process a change.  This stores all information needed to
 //                  process the change when DistributeQueuedChanges is called.
 Error
-ChangeManager::ChangeOccurred(ISubject* pInChangedSubject, System::Changes::BitMask uInChangedBits) {
+ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes::BitMask uInChangedBits) {
     Error curError = Errors::Undefined;
     BOOST_ASSERT(pInChangedSubject);
 
@@ -251,9 +251,9 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
                 Notification& notif = pList->at(i);
                 // Get subject for notification
                 unsigned int uID = notif.m_pSubject->getObserverId(this);
-                BOOST_ASSERT(uID != ISubject::InvalidObserverID);
+                BOOST_ASSERT(uID != ISystemObject::InvalidObserverID);
 
-                if (uID != ISubject::InvalidObserverID) {
+                if (uID != ISystemObject::InvalidObserverID) {
                     // Get the index for this subject
                     unsigned int index = m_indexList[uID];
 

@@ -96,7 +96,7 @@ void TerrainGraphicObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc.
 ///
-Error TerrainGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error TerrainGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

@@ -45,7 +45,7 @@ void ParticleGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error ParticleGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error ParticleGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     /*if (ChangeType & System::Changes::Physic::Position) {

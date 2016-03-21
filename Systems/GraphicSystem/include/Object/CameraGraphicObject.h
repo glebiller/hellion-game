@@ -66,7 +66,7 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        virtual Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
 protected:
 

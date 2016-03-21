@@ -83,7 +83,7 @@ void CameraGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error CameraGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
     /*if (ChangeType & System::Changes::Physic::Position) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Vector3& Position = *pGeometryObject->GetPosition();

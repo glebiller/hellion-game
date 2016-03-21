@@ -47,7 +47,7 @@ void SkyGraphicObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc.
 ///
-Error SkyGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error SkyGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

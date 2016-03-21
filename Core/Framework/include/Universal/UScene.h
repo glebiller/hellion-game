@@ -40,7 +40,7 @@ public:
     typedef std::list<UObject*>                                         Objects;
 
     struct ObjectLinkData {
-        ISubject*               pSubject;
+        ISystemObject*               pSubject;
         IObserver*              pObserver;
     };
     typedef std::list<ObjectLinkData>       ObjectLinks;
@@ -137,7 +137,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
+    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask SystemChanges);
     
     /**
      * @inheritDoc

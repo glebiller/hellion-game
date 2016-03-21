@@ -42,7 +42,7 @@ Error PassiveInputObject::initialize() {
 /**
  * @inheritDoc
  */
-Error PassiveInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error PassiveInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

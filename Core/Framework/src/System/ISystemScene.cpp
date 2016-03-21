@@ -42,7 +42,7 @@ void ISystemScene::GlobalSceneStatusChanged(GlobalSceneStatus Status) {
 /**
  * @inheritDoc
  */
-Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error ISystemScene::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
     return Errors::Success;
 }
 

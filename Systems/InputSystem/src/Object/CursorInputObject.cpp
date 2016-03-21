@@ -69,7 +69,7 @@ void CursorInputObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc
 ///
-Error CursorInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error CursorInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
     return Errors::Success;
 }

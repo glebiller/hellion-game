@@ -14,7 +14,7 @@
 
 #pragma once
 
-class ISubject;
+class ISystemObject;
 
 #include "DataTypes.h"
 
@@ -22,11 +22,9 @@ class ISubject;
 /// Notification.
 ///
 struct Notification {
-    Notification(ISubject* pSubject, unsigned int changedBits)
-        : m_pSubject(pSubject)
-        , m_changedBits(changedBits)
-    {}
+    Notification(ISystemObject* systemObject, unsigned int changedBits)
+            : m_pSubject(systemObject), m_changedBits(changedBits) { }
 
-    ISubject*   m_pSubject;
-    unsigned int         m_changedBits;
+    ISystemObject* m_pSubject;
+    unsigned int m_changedBits;
 };

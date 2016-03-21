@@ -23,7 +23,6 @@
 
 #include "DataTypes.h"
 #include "Generic/IObserver.h"
-#include "Generic/ISubject.h"
 #include "System/Changes.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
@@ -72,7 +71,7 @@ public:
     /**
      * @inheritDoc
      */
-    virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    virtual Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
     /**
      * Create the system task for this scene.

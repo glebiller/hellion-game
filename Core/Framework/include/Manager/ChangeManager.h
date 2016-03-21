@@ -48,13 +48,13 @@ public:
     // Must be called after construction for a valid Change Manager
 
     // ChangeManager Functionality
-    Error Register(ISubject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
-    Error Register(ISubject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
-    Error Unregister(ISubject* pSubject, IObserver* pObserver);
+    Error Register(ISystemObject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
+    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
+    Error Unregister(ISystemObject* systemObject, IObserver* pObserver);
     Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
 
     // IObserver Functionality
-    Error ChangeOccurred(ISubject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
+    Error ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
         
     /**
      * @inheritDoc
@@ -103,7 +103,7 @@ private:
     static void InitThreadLocalData(void* mgr);
     static void FreeThreadLocalData(void* mgr);
 
-    Error RemoveSubject(ISubject* pSubject);
+    Error RemoveSubject(ISystemObject* systemObject);
 
     static void DistributionCallback(void* param, unsigned int begin, unsigned int end);
     void DistributeRange(unsigned int begin, unsigned int end);

@@ -49,7 +49,7 @@ Error ConnectNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error ConnectNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     if (ChangeType & System::Changes::Input::Action) {

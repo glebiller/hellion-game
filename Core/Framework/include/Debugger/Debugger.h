@@ -102,7 +102,7 @@ public:
      *
      * @param object The updated object.
      */
-    void addUpdatedObject(ISubject* object);
+    void addUpdatedObject(ISystemObject* object);
 
     /**
      * Debug object.
@@ -131,7 +131,7 @@ private:
 
     UScene*                 m_pUScene;
     std::list<std::string>  m_createdObjectIds;
-    std::set<ISubject*>     m_updatedObjects;
+    std::set<ISystemObject*>     m_updatedObjects;
     
     zmq::context_t*         m_pContext;
     zmq::socket_t*          m_pSocket;

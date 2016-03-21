@@ -55,7 +55,7 @@ Error ReplicableNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error ReplicableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error ReplicableNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
     
     if (ChangeType & System::Changes::Physic::Position) {

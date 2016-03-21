@@ -12,22 +12,89 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <Universal/UObject.h>
 #include "System/ISystemObject.h"
+
+#include "Universal/UObject.h"
 
 class UObject;
 
 /**
  * @inheritDoc
  */
-ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent &component)
-        : ISubject(entity), component_(component), m_pSystemScene(pSystemScene), m_entity(entity) {
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, UObject* entity, const Schema::SystemComponent& component)
+        : component_(component), m_pSystemScene(pSystemScene), m_entity(entity) {
 }
 
 /**
  * @inheritDoc
  */
 ISystemObject::~ISystemObject() {
+    for (auto observer : observers_) {
+        observer.m_pObserver->ChangeOccurred(this, 0);
+    }
 
+    observers_.clear();
 }
+
+unsigned int ISystemObject::getObserverId(IObserver* pObserver) const {
+    for (auto observer : observers_) {
+        if (observer.m_pObserver == pObserver) {
+            return observer.m_myID;
+        }
+    }
+
+    return InvalidObserverID;
+}
+
+void ISystemObject::Attach(IObserver* pInObserver, System::Types::BitMask uInIntrestBits, unsigned int uID) {
+    BOOST_ASSERT_MSG(pInObserver, "ISystemObject::Attach: Valid pointer to observer object must be specified");
+    BOOST_ASSERT_MSG(std::find(observers_.begin(), observers_.end(), pInObserver) == observers_.end(),
+                     "ISystemObject::Attach: Observer has already been attached. Use ISystemObject::UpdateInterestBits instead.");
+    observers_.push_back(ObserverRequest(pInObserver, uID, uInIntrestBits));
+}
+
+void ISystemObject::Detach(IObserver* pInObserver) {
+    auto it = std::find(observers_.begin(), observers_.end(), pInObserver);
+    if (it != observers_.end()) {
+        observers_.erase(it);
+    }
+}
+
+void ISystemObject::UpdateInterestBits(IObserver* pInObserver, unsigned int uInIntrestBits) {
+    auto it = std::find(observers_.begin(), observers_.end(), pInObserver);
+    if (it != observers_.end()) {
+        // No lock is used, but updates can happen concurrently. So use interlocked operation
+        long prevBits;
+        long newBits = long(it->m_interestBits | uInIntrestBits);
+        do {
+            prevBits = it->m_interestBits;
+        } while (AtomicCompareAndSwap((long*) &it->m_interestBits, newBits, prevBits) != prevBits);
+    }
+}
+
+void ISystemObject::PostChanges(System::Changes::BitMask uInChangedBits) {
+    for (auto observerRequest : observers_) {
+        unsigned int changedBitsOfInterest = observerRequest.m_interestBits & uInChangedBits;
+        if (changedBitsOfInterest) {
+            observerRequest.m_pObserver->ChangeOccurred(this, changedBitsOfInterest);
+        }
+    }
+}
+
+const void* ISystemObject::getComponent() {
+    return component_.data();
+}
+
+long ISystemObject::AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits) {
+#if defined(_MSC_VER)
+    return _InterlockedCompareExchange(interestBits, newBits, prevBits);
+#elif defined(__GNUC__)
+    return __sync_val_compare_and_swap(interestBits, prevBits, newBits);
+#endif
+}
+
+
+
+
+
 

@@ -57,7 +57,7 @@ Error MovablePhysicObject::initialize() {
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error MovablePhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     if (ChangeType & System::Changes::Input::Velocity) {

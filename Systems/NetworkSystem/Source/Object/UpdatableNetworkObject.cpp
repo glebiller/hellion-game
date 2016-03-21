@@ -61,7 +61,7 @@ Error UpdatableNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error UpdatableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error UpdatableNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

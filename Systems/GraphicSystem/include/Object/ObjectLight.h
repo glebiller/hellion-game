@@ -72,7 +72,7 @@ class GraphicObjectLight : public GraphicObject {
         /**
          * @inheritDoc
          */
-        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
     protected:
 

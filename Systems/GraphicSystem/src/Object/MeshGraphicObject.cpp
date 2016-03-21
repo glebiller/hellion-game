@@ -69,12 +69,12 @@ void MeshGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error MeshGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     // TODO next step
     if (ChangeType & Schema::EntityChange::PhysicPosition) {
-        auto component = pSubject->getComponent(Schema::ComponentType::PhysicPosition);
+        auto component = systemObject->getComponent();
         auto position = static_cast<const Schema::Components::PhysicPosition *>(component);
         m_pNode->setPosition(position->x(), position->y(), position->z());
     }

@@ -54,7 +54,7 @@ void CursorGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error CursorGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error CursorGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
     
     return Errors::Success;

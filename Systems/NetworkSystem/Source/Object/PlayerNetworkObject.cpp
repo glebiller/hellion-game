@@ -57,7 +57,7 @@ Error PlayerNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error PlayerNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
     
     if (ChangeType & System::Changes::Physic::Position) {

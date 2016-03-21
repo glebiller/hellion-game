@@ -62,7 +62,7 @@ void LightGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error LightGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error LightGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
     return Errors::Success;
 }
