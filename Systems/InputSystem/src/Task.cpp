@@ -36,13 +36,6 @@ InputTask::~InputTask() {
 ///
 /// @inheritDoc
 ///
-Error InputTask::initialize() {
-    return Errors::Success;
-}
-
-///
-/// @inheritDoc
-///
 void InputTask::Update(float DeltaTime) {
     OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);

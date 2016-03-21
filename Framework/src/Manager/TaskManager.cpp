@@ -95,7 +95,7 @@ void TaskManager::SystemTaskCallback(void* pData) {
  */
 void TaskManager::InitAffinityData(void* mgr) {
     TaskManager* pThis = static_cast<TaskManager*>(mgr);
-    SCOPED_SPIN_LOCK(pThis->m_spinMutex);
+    tbb::spin_mutex::scoped_lock _lock(pThis->m_spinMutex);
     pThis->m_affinityIDs.push_back(tbb::task::self().affinity());
 }
 
@@ -232,7 +232,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     // This method triggers a synchronized callback to be called once by each thread used
     // by the TaskManager.  This method waits until all callbacks have executed.
     // only one at a time here
-    SCOPED_SPIN_LOCK(m_tSynchronizedCallbackMutex);
+    tbb::spin_mutex::scoped_lock _lock(m_tSynchronizedCallbackMutex);
     __ITT_EVENT_START(m_tSynchronizeTPEvent, PROFILE_TASKMANAGER);
     int uNumberOfThreads = m_uNumberOfThreads;
 

@@ -19,6 +19,7 @@
 #include <boost/thread/tss.hpp>
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
+#include <tbb/spin_mutex.h>
 
 #include "Manager/ITaskManager.h"
 #include "Generic/IttNotify.h"
@@ -92,7 +93,7 @@ Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMas
 
     if (pInSubject->GetPotentialSystemChanges() & observerIntrestBits) {
         // Lock out updates while we register a subject
-        SCOPED_SPIN_LOCK(m_swUpdate);
+        tbb::spin_mutex::scoped_lock _lock(m_swUpdate);
         unsigned int uID = pInSubject->getObserverId(this);
 
         if (uID != ISystemObject::InvalidObserverID) {
@@ -139,7 +140,7 @@ ChangeManager::Unregister(
     Error curError = Errors::Failure;
 
     if (pInSubject && pInObserver) {
-        SCOPED_SPIN_LOCK(m_swUpdate);
+        tbb::spin_mutex::scoped_lock _lock(m_swUpdate);
         unsigned int uID = pInSubject->getObserverId(this);
 
         if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pInSubject) {
@@ -173,7 +174,7 @@ Error ChangeManager::RemoveSubject(ISystemObject* systemObject
     Error curError;
     std::vector<ObserverRequest> observersList;
     {
-        SCOPED_SPIN_LOCK(m_swUpdate);
+        tbb::spin_mutex::scoped_lock _lock(m_swUpdate);
         unsigned int uID = systemObject->getObserverId(this);
         BOOST_ASSERT(uID != ISystemObject::InvalidObserverID);
         BOOST_ASSERT(m_subjectsList[uID].m_pSubject == systemObject);
@@ -409,7 +410,7 @@ void ChangeManager::InitThreadLocalData(void* arg) {
         mgr->m_tlsNotifyList.reset(new std::vector<Notification>());
         mgr->m_tlsNotifyList->reserve(8192);
         // Lock out the updates and add this NotifyList to m_notifyLists
-        SCOPED_SPIN_LOCK(mgr->m_swUpdate);
+        tbb::spin_mutex::scoped_lock _lock(mgr->m_swUpdate);
         mgr->m_notifyLists.push_back(mgr->m_tlsNotifyList.get());
     } else {
         mgr->m_tlsNotifyList->clear();

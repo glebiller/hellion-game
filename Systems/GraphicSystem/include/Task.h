@@ -44,11 +44,6 @@ public:
     ///
     /// @inheritDoc.
     ///
-    Error initialize();
-
-    ///
-    /// @inheritDoc.
-    ///
     void Update(float DeltaTime);
 
     ///

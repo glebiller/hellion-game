@@ -56,8 +56,8 @@ set_property(TARGET TBB PROPERTY
         INTERFACE_LINK_LIBRARIES ${TBB_LIBRARIES})
 
 #enable_testing()
-add_subdirectory(Core)
 add_subdirectory(Deps)
+add_subdirectory(Framework)
 add_subdirectory(Main)
 add_subdirectory(Systems)
 

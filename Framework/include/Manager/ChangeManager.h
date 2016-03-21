@@ -14,16 +14,16 @@
 
 #pragma once
 
-#include <boost/log/sources/logger.hpp>
-#include <boost/thread/tss.hpp>
 #include <set>
 #include <list>
+#include <boost/log/sources/logger.hpp>
+#include <boost/thread/tss.hpp>
+#include <tbb/spin_mutex.h>
 #include <System/Types.h>
 
 #include "Generic/IObserver.h"
 #include "Manager/Notification.h"
 #include "Manager/SubjectInfo.h"
-#include "SpinMutex.h"
 
 class ITaskManager;
 
@@ -48,14 +48,19 @@ public:
     // Must be called after construction for a valid Change Manager
 
     // ChangeManager Functionality
-    Error Register(ISystemObject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
-    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
+    Error Register(ISystemObject* pInSubject, IObserver* pInObserver,
+                   System::Types::BitMask observerIdBits = System::Types::All);
+
+    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver,
+                   System::Types::BitMask observerIdBits = System::Types::All);
+
     Error Unregister(ISystemObject* systemObject, IObserver* pObserver);
+
     Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
 
     // IObserver Functionality
     Error ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
-        
+
     /**
      * @inheritDoc
      */
@@ -74,41 +79,41 @@ public:
     inline std::vector<Notification>& GetNotifyList(unsigned int tlsIndex);
 
 protected:
-    ITaskManager*       m_pTaskManager;
+    ITaskManager* m_pTaskManager;
 
     struct MappedNotification {
         MappedNotification(unsigned int uID, unsigned int changedBits)
-            : m_subjectID(uID)
-            , m_changedBits(changedBits)
-        {}
+                : m_subjectID(uID), m_changedBits(changedBits) { }
 
         unsigned int m_subjectID;
         unsigned int m_changedBits;
     };
 
-    unsigned int                                     m_lastID;
-    std::vector<unsigned int>                        m_indexList;
-    std::vector<unsigned int>                        m_freeIDsList;
-    std::vector<SubjectInfo>                m_subjectsList;
-    std::list<std::vector<Notification>*>   m_notifyLists;
-    std::vector<MappedNotification>         m_cumulativeNotifyList;
+    unsigned int m_lastID;
+    std::vector<unsigned int> m_indexList;
+    std::vector<unsigned int> m_freeIDsList;
+    std::vector<SubjectInfo> m_subjectsList;
+    std::list<std::vector<Notification>*> m_notifyLists;
+    std::vector<MappedNotification> m_cumulativeNotifyList;
 
     boost::thread_specific_ptr<std::vector<Notification>> m_tlsNotifyList;
 
-    DEFINE_SPIN_MUTEX(m_swUpdate);
+    tbb::spin_mutex m_swUpdate;
 
 private:
     boost::log::sources::logger logger_;
 
     static void InitThreadLocalData(void* mgr);
+
     static void FreeThreadLocalData(void* mgr);
 
     Error RemoveSubject(ISystemObject* systemObject);
 
     static void DistributionCallback(void* param, unsigned int begin, unsigned int end);
+
     void DistributeRange(unsigned int begin, unsigned int end);
 
-    System::Types::BitMask      m_systems2BeNotified;
-    System::Changes::BitMask    m_ChangesToDist;
+    System::Types::BitMask m_systems2BeNotified;
+    System::Changes::BitMask m_ChangesToDist;
 
 };

@@ -37,11 +37,6 @@ public:
     /// Destructor.
     ///
     virtual ~ISystemTask();
-    
-    ///
-    /// @inheritDoc.
-    ///
-    virtual Error initialize() = 0;
 
     virtual void Update(float DeltaTime) = 0;
 

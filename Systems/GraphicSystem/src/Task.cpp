@@ -43,13 +43,6 @@ GraphicTask::~GraphicTask() {
 ///
 /// @inheritDoc
 ///
-Error GraphicTask::initialize() {
-    return Errors::Success;
-}
-
-///
-/// @inheritDoc
-///
 void GraphicTask::Update(float DeltaTime) {
     // Since rendering is a limiting serial stage in some (if not most) of the frames,
     // we do not want it to be preempted. So temporarily boost up its thread priority.

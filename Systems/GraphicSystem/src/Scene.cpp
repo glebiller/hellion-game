@@ -45,8 +45,6 @@ extern IServiceManager* g_serviceManager;
 static const unsigned int maxObjectsPerBatch = 40;
 static const unsigned int UpdateGrainSize = 120;
 
-DEFINE_SPIN_MUTEX(GraphicScene::m_mutex);
-
 // Prototypes
 void ProcessObjects(void* Data);
 

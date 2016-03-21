@@ -8,11 +8,15 @@ add_library(Framework
         include/Generic/Framework.h
         include/Generic/Instrumentation.h
         include/Generic/IObserver.h
+        include/Generic/IttNotify.h
         include/Generic/Scheduler.h
         include/Manager/ChangeManager.h
+        include/Manager/IServiceManager.h
+        include/Manager/ITaskManager.h
         include/Manager/Notification.h
         include/Manager/ObserverRequest.h
         include/Manager/ServiceManager.h
+        include/Manager/SubjectInfo.h
         include/Manager/TaskManager.h
         include/Service/DefinitionService.h
         include/Service/RuntimeService.h
@@ -36,11 +40,16 @@ add_library(Framework
         include/System/ISystemScene.h
         include/System/ISystemTask.h
         include/Task/GenericCallbackData.h
+        include/Task/GenericCallbackTask.h
         include/Task/ParallelForBody.h
+        include/Task/PerformanceHint.h
         include/Task/StallTask.h
         include/Task/SynchronizeTask.h
         include/Universal/UObject.h
         include/Universal/UScene.h
+        include/DataTypes.h
+        include/Defines.h
+        include/Errors.h
         src/Debugger/Debugger.cpp
         src/Debugger/ObjectChangesDebugger.cpp
         src/Debugger/SceneChangesDebugger.cpp
@@ -86,7 +95,6 @@ target_link_libraries(Framework
         Boost-system
         Boost-filesystem
         TBB
-        Generated
         )
 
 install(TARGETS Framework

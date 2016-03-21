@@ -39,11 +39,6 @@ public:
     /// @inheritDoc.
     ///
     ~PhysicTask();
-
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
         
     ///
     /// @inheritDoc.

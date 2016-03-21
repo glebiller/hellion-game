@@ -24,12 +24,12 @@
 #include <tbb/task.h>
 #include <tbb/task_scheduler_init.h>
 #include <tbb/tbb_thread.h>
+#include <tbb/spin_mutex.h>
 
 #pragma warning( pop )
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "SpinMutex.h"
 #include "Generic/IttNotify.h"
 #include "Manager/ITaskManager.h"
 
@@ -184,7 +184,7 @@ private:
     tbb::tbb_thread::id m_uPrimaryThreadID;
     boost::interprocess::named_semaphore* m_hStallPoolSemaphore;
     tbb::task* m_pStallPoolParent;
-    DEFINE_SPIN_MUTEX(m_tSynchronizedCallbackMutex);
+    tbb::spin_mutex m_tSynchronizedCallbackMutex;
 
     tbb::task_scheduler_init* m_pTbbScheduler;
 
@@ -250,7 +250,7 @@ private:
     typedef std::vector<tbb::task::affinity_id> AffinityIDsList;
     AffinityIDsList m_affinityIDs;
 
-    DEFINE_SPIN_MUTEX(m_spinMutex);
+    tbb::spin_mutex m_spinMutex;
 
     static void InitAffinityData(void* mgr);
 

@@ -36,11 +36,6 @@ public:
     /// @inheritDoc.
     ///
     ~InputTask();
-
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
     
     ///
     /// @inheritDoc.

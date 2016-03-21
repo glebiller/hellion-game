@@ -41,8 +41,6 @@ class UScene;
 
 class UObject;
 
-class Gdf;
-
 class ISystem;
 
 ///

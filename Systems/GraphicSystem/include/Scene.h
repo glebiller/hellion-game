@@ -21,7 +21,6 @@
 #pragma warning( pop )
 
 #include "DataTypes.h"
-#include "SpinMutex.h"
 #include "Task.h"
 
 class GraphicSystem;
@@ -44,8 +43,6 @@ class GraphicObject;
 class GraphicScene : public ISystemScene {
 
 public:
-
-    DECLARE_STATIC_SPIN_MUTEX(m_mutex);
 
     /**
      * @inheritDoc

@@ -43,15 +43,6 @@ PhysicTask::~PhysicTask() {
 ///
 /// @inheritDoc
 ///
-Error PhysicTask::initialize() {
-
-
-    return Errors::Success;
-}
-
-///
-/// @inheritDoc
-///
 void PhysicTask::Update(float DeltaTime) {
     if (DeltaTime > 0.0f) {
         m_DeltaTime = DeltaTime;

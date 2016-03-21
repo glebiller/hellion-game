@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,31 +14,22 @@
 
 #pragma once
 
-// TODO Remove
+#include <vector>
 
-#include "Defines.h"
+#include "DataTypes.h"
+#include "Manager/ObserverRequest.h"
 
-#if USE_SPIN_MUTEX
+class ISystemObject;
+class ObserversList;
 
-#include <tbb/spin_mutex.h>
+///
+/// Represents a list of observers extended with cumulative data.
+///
+struct SubjectInfo {
+    SubjectInfo() : m_pSubject(nullptr), m_interestBits(0) {
+    }
 
-#define DEFINE_SPIN_MUTEX(mutex)             tbb::spin_mutex mutex
-#define DECLARE_STATIC_SPIN_MUTEX(mutex)     static tbb::spin_mutex mutex
-
-#define SCOPED_SPIN_LOCK(mutex)              tbb::spin_mutex::scoped_lock _lock(mutex)
-#define SCOPED_SPIN_LOCK_CONFLICT( mutex )   tbb::spin_mutex::scoped_lock _lock##mutex(mutex)
-#define SCOPED_SPIN_LOCK_BEGIN(mutex)        { tbb::spin_mutex::scoped_lock _lock(mutex)
-#define SCOPED_SPIN_LOCK_END()               }
-
-#else /* !USE_SPIN_MUTEX */
-
-#define DEFINE_SPIN_MUTEX(mutex)
-#define DECLARE_STATIC_SPIN_MUTEX(mutex)
-
-#define SCOPED_SPIN_LOCK(mutex)
-#define SCOPED_SPIN_LOCK_BEGIN(mutex)
-#define SCOPED_SPIN_LOCK_END()
-
-#endif /* !USE_SPIN_MUTEX */
-
-
+    ISystemObject* m_pSubject;
+    unsigned int m_interestBits;
+    std::vector<ObserverRequest> m_observersList;
+};
