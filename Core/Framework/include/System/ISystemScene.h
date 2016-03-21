@@ -35,7 +35,7 @@ class ISystemTask;
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
  */
-class ISystemScene : public ISubject, public IObserver {
+class ISystemScene : public IObserver {
 
 public:
 

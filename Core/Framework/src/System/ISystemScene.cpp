@@ -21,9 +21,8 @@
  * @inheritDoc
  */
 ISystemScene::ISystemScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
-        : ISubject()
-        , m_pSystem(pSystem),
-          systemScene(systemScene) {
+        : m_pSystem(pSystem)
+        , systemScene(systemScene) {
     BOOST_ASSERT(m_pSystem != nullptr);
 }
 
@@ -51,11 +50,10 @@ Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask 
  * @inheritDoc
  */
 ISystemObject* ISystemScene::CreateObject(UObject* entity, const Schema::SystemComponent* component) {
-    // TODO handle unkown factory
     ObjectFactory objectFactory = m_ObjectFactories[component->data_type()];
     ISystemObject* systemObject = objectFactory(*this, *entity, *component);
     BOOST_ASSERT_MSG(systemObject != nullptr, "Impossible to create the object");
-    m_pObjects[systemObject->getEntity()->getId()] = systemObject;
+    m_pObjects[entity->getId()] = systemObject;
     return systemObject;
 }
 

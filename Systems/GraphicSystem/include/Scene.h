@@ -65,13 +65,6 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() override {
-        return System::Changes::None;
-    };
-
-    /**
-     * @inheritDoc
-     */
     System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
     };
@@ -86,8 +79,6 @@ public:
 
 
     virtual void createTask() override;
-
-protected:
 
 protected:
     Ogre::SceneManager* m_pSceneManager;

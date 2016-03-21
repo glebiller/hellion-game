@@ -74,7 +74,8 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 
     // TODO next step
     if (ChangeType & Schema::EntityChange::PhysicPosition) {
-        auto position = pSubject->getPosition();
+        auto component = pSubject->getComponent(Schema::ComponentType::PhysicPosition);
+        auto position = static_cast<const Schema::Components::PhysicPosition *>(component.data());
         m_pNode->setPosition(position->x(), position->y(), position->z());
     }
     /*if (ChangeType & System::Changes::Physic::Orientation) {

@@ -33,7 +33,7 @@ class UScene;
  * @sa  IObserver
  * @sa  IGeometryObject
  */
-class UObject : public ISubject, public IObserver {
+class UObject : public IObserver {
 public:
     typedef std::map<Schema::SystemType, ISystemObject*>      SystemObjects;
 
@@ -64,7 +64,7 @@ public:
      *
      * @return  A constant reference to the system object mapping.
      */
-    const SystemObjects& GetExtensions();
+    const std::map<Schema::ComponentType, ISystemObject*>& GetExtensions();
 
     /**
      * Gets the specified system object.
@@ -75,24 +75,17 @@ public:
      *
      * @return  null if it fails, else the extension.
      */
-    ISystemObject* GetExtension(Schema::SystemType System);
+    ISystemObject* GetExtension(Schema::ComponentType componentType);
 
     /**
      * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges) override;
-    
+
     /**
      * @inheritDoc
      */
     inline System::Changes::BitMask GetDesiredSystemChanges() override {
-        return System::Changes::None;
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    inline System::Changes::BitMask GetPotentialSystemChanges() override {
         return System::Changes::None;
     }
 
@@ -135,7 +128,7 @@ protected:
     IChangeManager*                                     m_pObjectCCM;
 
     UScene*                                             m_pScene;
-    SystemObjects                                       m_ObjectExtensions; // EntityComponent
+    std::map<Schema::ComponentType, ISystemObject*>     m_ObjectExtensions;
     UObject*                                            parent_;
     std::list<UObject*>                                 children_;
 

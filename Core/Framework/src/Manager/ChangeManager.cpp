@@ -85,16 +85,17 @@ UObject -> ISystemObject -> ?? really useful ?
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
 Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
-    Error curError = Errors::Failure;
+    BOOST_ASSERT_MSG(pInSubject != nullptr, "Subject cannot be null");
+    BOOST_ASSERT_MSG(pInObserver != nullptr, "Observer cannot be null");
 
-    if (pInSubject && pInObserver) {
-        // Lock out updates while we register a subjext
+    if (pInSubject->GetPotentialSystemChanges() & observerIntrestBits) {
+        // Lock out updates while we register a subject
         SCOPED_SPIN_LOCK(m_swUpdate);
         unsigned int uID = pInSubject->getObserverId(this);
 
         if (uID != ISubject::InvalidObserverID) {
             // Subject has already been registered. Add new observer to the list
-            SubjectInfo& si = m_subjectsList[uID];
+            SubjectInfo &si = m_subjectsList[uID];
             si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
             observerIntrestBits &= ~si.m_interestBits;
 
@@ -114,17 +115,15 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
                 m_freeIDsList.pop_back();
             }
 
-            SubjectInfo& si = m_subjectsList[uID];
+            SubjectInfo &si = m_subjectsList[uID];
             si.m_pSubject = pInSubject;
             si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
             si.m_interestBits = observerIntrestBits;
             pInSubject->Attach(this, observerIntrestBits, uID);
         }
-
-        curError = Errors::Success;
     }
 
-    return curError;
+    return Errors::Success;
 }
 
 

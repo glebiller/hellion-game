@@ -69,8 +69,7 @@ UScene::~UScene() {
     //
     // Send "post-destroying objects" message to the scene extensions then delete the scene.
     //
-    SystemScenes systemScenes = m_SystemScenes;
-    for (auto systemScene : systemScenes) {
+    for (auto systemScene : m_SystemScenes) {
         ISystemScene* pSystemScene = systemScene.second;
         pSystemScene->GlobalSceneStatusChanged(
             ISystemScene::GlobalSceneStatus::PostDestroyingObjects
@@ -138,14 +137,9 @@ ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemS
     // TODO move to SceneConstructor
     pScene->createTask();
     //
-    // Register all changes made by the scene.
-    //
-    m_pSceneCCM->Register(pScene, System::Changes::Generic::All, this);
-    //
     // Add the scene to the collection.
     //
     m_SystemScenes[systemType] = pScene;
-
     return pScene;
 }
 
@@ -169,10 +163,6 @@ Error UScene::Unextend(ISystemScene* pScene) {
     auto it = m_SystemScenes.find(SystemType);
     BOOST_ASSERT_MSG(it != m_SystemScenes.end(), "The scene to delete for its system type doesn't exist.");
     m_SystemScenes.erase(it);
-    //
-    // Unregister the scene from the CCM.
-    //
-    m_pSceneCCM->Unregister(pScene, this);
     //
     // Call the system to delete it's scene.
     //
@@ -255,7 +245,6 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     }
 
     m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-
     return pObject;
 }
 
@@ -263,15 +252,9 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
  * @inheritDoc
  */
 void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent* systemComponent) {
-    UObject::SystemObjects extensions = pObject->GetExtensions();
-    if (extensions.find(systemComponent->systemType()) != extensions.end()) {
-        return;
-    }
-
     const Schema::SystemType& type = systemComponent->systemType();
     ISystemScene* systemScene = m_SystemScenes.find(type)->second;
     ISystemObject* pSystemObject = pObject->Extend(systemScene, systemComponent);
-    BOOST_ASSERT(pSystemObject != NULL);
     m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
 };
 
@@ -330,30 +313,6 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
         // Inform the link requester that the link has been established.
         //
         pSubject->PostChanges(System::Changes::Link);
-    }
-}
-
-/**
- * @inheritDoc
- */
-void UScene::CreateObjectLink(UObject* pSubject, ISystemObject* pObserver) {
-    //
-    // Register objects with the CCM.
-    //
-    System::Changes::BitMask Changes =
-        pSubject->GetPotentialSystemChanges() & pObserver->GetDesiredSystemChanges();
-
-    if (Changes) {
-        m_pObjectCCM->Register(pSubject, Changes, pObserver);
-        //
-        // Hold on to the list for unregistering later.
-        //
-        ObjectLinkData old = { pSubject, pObserver };
-        m_ObjectLinks.push_back(old);
-        //
-        // Inform the link requester that the link has been established.
-        //
-        pSubject->PostChanges(System::Changes::ParentLink);
     }
 }
 

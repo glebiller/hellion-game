@@ -49,11 +49,16 @@ public:
 
     virtual void Update(float DeltaTime) = 0;
 
-    /**
-     * @inheritDoc
-     */
+    inline const void* getComponentData() {
+        return component_.data();
+    }
+
     inline Schema::SystemType GetSystemType() {
         return component_.systemType();
+    }
+
+    inline Schema::ComponentType getComponentType() {
+        return component_.data_type();
     }
 
     /**
@@ -69,6 +74,8 @@ public:
     inline UObject* getEntity() {
         return m_entity;
     }
+
+    const void* getComponent(Schema::ComponentType componentType) override;
 
 protected:
     const Schema::SystemComponent& component_;

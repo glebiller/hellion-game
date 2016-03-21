@@ -135,14 +135,6 @@ public:
     void CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver);
 
     /**
-     * Creates object link.
-     *
-     * @param [in,out]  pSubject    If non-null, the subject.
-     * @param [in,out]  pObserver   If non-null, the observer.
-     */
-    void CreateObjectLink(UObject* pSubject, ISystemObject* pObserver);
-    
-    /**
      * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);

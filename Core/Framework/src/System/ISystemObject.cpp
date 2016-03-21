@@ -35,3 +35,8 @@ ISystemObject::~ISystemObject() {
     
 }
 
+const void* ISystemObject::getComponent(Schema::ComponentType componentType) {
+ // TODO make the subject be the UObject instead
+ return m_entity->GetExtension(componentType)->getComponentData();
+}
+

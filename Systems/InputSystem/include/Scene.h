@@ -51,13 +51,6 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() override {
-        return System::Changes::Generic::DeleteObject;
-    };
-
-    /**
-     * @inheritDoc
-     */
     System::Changes::BitMask GetDesiredSystemChanges() override {
         return System::Changes::None;
     };

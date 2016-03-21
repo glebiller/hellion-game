@@ -26,7 +26,8 @@
  * @inheritDoc
  */
 UObject::UObject(UScene* pScene, const Schema::SceneEntity &sceneEntity, UObject* parent)
-        : ISubject(), m_pObjectCCM(pScene->getObjectCCM()), m_pScene(pScene) {
+        : m_pObjectCCM(pScene->getObjectCCM())
+        , m_pScene(pScene) {
     entitySchema_ = &sceneEntity;
 }
 
@@ -34,10 +35,8 @@ UObject::UObject(UScene* pScene, const Schema::SceneEntity &sceneEntity, UObject
  * @inheritDoc
  */
 UObject::~UObject() {
-    SystemObjects SysObjs = m_ObjectExtensions;
-
-    for (auto it = SysObjs.begin(); it != SysObjs.end(); it++) {
-        Unextend(it->second->GetSystemScene<ISystemScene>());
+    for (auto& it : m_ObjectExtensions) {
+        Unextend(it.second->GetSystemScene<ISystemScene>());
     }
 
     m_ObjectExtensions.clear();
@@ -47,58 +46,18 @@ UObject::~UObject() {
  * @inheritDoc
  */
 ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemComponent* component) {
-    BOOST_ASSERT(pSystemScene != NULL);
-    BOOST_ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
+    BOOST_ASSERT_MSG(pSystemScene != nullptr, "SystemScene cannot be null");
 
     ISystemObject* pSystemObject = pSystemScene->CreateObject(this, component);
-    BOOST_ASSERT(pSystemObject != NULL);
-
-    //
-    // Get the changes this object will make and is looking for.
-    //
-    System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
-    System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
-
-    //
-    // Register each object with scenes that care about the object's changes.
-    //
-    UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (auto it : pScenes) {
-        ISystemScene* pScene = it.second;
-
-        if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Register(pSystemObject, pScene);
-        }
+    for (auto it : m_pScene->GetSystemScenes()) {
+        m_pObjectCCM->Register(pSystemObject, it.second);
     }
-
-    //
-    // Register each of the systems with each other.
-    //
     for (auto it : m_ObjectExtensions) {
-        ISystemObject* pObj = it.second;
-        if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
-            m_pObjectCCM->Register(pObj, pSystemObject->GetDesiredSystemChanges(), pSystemObject);
-        }
-        if (SysObjPotentialChanges & pObj->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Register(pSystemObject, pObj->GetDesiredSystemChanges(), pObj);
-        }
+        m_pObjectCCM->Register(it.second, pSystemObject);
+        m_pObjectCCM->Register(pSystemObject, it.second);
     }
 
-    //
-    // Add the system object to the list.
-    //
-    Schema::SystemType SystemType = pSystemObject->GetSystemType();
-    m_ObjectExtensions[SystemType] = pSystemObject;
-
-    //
-    // Set up the speed path for the geometry and graphics objects.
-    //
-    // TODO is it really usefull ?
-    /*if (SystemType == Proto::SystemType::Physic) {
-        m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
-        BOOST_ASSERT(m_pGeometryObject != NULL);
-    }*/
-
+    m_ObjectExtensions[component->data_type()] = pSystemObject;
     return pSystemObject;
 }
 
@@ -107,66 +66,53 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const Schema::SystemC
  */
 void UObject::Unextend(ISystemScene* pSystemScene) {
     BOOST_ASSERT(pSystemScene != NULL);
-    //
-    // Get the iterator for the object.
-    //
-    Schema::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
-    auto SysObjIt = m_ObjectExtensions.find(SystemType);
-    BOOST_ASSERT_MSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
-    ISystemObject* pSystemObject = SysObjIt->second;
 
-    //
-    // Go through all the other systems and unregister them with this as subject and observer.
-    //  The CCM should know if the objects are registered or not, and if not won't do anything.
-    //
-    for (auto it : m_ObjectExtensions) {
-        ISystemObject* pObj = it.second;
+    for(auto iterator = m_ObjectExtensions.begin(); iterator != m_ObjectExtensions.end(); iterator++) {
+        auto systemObject = iterator->second;
+        if (systemObject->GetSystemType() != pSystemScene->GetSystemType()) {
+            continue;
+        }
 
         //
-        // Make sure he system object is not unregistering as an observer of itself.
+        // Go through all the other systems and unregister them with this as subject and observer.
+        //  The CCM should know if the objects are registered or not, and if not won't do anything.
         //
-        if (pSystemObject != pObj) {
-            m_pObjectCCM->Unregister(pObj, pSystemObject);
-            m_pObjectCCM->Unregister(pSystemObject, pObj);
+        for (auto& it : m_ObjectExtensions) {
+            if (systemObject != it.second) {
+                m_pObjectCCM->Unregister(it.second, systemObject);
+                m_pObjectCCM->Unregister(systemObject, it.second);
+            }
         }
-    }
 
-    //
-    // Unregister each object with scenes that cared about the object's changes.
-    //
-    UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (auto it = pScenes.begin(); it != pScenes.end(); it++) {
-        ISystemScene* pScene = it->second;
-
-        if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Unregister(pSystemObject, pScene);
+        //
+        // Unregister each object with scenes that cared about the object's changes.
+        //
+        UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
+        for (auto it = pScenes.begin(); it != pScenes.end(); it++) {
+            if (systemObject->GetPotentialSystemChanges() & it->second->GetDesiredSystemChanges()) {
+                m_pObjectCCM->Unregister(systemObject, it->second);
+            }
         }
-    }
 
-    //
-    // Destroy the object.
-    //
-    pSystemScene->DestroyObject(pSystemObject);
-    //
-    // Remove the object from the map.
-    //
-    m_ObjectExtensions.erase(SysObjIt);
+        pSystemScene->DestroyObject(systemObject);
+        m_ObjectExtensions.erase(iterator->first);
+    }
 }
 
 /**
  * @inheritDoc
  */
-const UObject::SystemObjects &UObject::GetExtensions() {
+const std::map<Schema::ComponentType, ISystemObject*> &UObject::GetExtensions() {
     return m_ObjectExtensions;
 }
 
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::GetExtension(Schema::SystemType SystemType) {
+ISystemObject* UObject::GetExtension(Schema::ComponentType componentType) {
     ISystemObject* pSystemObject = nullptr;
 
-    auto it = m_ObjectExtensions.find(SystemType);
+    auto it = m_ObjectExtensions.find(componentType);
     if (it != m_ObjectExtensions.end()) {
         pSystemObject = it->second;
     }

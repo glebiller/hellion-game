@@ -18,6 +18,8 @@
 #include <list>
 #include <schema/physic_components_generated.h>
 #include <schema/input_components_generated.h>
+#include <Core/Framework/include/schema/component_type_generated.h>
+#include <Core/Framework/include/schema/scene_generated.h>
 
 #include "DataTypes.h"
 #include "System/Changes.h"
@@ -108,13 +110,7 @@ public:
      */
     void PostChanges(System::Changes::BitMask uInChangedBits);
 
-    virtual Schema::Components::PhysicPosition* getPosition() {
-        return nullptr;
-    }
-
-    virtual Schema::Components::InputVelocity* getVelocity() {
-        return nullptr;
-    }
+    virtual const void* getComponent(Schema::ComponentType componentType) = 0;
 
 protected:
 

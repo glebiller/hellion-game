@@ -82,11 +82,6 @@ public:
      */
     void createShot();
 
-
-    Schema::Components::InputVelocity* getVelocity() override {
-        return velocity_;
-    }
-
 private:
     Schema::Components::InputVelocity* velocity_;
 

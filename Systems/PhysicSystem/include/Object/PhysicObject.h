@@ -75,10 +75,6 @@ public:
      */
     void Update(float DeltaTime) override;
 
-    Schema::Components::PhysicPosition* getPosition() override {
-        return position_;
-    }
-
 protected:
     Schema::Components::PhysicPosition* position_;
     btRigidBody* rigidBody_;
