@@ -18,7 +18,7 @@
 #include <System/ISystemObject.h>
 
 #include "Scene.h"
-#include "System.h"
+#include "GraphicSystemSystem.h"
 #include "Object/Object.h"
 #include "Object/MeshGraphicObject.h"
 

@@ -88,7 +88,6 @@ protected:
     float m_LinearStart;
     float m_LinearEnd;
 
-    bool m_bPause;
     float m_fDeltaTime;
 
 private:

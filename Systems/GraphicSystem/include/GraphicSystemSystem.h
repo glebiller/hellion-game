@@ -22,12 +22,13 @@
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
 #include <OgreOverlaySystem.h>
+#include <OgreLog.h>
 
 #pragma warning( pop )
 
 #include <schema/graphic_system_generated.h>
 #include "Errors.h"
-#include "System.h" 
+#include "GraphicSystemSystem.h"
 #include "System/ISystem.h"
 
 class GraphicScene;
@@ -41,7 +42,7 @@ class GraphicTask;
  * @sa  ISystem
  * @sa  Ogre::WindowEventListener
  */
-class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
+class GraphicSystem : public ISystem, public Ogre::LogListener, public Ogre::WindowEventListener {
 public:
 
     /**
@@ -89,13 +90,9 @@ public:
         return m_pOverlaySystem;
     }
 
-    /**
-     * Window closed.
-     * This function is called when the app window is close (to signal that the app is shutting
-     * down).
-     *
-     * @param   pRenderWindow   Ogre::RenderWindow* - A pointer to Ogre render window that closed.
-     */
+    void messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug,
+                       const Ogre::String& logName, bool& skipThisMessage) override;
+
     void windowClosed(Ogre::RenderWindow* pRenderWindow) override;
 
 protected:
@@ -114,7 +111,6 @@ private:
 
     Ogre::ResourceGroupManager* m_pResourceGroupManager;
     Ogre::MaterialManager* m_pMaterialManager;
-    Ogre::RenderSystem* m_pRenderSystem;
     Ogre::OverlaySystem* m_pOverlaySystem;
 
     Ogre::RenderWindowDescription m_RenderWindowDescription;

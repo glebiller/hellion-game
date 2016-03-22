@@ -19,7 +19,7 @@
 #pragma warning( pop )
 
 #include "Scene.h"
-#include "System.h"
+#include "GraphicSystemSystem.h"
 #include "Object/Object.h"
 #include "Object/LightGraphicObject.h"
 

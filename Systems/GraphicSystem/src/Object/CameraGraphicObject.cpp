@@ -22,7 +22,7 @@
 
 #pragma warning( pop )
 
-#include "System.h"
+#include "GraphicSystemSystem.h"
 #include "Scene.h"
 #include "Object/Object.h"
 #include "Object/CameraGraphicObject.h"

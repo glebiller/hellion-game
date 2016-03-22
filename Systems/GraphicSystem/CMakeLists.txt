@@ -4,7 +4,6 @@ project(GraphicSystem LANGUAGES CXX)
 find_package(Ogre REQUIRED COMPONENTS Overlay Terrain)
 
 add_library(GraphicSystem SHARED
-        src/Listener/CustomLogListener.cpp
         src/Object/CameraGraphicObject.cpp
         src/Object/CursorGraphicObject.cpp
         src/Object/LightGraphicObject.cpp
@@ -13,9 +12,9 @@ add_library(GraphicSystem SHARED
         src/Object/ParticleGraphicObject.cpp
         src/Object/SkyGraphicObject.cpp
         src/Object/TerrainGraphicObject.cpp
-        src/GraphicSystem.cpp
+        src/GraphicSystemMain.cpp
         src/Scene.cpp
-        src/System.cpp
+        src/GraphicSystem.cpp
         src/Task.cpp
         )
 

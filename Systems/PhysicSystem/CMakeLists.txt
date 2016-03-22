@@ -8,7 +8,7 @@ add_library(PhysicSystem SHARED
         src/Object/PhysicObject.cpp
         src/PhysicSystem.cpp
         src/Scene.cpp
-        src/System.cpp
+        src/GraphicSystemSystem.cpp
         src/Task.cpp
         )
 

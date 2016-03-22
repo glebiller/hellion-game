@@ -15,5 +15,13 @@
       "group": "Default",
       "recursive": true
     }
+  ],
+  "plugins": [
+    "RenderSystem_GL",
+    "Plugin_ParticleFX"
+  ],
+  "miscParams": [
+    {"name": "macAPI", "value": "cocoa"},
+    {"name": "verticalSync", "value": "false"}
   ]
 }

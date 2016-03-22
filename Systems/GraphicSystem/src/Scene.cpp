@@ -22,7 +22,7 @@
 #include <schema/component_type_generated.h>
 
 #include "Manager/ServiceManager.h"
-#include "System.h"
+#include "GraphicSystemSystem.h"
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
@@ -57,6 +57,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     , m_FogMode(Ogre::FOG_NONE) {
     m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);
     m_pRootNode = m_pSceneManager->getRootSceneNode();
+    // TODO ambient light in scene config
     m_ambientLight = Ogre::ColourValue(1, 1, 1, 0.3);
     m_pSceneManager->setAmbientLight(m_ambientLight);
     m_pSceneManager->setSkyBox(true, "nebula");
@@ -66,8 +67,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
 
     m_ObjectFactories[Schema::ComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
-    /*m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
-    m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
+    /*m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
     m_ObjectFactories["Sky"] = boost::factory<SkyGraphicObject*>();
@@ -75,6 +75,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
 
     Ogre::Vector3 lightdir(0, 0, 0);
 
+    // TODO light in scene config
     Ogre::SceneNode* node = m_pSceneManager->createSceneNode();
     Ogre::Light* light = m_pSceneManager->createLight();
     node->setName("TestLight");
@@ -97,11 +98,10 @@ GraphicScene::~GraphicScene() {
  * @inheritDoc
  */
 void GraphicScene::Update(float DeltaTime) {
-    m_bPause = g_serviceManager->getRuntimeService()->isPaused();
     m_fDeltaTime = DeltaTime;
-
     unsigned int size = (unsigned int)m_pObjects.size();
     if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
+        // TODO Use a struct for params with DeltaTime, GraphicScene
         g_serviceManager->getTaskManager()->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
     } else {
         ProcessRange(0, size);
@@ -123,13 +123,7 @@ void GraphicScene::ProcessRange(unsigned int begin, unsigned int end) {
     auto start = m_pObjects.begin() + begin;
     for (auto iterator = start; iterator < start + end; iterator++) {
         GraphicObject* pObject = static_cast<GraphicObject*>(iterator->second);
-
-        // Update objects based on paused state
-        // TODO maybe not pause some objects ?
-        if (!m_bPause) {
-            // Process this object
-            pObject->Update(m_fDeltaTime);
-        }
+        pObject->Update(m_fDeltaTime);
     }
 }
 

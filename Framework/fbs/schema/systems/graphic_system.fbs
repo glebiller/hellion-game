@@ -5,6 +5,11 @@ struct Resolution {
     height:uint;
 }
 
+table MiscParam {
+    name:string;
+    value:string;
+}
+
 table ResourceLocation {
     name:string;
     type:string;
@@ -20,6 +25,8 @@ table GraphicSystem {
     antiAliasingQuality:short;
     verticalSync:bool;
     resources:[ResourceLocation];
+    plugins:[string];
+    miscParams:[MiscParam];
 }
 
 root_type GraphicSystem;
