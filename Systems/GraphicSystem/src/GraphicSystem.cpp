@@ -28,17 +28,17 @@
 
 #pragma warning( pop )
 
-#include "Manager/ServiceManager.h"
 #include "GraphicSystemSystem.h"
 #include "Scene.h"
-
-extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
  */
-GraphicSystem::GraphicSystem()
-        : ISystem(), m_pRenderWindow(nullptr), m_pMaterialManager(nullptr) {
+GraphicSystem::GraphicSystem(Framework* framework)
+        : ISystem()
+        , m_pRenderWindow(nullptr)
+        , m_pMaterialManager(nullptr),
+          framework_(framework) {
     flatbuffers::LoadFile("GraphicSystem.bin", true, &definitionData_);
     definition_ = Schema::Systems::GetGraphicSystem(definitionData_.c_str());
 
@@ -55,8 +55,7 @@ GraphicSystem::GraphicSystem()
         m_pRoot->loadPlugin(plugin->c_str());
     }
 
-    Ogre::RenderSystemList pRenderList;
-    pRenderList = m_pRoot->getAvailableRenderers();
+    Ogre::RenderSystemList pRenderList = m_pRoot->getAvailableRenderers();
     Ogre::RenderSystem* renderSystem = pRenderList.front();
     m_pRoot->setRenderSystem(renderSystem);
     m_pRoot->initialise(false, "Hellion Game");
@@ -64,9 +63,8 @@ GraphicSystem::GraphicSystem()
     // Misc Params
     Ogre::NameValuePairList miscParams;
     for (auto param : *definition_->miscParams()) {
-        miscParams[param->name()->c_str()] = param->name()->c_str();
+        miscParams[param->name()->c_str()] = param->value()->c_str();
     }
-
     m_pRenderWindow = m_pRoot->createRenderWindow(
             definition_->windowName()->c_str(),
             definition_->resolution()->width(),
@@ -76,16 +74,12 @@ GraphicSystem::GraphicSystem()
     );
     BOOST_ASSERT(m_pRenderWindow != NULL);
     m_pRenderWindow->setDeactivateOnFocusChange(false);
-
-    // Save the window handle & render window
-    // TODO save window handle in Framework
-    size_t hWnd;
-    m_pRenderWindow->getCustomAttribute("WINDOW", &hWnd);
-    g_serviceManager->getWindowService()->setHandle(hWnd);
-    g_serviceManager->getWindowService()->setRenderWindow(m_pRenderWindow);
-
-    // listen to the RenderWindow
     Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWindow, this);
+
+    // Save the window handle
+    std::size_t hWnd;
+    m_pRenderWindow->getCustomAttribute("WINDOW", &hWnd);
+    framework->setWindowHandle(hWnd);
 
     // Load materials
     // TODO resources locations in system config
@@ -143,63 +137,5 @@ void GraphicSystem::messageLogged(const Ogre::String& message, Ogre::LogMessageL
 };
 
 void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
-    g_serviceManager->getRuntimeService()->setStatus(RuntimeService::Status::Quit);
+    framework_->setRunning(false);
 }
-
-/**
- * @inheritDoc
- */
-void GraphicSystem::setResourceLocation(Schema::Systems::ResourceLocation* values) {
-
-    /*
-    const std::string name = *value;
-    const std::string locationType = *(++value);
-    const std::string resourceGroup = *(++value);
-    bool recursive = boost::lexical_cast<bool>(*(++value));
-    
-    m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
-    m_pResourceGroupManager->initialiseResourceGroup(resourceGroup);
-    m_pResourceGroupManager->loadResourceGroup(resourceGroup);*/
-}
-
-/**
- * @inheritDoc
- */
-void GraphicSystem::setWindowName(std::string* values) {
-
-    auto value = values->begin();
-    m_RenderWindowDescription.name = *value;
-}
-
-/**
- * @inheritDoc
- */
-void GraphicSystem::setFullScreen(bool values) {
-
-    m_RenderWindowDescription.useFullScreen = values;
-}
-
-/**
- * @inheritDoc
- */
-void GraphicSystem::setVerticalSync(bool values) {
-
-    m_RenderWindowDescription.miscParams["verticalSync"] = values;
-}
-
-/**
- * @inheritDoc
-void GraphicSystem::setAntiAliasing(Schema::vector2* values) {
-
-    m_RenderWindowDescription.miscParams["FSAA"] = values->x();
-    m_RenderWindowDescription.miscParams["FSAAQuality"] = values->y();
-}
-
-void GraphicSystem::setProperties(const flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* properties) {
-
-}
-
-flatbuffers::Vector<flatbuffers::Offset<Schema::Property>>* GraphicSystem::getProperties() {
-    return nullptr;
-}
- */

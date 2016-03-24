@@ -21,7 +21,7 @@
 #include <boost/log/sources/record_ostream.hpp>
 #include <tbb/spin_mutex.h>
 
-#include "Manager/ITaskManager.h"
+#include "Manager/TaskManager.h"
 #include "Generic/IttNotify.h"
 #include "Generic/IObserver.h"
 #include "System/ISystemObject.h"
@@ -366,7 +366,7 @@ ChangeManager::DistributeRange(unsigned int begin, unsigned int end) {
 
 ///////////////////////////////////////////////////////////////////////////////
 // SetTaskManager - Set TaskManager and init associated data
-Error ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
+Error ChangeManager::SetTaskManager(TaskManager* pTaskManager) {
     BOOST_ASSERT(pTaskManager && "Cannot set the task manager to null");
     BOOST_ASSERT(!m_pTaskManager && "ChangeManager: Call ResetTaskManager before using SetTaskManager to set the new task manager");
     

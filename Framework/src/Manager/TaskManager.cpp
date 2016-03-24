@@ -31,7 +31,6 @@
 
 #include "System/ISystemTask.h"
 #include "Manager/TaskManager.h"
-#include "Manager/ServiceManager.h"
 #include "Generic/Instrumentation.h"
 #include "Task/StallTask.h"
 #include "Task/SynchronizeTask.h"
@@ -42,9 +41,9 @@
 const char* const   semaphoreName  = "TaskManagerSemaphore";
 
 namespace local {
-    typedef GenericCallbackTask<ITaskManager::JobFunction> SystemTask;
-    typedef GenericCallbackTask<ITaskManager::JobFunction> JobTask;
-    typedef GenericCallbackTask<ITaskManager::JobCompletionFunction> JobCompletionTask;
+    typedef GenericCallbackTask<TaskManager::JobFunction> SystemTask;
+    typedef GenericCallbackTask<TaskManager::JobFunction> JobTask;
+    typedef GenericCallbackTask<TaskManager::JobCompletionFunction> JobCompletionTask;
 
     static TaskManager* g_pTaskManager = NULL;
 } // namespace local
@@ -270,7 +269,7 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
 /**
  * @inhertiDoc
  */
-unsigned int TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints) {
+unsigned int TaskManager::GetRecommendedJobCount(JobCountInstructionHints Hints) {
     // Call this method to determine the ideal number of tasks to submit to the TaskManager
     // for maximum performance.
     //

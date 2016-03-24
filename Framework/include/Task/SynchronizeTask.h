@@ -18,6 +18,7 @@
 #include <condition_variable>
 #include <tbb/task.h>
 
+#include "Manager/TaskManager.h"
 #include "DataTypes.h"
 
 class TaskManager;
@@ -50,7 +51,7 @@ public:
      * @param [in,out]  pParam  If non-null, the parameter.
      * @param   uCount          Number of.
      */
-    static void PrepareCallback(ITaskManager::JobFunction fFunc, void* pParam, unsigned int uCount) {
+    static void PrepareCallback(TaskManager::JobFunction fFunc, void* pParam, unsigned int uCount) {
         m_fCallback = fFunc;
         m_pCallbackParam = pParam;
         m_lCallbacksCount = uCount;
@@ -62,7 +63,7 @@ public:
 public:
     static std::mutex m_allCallbacksMutex;
     static std::condition_variable m_hAllCallbacksInvokedEvent;
-    static ITaskManager::JobFunction m_fCallback;
+    static TaskManager::JobFunction m_fCallback;
     static void* m_pCallbackParam;
     static volatile long m_lCallbacksCount;
 

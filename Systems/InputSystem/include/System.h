@@ -16,6 +16,7 @@
 
 #include <list>
 #include <schema/system_type_generated.h>
+#include <Generic/Framework.h>
 
 #include "Errors.h"
 #include "System/ISystem.h"
@@ -31,7 +32,7 @@ public:
     /**
      * @inheritDoc
      */
-    InputSystem();
+    InputSystem(Framework* framework);
 
     /**
      * @inheritDoc
@@ -46,4 +47,11 @@ public:
     Schema::SystemType GetSystemType() override {
         return Schema::SystemType::Input;
     }
+
+    inline Framework* getFramework() {
+        return framework_;
+    }
+
+private:
+    Framework* framework_;
 };

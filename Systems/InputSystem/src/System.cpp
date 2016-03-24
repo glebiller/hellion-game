@@ -13,30 +13,27 @@
 // responsibility to update it.
 
 #include <boost/functional/factory.hpp>
+#include <boost/lexical_cast.hpp>
 #include <OIS.h>
 #include <OISB.h>
+#include <Generic/Framework.h>
 
-#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
-
-extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
  */
-InputSystem::InputSystem()
-    : ISystem() {
+InputSystem::InputSystem(Framework* framework)
+        : ISystem(), framework_(framework) {
     new OISB::System();
 
-    // TODO use change occurred ?
-    size_t hWnd = g_serviceManager->getWindowService()->getHandle();
+    std:
+    size_t hWnd = framework->getWindowHandle();
     BOOST_ASSERT_MSG(hWnd != 0, "Window handle should not be null !");
 
     OIS::ParamList paramList;
-    std::ostringstream windowHndStr;
-    windowHndStr << hWnd;
-    paramList.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+    paramList.insert(std::make_pair(std::string("WINDOW"), boost::lexical_cast<std::string>(hWnd)));
 
 #if defined OIS_WIN32_PLATFORM
     paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
@@ -53,7 +50,6 @@ InputSystem::InputSystem()
 #endif
 
     OIS::InputManager* inputManager = OIS::InputManager::createInputSystem(paramList);
-    auto name = inputManager->inputSystemName().data();
     OISB::System::getSingleton().initialize(inputManager);
 }
 

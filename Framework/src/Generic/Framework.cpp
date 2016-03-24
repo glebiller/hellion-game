@@ -24,17 +24,17 @@
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Manager/ChangeManager.h"
-#include "Manager/ServiceManager.h"
-#include "Service/DefinitionService.h"
+#include "Manager/TaskManager.h"
 #include "Generic/Scheduler.h"
 #include "Generic/Framework.h"
 
 Framework::Framework() :
-    m_serviceManager(new ServiceManager()),
     m_pSceneCCM(new ChangeManager()),
     m_pObjectCCM(new ChangeManager()),
-    m_pScheduler(new Scheduler()),
-    m_pScene(nullptr) {
+    taskManager_(new TaskManager()),
+    m_pScheduler(new Scheduler(taskManager_)),
+    m_pScene(nullptr),
+    running_(true) {
 }
 
 Framework::~Framework() {
@@ -44,12 +44,10 @@ Framework::~Framework() {
     delete m_pScheduler;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
-    delete m_serviceManager;
     delete m_environment;
 }
 
 boost::system::errc::errc_t Framework::Initialize() {
-    // Load settings
     std::string environmentFile;
     flatbuffers::LoadFile("Environment.bin", true, &environmentFile);
     m_environment = Schema::GetEnvironment(environmentFile.c_str());
@@ -63,6 +61,7 @@ boost::system::errc::errc_t Framework::Initialize() {
     //Singletons::Debugger.setChangeManagers(m_pSceneCCM, m_pObjectCCM);
 #endif
 
+    // TODO use constructor instead ?
     m_pScheduler->init(m_environment);
 
     for (auto system : *m_environment->systems()) {
@@ -70,25 +69,21 @@ boost::system::errc::errc_t Framework::Initialize() {
         sharedLibraryPath /= system->c_str() + boost::dll::shared_library::suffix().string();
         boost::dll::shared_library systemLib(sharedLibraryPath);
         m_systemLibraries.push_back(systemLib);
+        ISystem* iSystem = systemLib.get<ISystem* (Framework*)>("CreateSystem")(this);
 
-        std::function<void (IServiceManager*)> fnInitSystemLib =
-                systemLib.get<void (IServiceManager*)>("InitializeSystemLib");
-        fnInitSystemLib(IServiceManager::get());
-        std::function<ISystem* ()> fnCreateSystem =
-                systemLib.get<ISystem* ()>("CreateSystem");
-        ISystem* iSystem = fnCreateSystem();
         Schema::SystemType systemType = iSystem->GetSystemType();
         BOOST_ASSERT(m_systems.find(systemType) == m_systems.end());
         m_systems[systemType] = iSystem;
     }
 
-    IServiceManager::get()->getRuntimeService()->setNextScene(m_environment->startupScene()->c_str());
+    setNextScene(m_environment->startupScene()->c_str());
 
     //
     // Initialize resources necessary for parallel change distribution.
     //
-    m_pObjectCCM->SetTaskManager(m_pScheduler->getTaskManager());
-    m_pSceneCCM->SetTaskManager(m_pScheduler->getTaskManager());
+    // TODO use constructor instead ?
+    m_pObjectCCM->SetTaskManager(taskManager_);
+    m_pSceneCCM->SetTaskManager(taskManager_);
 
     return boost::system::errc::success;
 }
@@ -115,23 +110,17 @@ void Framework::Shutdown() {
 /// @inheritDoc.
 ///
 Error Framework::Execute() {
-    RuntimeService* runtimeService = IServiceManager::get()->getRuntimeService();
-    //while (true) {
-        if (runtimeService->isNextScene()) {
-            setNextScene(runtimeService->getSceneName());
-            runtimeService->setStatus(RuntimeService::Status::Running);
-        }
+    // TODO
+    /*if (runtimeService->isNextScene()) {
+        setNextScene(runtimeService->getSceneName());
+        runtimeService->setStatus(RuntimeService::Status::Running);
+    }*/
 
-        processMessages();
-        m_pScheduler->execute();
-        m_pScene->update();
-        
-        if (runtimeService->isQuit()) {
-            return Errors::Failure;
-        }
-    //}
+    processMessages();
+    m_pScheduler->execute();
+    m_pScene->update();
 
-    return Errors::Success;
+    return running_ ? Errors::Success : Errors::Failure;
 }
 
 ///
@@ -164,3 +153,16 @@ void Framework::setNextScene(std::string nextSceneName) {
     m_pScheduler->setScene(m_pScene);
     m_pScene->init();
 }
+
+void Framework::setWindowHandle(std::size_t windowHandle) {
+    windowHandle_ = windowHandle;
+}
+
+std::size_t Framework::getWindowHandle() {
+    return windowHandle_;
+}
+
+void Framework::setRunning(bool running) {
+    running_ = running;
+}
+

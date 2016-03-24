@@ -21,7 +21,6 @@
 
 #include <schema/component_type_generated.h>
 
-#include "Manager/ServiceManager.h"
 #include "GraphicSystemSystem.h"
 #include "Scene.h"
 #include "Task.h"
@@ -32,8 +31,6 @@
 #include "Object/ParticleGraphicObject.h"
 #include "Object/SkyGraphicObject.h"
 #include "Object/TerrainGraphicObject.h"
-
-extern IServiceManager* g_serviceManager;
 
 // We use SM2.0 instancing. Since we do normal mapping on the instanced geometry, we
 // need to pass both the world matrix and the inverse world matrix for each instance.
@@ -100,12 +97,13 @@ GraphicScene::~GraphicScene() {
 void GraphicScene::Update(float DeltaTime) {
     m_fDeltaTime = DeltaTime;
     unsigned int size = (unsigned int)m_pObjects.size();
-    if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
+    // TODO allow system to schedule tasks
+    /*if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
         // TODO Use a struct for params with DeltaTime, GraphicScene
         g_serviceManager->getTaskManager()->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
-    } else {
+    } else {*/
         ProcessRange(0, size);
-    }
+    //}
 }
 
 /**

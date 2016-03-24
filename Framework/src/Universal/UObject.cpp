@@ -12,15 +12,11 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <schema/component_type_generated.h>
-
-#include "Universal/UScene.h"
 #include "Universal/UObject.h"
-#include "Service/SystemService.h"
+
+#include <schema/component_type_generated.h>
 #include "Manager/ChangeManager.h"
-#include "Manager/IServiceManager.h"
-#include "System/ISystemScene.h"
-#include "System/ISystemObject.h"
+#include "Universal/UScene.h"
 
 /**
  * @inheritDoc

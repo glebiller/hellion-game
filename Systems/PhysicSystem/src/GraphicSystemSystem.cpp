@@ -15,10 +15,7 @@
 #include <btBulletDynamicsCommon.h>
 
 #include "System.h"
-#include "Manager/ServiceManager.h"
 #include "Scene.h"
-
-extern IServiceManager* g_serviceManager;
 
 unsigned int PhysicSystem::s_idMainThread = 0;
 tbb::atomic<unsigned int> PhysicSystem::s_threadNumberCount;

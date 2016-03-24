@@ -21,14 +21,11 @@
 #pragma warning( push, 0 )
 #pragma warning( disable : 4244 6211 6386 )
 
-#include "Manager/ServiceManager.h"
 #include "Scene.h"
 #include "Object/Object.h"
 #include "Object/CursorGraphicObject.h"
 
 #define POGRESCENEMGR (reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager())
-
-extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc

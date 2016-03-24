@@ -20,7 +20,7 @@
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
-#include "Manager/ITaskManager.h"
+#include "Manager/TaskManager.h"
 #include "Task/GenericCallbackData.h"
 
 class Instrumentation;
@@ -44,7 +44,7 @@ public:
      *                                                                  and TP event arguments (job
      *                                                                  type,tp event)
      */
-    ParallelForBody(Instrumentation* instrumentation, ITaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
+    ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
 
     /**
      *  casting operator.
@@ -52,6 +52,6 @@ public:
     void operator() (const tbb::blocked_range<unsigned int>& r) const;
 
 private:
-    ITaskManager::ParallelForFunction m_pfnCallback;
+    TaskManager::ParallelForFunction m_pfnCallback;
 
 };

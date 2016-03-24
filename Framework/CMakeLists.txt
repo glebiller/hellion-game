@@ -11,18 +11,10 @@ add_library(Framework
         include/Generic/IttNotify.h
         include/Generic/Scheduler.h
         include/Manager/ChangeManager.h
-        include/Manager/IServiceManager.h
-        include/Manager/ITaskManager.h
         include/Manager/Notification.h
         include/Manager/ObserverRequest.h
-        include/Manager/ServiceManager.h
         include/Manager/SubjectInfo.h
         include/Manager/TaskManager.h
-        include/Service/DefinitionService.h
-        include/Service/RuntimeService.h
-        include/Service/SettingService.h
-        include/Service/SystemService.h
-        include/Service/WindowService.h
         include/schema/component_type_generated.h
         include/schema/graphic_components_generated.h
         include/schema/input_components_generated.h
@@ -57,13 +49,7 @@ add_library(Framework
         src/Generic/Instrumentation.cpp
         src/Generic/Scheduler.cpp
         src/Manager/ChangeManager.cpp
-        src/Manager/ServiceManager.cpp
         src/Manager/TaskManager.cpp
-        src/Service/DefinitionService.cpp
-        src/Service/RuntimeService.cpp
-        src/Service/SettingService.cpp
-        src/Service/SystemService.cpp
-        src/Service/WindowService.cpp
         src/System/ISystem.cpp
         src/System/ISystemObject.cpp
         src/System/ISystemScene.cpp

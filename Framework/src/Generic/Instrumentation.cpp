@@ -22,8 +22,6 @@
 #include <pdhmsg.h>
 #endif
 
-#include "Manager/ServiceManager.h"
-#include "Manager/ITaskManager.h"
 #include "Generic/Instrumentation.h"
 
 

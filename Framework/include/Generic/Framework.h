@@ -23,15 +23,11 @@
 #include <schema/system_type_generated.h>
 
 #include "System/Types.h"
-#include "Manager/IServiceManager.h"
-#include "Service/RuntimeService.h"
+#include "Manager/TaskManager.h"
 
 namespace Schema {
     class Environment;
 }
-class DefinitionService;
-
-class ServiceManager;
 
 class Scheduler;
 
@@ -60,6 +56,12 @@ public:
 
     Error Execute();
 
+    void setWindowHandle(std::size_t windowHandle);
+
+    std::size_t getWindowHandle();
+
+    void setRunning(bool running);
+
 private:
 
     void processMessages();
@@ -68,8 +70,8 @@ private:
 
 private:
     boost::log::sources::logger logger_;
-    ServiceManager* m_serviceManager;
 
+    TaskManager* taskManager_;
     Scheduler* m_pScheduler;
     ChangeManager* m_pSceneCCM;
     ChangeManager* m_pObjectCCM;
@@ -78,5 +80,7 @@ private:
     const Schema::Environment* m_environment;
     std::map<Schema::SystemType, ISystem*> m_systems;
     std::vector<boost::dll::shared_library> m_systemLibraries;
+    std::size_t windowHandle_;
+    bool running_;
 
 };

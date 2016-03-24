@@ -19,7 +19,6 @@
 namespace Schema {
     class Environment;
 }
-class RuntimeService;
 class TaskManager;
 
 ///
@@ -31,7 +30,7 @@ public:
     ///
     /// Constructor.
     ///
-    Scheduler();
+    Scheduler(TaskManager* taskManager);
 
     ///
     /// Destructor.
@@ -72,7 +71,6 @@ public:
 protected:
     static const boost::timer::nanosecond_type          sm_defaultClockFrequency;
 
-    RuntimeService*                                     m_runtimeService;
     TaskManager*                                        m_pTaskManager;
     
     bool                                                m_benchmarkingEnabled;

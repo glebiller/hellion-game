@@ -14,18 +14,12 @@
 
 #include <boost/dll.hpp>
 
+#include <Generic/Framework.h>
 #include "System/ISystem.h"
-#include "Manager/ServiceManager.h"
 #include "System.h"
 
-IServiceManager*        g_serviceManager;
-
-extern "C" void BOOST_SYMBOL_EXPORT InitializeSystemLib(IServiceManager* serviceManager) {
-    g_serviceManager = serviceManager;
-}
-
-extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem() {
-    return new InputSystem();
+extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem(Framework* framework) {
+    return new InputSystem(framework);
 }
 
 extern "C" void BOOST_SYMBOL_EXPORT DestroySystem(ISystem* pSystem) {

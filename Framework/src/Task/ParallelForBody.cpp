@@ -15,13 +15,12 @@
 #include <tbb/task.h>
 #include <tbb/blocked_range.h>
 
-#include "DataTypes.h"
 #include "Generic/IttNotify.h"
 #include "Generic/Instrumentation.h"
 #include "Manager/TaskManager.h"
 #include "Task/ParallelForBody.h"
 
-ParallelForBody::ParallelForBody(Instrumentation* instrumentation, ITaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
+ParallelForBody::ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
         : GenericCallbackData(instrumentation, pParam PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
         , m_pfnCallback(pfn) {
 };

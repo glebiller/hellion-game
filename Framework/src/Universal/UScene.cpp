@@ -19,7 +19,6 @@
 #include <schema/environment_generated.h>
 #include "Generic/Framework.h"
 #include "Universal/UScene.h"
-#include "Manager/ServiceManager.h"
 #include "Manager/ChangeManager.h"
 
 /**
@@ -207,7 +206,7 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
         //parent->addChildren(pObject);
     }
 
-    SystemService* systemService = IServiceManager::get()->getSystemService();
+    //SystemService* systemService = IServiceManager::get()->getSystemService();
     // TODO
     /*Templates::iterator templateIt = m_templates.find(std::string(objectProto->name()->c_str()));
     

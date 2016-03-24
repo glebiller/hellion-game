@@ -14,13 +14,9 @@
 
 #include "Task.h"
 
-#include <Manager/IServiceManager.h>
-
 #include "Scene.h"
 #include "System.h"
 #include "Object/PhysicObject.h"
-
-extern IServiceManager* g_serviceManager;
 
 // Grain sizes of the parallel jobs. The less is the grainsize the better is
 // the load balance, and the higher is the parallel overhead.

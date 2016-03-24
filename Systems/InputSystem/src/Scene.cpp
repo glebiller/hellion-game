@@ -16,7 +16,6 @@
 #include <OISB.h>
 #include <schema/input_components_generated.h>
 
-#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
@@ -26,8 +25,6 @@
 #include "Object/CursorInputObject.h"
 #include "Object/PassiveInputObject.h"
 #include "Object/PlayerObject.h"
-
-extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -59,7 +56,7 @@ InputScene::~InputScene() {
  */
 void InputScene::Update(float DeltaTime) {
     if (m_quitInputAction->isActive()) {
-        g_serviceManager->getRuntimeService()->setStatus(RuntimeService::Status::Quit);
+        GetSystem<InputSystem>()->getFramework()->setRunning(false);
         return;
     }
 

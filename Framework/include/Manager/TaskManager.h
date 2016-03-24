@@ -31,7 +31,7 @@
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Generic/IttNotify.h"
-#include "Manager/ITaskManager.h"
+#include "System/ISystemTask.h"
 
 namespace Schema {
     struct Environment;
@@ -40,11 +40,38 @@ class Instrumentation;
 
 /**
  * This class uses Intel Threading Building Blocks to run tasks.
- * 
- * @sa  ITaskManager
  */
-class TaskManager : public ITaskManager {
+class TaskManager {
 public:
+
+    /**
+     * Defines an alias representing the void*.
+     * This type defines the callback used for generic jobs by the <c>ITaskManager</c>.
+     */
+    typedef void (*JobFunction)(void*);
+
+    /**
+     * Defines an alias representing the void*.
+     * This type defines the callback used for generic job completions by the <c>ITaskManager</c>.
+     * ### return   the number of jobs issued by this function.
+     */
+    typedef unsigned int(*JobCompletionFunction)(void*);
+
+    /**
+     * Defines an alias representing the end.
+     */
+    typedef void (*ParallelForFunction)(void* param, unsigned int begin, unsigned int end);
+
+    /**
+     * Values that represent JobCountInstructionHints.
+     * This type provides hints to the <c>GetRecommendedJobCount</c> method on the type of work
+     * about to be submitted to the <c>ITaskManager</c>.
+     * @sa  ITaskManager::GetRecommendedJobCount    .
+     */
+    enum JobCountInstructionHints {
+        None, Generic, FP, SIMD_FP, SIMD_INT,
+    };
+
     /**
      * Constructor.
      */
@@ -110,7 +137,7 @@ public:
      * @return  the number of jobs which is optimal for the type of work specified by
      *          <paramref name="Hints"/>
      */
-    virtual unsigned int GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints);
+    virtual unsigned int GetRecommendedJobCount(JobCountInstructionHints Hints);
 
     /**
      * Parallel for.

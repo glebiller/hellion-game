@@ -27,6 +27,7 @@
 #pragma warning( pop )
 
 #include <schema/graphic_system_generated.h>
+#include <Generic/Framework.h>
 #include "Errors.h"
 #include "GraphicSystemSystem.h"
 #include "System/ISystem.h"
@@ -48,7 +49,7 @@ public:
     /**
      * @inheritDoc
      */
-    GraphicSystem();
+    GraphicSystem(Framework* framework);
 
     /**
      * @inheritDoc
@@ -95,28 +96,17 @@ public:
 
     void windowClosed(Ogre::RenderWindow* pRenderWindow) override;
 
-protected:
-
-    void setResourceLocation(Schema::Systems::ResourceLocation* values);
-
-    void setWindowName(std::string* values);
-
-    void setFullScreen(bool values);
-
-    void setVerticalSync(bool values);
-
 private:
     boost::log::sources::logger logger_;
-    Ogre::Root* m_pRoot;
-
-    Ogre::ResourceGroupManager* m_pResourceGroupManager;
-    Ogre::MaterialManager* m_pMaterialManager;
-    Ogre::OverlaySystem* m_pOverlaySystem;
-
-    Ogre::RenderWindowDescription m_RenderWindowDescription;
-    Ogre::RenderWindow* m_pRenderWindow;
+    Framework* framework_;
 
     std::string definitionData_;
     const Schema::Systems::GraphicSystem* definition_;
+
+    Ogre::Root* m_pRoot;
+    Ogre::RenderWindow* m_pRenderWindow;
+    Ogre::ResourceGroupManager* m_pResourceGroupManager;
+    Ogre::MaterialManager* m_pMaterialManager;
+    Ogre::OverlaySystem* m_pOverlaySystem;
 
 };

@@ -20,7 +20,7 @@
 
 std::mutex SynchronizeTask::m_allCallbacksMutex;
 std::condition_variable SynchronizeTask::m_hAllCallbacksInvokedEvent;
-ITaskManager::JobFunction SynchronizeTask::m_fCallback = NULL;
+TaskManager::JobFunction SynchronizeTask::m_fCallback = NULL;
 void* SynchronizeTask::m_pCallbackParam = NULL;
 volatile long SynchronizeTask::m_lCallbacksCount = 0;
 

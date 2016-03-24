@@ -16,22 +16,16 @@
 #include <boost/timer/timer.hpp>
 
 #include "schema/environment_generated.h"
-#include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
-#include "Service/SettingService.h"
-#include "Service/RuntimeService.h"
 #include "Universal/UScene.h"
 #include "Generic/Scheduler.h"
-#include "Debugger/Debugger.h"
 
 // Set the timer to 120Hz
 const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost::timer::nanosecond_type(1000000000LL / 120);
 
-Scheduler::Scheduler()
-    : m_runtimeService(IServiceManager::get()->getRuntimeService()),
+Scheduler::Scheduler(TaskManager* taskManager)
       // TODO move new TaskManager responsibility to Framework class
-      m_pTaskManager(new TaskManager()) {
-    IServiceManager::get()->setTaskManager(m_pTaskManager);
+      : m_pTaskManager(taskManager) {
 }
 
 Scheduler::~Scheduler() {
@@ -89,9 +83,10 @@ void Scheduler::execute() {
     //Singletons::Debugger.update(DeltaTime);
 #endif
 
-    if (m_runtimeService->isPaused()) {
+    // TODO
+    /*if (m_runtimeService->isPaused()) {
         deltaTime = 0.0f;
-    }
+    }*/
 
     //
     // Schedule the scenes that are ready for execution.
@@ -123,3 +118,4 @@ void Scheduler::waitForScenes() {
         m_pTaskManager->WaitForSystemTasks(aScenesToWaitFor, cScenesToWaitFor);
     }
 }
+

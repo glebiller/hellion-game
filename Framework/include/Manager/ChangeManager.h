@@ -24,8 +24,7 @@
 #include "Generic/IObserver.h"
 #include "Manager/Notification.h"
 #include "Manager/SubjectInfo.h"
-
-class ITaskManager;
+#include "TaskManager.h"
 
 /**
  * Responsible for queuing up changes requests and then issuing them to the system for modifying
@@ -71,7 +70,7 @@ public:
     // Must be called before any parallel execution starts (that is
     // before changes start being accumulated in thread local lists),
     // but after the task manager has been initialized
-    Error SetTaskManager(ITaskManager*);
+    Error SetTaskManager(TaskManager*);
 
     // Must be called before the previously set task manager has been shut down
     void ResetTaskManager();
@@ -79,7 +78,7 @@ public:
     inline std::vector<Notification>& GetNotifyList(unsigned int tlsIndex);
 
 protected:
-    ITaskManager* m_pTaskManager;
+    TaskManager* m_pTaskManager;
 
     struct MappedNotification {
         MappedNotification(unsigned int uID, unsigned int changedBits)
