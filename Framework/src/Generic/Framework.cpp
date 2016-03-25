@@ -12,29 +12,23 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/system/error_code.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/dll/runtime_symbol_info.hpp>
-#include <boost/dll.hpp>
+#include "Generic/Framework.h"
+
 #include <flatbuffers/util.h>
 
 #include "schema/environment_generated.h"
 #include "schema/scene_generated.h"
-#include "Defines.h"
 #include "Universal/UScene.h"
-#include "Universal/UObject.h"
 #include "Manager/ChangeManager.h"
-#include "Manager/TaskManager.h"
 #include "Generic/Scheduler.h"
-#include "Generic/Framework.h"
 
 Framework::Framework() :
-    m_pSceneCCM(new ChangeManager()),
-    m_pObjectCCM(new ChangeManager()),
-    taskManager_(new TaskManager()),
-    m_pScheduler(new Scheduler(taskManager_)),
-    m_pScene(nullptr),
-    running_(true) {
+        m_pSceneCCM(new ChangeManager()),
+        m_pObjectCCM(new ChangeManager()),
+        taskManager_(new TaskManager()),
+        m_pScheduler(new Scheduler(taskManager_)),
+        m_pScene(nullptr),
+        running_(true) {
 }
 
 Framework::~Framework() {
@@ -51,7 +45,7 @@ boost::system::errc::errc_t Framework::Initialize() {
     std::string environmentFile;
     flatbuffers::LoadFile("Environment.bin", true, &environmentFile);
     m_environment = Schema::GetEnvironment(environmentFile.c_str());
-    
+
     //
     // Init debugger
     // 
@@ -69,7 +63,7 @@ boost::system::errc::errc_t Framework::Initialize() {
         sharedLibraryPath /= system->c_str() + boost::dll::shared_library::suffix().string();
         boost::dll::shared_library systemLib(sharedLibraryPath);
         m_systemLibraries.push_back(systemLib);
-        ISystem* iSystem = systemLib.get<ISystem* (Framework*)>("CreateSystem")(this);
+        ISystem* iSystem = systemLib.get<ISystem*(Framework*)>("CreateSystem")(this);
 
         Schema::SystemType systemType = iSystem->GetSystemType();
         BOOST_ASSERT(m_systems.find(systemType) == m_systems.end());

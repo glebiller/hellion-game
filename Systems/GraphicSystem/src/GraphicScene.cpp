@@ -25,6 +25,7 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
+#include "Object/AmbientLightGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/LightGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
@@ -56,12 +57,11 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     m_pRootNode = m_pSceneManager->getRootSceneNode();
     // TODO ambient light in scene config
     m_ambientLight = Ogre::ColourValue(1, 1, 1, 0.3);
-    m_pSceneManager->setAmbientLight(m_ambientLight);
-    m_pSceneManager->setSkyBox(true, "nebula");
-    m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
+    //m_pSceneManager->setAmbientLight(m_ambientLight);
+    //m_pSceneManager->setSkyBox(true, "nebula");
+    //m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
 
-    //m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
-
+    m_ObjectFactories[Schema::ComponentType::GraphicAmbientLight] = boost::factory<AmbientLightGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
     /*m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();

@@ -11,7 +11,7 @@ table MetaData {
 }
 
 table SystemComponent {
-    systemType: SystemType;
+    systemType:SystemType;
     data:ComponentType;
 }
 

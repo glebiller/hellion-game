@@ -1,5 +1,22 @@
 namespace Schema.Components;
 
+struct GraphicColor {
+    red: float;
+    green: float;
+    blue: float;
+    alpha: float;
+}
+
+table GraphicAmbientLight {
+    color: GraphicColor;
+}
+
+table GraphicLight {
+    type: string;
+    diffuseColor: GraphicColor;
+    specularColor: GraphicColor;
+}
+
 table GraphicCamera {
 
 }

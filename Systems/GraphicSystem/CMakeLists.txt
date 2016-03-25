@@ -4,6 +4,8 @@ project(GraphicSystem LANGUAGES CXX)
 find_package(Ogre REQUIRED COMPONENTS Overlay Terrain)
 
 add_library(GraphicSystem SHARED
+        include/Object/AmbientLightGraphicObject.h
+        src/Object/AmbientLightGraphicObject.cpp
         src/Object/CameraGraphicObject.cpp
         src/Object/CursorGraphicObject.cpp
         src/Object/LightGraphicObject.cpp
@@ -13,9 +15,9 @@ add_library(GraphicSystem SHARED
         src/Object/SkyGraphicObject.cpp
         src/Object/TerrainGraphicObject.cpp
         src/GraphicSystemMain.cpp
-        src/Scene.cpp
+        src/GraphicScene.cpp
         src/GraphicSystem.cpp
-        src/Task.cpp
+        src/GraphicTask.cpp
         )
 
 target_include_directories(GraphicSystem PUBLIC

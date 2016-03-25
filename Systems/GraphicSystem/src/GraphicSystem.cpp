@@ -14,9 +14,7 @@
 
 #include <boost/log/sources/logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
-#include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/bind.hpp>
 #include <flatbuffers/util.h>
 #include <schema/graphic_system_generated.h>
 

@@ -5,6 +5,8 @@ include "schema/components/physic_components.fbs";
 namespace Schema;
 
 union ComponentType {
+  Components.GraphicAmbientLight,
+  Components.GraphicLight,
   Components.GraphicCamera,
   Components.GraphicMesh,
 
