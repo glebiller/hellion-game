@@ -16,6 +16,7 @@
 
 #include <OgreVector3.h>
 #include <System/Types.h>
+#include <schema/entity_change_generated.h>
 
 #include "Object/Object.h"
 #include "System/ISystemScene.h"
@@ -60,7 +61,7 @@ class CameraGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         virtual System::Types::BitMask GetDesiredSystemChanges() {
-            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+            return Schema::EntityChange::PhysicPosition;
         }
         
         /**

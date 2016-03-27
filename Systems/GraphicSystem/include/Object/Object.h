@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "GraphicSystemSystem.h"
+#include "GraphicSystem.h"
 #include "System/ISystemObject.h"
 
 class GraphicSystem;

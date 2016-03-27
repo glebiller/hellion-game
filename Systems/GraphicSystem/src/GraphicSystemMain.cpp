@@ -16,7 +16,7 @@
 
 #include <Generic/Framework.h>
 #include "System/ISystem.h"
-#include "GraphicSystemSystem.h"
+#include "GraphicSystem.h"
 
 extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem(Framework* framework) {
     return new GraphicSystem(framework);

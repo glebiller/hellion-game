@@ -15,12 +15,11 @@
 #pragma once
 
 #include <System/Types.h>
-#include "Object/Object.h"
+#include <System/ISystemObject.h>
+#include <Object/Object.h>
+#include <OgreSceneManager.h>
 
-class GraphicSystem;
-class ISystemScene;
-
-class SkyGraphicObject : public GraphicObject {
+class SkyboxGraphicObject : public ISystemObject {
 public:
     ///
     /// Constructor.
@@ -28,39 +27,39 @@ public:
     /// @param [in,out] pSystemScene    If non-null, the system scene.
     /// @param  pszName                 The name.
     ///
-    SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity,
-                     const Schema::SystemComponent& component);
+    SkyboxGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                        const Schema::SystemComponent& component);
 
     ///
     /// Destructor.
     ///
-    ~SkyGraphicObject();
-        
+    ~SkyboxGraphicObject();
+
     ///
     /// @inheritDoc.
     ///
     void Update(float DeltaTime);
-            
+
     ///
     /// @inheritDoc.
     ///
     System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
-    
+
     ///
     /// @inheritDoc.
     ///
     System::Types::BitMask GetDesiredSystemChanges() {
         return System::Changes::None;
     };
-    
+
     ///
     /// @inheritDoc.
     ///
     Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
-private:
-    bool mSkysImported;
+protected:
+    Ogre::SceneManager* sceneManager_;
 
 };

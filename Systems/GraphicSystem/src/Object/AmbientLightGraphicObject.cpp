@@ -21,7 +21,7 @@
 
 #include <schema/graphic_components_generated.h>
 
-#include "Scene.h"
+#include "GraphicScene.h"
 #include "Object/LightGraphicObject.h"
 
 

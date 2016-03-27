@@ -9,6 +9,8 @@ union ComponentType {
   Components.GraphicLight,
   Components.GraphicCamera,
   Components.GraphicMesh,
+  Components.GraphicSkybox,
+  Components.GraphicTerrain,
 
   Components.InputVelocity,
 

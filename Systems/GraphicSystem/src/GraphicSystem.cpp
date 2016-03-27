@@ -17,25 +17,17 @@
 #include <boost/lexical_cast.hpp>
 #include <flatbuffers/util.h>
 #include <schema/graphic_system_generated.h>
-
-#pragma warning( push, 0 )
-
 #include <Ogre.h>
 #include <OgrePlugin.h>
-#include <OgreWindowEventUtilities.h>
 
-#pragma warning( pop )
-
-#include "GraphicSystemSystem.h"
-#include "Scene.h"
+#include "GraphicSystem.h"
+#include "GraphicScene.h"
 
 /**
  * @inheritDoc
  */
 GraphicSystem::GraphicSystem(Framework* framework)
-        : ISystem()
-        , m_pRenderWindow(nullptr)
-        , m_pMaterialManager(nullptr),
+        : ISystem(), m_pRenderWindow(nullptr), m_pMaterialManager(nullptr),
           framework_(framework) {
     flatbuffers::LoadFile("GraphicSystem.bin", true, &definitionData_);
     definition_ = Schema::Systems::GetGraphicSystem(definitionData_.c_str());
@@ -116,7 +108,7 @@ ISystemScene* GraphicSystem::createScene(const Schema::SystemScene* systemScene)
 }
 
 void GraphicSystem::messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug,
-                                      const Ogre::String& logName, bool& skipThisMessage) {
+                                  const Ogre::String& logName, bool& skipThisMessage) {
     if (skipThisMessage) {
         return;
     }

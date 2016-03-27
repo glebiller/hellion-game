@@ -33,6 +33,9 @@ UScene::UScene(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM, std::map<Sch
         auto system = systems.find(scene->systemType())->second;
         Extend(*system, scene);
     }
+    for (auto entity : *universalSceneSchema_->entities()) {
+        createSceneEntity(*entity);
+    }
 }
 
 /**
@@ -82,11 +85,6 @@ UScene::~UScene() {
  * @inheritDoc
  */
 void UScene::init() {
-    // Create Entities
-    for (auto entity : *universalSceneSchema_->entities()) {
-        createSceneEntity(*entity);
-    }
-
     //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
     // The link needs to be established before any other messages come through.
@@ -189,6 +187,7 @@ void UScene::addTemplates(const flatbuffers::Vector<flatbuffers::Offset<Schema::
  */
 UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     UObject* parent = nullptr;
+    // TODO template
     /*if (objectProto->parent()) {
         parent = FindObject(objectProto->parent()->c_str());
     }*/
@@ -222,28 +221,13 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
         createSystemObject(pObject, component);
     }
 
-    /*
-    // 
-    // Properties
-    // 
-    if (templateIt != m_templates.end()) {
-        for (auto objectProto : *(*templateIt).second->systemObjects()) {
-            pObject->GetExtension(objectProto->systemType())->setProperties(objectProto->properties());
-        }
-    }
-    for (auto objectProto : *objectProto->systemObjects()) {
-        pObject->GetExtension(objectProto->systemType())->setProperties(objectProto->properties());
-    }
-
-     */
-
     // Initialize
     for (auto systemObject : pObject->GetExtensions()) {
         ISystemObject* pObj = systemObject.second;
         pObj->PostChanges(pObj->GetPotentialSystemChanges());
     }
-
     m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+
     return pObject;
 }
 

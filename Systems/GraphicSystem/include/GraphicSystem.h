@@ -29,7 +29,7 @@
 #include <schema/graphic_system_generated.h>
 #include <Generic/Framework.h>
 #include "Errors.h"
-#include "GraphicSystemSystem.h"
+#include "GraphicSystem.h"
 #include "System/ISystem.h"
 
 class GraphicScene;

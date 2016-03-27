@@ -19,7 +19,6 @@
 #include <System/ISystemObject.h>
 #include "Object/Object.h"
 
-
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
  * System.h for a definition of the class and its functions.

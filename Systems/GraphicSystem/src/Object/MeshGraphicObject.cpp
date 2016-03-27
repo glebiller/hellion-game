@@ -17,8 +17,8 @@
 #include <schema/physic_components_generated.h>
 #include <System/ISystemObject.h>
 
-#include "Scene.h"
-#include "GraphicSystemSystem.h"
+#include "GraphicScene.h"
+#include "GraphicSystem.h"
 #include "Object/Object.h"
 #include "Object/MeshGraphicObject.h"
 

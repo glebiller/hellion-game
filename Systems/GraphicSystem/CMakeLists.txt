@@ -5,6 +5,12 @@ find_package(Ogre REQUIRED COMPONENTS Overlay Terrain)
 
 add_library(GraphicSystem SHARED
         include/Object/AmbientLightGraphicObject.h
+        include/Object/CameraGraphicObject.h
+        include/Object/SkyboxGraphicObject.h
+        include/Object/TerrainGraphicObject.h
+        include/GraphicSystem.h
+        include/GraphicScene.h
+        include/GraphicTask.h
         src/Object/AmbientLightGraphicObject.cpp
         src/Object/CameraGraphicObject.cpp
         src/Object/CursorGraphicObject.cpp
@@ -12,7 +18,7 @@ add_library(GraphicSystem SHARED
         src/Object/MeshGraphicObject.cpp
         src/Object/Object.cpp
         src/Object/ParticleGraphicObject.cpp
-        src/Object/SkyGraphicObject.cpp
+        src/Object/SkyboxGraphicObject.cpp
         src/Object/TerrainGraphicObject.cpp
         src/GraphicSystemMain.cpp
         src/GraphicScene.cpp

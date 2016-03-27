@@ -22,8 +22,8 @@
 
 #pragma warning( pop )
 
-#include "GraphicSystemSystem.h"
-#include "Scene.h"
+#include "GraphicSystem.h"
+#include "GraphicScene.h"
 #include "Object/Object.h"
 #include "Object/CameraGraphicObject.h"
 

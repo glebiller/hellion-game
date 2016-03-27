@@ -12,13 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Task.h"
+#include "GraphicTask.h"
 
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
 
-#include "Scene.h"
+#include "GraphicScene.h"
 #include "Object/Object.h"
 #include "Generic/IttNotify.h"
 

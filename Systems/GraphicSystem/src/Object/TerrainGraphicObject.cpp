@@ -14,47 +14,26 @@
 
 #include "Object/TerrainGraphicObject.h"
 
-#pragma warning( push, 0 )
-#pragma warning( disable : 6326 6385 )
 #include <OgreTerrain.h>
 #include <OgreTerrainGroup.h>
-#pragma warning( pop )
 
-#include "Scene.h"
-#include "Object/Object.h"
+#include "GraphicScene.h"
 
 ///
 /// @inheritDoc.
 ///
-TerrainGraphicObject::TerrainGraphicObject(ISystemScene* pSystemScene, UObject* entity,
+TerrainGraphicObject::TerrainGraphicObject(ISystemScene& pSystemScene, UObject& entity,
                                            const Schema::SystemComponent& component)
-    : GraphicObject(pSystemScene, entity, component),
-      mTerrainGlobals(0),
-      mTerrainGroup(0),
-      mTerrainsImported(false) {
-    //m_propertySetters["Terrain"] = boost::bind(&TerrainGraphicObject::setTerrain, this, _1);
-}
-
-///
-/// @inheritDoc.
-///
-TerrainGraphicObject::~TerrainGraphicObject() {
-    OGRE_DELETE mTerrainGroup;
-    OGRE_DELETE mTerrainGlobals;
-}
-
-///
-/// @inheritDoc.
-///
-Error TerrainGraphicObject::initialize() {
-    Error Err = Errors::Success;
-
-
+        : GraphicObject(&pSystemScene, &entity, component),
+          mTerrainGlobals(nullptr),
+          mTerrainGroup(nullptr),
+          mTerrainsImported(false) {
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
     Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(7);
 
     mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
-    mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(GetSystemScene<GraphicScene>()->getSceneManager(), Ogre::Terrain::ALIGN_X_Z, 257, 1024.0f);
+    mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(GetSystemScene<GraphicScene>()->getSceneManager(),
+                                                Ogre::Terrain::ALIGN_X_Z, 257, 1024.0f);
     mTerrainGroup->setFilenameConvention(Ogre::String("terrain/MainTerrain"), Ogre::String("dat"));
     mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
     configureTerrainDefaults();
@@ -78,7 +57,14 @@ Error TerrainGraphicObject::initialize() {
     }
 
     mTerrainGroup->freeTemporaryResources();
-    return Err;
+}
+
+///
+/// @inheritDoc.
+///
+TerrainGraphicObject::~TerrainGraphicObject() {
+    OGRE_DELETE mTerrainGroup;
+    OGRE_DELETE mTerrainGlobals;
 }
 
 ///
@@ -97,22 +83,19 @@ void TerrainGraphicObject::Update(float DeltaTime) {
 /// @inheritDoc.
 ///
 Error TerrainGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-
-
     return Errors::Success;
 }
 
-
 void TerrainGraphicObject::configureTerrainDefaults() {
-    //Ogre::Light* light = GetSystemScene<GraphicScene>()->getSceneManager()->getAmbientLight();
+    auto ambientLight = GetSystemScene<GraphicScene>()->getSceneManager()->getAmbientLight();
     // Configure global
     mTerrainGlobals->setMaxPixelError(8);
     // testing composite map
     mTerrainGlobals->setCompositeMapDistance(3000);
     // Important to set these so that the terrain knows what to use for derived (non-realtime) data
-    //mTerrainGlobals->setLightMapDirection(light->getDerivedDirection());
-    //mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
-    mTerrainGlobals->setCompositeMapAmbient(GetSystemScene<GraphicScene>()->getSceneManager()->getAmbientLight());
+    mTerrainGlobals->setLightMapDirection(Ogre::Vector3(0, 1, 0));
+    mTerrainGlobals->setCompositeMapDiffuse(Ogre::ColourValue());
+    mTerrainGlobals->setCompositeMapAmbient(ambientLight);
     // Configure default import settings for if we use imported image
     Ogre::Terrain::ImportData& defaultimp = mTerrainGroup->getDefaultImportSettings();
     defaultimp.terrainSize = 257;
@@ -171,10 +154,10 @@ void TerrainGraphicObject::initBlendMaps(Ogre::Terrain* terrain) {
             blendMap0->convertImageToTerrainSpace(x, y, &tx, &ty);
             Ogre::Real height = terrain->getHeightAtTerrainPosition(tx, ty);
             Ogre::Real val = (height - minHeight0) / fadeDist0;
-            val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+            val = Ogre::Math::Clamp(val, (Ogre::Real) 0, (Ogre::Real) 1);
             *pBlend0++ = val;
             val = (height - minHeight1) / fadeDist1;
-            val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
+            val = Ogre::Math::Clamp(val, (Ogre::Real) 0, (Ogre::Real) 1);
             *pBlend1++ = val;
         }
     }

@@ -17,6 +17,16 @@ table GraphicLight {
     specularColor: GraphicColor;
 }
 
+table GraphicSkybox {
+    enabled: bool;
+    material: string;
+    distance: double;
+}
+
+table GraphicTerrain {
+
+}
+
 table GraphicCamera {
 
 }

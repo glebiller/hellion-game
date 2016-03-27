@@ -21,16 +21,16 @@
 
 #include <schema/component_type_generated.h>
 
-#include "GraphicSystemSystem.h"
-#include "Scene.h"
-#include "Task.h"
+#include "GraphicSystem.h"
+#include "GraphicScene.h"
+#include "GraphicTask.h"
 #include "Object/Object.h"
 #include "Object/AmbientLightGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/LightGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
 #include "Object/ParticleGraphicObject.h"
-#include "Object/SkyGraphicObject.h"
+#include "Object/SkyboxGraphicObject.h"
 #include "Object/TerrainGraphicObject.h"
 
 // We use SM2.0 instancing. Since we do normal mapping on the instanced geometry, we
@@ -55,19 +55,17 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     , m_FogMode(Ogre::FOG_NONE) {
     m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);
     m_pRootNode = m_pSceneManager->getRootSceneNode();
-    // TODO ambient light in scene config
-    m_ambientLight = Ogre::ColourValue(1, 1, 1, 0.3);
-    //m_pSceneManager->setAmbientLight(m_ambientLight);
-    //m_pSceneManager->setSkyBox(true, "nebula");
     //m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
 
     m_ObjectFactories[Schema::ComponentType::GraphicAmbientLight] = boost::factory<AmbientLightGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
+    m_ObjectFactories[Schema::ComponentType::GraphicSkybox] = boost::factory<SkyboxGraphicObject*>();
+    m_ObjectFactories[Schema::ComponentType::GraphicTerrain] = boost::factory<TerrainGraphicObject*>();
     /*m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
-    m_ObjectFactories["Sky"] = boost::factory<SkyGraphicObject*>();
+    m_ObjectFactories["Sky"] = boost::factory<SkyboxGraphicObject*>();
     m_ObjectFactories["Terrain"] = boost::factory<TerrainGraphicObject*>();*/
 
     Ogre::Vector3 lightdir(0, 0, 0);

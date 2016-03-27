@@ -13,8 +13,8 @@
   "entities": [
     {
       "metaData": {
-        "entityId": "ambient-light",
-        "name": "AmbientLight",
+        "entityId": "scene-light",
+        "name": "SceneLight",
         "comment": ""
       },
       "systemComponents": [
@@ -29,6 +29,15 @@
               "alpha": 1
             }
           }
+        },
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicSkybox",
+          "data": {
+            "enabled" : true,
+            "material": "nebula",
+            "distance": 6000
+          }
         }
       ]
     },
@@ -42,6 +51,13 @@
         {
           "systemType": "Graphic",
           "data_type": "GraphicCamera",
+          "data": {
+
+          }
+        },
+        {
+          "systemType": "Input",
+          "data_type": "InputCamera",
           "data": {
 
           }

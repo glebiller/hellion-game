@@ -12,42 +12,38 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Object/SkyGraphicObject.h"
+#include "Object/SkyboxGraphicObject.h"
 
-#pragma warning( push, 0 )
-#pragma warning( disable : 6326 6385 )
-#include <Ogre.h>
-#pragma warning( pop )
-
-#include "Assert.h"
+#include "GraphicScene.h"
 
 ///
 /// @inheritDoc.
 ///
-SkyGraphicObject::SkyGraphicObject(ISystemScene* pSystemScene, UObject* entity,
-                                   const Schema::SystemComponent& component)
-    : GraphicObject(pSystemScene, entity, component),
-      mSkysImported(false) {
-    
+SkyboxGraphicObject::SkyboxGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                                         const Schema::SystemComponent& component)
+        : ISystemObject(&pSystemScene, &entity, component),
+          sceneManager_(reinterpret_cast<GraphicScene&>(pSystemScene).getSceneManager()) {
+    auto definition = static_cast<const Schema::Components::GraphicSkybox*> (component.data());
+    sceneManager_->setSkyBox(definition->enabled(), definition->material()->c_str(), Ogre::Real(definition->distance()));
 }
 
 ///
 /// @inheritDoc.
 ///
-SkyGraphicObject::~SkyGraphicObject() {
+SkyboxGraphicObject::~SkyboxGraphicObject() {
 }
 
 ///
 /// @inheritDoc.
 ///
-void SkyGraphicObject::Update(float DeltaTime) {
+void SkyboxGraphicObject::Update(float DeltaTime) {
 
 }
 
 ///
 /// @inheritDoc.
 ///
-Error SkyGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error SkyboxGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
 
 
     return Errors::Success;

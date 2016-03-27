@@ -21,7 +21,7 @@
 #pragma warning( pop )
 
 #include "DataTypes.h"
-#include "Task.h"
+#include "GraphicTask.h"
 
 class GraphicSystem;
 
@@ -80,8 +80,6 @@ public:
 protected:
     Ogre::SceneManager* m_pSceneManager;
     Ogre::SceneNode* m_pRootNode;
-
-    Ogre::ColourValue m_ambientLight;
     Ogre::ColourValue m_FogColor;
     Ogre::FogMode m_FogMode;
     float m_ExpDensity;

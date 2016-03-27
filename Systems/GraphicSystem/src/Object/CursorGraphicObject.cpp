@@ -21,7 +21,7 @@
 #pragma warning( push, 0 )
 #pragma warning( disable : 4244 6211 6386 )
 
-#include "Scene.h"
+#include "GraphicScene.h"
 #include "Object/Object.h"
 #include "Object/CursorGraphicObject.h"
 

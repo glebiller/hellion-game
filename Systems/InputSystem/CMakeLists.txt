@@ -7,7 +7,7 @@ add_library(InputSystem SHARED
         src/InputSystem.cpp
         src/Scene.cpp
         src/System.cpp
-        src/Task.cpp
+        src/GraphicTask.cpp
         )
 
 target_include_directories(InputSystem PUBLIC

@@ -139,11 +139,6 @@ void Framework::setNextScene(std::string nextSceneName) {
         delete m_pScene;
     }
     m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM, m_systems);
-    /*for (auto it : m_systems) {
-        m_pScene->Extend(*it.second);
-    }*/
-
-    //m_definitionService->parseScene(m_pScene, nextSceneName);
     m_pScheduler->setScene(m_pScene);
     m_pScene->init();
 }
