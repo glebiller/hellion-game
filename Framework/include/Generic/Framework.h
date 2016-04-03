@@ -19,29 +19,18 @@
 #include <vector>
 #include <boost/log/sources/logger.hpp>
 #include <boost/system/error_code.hpp>
-#include <boost/dll.hpp>
+#include <boost/dll/shared_library.hpp>
 #include <schema/system_type_generated.h>
 
 #include "System/Types.h"
+#include "Manager/ChangeManager.h"
 #include "Manager/TaskManager.h"
-
-namespace Schema {
-    class Environment;
-}
-
-class Scheduler;
-
-class ChangeManager;
-
-class UScene;
-
-class UObject;
-
-class ISystem;
+#include "Generic/Scheduler.h"
+#include "Universal/UScene.h"
+#include "System/ISystem.h"
 
 ///
-/// Framework. Responsible for tying in all the different managers and systems.  Also handles
-/// loading and parsing of the global definition file (gdf).
+/// Framework. Responsible for tying in all the different managers and systems.
 ///
 class Framework {
 public:
@@ -54,7 +43,7 @@ public:
 
     void Shutdown();
 
-    Error Execute();
+    bool Execute();
 
     void setWindowHandle(std::size_t windowHandle);
 
@@ -63,8 +52,6 @@ public:
     void setRunning(bool running);
 
 private:
-
-    void processMessages();
 
     void setNextScene(std::string nextSceneName);
 
@@ -77,6 +64,7 @@ private:
     ChangeManager* m_pObjectCCM;
 
     UScene* m_pScene;
+    std::string environmentFile_;
     const Schema::Environment* m_environment;
     std::map<Schema::SystemType, ISystem*> m_systems;
     std::vector<boost::dll::shared_library> m_systemLibraries;

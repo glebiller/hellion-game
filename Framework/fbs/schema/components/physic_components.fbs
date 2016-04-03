@@ -1,5 +1,9 @@
 namespace Schema.Components;
 
+table PhysicTerrain {
+
+}
+
 table PhysicPosition {
     x:float;
     y:float;

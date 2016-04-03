@@ -33,12 +33,14 @@ PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Sc
     btCollisionShape* playerShape = new btCapsuleShape(1 ,2);
     btDefaultMotionState* fallMotionState =
             new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 2, 0)));
-    btScalar mass = 1;
+    btScalar mass = 80;
     btVector3 fallInertia(0, 0, 0);
     playerShape->calculateLocalInertia(mass, fallInertia);
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, playerShape, fallInertia);
+    fallRigidBodyCI.m_linearDamping = 0;
     rigidBody_ = new btRigidBody(fallRigidBodyCI);
     rigidBody_->setAngularFactor(0);
+    rigidBody_->getWorldTransform().setOrigin(btVector3(position_->x(), position_->y(), position_->z()));
     GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
 }
 
@@ -54,8 +56,9 @@ PhysicObject::~PhysicObject() {
  */
 Error PhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
     if (ChangeType & Schema::EntityChange::InputVelocity) {
-        auto scalar = static_cast<const Schema::Components::InputVelocity *>(systemObject->getComponent())->scalar();
-        rigidBody_->setLinearVelocity(btVector3(scalar->x(), scalar->y(), scalar->z()));
+        auto inputSystemObject = systemObject->getEntity()->GetExtension(Schema::ComponentType::InputVelocity);
+        auto scalar = inputSystemObject->getComponent<Schema::Components::InputVelocity>()->scalar();
+        rigidBody_->setLinearVelocity(btVector3(scalar->x()*100, scalar->y()*100, scalar->z()*100));
     }
     return Errors::Success;
 }
@@ -68,9 +71,8 @@ void PhysicObject::Update(float DeltaTime) {
 
     btTransform transform;
     rigidBody_->getMotionState()->getWorldTransform(transform);
-    if (transform_.getOrigin() == transform.getOrigin()) {
-        // TODO
-    //    return;
+    if (transform_ == transform) {
+        return;
     }
 
     transform_ = transform;

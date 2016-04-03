@@ -10,3 +10,6 @@ table InputVelocity {
     scalar: VelocityVector;
     angular: VelocityVector;
 }
+
+table InputCamera {
+}

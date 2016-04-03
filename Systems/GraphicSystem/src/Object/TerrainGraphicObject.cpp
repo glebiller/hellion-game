@@ -34,7 +34,7 @@ TerrainGraphicObject::TerrainGraphicObject(ISystemScene& pSystemScene, UObject& 
     mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
     mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(GetSystemScene<GraphicScene>()->getSceneManager(),
                                                 Ogre::Terrain::ALIGN_X_Z, 257, 1024.0f);
-    mTerrainGroup->setFilenameConvention(Ogre::String("terrain/MainTerrain"), Ogre::String("dat"));
+    mTerrainGroup->setFilenameConvention(Ogre::String("/Users/guillaume/ClionProjects/hellion-game/Assets/Media/Graphic/terrain/MainTerrain"), Ogre::String("dat"));
     mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
     configureTerrainDefaults();
 

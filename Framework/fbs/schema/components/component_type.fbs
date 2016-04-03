@@ -13,6 +13,8 @@ union ComponentType {
   Components.GraphicTerrain,
 
   Components.InputVelocity,
+  Components.InputCamera,
 
-  Components.PhysicPosition
+  Components.PhysicPosition,
+  Components.PhysicTerrain
 }

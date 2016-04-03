@@ -18,6 +18,7 @@
   ],
   "plugins": [
     "RenderSystem_GL",
+    "Plugin_CgProgramManager",
     "Plugin_ParticleFX"
   ],
   "miscParams": [

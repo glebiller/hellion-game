@@ -2,7 +2,16 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(InputSystem LANGUAGES CXX)
 
 add_library(InputSystem SHARED
+        include/component/InputVelocityComponent.h
+        include/Object/Object.h
+        include/Object/CameraInputObject.h
+        include/Object/PlayerObject.h
+        include/Scene.h
+        include/System.h
+        include/Task.h
+        src/component/InputVelocityComponent.cpp
         src/Object/Object.cpp
+        src/Object/CameraInputObject.cpp
         src/Object/PlayerObject.cpp
         src/InputSystem.cpp
         src/Scene.cpp
@@ -21,8 +30,6 @@ target_compile_features(InputSystem
         )
 
 target_link_libraries(InputSystem
-        Boost
-        Boost-log
         Framework
         OIS
         OISB
@@ -31,8 +38,8 @@ target_link_libraries(InputSystem
 install(TARGETS InputSystem
         ARCHIVE  DESTINATION lib
         LIBRARY  DESTINATION lib
-        RUNTIME  DESTINATION bin)  # This is for Windows
+        RUNTIME  DESTINATION bin
+        )
 install(DIRECTORY include/ DESTINATION include)
 
 export(TARGETS InputSystem FILE InputSystemConfig.cmake)
-

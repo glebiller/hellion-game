@@ -14,11 +14,10 @@
 
 #pragma once
 
-#include "System.h"
-#include "System/ISystemObject.h"
-
-class InputSystem;
-class InputScene;
+#include <System/ISystemObject.h>
+#include <System/ISystemScene.h>
+#include <Universal/UObject.h>
+#include <schema/scene_generated.h>
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\

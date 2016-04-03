@@ -10,6 +10,13 @@ table MetaData {
   comment:string;
 }
 
+table EntityLink {
+    subjectId:string;
+    observerId:string;
+    subjectComponent:ComponentType;
+    observerComponent:ComponentType;
+}
+
 table SystemComponent {
     systemType:SystemType;
     data:ComponentType;
@@ -27,6 +34,7 @@ table SystemScene {
 table UniversalScene {
     scenes:[SystemScene];
     entities:[SceneEntity];
+    links:[EntityLink];
 }
 
 root_type UniversalScene;

@@ -31,17 +31,12 @@ public:
     /**
      * @inheritDoc
      */
-    MovablePhysicObject(ISystemScene* pSystemScene, UObject* entity);
+    MovablePhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
 
     /**
      * @inheritDoc
      */
     virtual ~MovablePhysicObject();
-
-    /**
-     * @inheritDoc
-     */
-    Error initialize();
 
     /**
      * @inheritDoc

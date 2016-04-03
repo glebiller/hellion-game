@@ -18,7 +18,10 @@
 #include <flatbuffers/util.h>
 #include <schema/graphic_system_generated.h>
 #include <Ogre.h>
-#include <OgrePlugin.h>
+#include <OgreOverlay.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlayContainer.h>
+#include <OgreOverlayElement.h>
 
 #include "GraphicSystem.h"
 #include "GraphicScene.h"
@@ -75,8 +78,15 @@ GraphicSystem::GraphicSystem(Framework* framework)
     // TODO resources locations in system config
     m_pResourceGroupManager->addResourceLocation("Assets/Media/Graphic", "FileSystem",
                                                  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, true);
+    m_pResourceGroupManager->addResourceLocation("Assets/Media/OgreCore", "FileSystem",
+                                                 Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, false);
     m_pResourceGroupManager->initialiseResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     m_pResourceGroupManager->loadResourceGroup(Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+
+    Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+    auto overlay = overlayManager.getByName("Core/DebugOverlay");
+    overlay->show();
 
     BOOST_LOG(logger_) << "Graphic System created";
 }

@@ -3,7 +3,7 @@
 #include <Generic/Framework.h>
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#include <Errors.h>
+#include <boost/system/error_code.hpp>
 
 // All this does is suppress some messages in the run log.  NSApplication does not
 // implement buttonPressed and apps without a NIB have no target for the action.
@@ -52,7 +52,7 @@ static id mAppDelegate;
 }
 
 - (void)execute:(id)sender {
-    if (framework_->Execute() != Errors::Success) {
+    if (!framework_->Execute()) {
         [NSApp terminate:self];
     }
 }

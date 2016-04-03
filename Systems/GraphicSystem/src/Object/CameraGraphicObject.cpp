@@ -37,7 +37,6 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
           m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity.getName())) {
     m_pCameraNode = m_pNode->createChildSceneNode();
     m_pCameraNode->setName(m_entity->getId() + "Camera_SceneNode");
-
     m_pCamera->setPolygonMode(Ogre::PM_SOLID);
 
     //
@@ -49,7 +48,7 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
         m_pCamera->setFarClipDistance(0);   // enable infinite far clip distance if we can
     }
     m_pCamera->setNearClipDistance(1);
-    m_pCamera->setPosition(10, 10, 10);
+    //m_pNode->setPosition(500, 500, 500);
 
 
     const Ogre::String workspaceName = "SampleBrowserWorkspace";
@@ -68,7 +67,7 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
  * @inheritDoc
  */
 CameraGraphicObject::~CameraGraphicObject() {
-    m_pCameraNode->detachObject(m_pCamera);
+    //m_pCameraNode->detachObject(m_pCamera);
 
     GetSystemScene<GraphicScene>()->getSceneManager()->destroyCamera(m_pCamera);
 }
@@ -84,12 +83,14 @@ void CameraGraphicObject::Update(float DeltaTime) {
  * @inheritDoc
  */
 Error CameraGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    /*if (ChangeType & System::Changes::Physic::Position) {
-        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
-        const Math::Vector3& Position = *pGeometryObject->GetPosition();
-        m_pNode->setPosition(Position.x, Position.y, Position.z);
+    if (ChangeType & Schema::EntityChange::PhysicPosition) {
+        if (systemObject->getEntity()->getId() == "player") {
+            auto position = systemObject->getComponent<Schema::Components::PhysicPosition>();
+            m_pCamera->setPosition(position->x() - 50, position->y() + 50, position->z());
+            m_vLookAt = Ogre::Vector3(position->x(), position->y(), position->z());
+        }
     }
-    if (ChangeType & System::Changes::Physic::Orientation) {
+    /*if (ChangeType & System::Changes::Physic::Orientation) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();
         m_pNode->setOrientation(Orientation.w, Orientation.x, Orientation.y, Orientation.z);

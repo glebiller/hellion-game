@@ -68,7 +68,7 @@ void ISystemObject::UpdateInterestBits(IObserver* pInObserver, unsigned int uInI
         long newBits = long(it->m_interestBits | uInIntrestBits);
         do {
             prevBits = it->m_interestBits;
-        } while (AtomicCompareAndSwap((long*) &it->m_interestBits, newBits, prevBits) != prevBits);
+        } while (AtomicCompareAndSwap(it->m_interestBits, newBits, prevBits) != prevBits);
     }
 }
 
@@ -81,15 +81,11 @@ void ISystemObject::PostChanges(System::Changes::BitMask uInChangedBits) {
     }
 }
 
-const void* ISystemObject::getComponent() {
-    return component_.data();
-}
-
-long ISystemObject::AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits) {
+long ISystemObject::AtomicCompareAndSwap(unsigned int interestBits, long newBits, long prevBits) {
 #if defined(_MSC_VER)
-    return _InterlockedCompareExchange(interestBits, newBits, prevBits);
+    return _InterlockedCompareExchange((long *) &interestBits, newBits, prevBits);
 #elif defined(__GNUC__)
-    return __sync_val_compare_and_swap(interestBits, prevBits, newBits);
+    return __sync_val_compare_and_swap(&interestBits, prevBits, newBits);
 #endif
 }
 

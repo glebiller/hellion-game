@@ -20,24 +20,10 @@ class ISystemScene;
 
 class TerrainPhysicObject : public PhysicObject {
 public:
-    ///
-    /// Constructor.
-    ///
-    /// @param [in,out] pSystemScene    If non-null, the system scene.
-    /// @param [in,out] entity          The name.
-    ///
-    TerrainPhysicObject(ISystemScene* pSystemScene, UObject* entity);
+    TerrainPhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
 
-    ///
-    /// Destructor.
-    ///
     ~TerrainPhysicObject();
 
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
-    
     ///
     /// @inheritDoc.
     ///

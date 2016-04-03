@@ -14,12 +14,9 @@
 
 #pragma once
 
+#include <map>
 #include <boost/timer/timer.hpp>
-
-namespace Schema {
-    class Environment;
-}
-class TaskManager;
+#include "Universal/UScene.h"
 
 ///
 /// Handles scheduling of all task execution.
@@ -27,19 +24,10 @@ class TaskManager;
 class Scheduler {
 public:
 
-    ///
-    /// Constructor.
-    ///
     Scheduler(TaskManager* taskManager);
 
-    ///
-    /// Destructor.
-    ///
     ~Scheduler();
 
-    ///
-    /// Initialises this object.
-    ///
     void init(const Schema::Environment* environment);
 
     ///
@@ -49,9 +37,6 @@ public:
     ///
     void setScene(const UScene* pScene);
 
-    ///
-    /// Execute the set UScene.
-    ///
     void execute();
 
     ///
@@ -59,22 +44,17 @@ public:
     ///
     void waitForScenes();
 
-    ///
-    /// Gets task manager.
-    ///
-    /// @return null if it fails, else the task manager.
-    ///
     inline TaskManager* getTaskManager() {
         return m_pTaskManager;
     }
 
 protected:
-    static const boost::timer::nanosecond_type          sm_defaultClockFrequency;
+    static const boost::timer::nanosecond_type sm_defaultClockFrequency;
 
-    TaskManager*                                        m_pTaskManager;
-    
-    bool                                                m_benchmarkingEnabled;
-    boost::timer::cpu_timer                             m_executionTimer;
-    std::map<Schema::SystemType, ISystemScene*>          m_SceneExecs;
+    TaskManager* m_pTaskManager;
+
+    bool m_benchmarkingEnabled;
+    boost::timer::cpu_timer m_executionTimer;
+    std::map<Schema::SystemType, ISystemScene*> m_SceneExecs;
 
 };

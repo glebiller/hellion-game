@@ -15,6 +15,7 @@
 #pragma once
 
 #include <OISB.h>
+#include <Framework/include/schema/entity_change_generated.h>
 
 #include "Object/Object.h"
 
@@ -36,18 +37,13 @@ public:
     /// @param [in,out] pSystemScene    If non-null, the system scene.
     /// @param  pszName                 The name.
     ///
-    CameraInputObject(ISystemScene* pSystemScene, UObject* entity);
+    CameraInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
 
     ///
     /// @inheritDoc.
     ///
     ~CameraInputObject();
-    
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
-        
+
     ///
     /// @inheritDoc.
     ///
@@ -57,14 +53,14 @@ public:
     /// @inheritDoc.
     ///
     System::Changes::BitMask GetPotentialSystemChanges() {
-        return System::Changes::Input::Rotation;
+        return Schema::EntityChange::InputVelocity | Schema::EntityChange::PhysicPosition;
     };
 
     ///
     /// @inheritDoc.
     ///
     System::Types::BitMask GetDesiredSystemChanges() {
-        return System::Changes::None;
+        return Schema::EntityChange::PhysicPosition;
     };
 
     ///
@@ -73,8 +69,10 @@ public:
     Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
 private:
-    OISB::AnalogAxisAction*         m_rotateUpDownAction;
-    OISB::AnalogAxisAction*         m_rotateRightLeftAction;
+    Schema::Components::InputVelocity* velocity_;
+
+    OISB::AnalogAxisAction* m_rotateUpDownAction;
+    OISB::AnalogAxisAction* m_rotateRightLeftAction;
 
 };
 

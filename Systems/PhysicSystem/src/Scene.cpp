@@ -33,7 +33,7 @@ PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScen
                                                  constraintSolver_,
                                                  GetSystem<PhysicSystem>()->getCollisionConfiguration());
 
-    dynamicsWorld_->setGravity(btVector3(0, -1, 0));
+    dynamicsWorld_->setGravity(btVector3(0, -9.8f, 0));
 
     btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
     btDefaultMotionState* groundMotionState =
@@ -46,7 +46,7 @@ PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScen
     m_ObjectFactories[Schema::ComponentType::PhysicPosition] = boost::factory<PhysicObject*>();
     //m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
     //m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
-    //m_ObjectFactories["Terrain"] = boost::factory<TerrainPhysicObject*>();
+    m_ObjectFactories[Schema::ComponentType::PhysicTerrain] = boost::factory<TerrainPhysicObject*>();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

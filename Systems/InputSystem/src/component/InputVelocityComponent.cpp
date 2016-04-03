@@ -12,33 +12,16 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Defines.h"
-#include <windows.h>
-#include <tchar.h>
+#include "component/InputVelocityComponent.h"
 
-#include "Framework.h"
-
-int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
-    #ifndef DEBUG_BUILD
-    //try
-    #endif
-    {
-        // Start framework
-        Framework* framework = new Framework();
-        if (framework->Initialize() == boost::system::errc::success) {
-            framework->Execute();
-            framework->Shutdown();
-            delete framework;
-        }
-        MSG Msg;
-        while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
-            TranslateMessage(&Msg);
-            DispatchMessage(&Msg);
-        }
-    }
-    #ifndef DEBUG_BUILD
-    //catch (...) {
-    //}
-    #endif
-    return 0;
+InputVelocityComponent::InputVelocityComponent(ISystemScene* pSystemScene, UObject* entity,
+                                               const Schema::SystemComponent& component)
+        : ISystemObject(pSystemScene, entity, component) {
+    velocity_ = getMutableComponent<Schema::Components::InputVelocity>();
 }
+
+InputVelocityComponent::~InputVelocityComponent() {
+
+}
+
+

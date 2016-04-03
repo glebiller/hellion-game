@@ -55,7 +55,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     , m_FogMode(Ogre::FOG_NONE) {
     m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);
     m_pRootNode = m_pSceneManager->getRootSceneNode();
-    //m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
+    m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
 
     m_ObjectFactories[Schema::ComponentType::GraphicAmbientLight] = boost::factory<AmbientLightGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicCamera] = boost::factory<CameraGraphicObject*>();
@@ -68,9 +68,9 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     m_ObjectFactories["Sky"] = boost::factory<SkyboxGraphicObject*>();
     m_ObjectFactories["Terrain"] = boost::factory<TerrainGraphicObject*>();*/
 
-    Ogre::Vector3 lightdir(0, 0, 0);
-
     // TODO light in scene config
+    /*
+    Ogre::Vector3 lightdir(0, 0, 0);
     Ogre::SceneNode* node = m_pSceneManager->createSceneNode();
     Ogre::Light* light = m_pSceneManager->createLight();
     node->setName("TestLight");
@@ -80,6 +80,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     light->setDirection(lightdir);
     light->setDiffuseColour(Ogre::ColourValue::Red);
     light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
+     */
 }
 
 /**

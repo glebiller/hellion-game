@@ -19,9 +19,10 @@
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 #include "schema/scene_generated.h"
+#include "Universal/UObject.h"
 
-class UObject;
 class ChangeManager;
+
 class SystemService;
 
 /**
@@ -34,16 +35,13 @@ class UScene : public IObserver {
 public:
 
     // TODO move
-    typedef std::map<std::string, Schema::SceneEntity*>                       Templates;
-    typedef std::map<Schema::SystemType, ISystem*>                       Systems;
-    typedef std::map<Schema::SystemType, ISystemScene*>                  SystemScenes;
-    typedef std::list<UObject*>                                         Objects;
+    typedef std::map<std::string, Schema::SceneEntity*> Templates;
 
     struct ObjectLinkData {
-        ISystemObject*               pSubject;
-        IObserver*              pObserver;
+        ISystemObject* pSubject;
+        IObserver* pObserver;
     };
-    typedef std::list<ObjectLinkData>       ObjectLinks;
+    typedef std::list<ObjectLinkData> ObjectLinks;
 
 public:
 
@@ -78,7 +76,7 @@ public:
      *
      * @return  The system scene collection.
      */
-    const SystemScenes& GetSystemScenes() const {
+    const std::map<Schema::SystemType, ISystemScene*>& GetSystemScenes() const {
         return m_SystemScenes;
     }
 
@@ -113,7 +111,7 @@ public:
      *
      * @return  The system scene collection.
      */
-    const Objects& GetObjects() const {
+    const std::list<UObject*>& GetObjects() const {
         return m_Objects;
     }
 
@@ -138,7 +136,7 @@ public:
      * @inheritDoc
      */
     Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask SystemChanges);
-    
+
     /**
      * @inheritDoc
      */
@@ -160,18 +158,18 @@ private:
     void createSystemObject(UObject* pObject, const Schema::SystemComponent* objectProto);
 
 protected:
-    boost::log::sources::logger             logger_;
+    boost::log::sources::logger logger_;
 
-    ChangeManager*                         m_pSceneCCM;
-    ChangeManager*                         m_pObjectCCM;
+    ChangeManager* m_pSceneCCM;
+    ChangeManager* m_pObjectCCM;
 
-    std::string                             universalSceneData_;
-    const Schema::UniversalScene*           universalSceneSchema_;
+    std::string universalSceneData_;
+    const Schema::UniversalScene* universalSceneSchema_;
 
-    SystemScenes                            m_SystemScenes;
-    Templates                               m_templates;
-    Objects                                 m_Objects;
-    ObjectLinks                             m_ObjectLinks;
+    std::map<Schema::SystemType, ISystemScene*> m_SystemScenes;
+    Templates m_templates;
+    std::list<UObject*> m_Objects;
+    std::list<ObjectLinkData> m_ObjectLinks;
 
 
 };

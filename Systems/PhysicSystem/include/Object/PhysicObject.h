@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <btBulletCollisionCommon.h>
 #include <schema/entity_change_generated.h>
 #include <schema/physic_components_generated.h>
 #include <System/Types.h>

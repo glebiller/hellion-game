@@ -18,15 +18,12 @@
 #include <flatbuffers/util.h>
 #include <schema/environment_generated.h>
 #include "Generic/Framework.h"
-#include "Universal/UScene.h"
-#include "Manager/ChangeManager.h"
 
 /**
  * @inheritDoc
  */
 UScene::UScene(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM, std::map<Schema::SystemType, ISystem*>& systems)
-    : m_pSceneCCM(pSceneCCM)
-    , m_pObjectCCM(pObjectCCM) {
+        : m_pSceneCCM(pSceneCCM), m_pObjectCCM(pObjectCCM) {
     flatbuffers::LoadFile("UniversalScene.bin", true, &universalSceneData_);
     universalSceneSchema_ = Schema::GetUniversalScene(universalSceneData_.c_str());
     for (auto scene : *universalSceneSchema_->scenes()) {
@@ -36,6 +33,20 @@ UScene::UScene(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM, std::map<Sch
     for (auto entity : *universalSceneSchema_->entities()) {
         createSceneEntity(*entity);
     }
+    for (auto link : *universalSceneSchema_->links()) {
+        UObject* pSubject = FindObject(link->subjectId()->c_str());
+        UObject* pObserver = FindObject(link->observerId()->c_str());
+        ISystemObject* pSystemSubject = pSystemSubject = pSubject->GetExtension(link->subjectComponent_type());
+        ISystemObject* pSystemObserver = pSystemObserver = pObserver->GetExtension(link->observerComponent_type());
+        CreateObjectLink(pSystemSubject, pSystemObserver);
+    }
+    for (auto entity : m_Objects) {
+        for (auto systemObject : entity->GetExtensions()) {
+            ISystemObject* pObj = systemObject.second;
+            pObj->PostChanges(pObj->GetPotentialSystemChanges());
+        }
+    }
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
 }
 
 /**
@@ -47,7 +58,7 @@ UScene::~UScene() {
     //
     for (auto it = m_SystemScenes.begin(); it != m_SystemScenes.end(); it++) {
         it->second->GlobalSceneStatusChanged(
-            ISystemScene::GlobalSceneStatus::PreDestroyingObjects
+                ISystemScene::GlobalSceneStatus::PreDestroyingObjects
         );
     }
 
@@ -62,8 +73,7 @@ UScene::~UScene() {
     //
     // Get rid of all the objects.
     //
-    Objects objects = m_Objects;
-    for (auto object : objects) {
+    for (auto object : m_Objects) {
         delete object;
     }
     m_Objects.clear();
@@ -74,7 +84,7 @@ UScene::~UScene() {
     for (auto systemScene : m_SystemScenes) {
         ISystemScene* pSystemScene = systemScene.second;
         pSystemScene->GlobalSceneStatusChanged(
-            ISystemScene::GlobalSceneStatus::PostDestroyingObjects
+                ISystemScene::GlobalSceneStatus::PostDestroyingObjects
         );
         Unextend(pSystemScene);
     }
@@ -111,7 +121,8 @@ void UScene::update() {
     // Distribute changes for object and scene CCMs.  The UObject propagates some object
     // messages up to the scene CCM so it needs to go first.
     m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All ^ System::Changes::Generic::CreateObject);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All,
+                                         System::Changes::All ^ System::Changes::Generic::CreateObject);
 }
 
 /**
@@ -122,7 +133,7 @@ ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemS
     BOOST_LOG(logger_) << "Extend Universal Scene with system " << Schema::EnumNameSystemType(systemType);
 
     BOOST_ASSERT_MSG(m_SystemScenes.find(systemType) == m_SystemScenes.end(),
-              "The new scene to create for the selected system type already exists.");
+                     "The new scene to create for the selected system type already exists.");
 
     //
     // Have the system create it's scene.
@@ -220,14 +231,6 @@ UObject* UScene::createSceneEntity(const Schema::SceneEntity& sceneEntity) {
     for (auto component : *sceneEntity.systemComponents()) {
         createSystemObject(pObject, component);
     }
-
-    // Initialize
-    for (auto systemObject : pObject->GetExtensions()) {
-        ISystemObject* pObj = systemObject.second;
-        pObj->PostChanges(pObj->GetPotentialSystemChanges());
-    }
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-
     return pObject;
 }
 
@@ -239,7 +242,7 @@ void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent*
     ISystemScene* systemScene = m_SystemScenes.find(type)->second;
     ISystemObject* pSystemObject = pObject->Extend(systemScene, systemComponent);
     m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
-};
+}
 
 /**
  * @inheritDoc
@@ -272,6 +275,7 @@ UObject* UScene::FindObject(std::string id) {
         }
     }
 
+    BOOST_ASSERT_MSG(pObject != nullptr, "Object with id cannot be found");
     return pObject;
 }
 
@@ -283,14 +287,14 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
     // Register objects with the CCM.
     //
     System::Changes::BitMask Changes =
-        pSubject->GetPotentialSystemChanges() & pObserver->GetDesiredSystemChanges();
+            pSubject->GetPotentialSystemChanges() & pObserver->GetDesiredSystemChanges();
 
     if (Changes) {
         m_pObjectCCM->Register(pSubject, Changes, pObserver);
         //
         // Hold on to the list for unregistering later.
         //
-        ObjectLinkData old = { pSubject, pObserver };
+        ObjectLinkData old = {pSubject, pObserver};
         m_ObjectLinks.push_back(old);
         //
         // Inform the link requester that the link has been established.

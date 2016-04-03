@@ -75,7 +75,7 @@ public:
      *
      * @return  null if it fails, else the extension.
      */
-    ISystemObject* GetExtension(Schema::ComponentType componentType);
+    ISystemObject* const GetExtension(Schema::ComponentType componentType);
 
     /**
      * @inheritDoc

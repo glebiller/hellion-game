@@ -2,10 +2,16 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(PhysicSystem LANGUAGES CXX)
 
 find_package(Bullet REQUIRED)
+find_package(PNG REQUIRED)
 
 add_library(PhysicSystem SHARED
+        include/Object/MovablePhysicObject.h
+        include/Object/PhysicObject.h
+        include/Object/TerrainPhysicObject.h
         include/Scene.h
+        src/Object/MovablePhysicObject.cpp
         src/Object/PhysicObject.cpp
+        src/Object/TerrainPhysicObject.cpp
         src/PhysicSystem.cpp
         src/Scene.cpp
         src/GraphicSystem.cpp
@@ -29,6 +35,7 @@ target_link_libraries(PhysicSystem
         Boost-log
         Framework
         ${BULLET_LIBRARIES}
+        ${PNG_LIBRARIES}
         )
 
 install(TARGETS PhysicSystem

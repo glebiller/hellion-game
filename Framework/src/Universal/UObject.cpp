@@ -83,7 +83,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
         //
         // Unregister each object with scenes that cared about the object's changes.
         //
-        UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
+        auto pScenes = m_pScene->GetSystemScenes();
         for (auto it = pScenes.begin(); it != pScenes.end(); it++) {
             if (systemObject->GetPotentialSystemChanges() & it->second->GetDesiredSystemChanges()) {
                 m_pObjectCCM->Unregister(systemObject, it->second);
@@ -105,15 +105,10 @@ const std::map<Schema::ComponentType, ISystemObject*> &UObject::GetExtensions() 
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::GetExtension(Schema::ComponentType componentType) {
-    ISystemObject* pSystemObject = nullptr;
-
+ISystemObject* const UObject::GetExtension(Schema::ComponentType componentType) {
     auto it = m_ObjectExtensions.find(componentType);
-    if (it != m_ObjectExtensions.end()) {
-        pSystemObject = it->second;
-    }
-
-    return pSystemObject;
+    BOOST_ASSERT_MSG(it != m_ObjectExtensions.end(), "Component type cannot be found");
+    return it->second;
 }
 
 /**

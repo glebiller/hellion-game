@@ -38,6 +38,7 @@ InputScene::InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
     m_ObjectFactories["Cursor"] = boost::factory<CursorInputObject*>();
     m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();*/
     m_ObjectFactories[Schema::ComponentType::InputVelocity] = boost::factory<PlayerInputObject*>();
+    m_ObjectFactories[Schema::ComponentType::InputCamera] = boost::factory<CameraInputObject*>();
     
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");

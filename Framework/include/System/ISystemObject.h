@@ -97,7 +97,6 @@ public:
      */
     void PostChanges(System::Changes::BitMask uInChangedBits);
 
-
     /**
      * Identifies the system changes that this subject could possibly make.
      *
@@ -107,7 +106,15 @@ public:
 
     virtual void Update(float DeltaTime) = 0;
 
-    const void* getComponent();
+    template <typename ComponentDataType>
+    inline const ComponentDataType* getComponent() {
+        return static_cast<const ComponentDataType*>(component_.data());
+    }
+
+    template<typename ComponentDataType>
+    inline ComponentDataType* getMutableComponent() {
+        return const_cast<ComponentDataType*>(getComponent<ComponentDataType>());
+    }
 
     inline Schema::SystemType GetSystemType() {
         return component_.systemType();
@@ -154,6 +161,6 @@ private:
      * @param   prevBits         The old value to compare to.
      * @return  The new value if it was written to or original value.
      */
-    long AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits);
+    long AtomicCompareAndSwap(unsigned int interestBits, long newBits, long prevBits);
 
 };

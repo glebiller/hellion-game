@@ -14,34 +14,23 @@
 
 #include "Object/CameraInputObject.h"
 
-#include <windows.h>
 #include <OISMouse.h>
+#include <schema/scene_generated.h>
+#include <schema/physic_components_generated.h>
 
 #include "Scene.h"
-#include "Generic/UObject.h"
 
 ///
 /// @inheritDo
 ///
-CameraInputObject::CameraInputObject(ISystemScene* pSystemScene, UObject* entity)
-    : InputObject(pSystemScene, entity) {
+CameraInputObject::CameraInputObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
+    : InputObject(&pSystemScene, &entity, component) {
+    auto systemObject = entity.GetExtension(Schema::ComponentType::InputVelocity);
+    velocity_ = systemObject->getMutableComponent<Schema::Components::InputVelocity>();
+
     InputScene* inputScene = GetSystemScene<InputScene>();
-    m_rotateUpDownAction = inputScene->getDefaultSchema()->createAction<OISB::AnalogAxisAction>(entity->getName() + "_UpDown");
-    m_rotateRightLeftAction = inputScene->getDefaultSchema()->createAction<OISB::AnalogAxisAction>(entity->getName() + "_RightLeft");
-}
-
-///
-/// @inheritDoc
-///
-CameraInputObject::~CameraInputObject() {
-
-}
-
-///
-/// @inheritDoc
-///
-Error CameraInputObject::initialize() {
-
+    m_rotateUpDownAction = inputScene->getDefaultSchema()->createAction<OISB::AnalogAxisAction>(entity.getName() + "_UpDown");
+    m_rotateRightLeftAction = inputScene->getDefaultSchema()->createAction<OISB::AnalogAxisAction>(entity.getName() + "_RightLeft");
 
     m_rotateUpDownAction->setUseAbsoluteValues(true);
     m_rotateUpDownAction->setAnalogEmulator(nullptr);
@@ -54,28 +43,43 @@ Error CameraInputObject::initialize() {
     OIS::Mouse* mouse = OISB::System::getSingleton().getOISMouse();
     mouse->getMouseState().width = 1024;
     mouse->getMouseState().height = 728;
+}
 
-    return Errors::Success;
+///
+/// @inheritDoc
+///
+CameraInputObject::~CameraInputObject() {
+
 }
 
 ///
 /// @inheritDoc
 ///
 void CameraInputObject::Update(float DeltaTime) {
-    m_rotation.y = m_rotateUpDownAction->getRelativeValue();
+    velocity_->mutable_angular()->mutate_y(m_rotateRightLeftAction->getRelativeValue());
+    //PostChanges(Schema::EntityChange::InputVelocity);
+    /*m_rotation.y = m_rotateUpDownAction->getRelativeValue();
     m_rotation.x = m_rotateRightLeftAction->getRelativeValue();
     if (m_rotation != Math::Vector3::Zero) {
         PostChanges(System::Changes::Input::Rotation);
-    }
-
-    OIS::Mouse* mouse = OISB::System::getSingleton().getOISMouse();
-    int x = mouse->getMouseState().X.abs;
+    }*/
 }
 
 ///
 /// @inheritDoc
 ///
 Error CameraInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+    if (ChangeType & Schema::EntityChange::PhysicPosition) {
+        /*if (systemObject->getEntity()->getId() == "player") {
+            auto subjectPosition = systemObject->getComponent<Schema::Components::PhysicPosition>();
+            auto position = getMutableComponent<Schema::Components::PhysicPosition>();
+            position->mutate_x(subjectPosition->x());
+            position->mutate_y(subjectPosition->y());
+            position->mutate_z(subjectPosition->z());
+            PostChanges(Schema::EntityChange::PhysicPosition);
+        } else {
 
+        }*/
+    }
     return Errors::Success;
 }

@@ -15,12 +15,9 @@
 #include "Generic/Framework.h"
 
 #include <flatbuffers/util.h>
+#include <boost/dll.hpp>
 
 #include "schema/environment_generated.h"
-#include "schema/scene_generated.h"
-#include "Universal/UScene.h"
-#include "Manager/ChangeManager.h"
-#include "Generic/Scheduler.h"
 
 Framework::Framework() :
         m_pSceneCCM(new ChangeManager()),
@@ -29,6 +26,8 @@ Framework::Framework() :
         m_pScheduler(new Scheduler(taskManager_)),
         m_pScene(nullptr),
         running_(true) {
+    flatbuffers::LoadFile("Environment.bin", true, &environmentFile_);
+    m_environment = Schema::GetEnvironment(environmentFile_.c_str());
 }
 
 Framework::~Framework() {
@@ -42,9 +41,6 @@ Framework::~Framework() {
 }
 
 boost::system::errc::errc_t Framework::Initialize() {
-    std::string environmentFile;
-    flatbuffers::LoadFile("Environment.bin", true, &environmentFile);
-    m_environment = Schema::GetEnvironment(environmentFile.c_str());
 
     //
     // Init debugger
@@ -103,31 +99,17 @@ void Framework::Shutdown() {
 ///
 /// @inheritDoc.
 ///
-Error Framework::Execute() {
+bool Framework::Execute() {
     // TODO
     /*if (runtimeService->isNextScene()) {
         setNextScene(runtimeService->getSceneName());
         runtimeService->setStatus(RuntimeService::Status::Running);
     }*/
 
-    processMessages();
     m_pScheduler->execute();
     m_pScene->update();
 
-    return running_ ? Errors::Success : Errors::Failure;
-}
-
-///
-/// @inheritDoc.
-///
-void Framework::processMessages() {
-#if defined(MSC_COMPILER)
-    MSG Msg;
-    while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
-        TranslateMessage(&Msg);
-        DispatchMessage(&Msg);
-    }
-#endif
+    return running_;
 }
 
 ///

@@ -21,11 +21,12 @@
 #include "Generic/Scheduler.h"
 
 // Set the timer to 120Hz
-const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost::timer::nanosecond_type(1000000000LL / 120);
+const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency = boost::timer::nanosecond_type(
+        1000000000LL / 120);
 
 Scheduler::Scheduler(TaskManager* taskManager)
-      // TODO move new TaskManager responsibility to Framework class
-      : m_pTaskManager(taskManager) {
+// TODO move new TaskManager responsibility to Framework class
+        : m_pTaskManager(taskManager) {
 }
 
 Scheduler::~Scheduler() {
@@ -47,13 +48,11 @@ void Scheduler::setScene(const UScene* pScene) {
     //Singletons::Debugger.setScene(pScene);
 #endif
 
-    const UScene::SystemScenes& SystemScenes = pScene->GetSystemScenes();
-    for (auto it = SystemScenes.begin(); it != SystemScenes.end(); it++) {
-        if (it->second->GetSystemTask<ISystemTask>() != NULL) {
-            m_SceneExecs[ it->first ] = it->second;
+    for (auto it : pScene->GetSystemScenes()) {
+        if (it.second->GetSystemTask<ISystemTask>() != NULL) {
+            m_SceneExecs[it.first] = it.second;
         }
     }
-
     m_executionTimer.start();
 }
 
@@ -65,12 +64,14 @@ void Scheduler::execute() {
     // Get the delta time; seconds since last Execute call.
     //
     if (!m_benchmarkingEnabled) {
-        boost::chrono::nanoseconds waitFor = boost::chrono::nanoseconds(sm_defaultClockFrequency - m_executionTimer.elapsed().wall);
+        boost::chrono::nanoseconds waitFor = boost::chrono::nanoseconds(
+                sm_defaultClockFrequency - m_executionTimer.elapsed().wall);
         if (waitFor.count() >= 0) {
             boost::this_thread::sleep_for(waitFor);
         }
     }
-    float deltaTime = boost::chrono::duration<float>(boost::chrono::nanoseconds(m_executionTimer.elapsed().wall)).count();
+    float deltaTime = boost::chrono::duration<float>(
+            boost::chrono::nanoseconds(m_executionTimer.elapsed().wall)).count();
     m_executionTimer.start();
 
     //
@@ -78,7 +79,7 @@ void Scheduler::execute() {
     // If we do this here, there's no thread sync to worry about since we're single-threaded here.
     //
     //m_pTaskManager->updatePeriodicData(deltaTime);
-    
+
 #ifdef DEBUG_BUILD
     //Singletons::Debugger.update(DeltaTime);
 #endif
@@ -91,6 +92,7 @@ void Scheduler::execute() {
     //
     // Schedule the scenes that are ready for execution.
     //
+    // TODO keep only one array ?
     unsigned int cScenesToExecute = 0;
     ISystemTask* aScenesToExecute[m_SceneExecs.size()];
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
@@ -109,7 +111,7 @@ void Scheduler::waitForScenes() {
     unsigned int cScenesToWaitFor = 0;
 
     for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
+        aScenesToWaitFor[cScenesToWaitFor++] = it->second->GetSystemTask<ISystemTask>();
     }
 
     m_SceneExecs.clear();

@@ -38,21 +38,51 @@
             "material": "nebula",
             "distance": 6000
           }
+        },
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicTerrain",
+          "data": {
+          }
+        },
+        {
+          "systemType": "Physic",
+          "data_type": "PhysicTerrain",
+          "data": {
+          }
         }
       ]
     },
     {
       "metaData": {
-        "entityId": "playerCamera-1",
+        "entityId": "player-camera",
         "name": "PlayerCamera",
         "comment": "The user control this object"
       },
       "systemComponents": [
         {
-          "systemType": "Graphic",
-          "data_type": "GraphicCamera",
+          "systemType": "Physic",
+          "data_type": "PhysicPosition",
           "data": {
-
+            "x": 100,
+            "y": 100,
+            "z": 100
+          }
+        },
+        {
+          "systemType": "Input",
+          "data_type": "InputVelocity",
+          "data": {
+            "scalar": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "angular": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
           }
         },
         {
@@ -61,12 +91,19 @@
           "data": {
 
           }
+        },
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicCamera",
+          "data": {
+
+          }
         }
       ]
     },
     {
       "metaData": {
-        "entityId": "2",
+        "entityId": "player",
         "name": "Player",
         "comment": "Display a player"
       },
@@ -82,9 +119,9 @@
           "systemType": "Physic",
           "data_type": "PhysicPosition",
           "data": {
-            "x": 1,
-            "y": 1,
-            "z": 1
+            "x": 100,
+            "y": 100,
+            "z": 100
           }
         },
         {
@@ -104,6 +141,14 @@
           }
         }
       ]
+    }
+  ],
+  "links": [
+    {
+      "subjectId": "player",
+      "observerId": "player-camera",
+      "subjectComponent_type": "PhysicPosition",
+      "observerComponent_type": "GraphicCamera"
     }
   ]
 }

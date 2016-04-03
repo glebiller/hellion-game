@@ -2,6 +2,19 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(Framework LANGUAGES CXX)
 
 add_library(Framework
+        include/schema/component_type_generated.h
+        include/schema/graphic_components_generated.h
+        include/schema/input_components_generated.h
+        include/schema/physic_components_generated.h
+        include/schema/graphic_system_generated.h
+        include/schema/input_system_generated.h
+        include/schema/network_system_generated.h
+        include/schema/physic_system_generated.h
+        include/schema/system_type_generated.h
+        include/schema/entity_change_generated.h
+        include/schema/environment_generated.h
+        include/schema/scene_generated.h
+
         include/Debugger/Debugger.h
         include/Debugger/ObjectChangesDebugger.h
         include/Debugger/SceneChangesDebugger.h
@@ -15,18 +28,6 @@ add_library(Framework
         include/Manager/ObserverRequest.h
         include/Manager/SubjectInfo.h
         include/Manager/TaskManager.h
-        include/schema/component_type_generated.h
-        include/schema/graphic_components_generated.h
-        include/schema/input_components_generated.h
-        include/schema/physic_components_generated.h
-        include/schema/graphic_system_generated.h
-        include/schema/input_system_generated.h
-        include/schema/network_system_generated.h
-        include/schema/physic_system_generated.h
-        include/schema/system_type_generated.h
-        include/schema/entity_change_generated.h
-        include/schema/environment_generated.h
-        include/schema/scene_generated.h
         include/System/ISystem.h
         include/System/ISystemObject.h
         include/System/ISystemScene.h

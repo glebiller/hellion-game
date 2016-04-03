@@ -12,29 +12,18 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/bind.hpp>
+#include "Object/MovablePhysicObject.h"
 
 #include "Scene.h"
-#include "PhysicObject.h"
-#include "Generic/UObject.h"
-#include "Object/MovablePhysicObject.h"
 
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, UObject* entity)
-    : PhysicObject(pSystemScene, entity)
+MovablePhysicObject::MovablePhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component)
+    : PhysicObject(pSystemScene, entity, component)
     , m_constraint_position(true)
     , m_velocity_multiplier(40)
     , m_rotation_multiplier(400) {
-    /*m_propertySetters["VelocityMultiplier"] = boost::bind(&IProperty::setSimpleType<float>, this, System::Changes::None, &m_velocity_multiplier, _1);
-    m_propertyGetters["VelocityMultiplier"] = boost::bind(&IProperty::getSimpleType<float>, this, &m_velocity_multiplier, _1);
-
-    m_propertySetters["RotationMultiplier"] = boost::bind(&IProperty::setSimpleType<float>, this, System::Changes::None, &m_rotation_multiplier, _1);
-    m_propertyGetters["RotationMultiplier"] = boost::bind(&IProperty::getSimpleType<float>, this, &m_rotation_multiplier, _1);
-
-    m_propertySetters["ConstraintPosition"] = boost::bind(&IProperty::setSimpleType<bool>, this, System::Changes::None, &m_constraint_position, _1);
-    m_propertyGetters["ConstraintPosition"] = boost::bind(&IProperty::getSimpleType<bool>, this, &m_constraint_position, _1);*/
 }
 
 /**
@@ -47,24 +36,12 @@ MovablePhysicObject::~MovablePhysicObject() {
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::initialize() {
-
-    
-    m_bInitialized = true;
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
 Error MovablePhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-
-
     if (ChangeType & System::Changes::Input::Velocity) {
-        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
+        //m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
     }
     if (ChangeType & System::Changes::Input::Rotation) {
-        m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
+        //m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
     }
 
     return Errors::Success;
@@ -74,20 +51,17 @@ Error MovablePhysicObject::ChangeOccurred(ISystemObject* systemObject, System::C
  * @inheritDoc
  */
 void MovablePhysicObject::Update(float DeltaTime) {
-
-    m_modified = 0;
-
     // Rotation
-    if (m_rotation != Math::Vector3::Zero) {
+    /*if (!transform_.getRotation()..isZero()) {
         Math::Quaternion additionalOrientation;
         //additionalOrientation.Set(m_rotation, Math::Angle::Deg2Rad(m_rotation_multiplier * DeltaTime));
         m_orientation *= additionalOrientation;
 
         m_modified |= System::Changes::Physic::Orientation;
-    }
+    }*/
     
     // Velocity
-    if (m_velocity != Math::Vector3::Zero) {
+    /*if (transform_.getOrigin().isZero()) {
         Math::Vector3 normalizedVelocity = Math::Vector3(m_velocity.x, m_velocity.y, m_velocity.z);
         m_orientation.Rotate(normalizedVelocity);
         normalizedVelocity.Normalize();
@@ -105,4 +79,5 @@ void MovablePhysicObject::Update(float DeltaTime) {
     if (m_modified != System::Changes::None) {
         PostChanges(m_modified);
     }
+     */
 }
