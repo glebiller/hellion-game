@@ -32,16 +32,21 @@ PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Sc
 
     btCollisionShape* playerShape = new btCapsuleShape(1 ,2);
     btDefaultMotionState* fallMotionState =
-            new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 2, 0)));
+            new btDefaultMotionState(btTransform(btQuaternion(1, 0, 0, 0).normalize(),
+                                                 btVector3(position_->x(), position_->y(), position_->z())));
     btScalar mass = 80;
     btVector3 fallInertia(0, 0, 0);
     playerShape->calculateLocalInertia(mass, fallInertia);
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, playerShape, fallInertia);
+    fallRigidBodyCI.m_friction = 0;
+    fallRigidBodyCI.m_restitution = 0;
     fallRigidBodyCI.m_linearDamping = 0;
     rigidBody_ = new btRigidBody(fallRigidBodyCI);
     rigidBody_->setAngularFactor(0);
-    rigidBody_->getWorldTransform().setOrigin(btVector3(position_->x(), position_->y(), position_->z()));
+    rigidBody_->setActivationState(DISABLE_DEACTIVATION);
     GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
+
+    //https://github.com/222464/EvolvedVirtualCreaturesRepo/tree/master/VirtualCreatures/Volumetric_SDL/Source/SceneObjects/Physics
 }
 
 /**

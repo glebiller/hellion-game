@@ -55,6 +55,27 @@
     },
     {
       "metaData": {
+        "entityId": "physic-debug",
+        "name": "PhysicDebug",
+        "comment": ""
+      },
+      "systemComponents": [
+        {
+          "systemType": "Graphic",
+          "data_type": "GraphicPhysicDebug",
+          "data": {
+          }
+        },
+        {
+          "systemType": "Physic",
+          "data_type": "PhysicDebug",
+          "data": {
+          }
+        }
+      ]
+    },
+    {
+      "metaData": {
         "entityId": "player-camera",
         "name": "PlayerCamera",
         "comment": "The user control this object"

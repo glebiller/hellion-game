@@ -1,5 +1,12 @@
 namespace Schema.Components;
 
+
+struct PositionVector {
+  x: float;
+  y: float;
+  z: float;
+}
+
 table PhysicTerrain {
 
 }
@@ -8,4 +15,27 @@ table PhysicPosition {
     x:float;
     y:float;
     z:float;
+}
+
+table DebugLine {
+    from: PositionVector;
+    to: PositionVector;
+}
+
+table DebugPlane {
+    normal: PositionVector;
+    constant: float;
+    origin: PositionVector;
+}
+table DebugCapsule {
+    radius: float;
+    halfHeight: float;
+    upAxis: int;
+    origin: PositionVector;
+}
+
+table PhysicDebug {
+    lines:[DebugLine];
+    planes:[DebugPlane];
+    capsules:[DebugCapsule];
 }

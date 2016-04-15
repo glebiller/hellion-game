@@ -14,24 +14,27 @@
 
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
+
 #pragma warning( push, 0 )
+
 #include <Ogre.h>
 #include <Compositor/OgreCompositorManager2.h>
+
 #pragma warning( pop )
 
 #include <schema/component_type_generated.h>
+#include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
 #include "GraphicSystem.h"
 #include "GraphicScene.h"
-#include "GraphicTask.h"
 #include "Object/Object.h"
 #include "Object/AmbientLightGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/LightGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
-#include "Object/ParticleGraphicObject.h"
 #include "Object/SkyboxGraphicObject.h"
 #include "Object/TerrainGraphicObject.h"
+#include "Object/PhysicDebugGraphicObject.h"
 
 // We use SM2.0 instancing. Since we do normal mapping on the instanced geometry, we
 // need to pass both the world matrix and the inverse world matrix for each instance.
@@ -50,10 +53,10 @@ void ProcessObjects(void* Data);
  * @inheritDoc
  */
 GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
-    : ISystemScene(pSystem, systemScene)
-    , m_pSceneManager(nullptr)
-    , m_FogMode(Ogre::FOG_NONE) {
-    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4, Ogre::INSTANCING_CULLING_THREADED);
+        : ISystemScene(pSystem, systemScene), m_pSceneManager(nullptr),
+          m_FogMode(Ogre::FOG_NONE) {
+    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC, 4,
+                                                                                Ogre::INSTANCING_CULLING_THREADED);
     m_pRootNode = m_pSceneManager->getRootSceneNode();
     m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
 
@@ -62,6 +65,7 @@ GraphicScene::GraphicScene(ISystem* pSystem, const Schema::SystemScene* systemSc
     m_ObjectFactories[Schema::ComponentType::GraphicMesh] = boost::factory<MeshGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicSkybox] = boost::factory<SkyboxGraphicObject*>();
     m_ObjectFactories[Schema::ComponentType::GraphicTerrain] = boost::factory<TerrainGraphicObject*>();
+    m_ObjectFactories[Schema::ComponentType::GraphicPhysicDebug] = boost::factory<PhysicDebugGraphicObject*>();
     /*m_ObjectFactories["Gui"] = boost::factory<GuiGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
@@ -95,13 +99,13 @@ GraphicScene::~GraphicScene() {
  */
 void GraphicScene::Update(float DeltaTime) {
     m_fDeltaTime = DeltaTime;
-    unsigned int size = (unsigned int)m_pObjects.size();
+    unsigned int size = (unsigned int) m_pObjects.size();
     // TODO allow system to schedule tasks
     /*if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
         // TODO Use a struct for params with DeltaTime, GraphicScene
         g_serviceManager->getTaskManager()->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
     } else {*/
-        ProcessRange(0, size);
+    ProcessRange(0, size);
     //}
 }
 

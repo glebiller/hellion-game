@@ -2,12 +2,15 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(GraphicSystem LANGUAGES CXX)
 
 find_package(Ogre REQUIRED COMPONENTS Overlay Terrain)
+find_package(Bullet REQUIRED)
 
 add_library(GraphicSystem SHARED
         include/Object/AmbientLightGraphicObject.h
         include/Object/CameraGraphicObject.h
+        include/Object/PhysicDebugGraphicObject.h
         include/Object/SkyboxGraphicObject.h
         include/Object/TerrainGraphicObject.h
+        include/Object/Object.h
         include/GraphicSystem.h
         include/GraphicScene.h
         include/GraphicTask.h
@@ -18,6 +21,7 @@ add_library(GraphicSystem SHARED
         src/Object/MeshGraphicObject.cpp
         src/Object/Object.cpp
         src/Object/ParticleGraphicObject.cpp
+        src/Object/PhysicDebugGraphicObject.cpp
         src/Object/SkyboxGraphicObject.cpp
         src/Object/TerrainGraphicObject.cpp
         src/GraphicSystemMain.cpp
@@ -33,6 +37,7 @@ target_include_directories(GraphicSystem PUBLIC
         ${OGRE_INCLUDE_DIR}
         ${OGRE_Terrain_INCLUDE_DIR}
         ${OGRE_Overlay_INCLUDE_DIR}
+        ${BULLET_INCLUDE_DIRS}
         )
 
 target_compile_features(GraphicSystem
@@ -47,6 +52,7 @@ target_link_libraries(GraphicSystem
         ${OGRE_LIBRARIES}
         ${OGRE_Overlay_LIBRARIES}
         ${OGRE_Terrain_LIBRARIES}
+        ${BULLET_LIBRARIES}
         )
 
 install(TARGETS GraphicSystem

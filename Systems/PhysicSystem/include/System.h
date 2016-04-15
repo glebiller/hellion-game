@@ -18,6 +18,7 @@
 #include <tbb/atomic.h>
 #include <schema/system_type_generated.h>
 #include <btBulletDynamicsCommon.h>
+#include <Generic/Framework.h>
 
 #include "DataTypes.h"
 #include "Errors.h"
@@ -63,6 +64,10 @@ public:
         return broadphaseInterface_;
     }
 
+    inline Framework* getFramework() {
+        return framework_;
+    }
+
 private:
     ///
     /// Allocate resourses need to support multiple threads.
@@ -87,6 +92,7 @@ private:
     static void ErrorReport(const char* pString, void* pErrorOutputObject);
 
 private:
+    Framework* framework_;
     btDefaultCollisionConfiguration* collisionConfiguration_;
     btCollisionDispatcher* collisionDispatcher_;
     btBroadphaseInterface* broadphaseInterface_;

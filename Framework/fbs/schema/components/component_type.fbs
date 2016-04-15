@@ -11,10 +11,12 @@ union ComponentType {
   Components.GraphicMesh,
   Components.GraphicSkybox,
   Components.GraphicTerrain,
+  Components.GraphicPhysicDebug,
 
   Components.InputVelocity,
   Components.InputCamera,
 
   Components.PhysicPosition,
-  Components.PhysicTerrain
+  Components.PhysicTerrain,
+  Components.PhysicDebug
 }

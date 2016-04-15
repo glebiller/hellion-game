@@ -12,45 +12,16 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#pragma once
+#include <boost/dll.hpp>
 
-#include <btBulletDynamicsCommon.h>
+#include <Generic/Framework.h>
+#include "System/ISystem.h"
+#include "System.h"
 
-#include "DebugDrawer.h"
-#include "System/ISystemScene.h"
+extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem(Framework* framework) {
+    return new PhysicSystem();
+}
 
-class PhysicSystem;
-class PhysicObject;
-class ISystem;
-
-class PhysicScene : public ISystemScene {
-public:
-
-    PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
-
-    ~PhysicScene();
-        
-    ///
-    /// @inheritDoc.
-    ///
-    void Update(float DeltaTime) override;
-        
-    ///
-    /// @inheritDoc.
-    ///
-    System::Changes::BitMask GetDesiredSystemChanges() override {
-        return System::Changes::None;
-    };
-
-    void createTask() override;
-
-    btDiscreteDynamicsWorld* getDynamicsWorld_() const {
-        return dynamicsWorld_;
-    }
-
-protected:
-    btSequentialImpulseConstraintSolver* constraintSolver_;
-    btDiscreteDynamicsWorld* dynamicsWorld_;
-    DebugDrawer* debugDrawer_;
-
-};
+extern "C" void BOOST_SYMBOL_EXPORT DestroySystem(ISystem* pSystem) {
+    delete reinterpret_cast<PhysicSystem*>(pSystem);
+}

@@ -34,3 +34,7 @@ table GraphicCamera {
 table GraphicMesh {
     name:string (required);
 }
+
+table GraphicPhysicDebug {
+
+}

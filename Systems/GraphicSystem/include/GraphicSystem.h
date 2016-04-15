@@ -96,6 +96,10 @@ public:
 
     void windowClosed(Ogre::RenderWindow* pRenderWindow) override;
 
+    Framework* getFramework() {
+        return framework_;
+    }
+
 private:
     boost::log::sources::logger logger_;
     Framework* framework_;

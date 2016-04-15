@@ -106,6 +106,9 @@ void PlayerInputObject::Update(float DeltaTime) {
     if (m_jumpInputAction->hasChanged()) {
         if (m_jumpInputAction->isActive()) {
             createShot();
+            velocity_->mutable_scalar()->mutate_y(1);
+        } else {
+            velocity_->mutable_scalar()->mutate_y(0);
         }
         //mModified |= System::Changes::Input::Action;
         //m_shotKeyboardButtonData->down = m_jumpInputAction->isActive();

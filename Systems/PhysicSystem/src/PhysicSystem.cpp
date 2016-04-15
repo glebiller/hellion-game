@@ -12,16 +12,55 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/dll.hpp>
+#include <btBulletDynamicsCommon.h>
 
-#include <Generic/Framework.h>
-#include "System/ISystem.h"
 #include "System.h"
+#include "Scene.h"
 
-extern "C" ISystem* BOOST_SYMBOL_EXPORT CreateSystem(Framework* framework) {
-    return new PhysicSystem();
+unsigned int PhysicSystem::s_idMainThread = 0;
+tbb::atomic<unsigned int> PhysicSystem::s_threadNumberCount;
+
+/**
+ * @inheritDoc
+ */
+PhysicSystem::PhysicSystem() : ISystem(),
+                               collisionConfiguration_(new btDefaultCollisionConfiguration()),
+                               collisionDispatcher_(new btCollisionDispatcher(collisionConfiguration_)),
+                               broadphaseInterface_(new btDbvtBroadphase()) {
 }
 
-extern "C" void BOOST_SYMBOL_EXPORT DestroySystem(ISystem* pSystem) {
-    delete reinterpret_cast<PhysicSystem*>(pSystem);
+/**
+ * @inheritDoc
+ */
+PhysicSystem::~PhysicSystem() {
+    delete broadphaseInterface_;
+    delete collisionDispatcher_;
+    delete collisionConfiguration_;
+}
+
+ISystemScene* PhysicSystem::createScene(const Schema::SystemScene* systemScene) {
+    m_pSystemScene = new PhysicScene(this, systemScene);
+    return m_pSystemScene;
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicSystem::AllocateThreadResources(PhysicSystem* pSystem) {
+
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicSystem::FreeThreadResources(PhysicSystem* pSystem) {
+
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicSystem::ErrorReport(const char* pString, void* pErrorOutputObject) {
+    PhysicSystem* pSystem = reinterpret_cast<PhysicSystem*>(pErrorOutputObject);
+
 }

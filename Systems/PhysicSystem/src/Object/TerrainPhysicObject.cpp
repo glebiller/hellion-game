@@ -14,14 +14,11 @@
 
 #include "Object/TerrainPhysicObject.h"
 
-// TODO better
-#define int_p_NULL NULL
-
 #include <btBulletDynamicsCommon.h>
-#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
-#include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io/png_io.hpp>
-#include <boost/gil/extension/io/png_dynamic_io.hpp>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <OgreImage.h>
+#include <OgreColourValue.h>
+#include <OgreResourceGroupManager.h>
 #include <Scene.h>
 
 ///
@@ -30,8 +27,8 @@
 TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& entity,
                                          const Schema::SystemComponent& component)
         : PhysicObject(pSystemScene, entity, component) {
-    boost::gil::rgb8_image_t image;
-    boost::gil::png_read_and_convert_image("Assets/Media/Graphic/terrain/terrain2.png", image);
+    Ogre::Image img;
+    img.load("terrain/terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
     const int xRes = 257;
     const int zRes = 257;
@@ -39,8 +36,7 @@ TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& en
     {
         for (int x = 0; x < xRes; x++) {
             for (int z = 0; z < zRes; z++) {
-                boost::gil::rgb8_pixel_t pixel = boost::gil::const_view(image)(x, z);
-                float height = pixel[0];
+                float height = img.getColourAt(x, z, 0).r;
                 pHeightData[x * zRes + z] = (unsigned char) (height * 255);
             }
         }
@@ -48,13 +44,8 @@ TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& en
     //
     // Create the shape
     //
-    btHeightfieldTerrainShape* heightfieldShape =
-            new btHeightfieldTerrainShape(xRes, zRes,
-                                          pHeightData,
-                                          1,
-                                          0, 100.0f,
-                                          1, PHY_INTEGER, false);
-
+    btHeightfieldTerrainShape* heightfieldShape = new btHeightfieldTerrainShape(xRes, zRes, pHeightData,
+                                                                                1, 0, 255, 1, PHY_FLOAT, false);
     rigidBody_ = new btRigidBody(0, new btDefaultMotionState(), heightfieldShape);
     rigidBody_->setFriction(0.8f);
     rigidBody_->setHitFraction(0.8f);
@@ -63,7 +54,7 @@ TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& en
     rigidBody_->getWorldTransform().setRotation(btQuaternion());
     rigidBody_->setCollisionFlags(rigidBody_->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
-    GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
+    //GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
 }
 
 ///

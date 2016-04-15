@@ -69,6 +69,7 @@ private:
     std::map<Schema::SystemType, ISystem*> m_systems;
     std::vector<boost::dll::shared_library> m_systemLibraries;
     std::size_t windowHandle_;
+    boost::shared_ptr<void> dynamicWorld_;
     bool running_;
 
 };

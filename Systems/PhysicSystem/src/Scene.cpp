@@ -22,6 +22,7 @@
 #include "Object/CharacterPhysicObject.h"
 #include "Object/MovablePhysicObject.h"
 #include "Object/TerrainPhysicObject.h"
+#include "DebugDrawer.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // HavokPhysicsScene - Default constructor
@@ -47,6 +48,7 @@ PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScen
     //m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
     //m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
     m_ObjectFactories[Schema::ComponentType::PhysicTerrain] = boost::factory<TerrainPhysicObject*>();
+    m_ObjectFactories[Schema::ComponentType::PhysicDebug] = boost::factory<DebugDrawer*>();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,6 +66,7 @@ void PhysicScene::Update(float DeltaTime) {
         PhysicObject* pObject = static_cast<PhysicObject*>(object.second);
         pObject->Update(DeltaTime);
     }
+    dynamicsWorld_->debugDrawWorld();
 }
 
 void PhysicScene::createTask() {

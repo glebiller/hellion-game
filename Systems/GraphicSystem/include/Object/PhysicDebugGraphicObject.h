@@ -14,43 +14,46 @@
 
 #pragma once
 
-#include <btBulletDynamicsCommon.h>
+#include "GraphicSystem.h"
+#include "System/ISystemObject.h"
+#include <schema/entity_change_generated.h>
 
-#include "DebugDrawer.h"
-#include "System/ISystemScene.h"
-
-class PhysicSystem;
-class PhysicObject;
-class ISystem;
-
-class PhysicScene : public ISystemScene {
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  ISystemObject
+ */
+class PhysicDebugGraphicObject : public ISystemObject {
 public:
-
-    PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScene);
-
-    ~PhysicScene();
         
-    ///
-    /// @inheritDoc.
-    ///
-    void Update(float DeltaTime) override;
-        
-    ///
-    /// @inheritDoc.
-    ///
-    System::Changes::BitMask GetDesiredSystemChanges() override {
+    /**
+     * @inheritDoc
+     */
+    PhysicDebugGraphicObject(ISystemScene& pSystemScene, UObject& entity,
+                             const Schema::SystemComponent& component);
+
+    /**
+     * @inheritDoc
+     */
+    virtual ~PhysicDebugGraphicObject();
+
+    void Update(float DeltaTime);
+
+    System::Changes::BitMask GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 
-    void createTask() override;
+    ///
+    /// @inheritDoc.
+    ///
+    System::Types::BitMask GetDesiredSystemChanges() {
+        return Schema::EntityChange::PhysicDebug;
+    };
 
-    btDiscreteDynamicsWorld* getDynamicsWorld_() const {
-        return dynamicsWorld_;
-    }
+    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
 protected:
-    btSequentialImpulseConstraintSolver* constraintSolver_;
-    btDiscreteDynamicsWorld* dynamicsWorld_;
-    DebugDrawer* debugDrawer_;
 
 };
+
