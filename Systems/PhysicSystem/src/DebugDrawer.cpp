@@ -1,12 +1,14 @@
+#include "DebugDrawer.h"
+
 #include <Framework/include/schema/entity_change_generated.h>
 #include <Scene.h>
-#include "DebugDrawer.h"
 
 DebugDrawer::DebugDrawer(ISystemScene &pSystemScene, UObject &entity, const Schema::SystemComponent& component) :
         ISystemObject(&pSystemScene, &entity, component),
         mDebugModes(DBG_DrawWireframe),
         connectedClient_(boost::none),
-        heartbeat_delay_(500000000LL) /* 500ms */ {
+        heartbeat_delay_(500000000LL) /* 500ms */,
+        running(true) {
     physicDebug_ = const_cast<Schema::Components::PhysicDebug*>(static_cast<const Schema::Components::PhysicDebug*>(component.data()));
 
     GetSystemScene<PhysicScene>()->getDynamicsWorld_()->setDebugDrawer(this);
@@ -28,8 +30,11 @@ DebugDrawer::~DebugDrawer() {
 }
 
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
-    if (connectedClient_.is_initialized()) {
-
+    if (isRunning()) {
+        auto vectorFrom = Schema::Components::PositionVector(from.x(), from.y(), from.z());
+        auto vectorTo = Schema::Components::PositionVector(to.x(), to.y(), to.z());
+        auto line = Schema::Components::CreateDebugLine(builder_, &vectorFrom, &vectorTo);
+        lines_.push_back(line);
     }
 }
 
@@ -57,11 +62,11 @@ int DebugDrawer::getDebugMode() const {
 void DebugDrawer::update() {
     if (heartbeat_.elapsed().wall >= heartbeat_delay_) {
         heartbeat_.stop();
-        builder_.Clear();
-        lines_.clear();
-        planes_.clear();
-        capsules_.clear();
     }
+    builder_.Clear();
+    lines_.clear();
+    planes_.clear();
+    capsules_.clear();
     server_.poll();
 
 }
@@ -100,33 +105,38 @@ void DebugDrawer::drawPlane(const btVector3& planeNormal, btScalar planeConst, c
 }
 
 void DebugDrawer::flushLines() {
-    //auto lines = builder_.CreateVector(lines_);
-    //auto planes = builder_.CreateVector(planes_);
-    //auto capsules = builder_.CreateVector(capsules_);
-    //auto debugDrawer = Schema::Components::CreateDebugDrawer(builder_, lines, planes, capsules);
-    //builder_.Finish(debugDrawer);
-    for (int i = 0; i < capsules_.size(); i++) {
-        auto capsule = flatbuffers::Offset<Schema::Components::DebugCapsule>(capsules_[i]);
-        physicDebug_->mutable_capsules()->Mutate(i, capsule);
-    }
+    auto lines = builder_.CreateVector(lines_);
+    auto planes = builder_.CreateVector(planes_);
+    auto capsules = builder_.CreateVector(capsules_);
+    auto physicDebug = Schema::Components::CreatePhysicDebug(builder_, lines, planes, capsules);
+    builder_.Finish(physicDebug);
+    physicDebug_ = flatbuffers::GetMutableRoot<Schema::Components::PhysicDebug>(builder_.GetBufferPointer());
 
     if (isRunning()) {
-        server_.send(connectedClient_.get(), builder_.GetBufferPointer(), builder_.GetSize(), websocketpp::frame::opcode::binary);
+        //server_.send(connectedClient_.get(), builder_.GetBufferPointer(), builder_.GetSize(), websocketpp::frame::opcode::binary);
         heartbeat_.start();
     }
     PostChanges(Schema::EntityChange::PhysicDebug);
 }
 
 Error DebugDrawer::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    return 0;
+    if (ChangeType & Schema::EntityChange::InputTrigger) {
+        running = !running;
+    }
 }
 
 bool DebugDrawer::isRunning() const {
-    return heartbeat_.is_stopped() && connectedClient_.is_initialized();
+    return running /*heartbeat_.is_stopped() && connectedClient_.is_initialized()*/;
 }
 
 void DebugDrawer::Update(float DeltaTime) {
     update();
+}
+
+void DebugDrawer::drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color,
+                               btScalar scalar) {
+    // Do nothing for performance
+    //btIDebugDraw::drawTriangle(v0, v1, v2, color, scalar);
 }
 
 

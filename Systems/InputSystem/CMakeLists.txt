@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(InputSystem LANGUAGES CXX)
 
 add_library(InputSystem SHARED
+        include/component/InputTriggerComponent.h
         include/component/InputVelocityComponent.h
         include/Object/Object.h
         include/Object/CameraInputObject.h
@@ -9,6 +10,7 @@ add_library(InputSystem SHARED
         include/Scene.h
         include/System.h
         include/Task.h
+        src/component/InputTriggerComponent.cpp
         src/component/InputVelocityComponent.cpp
         src/Object/Object.cpp
         src/Object/CameraInputObject.cpp

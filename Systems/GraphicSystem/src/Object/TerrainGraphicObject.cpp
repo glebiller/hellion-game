@@ -124,15 +124,6 @@ void TerrainGraphicObject::defineTerrain(long x, long y) {
     } else {
         Ogre::Image img;
         img.load("terrain/terrain.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-        if (x % 2 != 0) {
-            img.flipAroundY();
-        }
-
-        if (y % 2 != 0) {
-            img.flipAroundX();
-        }
-
         mTerrainGroup->defineTerrain(x, y, &img);
         mTerrainsImported = true;
     }

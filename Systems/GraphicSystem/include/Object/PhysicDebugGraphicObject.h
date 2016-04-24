@@ -17,6 +17,7 @@
 #include "GraphicSystem.h"
 #include "System/ISystemObject.h"
 #include <schema/entity_change_generated.h>
+#include <OgreManualObject.h>
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
@@ -54,6 +55,7 @@ public:
     Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
 
 protected:
+    Ogre::ManualObject* lines_;
 
 };
 

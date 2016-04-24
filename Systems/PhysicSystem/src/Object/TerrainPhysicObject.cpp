@@ -32,12 +32,20 @@ TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& en
 
     const int xRes = 257;
     const int zRes = 257;
-    unsigned char* pHeightData = new unsigned char[xRes * zRes];
+    float minHeight = 1;
+    float maxHeight = 0;
+    float* pHeightData = new float[xRes * zRes];
     {
         for (int x = 0; x < xRes; x++) {
             for (int z = 0; z < zRes; z++) {
-                float height = img.getColourAt(x, z, 0).r;
-                pHeightData[x * zRes + z] = (unsigned char) (height * 255);
+                float height = img.getColourAt((size_t) z, (size_t) x, 0).r;
+                pHeightData[x * zRes + z] = height;
+                if (minHeight > height) {
+                    minHeight = height;
+                }
+                if (maxHeight < height) {
+                    maxHeight = height;
+                }
             }
         }
     }
@@ -45,16 +53,20 @@ TerrainPhysicObject::TerrainPhysicObject(ISystemScene& pSystemScene, UObject& en
     // Create the shape
     //
     btHeightfieldTerrainShape* heightfieldShape = new btHeightfieldTerrainShape(xRes, zRes, pHeightData,
-                                                                                1, 0, 255, 1, PHY_FLOAT, false);
+                                                                                100, minHeight, maxHeight,
+                                                                                1, PHY_FLOAT, false);
+    btVector3 localScaling(4, 100, 4);
+    heightfieldShape->setLocalScaling(localScaling);
+
     rigidBody_ = new btRigidBody(0, new btDefaultMotionState(), heightfieldShape);
     rigidBody_->setFriction(0.8f);
     rigidBody_->setHitFraction(0.8f);
     rigidBody_->setRestitution(0.6f);
-    rigidBody_->getWorldTransform().setOrigin(btVector3(0, 0, 0));
-    rigidBody_->getWorldTransform().setRotation(btQuaternion());
+    rigidBody_->getWorldTransform().setOrigin(btVector3(0, 50, 0));
+    rigidBody_->getWorldTransform().setRotation(btQuaternion::getIdentity());
     rigidBody_->setCollisionFlags(rigidBody_->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
-    //GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
+    GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
 }
 
 ///

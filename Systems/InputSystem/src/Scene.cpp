@@ -15,6 +15,7 @@
 #include <boost/functional/factory.hpp>
 #include <OISB.h>
 #include <schema/input_components_generated.h>
+#include <component/InputTriggerComponent.h>
 
 #include "System.h"
 #include "Scene.h"
@@ -39,7 +40,8 @@ InputScene::InputScene(ISystem* pSystem, const Schema::SystemScene* systemScene)
     m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();*/
     m_ObjectFactories[Schema::ComponentType::InputVelocity] = boost::factory<PlayerInputObject*>();
     m_ObjectFactories[Schema::ComponentType::InputCamera] = boost::factory<CameraInputObject*>();
-    
+    m_ObjectFactories[Schema::ComponentType::InputTrigger] = boost::factory<InputTriggerComponent*>();
+
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");
     m_quitInputAction->bind("Keyboard/Escape");

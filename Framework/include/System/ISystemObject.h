@@ -106,14 +106,22 @@ public:
 
     virtual void Update(float DeltaTime) = 0;
 
+    virtual inline const void* getComponentData() {
+        return component_.data();
+    }
+
+    inline void * getMutableComponentData() {
+        return const_cast<void*>(getComponentData());
+    }
+
     template <typename ComponentDataType>
     inline const ComponentDataType* getComponent() {
-        return static_cast<const ComponentDataType*>(component_.data());
+        return static_cast<const ComponentDataType*>(getComponentData());
     }
 
     template<typename ComponentDataType>
     inline ComponentDataType* getMutableComponent() {
-        return const_cast<ComponentDataType*>(getComponent<ComponentDataType>());
+        return static_cast<ComponentDataType*>(getMutableComponentData());
     }
 
     inline Schema::SystemType GetSystemType() {

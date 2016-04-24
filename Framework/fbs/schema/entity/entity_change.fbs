@@ -2,6 +2,7 @@ namespace Schema;
 
 enum EntityChange : uint (bit_flags) {
     InputVelocity,
+    InputTrigger,
 
     PhysicPosition,
     PhysicDebug

@@ -40,9 +40,7 @@ public:
     }
 
     virtual void drawTriangle(const btVector3& v0, const btVector3& v1, const btVector3& v2, const btVector3& color,
-                              btScalar scalar) override {
-        btIDebugDraw::drawTriangle(v0, v1, v2, color, scalar);
-    }
+                              btScalar scalar) override;
 
     virtual void drawAabb(const btVector3& from, const btVector3& to, const btVector3& color) override {
         btIDebugDraw::drawAabb(from, to, color);
@@ -108,9 +106,12 @@ public:
     };
 
     System::Types::BitMask GetDesiredSystemChanges() override {
-        return System::Changes::None;
+        return Schema::EntityChange::InputTrigger;
     };
 
+    virtual const void* getComponentData() override {
+        return physicDebug_;
+    }
 
 private:
 
@@ -129,6 +130,7 @@ private:
     flatbuffers::FlatBufferBuilder builder_;
     boost::timer::cpu_timer  heartbeat_;
     boost::timer::nanosecond_type   heartbeat_delay_;
+    bool running;
 
     bool isRunning() const;
 };

@@ -70,6 +70,15 @@
           "systemType": "Physic",
           "data_type": "PhysicDebug",
           "data": {
+            "lines": [],
+            "capsules":[]
+          }
+        },
+        {
+          "systemType": "Input",
+          "data_type": "InputTrigger",
+          "data": {
+            "action": "toggle"
           }
         }
       ]

@@ -1,5 +1,9 @@
 namespace Schema.Components;
 
+enum TriggerAction : uint {
+    toggle
+}
+
 struct VelocityVector {
   x: float;
   y: float;
@@ -12,4 +16,8 @@ table InputVelocity {
 }
 
 table InputCamera {
+}
+
+table InputTrigger {
+    action: TriggerAction;
 }

@@ -15,6 +15,7 @@ union ComponentType {
 
   Components.InputVelocity,
   Components.InputCamera,
+  Components.InputTrigger,
 
   Components.PhysicPosition,
   Components.PhysicTerrain,
