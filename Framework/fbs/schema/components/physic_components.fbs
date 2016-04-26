@@ -11,6 +11,10 @@ table PhysicTerrain {
 
 }
 
+table PhysicCharacter {
+
+}
+
 table PhysicPosition {
     x:float;
     y:float;

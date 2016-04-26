@@ -33,19 +33,10 @@ PhysicScene::PhysicScene(ISystem* pSystem, const Schema::SystemScene* systemScen
                                                  GetSystem<PhysicSystem>()->getBroadphaseInterface(),
                                                  constraintSolver_,
                                                  GetSystem<PhysicSystem>()->getCollisionConfiguration());
-
     dynamicsWorld_->setGravity(btVector3(0, -9.8f, 0));
 
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-    btDefaultMotionState* groundMotionState =
-            new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-    btRigidBody::btRigidBodyConstructionInfo
-            groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-    dynamicsWorld_->addRigidBody(groundRigidBody);
-
     m_ObjectFactories[Schema::ComponentType::PhysicPosition] = boost::factory<PhysicObject*>();
-    //m_ObjectFactories["Character"] = boost::factory<CharacterPhysicObject*>();
+    m_ObjectFactories[Schema::ComponentType::PhysicCharacter] = boost::factory<CharacterPhysicObject*>();
     //m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
     m_ObjectFactories[Schema::ComponentType::PhysicTerrain] = boost::factory<TerrainPhysicObject*>();
     m_ObjectFactories[Schema::ComponentType::PhysicDebug] = boost::factory<DebugDrawer*>();

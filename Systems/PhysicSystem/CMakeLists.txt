@@ -6,6 +6,7 @@ find_package(Ogre REQUIRED)
 
 add_library(PhysicSystem SHARED
         include/DebugDrawer.h
+        include/Object/CharacterPhysicObject.h
         include/Object/MovablePhysicObject.h
         include/Object/PhysicObject.h
         include/Object/TerrainPhysicObject.h
@@ -13,6 +14,7 @@ add_library(PhysicSystem SHARED
         include/System.h
         include/Task.H
         src/DebugDrawer.cpp
+        src/Object/CharacterPhysicObject.cpp
         src/Object/MovablePhysicObject.cpp
         src/Object/PhysicObject.cpp
         src/Object/TerrainPhysicObject.cpp

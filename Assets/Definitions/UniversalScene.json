@@ -155,6 +155,12 @@
           }
         },
         {
+          "systemType": "Physic",
+          "data_type": "PhysicCharacter",
+          "data": {
+          }
+        },
+        {
           "systemType": "Input",
           "data_type": "InputVelocity",
           "data": {
@@ -177,7 +183,7 @@
     {
       "subjectId": "player",
       "observerId": "player-camera",
-      "subjectComponent_type": "PhysicPosition",
+      "subjectComponent_type": "PhysicCharacter",
       "observerComponent_type": "GraphicCamera"
     }
   ]

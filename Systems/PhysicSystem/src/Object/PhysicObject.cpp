@@ -30,23 +30,6 @@ PhysicObject::PhysicObject(ISystemScene& pSystemScene, UObject& entity, const Sc
     , m_bStatic(false) {
     position_ = const_cast<Schema::Components::PhysicPosition*>(static_cast<const Schema::Components::PhysicPosition*>(component.data()));
 
-    btCollisionShape* playerShape = new btCapsuleShape(1 ,2);
-    btDefaultMotionState* fallMotionState =
-            new btDefaultMotionState(btTransform(btQuaternion(1, 0, 0, 0).normalize(),
-                                                 btVector3(position_->x(), position_->y(), position_->z())));
-    btScalar mass = 80;
-    btVector3 fallInertia(0, 0, 0);
-    playerShape->calculateLocalInertia(mass, fallInertia);
-    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, playerShape, fallInertia);
-    fallRigidBodyCI.m_friction = 0;
-    fallRigidBodyCI.m_restitution = 0;
-    fallRigidBodyCI.m_linearDamping = 0;
-    rigidBody_ = new btRigidBody(fallRigidBodyCI);
-    rigidBody_->setAngularFactor(0);
-    rigidBody_->setActivationState(DISABLE_DEACTIVATION);
-    GetSystemScene<PhysicScene>()->getDynamicsWorld_()->addRigidBody(rigidBody_);
-
-    //https://github.com/222464/EvolvedVirtualCreaturesRepo/tree/master/VirtualCreatures/Volumetric_SDL/Source/SceneObjects/Physics
 }
 
 /**
@@ -60,11 +43,6 @@ PhysicObject::~PhysicObject() {
  * @inheritDoc
  */
 Error PhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::InputVelocity) {
-        auto inputSystemObject = systemObject->getEntity()->GetExtension(Schema::ComponentType::InputVelocity);
-        auto scalar = inputSystemObject->getComponent<Schema::Components::InputVelocity>()->scalar();
-        rigidBody_->setLinearVelocity(btVector3(scalar->x()*100, scalar->y()*100, scalar->z()*100));
-    }
     return Errors::Success;
 }
 
@@ -73,16 +51,4 @@ Error PhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes:
  */
 void PhysicObject::Update(float DeltaTime) {
     boost::ignore_unused(DeltaTime);
-
-    btTransform transform;
-    rigidBody_->getMotionState()->getWorldTransform(transform);
-    if (transform_ == transform) {
-        return;
-    }
-
-    transform_ = transform;
-    position_->mutate_x(transform_.getOrigin().getX());
-    position_->mutate_y(transform_.getOrigin().getY());
-    position_->mutate_z(transform_.getOrigin().getZ());
-    PostChanges(Schema::EntityChange::PhysicPosition);
 }

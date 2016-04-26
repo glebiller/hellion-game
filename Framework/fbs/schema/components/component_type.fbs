@@ -19,5 +19,6 @@ union ComponentType {
 
   Components.PhysicPosition,
   Components.PhysicTerrain,
+  Components.PhysicCharacter,
   Components.PhysicDebug
 }

@@ -48,8 +48,6 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene& pSystemScene, UObject& en
         m_pCamera->setFarClipDistance(0);   // enable infinite far clip distance if we can
     }
     m_pCamera->setNearClipDistance(1);
-    //m_pNode->setPosition(500, 500, 500);
-
 
     const Ogre::String workspaceName = "SampleBrowserWorkspace";
     Ogre::CompositorManager2* compositorManager = m_pSystemScene->GetSystem<GraphicSystem>()->getRoot()->getCompositorManager2();
@@ -85,8 +83,9 @@ void CameraGraphicObject::Update(float DeltaTime) {
 Error CameraGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
     if (ChangeType & Schema::EntityChange::PhysicPosition) {
         if (systemObject->getEntity()->getId() == "player") {
-            auto position = systemObject->getComponent<Schema::Components::PhysicPosition>();
-            m_pCamera->setPosition(position->x() - 50, position->y() + 50, position->z());
+            auto object = systemObject->getEntity()->GetExtension(Schema::ComponentType::PhysicPosition);
+            auto position = object->getComponent<Schema::Components::PhysicPosition>();
+            m_pCamera->setPosition(position->x() - 5, position->y() + 5, position->z());
             m_vLookAt = Ogre::Vector3(position->x(), position->y(), position->z());
         }
     }

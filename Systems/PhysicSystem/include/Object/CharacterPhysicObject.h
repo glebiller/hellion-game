@@ -14,12 +14,11 @@
 
 #pragma once
 
-#include "Object/PhysicObject.h"
-
-class ISystemScene;
-class hkpCharacterProxy;
-class hkpCharacterContext;
-class IgnorePhantomOverlapListener;
+#include <System/ISystemObject.h>
+#include <schema/entity_change_generated.h>
+#include <LinearMath/btVector3.h>
+#include <LinearMath/btTransform.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
 
 ///
 /// <c>CharacterPhysicObject</c> Implementation of the ISystemObject interface. This is the
@@ -27,45 +26,30 @@ class IgnorePhantomOverlapListener;
 ///
 /// @sa PhysicObject
 ///
-class CharacterPhysicObject : public PhysicObject {
+class CharacterPhysicObject : public ISystemObject {
 public:
-    CharacterPhysicObject(ISystemScene* pSystemScene, UObject* entity);
+    CharacterPhysicObject(ISystemScene& pSystemScene, UObject& entity, const Schema::SystemComponent& component);
 
     ~CharacterPhysicObject();
-    
-    ///
-    /// @inheritDoc.
-    ///
-    Error initialize();
 
-    ///
-    /// @inheritDoc.
-    ///
-    System::Changes::BitMask GetPotentialSystemChanges() {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+    System::Changes::BitMask GetPotentialSystemChanges() override {
+        return Schema::EntityChange::PhysicPosition;
     };
-    
-    ///
-    /// @inheritDoc.
-    ///
-    System::Types::BitMask GetDesiredSystemChanges() {
-        return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
+
+    System::Types::BitMask GetDesiredSystemChanges() override {
+        return Schema::EntityChange::InputVelocity | Schema::EntityChange::PhysicPosition;
     };
-    
-    ///
-    /// @inheritDoc.
-    ///
+
     Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
-    
-    ///
-    /// @inheritDoc.
-    ///
+
     void Update(float DeltaTime);
 
 private:
-    hkpCharacterProxy*              m_CharacterProxy;
-    hkpCharacterContext*            m_characterContext;
+    Schema::Components::PhysicPosition* position_;
+    btRigidBody* rigidBody_;
+    btTransform transform_;
+    btVector3 velocity_;
 
-    float                             m_Radius;
+    float m_Radius;
 
 };

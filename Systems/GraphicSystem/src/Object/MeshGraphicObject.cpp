@@ -43,7 +43,6 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene& pSystemScene, UObject& entity
     m_pEntity = POGRESCENEMGR->createEntity(mesh->name()->c_str());
     m_pNode->setName(m_entity->getName());
     m_pNode->attachObject(m_pEntity);
-    m_pNode->setScale(10, 10, 10);
 }
 
 
@@ -75,7 +74,8 @@ Error MeshGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Cha
 
     // TODO next step
     if (ChangeType & Schema::EntityChange::PhysicPosition) {
-        auto position = systemObject->getComponent<Schema::Components::PhysicPosition>();
+        auto object = systemObject->getEntity()->GetExtension(Schema::ComponentType::PhysicPosition);
+        auto position = object->getComponent<Schema::Components::PhysicPosition>();
         m_pNode->setPosition(position->x(), position->y(), position->z());
     }
     /*if (ChangeType & System::Changes::Physic::Orientation) {

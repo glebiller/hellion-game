@@ -63,7 +63,7 @@ public:
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges() override {
-        return Schema::EntityChange::InputVelocity;
+        return 0;
     };
 
     /**
@@ -78,8 +78,6 @@ public:
 
 protected:
     Schema::Components::PhysicPosition* position_;
-    btRigidBody* rigidBody_;
-    btTransform transform_;
     bool m_bStatic;
 
 };

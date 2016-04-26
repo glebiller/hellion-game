@@ -49,5 +49,6 @@ public:
     void Update(float DeltaTime);
 
 private:
+    btRigidBody* rigidBody_;
 
 };

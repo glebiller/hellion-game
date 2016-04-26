@@ -85,12 +85,13 @@ void DebugDrawer::onClose(websocketpp::connection_hdl hdl) {
 
 void DebugDrawer::drawCapsule(btScalar radius, btScalar halfHeight, int upAxis, const btTransform& transform,
                               const btVector3& color) {
-    if (isRunning()) {
+    btIDebugDraw::drawCapsule(radius, halfHeight, upAxis, transform, color);
+    /*if (isRunning()) {
         auto tOrigin = transform.getOrigin();
         auto origin = Schema::Components::PositionVector(tOrigin.x(), tOrigin.y(), tOrigin.z());
         auto capsule = Schema::Components::CreateDebugCapsule(builder_, radius, halfHeight, upAxis, &origin);
         capsules_.push_back(capsule);
-    }
+    }*/
 }
 
 void DebugDrawer::drawPlane(const btVector3& planeNormal, btScalar planeConst, const btTransform& transform,
