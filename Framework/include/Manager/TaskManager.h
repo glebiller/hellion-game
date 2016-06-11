@@ -30,7 +30,6 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Generic/IttNotify.h"
 #include "System/ISystemTask.h"
 
 namespace Schema {

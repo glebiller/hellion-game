@@ -44,9 +44,9 @@ namespace System {
          */
         inline unsigned int GetIndex(const Schema::SystemType systemType) {
             unsigned int Index = All;
-#if defined(MSC_COMPILER)
+#if defined(_MSC_VER)
             _BitScanForward((unsigned long*)&Index, systemType);
-#elif defined(GCC_COMPILER)
+#elif defined(__GNUC__)
             Index = __builtin_ffs(static_cast<unsigned int>(systemType));
 #endif
             return Index;

@@ -19,7 +19,6 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Generic/IttNotify.h"
 
 class Instrumentation;
 class TaskManager;
@@ -37,18 +36,10 @@ public:
      * @param [in,out]  pParam          If non-null, the parameter.
      * @param   parameter3              The third parameter.
      */
-    GenericCallbackData(Instrumentation* instrumentation, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
+    GenericCallbackData(Instrumentation* instrumentation, void* pParam, Schema::SystemType jobType);
 
 protected:
     Instrumentation*    m_instrumentation;
+    Schema::SystemType  m_jobType;
     void*               m_pParam;
-
-#if defined(STATISTICS_BY_JOB_TYPE)
-    Schema::SystemType   m_jobType;
-#endif
-
-#if defined(USE_THREAD_PROFILER)
-    __itt_event         m_tpEvent;
-#endif
-
 };

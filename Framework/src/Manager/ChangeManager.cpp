@@ -22,13 +22,8 @@
 #include <tbb/spin_mutex.h>
 
 #include "Manager/TaskManager.h"
-#include "Generic/IttNotify.h"
 #include "Generic/IObserver.h"
 #include "System/ISystemObject.h"
-
-// Declare Thread Profiler events
-__ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);
-__ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionTpEvent, "Change Distribution", 19);
 
 ///////////////////////////////////////////////////////////////////////////////
 // ChangeManager - Default constructor
@@ -229,8 +224,6 @@ ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes:
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeQueuedChanges - Distribute all queued notifications to the proper observers
 Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNotified, System::Changes::BitMask ChangesToDist) {
-    // Start ThredProfiler event
-    __ITT_EVENT_START(m_ChangeDistributionTpEvent, PROFILE_CHANGECONTROL);
     // Store the parameters so they can be used by multiple threads later
     m_systems2BeNotified = systems2BeNotified;
     m_ChangesToDist = ChangesToDist;
@@ -238,8 +231,6 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
     // Loop through all the notifications.  We might need to loop through multiple
     // times because processing notifications might generate more notifications
     for (;;) {
-        // Start ThreadProfiler event
-        __ITT_EVENT_START(m_ChangeDistributionPreprocessTpEvent, PROFILE_CHANGECONTROL);
         // Make sure m_indexList is big enough to hold all subjects
         m_indexList.resize(m_subjectsList.size());
         // Loop through all list and build m_cumulativeNotifyList
@@ -276,8 +267,6 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
             pList->clear();
         }
 
-        // End ThreadProfiler event
-        __ITT_EVENT_END(m_ChangeDistributionPreprocessTpEvent, PROFILE_CHANGECONTROL);
         // Determine number of notifications to process
         size_t NumberOfChanges = m_cumulativeNotifyList.size();
 
@@ -308,9 +297,6 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
             break;
         }
     }
-
-    // End ThredProfiler event
-    __ITT_EVENT_END(m_ChangeDistributionTpEvent, PROFILE_CHANGECONTROL);
     return Errors::Success;
 }
 

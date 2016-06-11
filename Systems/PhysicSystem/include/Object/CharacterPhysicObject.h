@@ -40,9 +40,9 @@ public:
         return Schema::EntityChange::InputVelocity | Schema::EntityChange::PhysicPosition;
     };
 
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
 
-    void Update(float DeltaTime);
+    void Update(float DeltaTime) override;
 
 private:
     Schema::Components::PhysicPosition* position_;

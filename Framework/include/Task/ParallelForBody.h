@@ -16,39 +16,21 @@
 
 #include <tbb/task.h>
 #include <tbb/blocked_range.h>
+#include <schema/system_type_generated.h>
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Generic/IttNotify.h"
 #include "Manager/TaskManager.h"
 #include "Task/GenericCallbackData.h"
 
 class Instrumentation;
 class TaskManager;
 
-/**
- * Parallel for body.
- *
- * @sa  GenericCallbackData
- */
 class ParallelForBody : public GenericCallbackData {
 public:
 
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  instrumentation                                 If non-null, the
-     *                                                                  instrumentation.
-     * @param   pfn                                                     The pfn.
-     * @param [in,out]  DECLARE_JOB_AND_TP_EVENT_ARGS(jobType,tpEvent)  If non-null, the declare job
-     *                                                                  and TP event arguments (job
-     *                                                                  type,tp event)
-     */
-    ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
+    ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam, Schema::SystemType jobType);
 
-    /**
-     *  casting operator.
-     */
     void operator() (const tbb::blocked_range<unsigned int>& r) const;
 
 private:

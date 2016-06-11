@@ -14,19 +14,20 @@
 
 #include <tbb/task.h>
 #include <tbb/blocked_range.h>
+#include <boost/timer/timer.hpp>
+#include <schema/system_type_generated.h>
 
-#include "Generic/IttNotify.h"
 #include "Generic/Instrumentation.h"
 #include "Manager/TaskManager.h"
 #include "Task/ParallelForBody.h"
 
-ParallelForBody::ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
-        : GenericCallbackData(instrumentation, pParam PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
+ParallelForBody::ParallelForBody(Instrumentation* instrumentation, TaskManager::ParallelForFunction pfn, void* pParam, Schema::SystemType jobType)
+        : GenericCallbackData(instrumentation, pParam, jobType)
         , m_pfnCallback(pfn) {
 };
 
 void ParallelForBody::operator() (const tbb::blocked_range<unsigned int>& r) const {
-    JOB_TASK_STARTED(m_jobType, m_tpEvent);
+    boost::timer::cpu_timer counter;
     m_pfnCallback(m_pParam, r.begin(), r.end());
-    JOB_TASK_FINISHED(m_jobType, m_tpEvent);
+    m_instrumentation->CaptureJobCounterTicks(m_jobType, counter.elapsed().wall);
 }

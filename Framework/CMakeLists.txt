@@ -21,7 +21,6 @@ add_library(Framework
         include/Generic/Framework.h
         include/Generic/Instrumentation.h
         include/Generic/IObserver.h
-        include/Generic/IttNotify.h
         include/Generic/Scheduler.h
         include/Manager/ChangeManager.h
         include/Manager/Notification.h

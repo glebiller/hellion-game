@@ -24,10 +24,6 @@
 
 #define POGRESCENEMGR (reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager())
 
-#include "Generic/IttNotify.h"
-
-__ITT_DEFINE_STATIC_EVENT(g_tpeChangeOccurred, "Graphics Mesh: ChangeOccurred", 29);
-
 unsigned int MeshGraphicObject::sm_EntityId = 0;
 
 /**

@@ -15,6 +15,7 @@
 #pragma once    
 
 #include <tbb/task.h>
+#include <boost/timer/timer.hpp>
 
 #include "DataTypes.h"
 #include "Task/GenericCallbackData.h"
@@ -39,9 +40,9 @@ public:
      * @param [in,out]  pParam                  If non-null, the parameter.
      * @param   DECLARE_TP_EVENT_ARG(tpEvent)   The declare TP event argument (tp event)
      */
-    GenericCallbackTask(Instrumentation* instrumentation, Fptr fFunc, void* pParam DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
-        : GenericCallbackData(instrumentation, pParam PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
-        , m_fFunc(fFunc) {
+    GenericCallbackTask(Instrumentation* instrumentation, Fptr fFunc, void* pParam, Schema::SystemType jobType)
+        : GenericCallbackData(instrumentation, pParam, jobType)
+        , callbackFunction_(fFunc) {
     };
 
     /**
@@ -50,14 +51,14 @@ public:
      * @return  null if it fails, else.
      */
     virtual tbb::task* execute() {
-        BOOST_ASSERT(m_fFunc != NULL);
-        JOB_TASK_STARTED(m_jobType, m_tpEvent);
-        m_fFunc(m_pParam);
-        JOB_TASK_FINISHED(m_jobType, m_tpEvent);
+        BOOST_ASSERT(callbackFunction_ != NULL);
+        boost::timer::cpu_timer counter;
+        callbackFunction_(m_pParam);
+        m_instrumentation->CaptureJobCounterTicks(m_jobType, counter.elapsed().wall);
         return NULL;
     };
 
 protected:
-    Fptr                m_fFunc;
+    Fptr                callbackFunction_;
 
 };

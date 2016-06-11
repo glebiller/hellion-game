@@ -15,17 +15,6 @@
 #pragma once
 
 //
-// Compiler options
-//
-#if defined(_MSC_VER)
-#define MSC_COMPILER
-#elif defined(__GNUC__)
-#define GCC_COMPILER
-#else
-#pragma error "Unkown compiler"
-#endif
-
-//
 // Windows Specific
 // 
 #define NOMINMAX
@@ -41,45 +30,9 @@
 #define DEBUG_BUILD
 #endif
 
-#define LOGGER_ENABLED
-#define HAVOK_VDB_ENABLED
-
-// The current mechanism of by-job statistics does not work correctly in case of
-// nested parallelism, since work-stealing TBB scheduler may (and does) interleave
-// different jobs on the same thread. To make it work correctly the statistics
-// should be accumulated on a per-thread basis. Besides with the fine grained job
-// tasks (which are necessary to achieve acceptable load balancing) the overhead
-// of statistics tracking may become noticeable.
-#define STATISTICS_BY_JOB_TYPE
-
-#define USE_SPIN_MUTEX 1
-
-//
-// Log level
-// 
-#undef LOGOG_LEVEL
-#define LOGOG_LEVEL LOGOG_LEVEL_WARN
-
 //
 // Custom values
 //
 #if !defined(NULL)
 #define NULL nullptr
 #endif
-
-//
-// stdcall
-//
-#if !defined(MSC_COMPILER)
-#define __stdcall
-#endif
-
-//
-// Unused param
-//
-#if defined(MSC_COMPILER)
-#define UNUSED_PARAM(p) (p);
-#else
-#define UNUSED_PARAM(p)
-#endif
-

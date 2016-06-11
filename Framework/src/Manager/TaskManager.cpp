@@ -17,12 +17,9 @@
 #include "Defines.h"
 #include "DataTypes.h"
 
-#pragma warning (push)
-#pragma warning (disable: 4100)
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
 #include <tbb/partitioner.h>
-#pragma warning (pop)
 
 #if defined(MSC_COMPILER)
     #include <Windows.h>
@@ -42,8 +39,6 @@ const char* const   semaphoreName  = "TaskManagerSemaphore";
 
 namespace local {
     typedef GenericCallbackTask<TaskManager::JobFunction> SystemTask;
-    typedef GenericCallbackTask<TaskManager::JobFunction> JobTask;
-    typedef GenericCallbackTask<TaskManager::JobCompletionFunction> JobCompletionTask;
 
     static TaskManager* g_pTaskManager = NULL;
 } // namespace local
@@ -140,9 +135,7 @@ void TaskManager::Init(const Schema::Environment* environment) {
     m_pTbbScheduler = new tbb::task_scheduler_init(requestedNumberOfThreads);
     m_pSystemTasksRoot = new(tbb::task::allocate_root()) tbb::empty_task;
     NonStandardPerThreadCallback(InitAffinityData, this);
-#ifdef STATISTICS_BY_JOB_TYPE
     m_instrumentation->setActiveThreadCount(requestedNumberOfThreads);
-#endif
 }
 
 /**
@@ -168,9 +161,7 @@ void TaskManager::Shutdown() {
  * @inhertiDoc
  */
 void TaskManager::updatePeriodicData(float deltaTime) {
-#ifdef STATISTICS_BY_JOB_TYPE
     m_instrumentation->UpdatePeriodicData(deltaTime);
-#endif
 }
 
 /**
@@ -179,7 +170,6 @@ void TaskManager::updatePeriodicData(float deltaTime) {
 void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, unsigned int uTaskCount, float fDeltaTime) {
     // Call this from the primary thread to schedule system work.
     BOOST_ASSERT(IsPrimaryThread());
-    __ITT_EVENT_START(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
     BOOST_ASSERT(uTaskCount > 0);
     m_fDeltaTime = fDeltaTime;
     UpdateThreadPoolSize();
@@ -206,8 +196,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, unsigned int uTa
                 if (Task::getPerformanceHint(pTasks[i]->GetSystemType()) == (Task::PerformanceHint) h) {
                     // this task can be run on an arbitrary thread -- allocate it
                     SystemTask* pSystemTask = new(tbb::task::allocate_additional_child_of(*m_pSystemTasksRoot))
-                    SystemTask(m_instrumentation, SystemTaskCallback, pTasks[i] 
-                        PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
+                    SystemTask(m_instrumentation, SystemTaskCallback, pTasks[i], pTasks[i]->GetSystemType());
                     // affinity will increase the chances that each SystemTask will be assigned
                     // to a unique thread, regardless of PerformanceHint
                     BOOST_ASSERT(pSystemTask != NULL);
@@ -221,7 +210,6 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, unsigned int uTa
     // We only spawn system tasks here. They in their turn will spawn descendant tasks.
     // Waiting for the whole bunch completion happens in WaitForSystemTasks.
     m_pSystemTasksRoot->spawn(tTaskList);
-    __ITT_EVENT_END(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
 }
 
 /**
@@ -232,7 +220,6 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     // by the TaskManager.  This method waits until all callbacks have executed.
     // only one at a time here
     tbb::spin_mutex::scoped_lock _lock(m_tSynchronizedCallbackMutex);
-    __ITT_EVENT_START(m_tSynchronizeTPEvent, PROFILE_TASKMANAGER);
     int uNumberOfThreads = m_uNumberOfThreads;
 
     if (uNumberOfThreads != m_uMaxNumberOfThreads) {
@@ -262,8 +249,6 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
         m_uTargetNumberOfThreads = uNumberOfThreads;
         UpdateThreadPoolSize();
     }
-
-    __ITT_EVENT_END(m_tSynchronizeTPEvent, PROFILE_TASKMANAGER);
 } 
 
 /**
@@ -282,15 +267,8 @@ unsigned int TaskManager::GetRecommendedJobCount(JobCountInstructionHints Hints)
  * @inhertiDoc
  */
 void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, unsigned int begin, unsigned int end, unsigned int minGrainSize) {
-#if defined(STATISTICS_BY_JOB_TYPE)
-    // ??? How often does this fail over to NULL?
     Schema::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Schema::SystemType::MIN;
-#endif
-#if defined(USE_THREAD_PROFILER)
-    __itt_event tpEvent = GetSupportForSystemTask(pSystemTask).m_tpeSystemTaskJob;
-#endif
-    ParallelForBody body(m_instrumentation, pfnJobFunction, pParam
-                         PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
+    ParallelForBody body(m_instrumentation, pfnJobFunction, pParam, jobType);
 
     if (m_uNumberOfThreads != 1) {
         tbb::parallel_for(tbb::blocked_range<unsigned int>(begin, end, minGrainSize), body, tbb::auto_partitioner());
@@ -320,9 +298,7 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, unsigned int uTaskCou
         // see if we are waiting for this task
         if (std::find(pTasks, pTasks + uTaskCount, systemTask)) {
             // we are, so execute it now on the primary thread
-            __ITT_EVENT_START(GetSupportForSystemTask(systemTask).m_tpeSystemTask, PROFILE_TASKMANAGER);
             systemTask->Update(m_fDeltaTime);
-            __ITT_EVENT_END(GetSupportForSystemTask(systemTask).m_tpeSystemTask, PROFILE_TASKMANAGER);
         } else {
             // save it for next time
             m_tmpTaskList.push_back(systemTask);
@@ -494,8 +470,6 @@ void TaskManager::UpdateThreadPoolSize() {
 
         m_pStallPoolParent->spawn(tList);
         m_uNumberOfThreads = m_uTargetNumberOfThreads;
-#ifdef STATISTICS_BY_JOB_TYPE
         m_instrumentation->setActiveThreadCount(m_uTargetNumberOfThreads);
-#endif
     }
 }

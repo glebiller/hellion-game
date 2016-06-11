@@ -20,9 +20,6 @@
 
 #include "GraphicScene.h"
 #include "Object/Object.h"
-#include "Generic/IttNotify.h"
-
-__ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 
 ///
 /// @inheritDoc
@@ -51,9 +48,7 @@ void GraphicTask::Update(float DeltaTime) {
     //
     // Render the scene
     //
-    __ITT_EVENT_START(g_tpeRendering, PROFILE_RENDER);
     m_pRoot->renderOneFrame();
-    __ITT_EVENT_END(g_tpeRendering, PROFILE_RENDER);
     // Since it's the pool thread, we know that normally it runs at normal priority.
     // In more general case we would have needed to remember the initial priority
     // before bringing it up.
