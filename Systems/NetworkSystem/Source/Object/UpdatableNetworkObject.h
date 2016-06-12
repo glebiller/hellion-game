@@ -52,7 +52,7 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    ISystemObject::Changes GetPotentialSystemChanges() {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation
              | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };

@@ -73,7 +73,7 @@ void ISystemObject::UpdateInterestBits(IObserver* pInObserver, unsigned int uInI
     }
 }
 
-void ISystemObject::PostChanges(System::Changes::BitMask uInChangedBits) {
+void ISystemObject::PostChanges(ISystemObject::Changes uInChangedBits) {
     for (auto observerRequest : observers_) {
         IObserver::Changes changes = observerRequest.m_interestBits & uInChangedBits;
         if (changes) {

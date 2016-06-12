@@ -52,7 +52,7 @@ public:
     ///
     /// @inheritDoc.
     ///
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    ISystemObject::Changes GetPotentialSystemChanges() {
         return Schema::EntityChange::InputVelocity | Schema::EntityChange::PhysicPosition;
     };
 

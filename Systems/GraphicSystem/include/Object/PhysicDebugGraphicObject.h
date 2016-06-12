@@ -41,7 +41,7 @@ public:
 
     void Update(float DeltaTime);
 
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    ISystemObject::Changes GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 

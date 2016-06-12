@@ -101,7 +101,7 @@ public:
 
     void Update(float DeltaTime) override;
 
-    System::Changes::BitMask GetPotentialSystemChanges() override {
+    ISystemObject::Changes GetPotentialSystemChanges() override {
         return Schema::EntityChange::PhysicDebug;
     };
 

@@ -20,7 +20,7 @@ public:
      */
     virtual ~InputTriggerComponent();
 
-    System::Changes::BitMask GetPotentialSystemChanges() override {
+    ISystemObject::Changes GetPotentialSystemChanges() override {
         return Schema::EntityChange::InputTrigger;
     };
 

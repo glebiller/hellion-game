@@ -50,7 +50,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges() {
+    inline ISystemObject::Changes GetDesiredSystemChanges() {
         return System::Changes::All;
     }
 

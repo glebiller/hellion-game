@@ -53,7 +53,7 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        virtual System::Changes::BitMask GetPotentialSystemChanges() {
+        virtual ISystemObject::Changes GetPotentialSystemChanges() {
             return System::Changes::None;    
         }
         

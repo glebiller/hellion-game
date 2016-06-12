@@ -41,7 +41,7 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    ISystemObject::Changes GetPotentialSystemChanges() {
         return System::Changes::None;
     };
 

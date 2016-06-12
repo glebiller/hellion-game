@@ -239,7 +239,7 @@ void UScene::createSystemObject(UObject* pObject, const Schema::SystemComponent*
     const Schema::SystemType& type = systemComponent->systemType();
     ISystemScene* systemScene = m_SystemScenes.find(type)->second;
     ISystemObject* pSystemObject = pObject->Extend(systemScene, systemComponent);
-    m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
+    m_pSceneCCM->Register(pSystemObject, this);
 }
 
 /**
@@ -281,14 +281,9 @@ UObject* UScene::FindObject(std::string id) {
  * @inheritDoc
  */
 void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver) {
-    //
-    // Register objects with the CCM.
-    //
-    System::Changes::BitMask Changes =
-            pSubject->GetPotentialSystemChanges() & pObserver->GetDesiredSystemChanges();
-
+    ISystemObject::Changes Changes = pSubject->GetPotentialSystemChanges() & pObserver->GetDesiredSystemChanges();
     if (Changes) {
-        m_pObjectCCM->Register(pSubject, Changes, pObserver);
+        m_pObjectCCM->Register(pSubject, pObserver);
         //
         // Hold on to the list for unregistering later.
         //

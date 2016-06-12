@@ -43,7 +43,7 @@ public:
      * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
      *  to inform the change control manager if this scene should be informed of the change.
      *
-     * @return  A System::Changes::BitMask.
+     * @return  A IObserver::Changes.
      */
     virtual inline Changes GetDesiredSystemChanges() = 0;
 

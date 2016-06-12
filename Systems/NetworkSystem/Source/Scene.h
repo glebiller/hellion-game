@@ -50,14 +50,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() {
+    ISystemObject::Changes GetPotentialSystemChanges() {
         return System::Changes::Generic::All;
     };
 
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetDesiredSystemChanges() {
+    ISystemObject::Changes GetDesiredSystemChanges() {
         return System::Changes::None;
     };
 

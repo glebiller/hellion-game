@@ -24,6 +24,7 @@
 #include "Generic/IObserver.h"
 #include "Manager/Notification.h"
 #include "Manager/SubjectInfo.h"
+#include "System/ISystemObject.h"
 #include "TaskManager.h"
 
 /**
@@ -49,12 +50,9 @@ public:
     // ChangeManager Functionality
     Error Register(ISystemObject* pInSubject, IObserver* pInObserver);
 
-    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits,
-                       IObserver* pInObserver);
-
     Error Unregister(ISystemObject* systemObject, IObserver* pObserver);
 
-    Error DistributeQueuedChanges(System::Changes::BitMask ChangesToDist);
+    Error DistributeQueuedChanges(ISystemObject::Changes ChangesToDist);
 
     // IObserver Functionality
     Error ChangeOccurred(ISystemObject* pInChangedSubject, IObserver::Changes changes);
@@ -62,7 +60,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges() {
+    inline ISystemObject::Changes GetDesiredSystemChanges() {
         return System::Changes::All;
     }
 
@@ -111,6 +109,6 @@ private:
 
     void DistributeRange(unsigned int begin, unsigned int end);
 
-    System::Changes::BitMask m_ChangesToDist;
+    ISystemObject::Changes m_ChangesToDist;
 
 };

@@ -46,7 +46,7 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges() override {
+    ISystemObject::Changes GetPotentialSystemChanges() override {
         return /*System::Changes::Generic::CreateObject | System::Changes::Input::Action
              | System::Changes::Input::Velocity | System::Changes::Input::Rotation*/
                 Schema::EntityChange::InputVelocity;

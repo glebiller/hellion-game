@@ -68,10 +68,6 @@ ChangeManager::~ChangeManager() {
     }
 }
 
-Error ChangeManager::Register(ISystemObject* pInSubject, IObserver* pInObserver) {
-    return Register(pInSubject, pInObserver->GetDesiredSystemChanges(), pInObserver);
-}
-
 /*
 ISystemObject -> ISystemScene -> not used
 ISystemObject -> ISystemObject ->
@@ -82,10 +78,11 @@ UObject -> ISystemObject -> ?? really useful ?
 
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
-Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver) {
+Error ChangeManager::Register(ISystemObject* pInSubject, IObserver* pInObserver) {
     BOOST_ASSERT_MSG(pInSubject != nullptr, "Subject cannot be null");
     BOOST_ASSERT_MSG(pInObserver != nullptr, "Observer cannot be null");
 
+    auto observerIntrestBits = pInObserver->GetDesiredSystemChanges();
     if (pInSubject->GetPotentialSystemChanges() & observerIntrestBits) {
         // Lock out updates while we register a subject
         tbb::spin_mutex::scoped_lock _lock(m_swUpdate);
@@ -223,7 +220,7 @@ ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, IObserver::Chang
 
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeQueuedChanges - Distribute all queued notifications to the proper observers
-Error ChangeManager::DistributeQueuedChanges(System::Changes::BitMask ChangesToDist) {
+Error ChangeManager::DistributeQueuedChanges(ISystemObject::Changes ChangesToDist) {
     // Store the parameters so they can be used by multiple threads later
     m_ChangesToDist = ChangesToDist;
 

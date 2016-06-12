@@ -85,7 +85,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges() override {
+    inline ISystemObject::Changes GetDesiredSystemChanges() override {
         return System::Changes::None;
     }
 

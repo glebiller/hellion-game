@@ -40,6 +40,7 @@ class UObject;
 class ISystemObject : public IObserver {
 public:
 
+    typedef unsigned int Changes;
     static const unsigned int InvalidObserverID = (const unsigned int) -1;
 
     /**
@@ -95,14 +96,14 @@ public:
      * @param   uInChangedBits  The unsigned int bit field that describes the conceptual change with respect
      *                          to the published interests.
      */
-    void PostChanges(System::Changes::BitMask uInChangedBits);
+    void PostChanges(ISystemObject::Changes uInChangedBits);
 
     /**
      * Identifies the system changes that this subject could possibly make.
      *
      * @return  A bitmask of the possible system changes.
      */
-    virtual System::Changes::BitMask GetPotentialSystemChanges() = 0;
+    virtual ISystemObject::Changes GetPotentialSystemChanges() = 0;
 
     virtual void Update(float DeltaTime) = 0;
 

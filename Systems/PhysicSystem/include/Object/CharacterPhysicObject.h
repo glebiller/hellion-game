@@ -32,7 +32,7 @@ public:
 
     ~CharacterPhysicObject();
 
-    System::Changes::BitMask GetPotentialSystemChanges() override {
+    ISystemObject::Changes GetPotentialSystemChanges() override {
         return Schema::EntityChange::PhysicPosition;
     };
 
