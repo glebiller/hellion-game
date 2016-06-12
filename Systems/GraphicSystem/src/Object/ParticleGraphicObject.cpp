@@ -45,9 +45,7 @@ void ParticleGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error ParticleGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-
-
+Error ParticleGraphicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     /*if (ChangeType & System::Changes::Physic::Position) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Vector3& Position = *pGeometryObject->GetPosition();

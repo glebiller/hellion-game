@@ -57,14 +57,14 @@ class CursorGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        System::Types::BitMask GetDesiredSystemChanges() {
+        IObserver::Changes GetDesiredSystemChanges() {
             return System::Changes::Input::Velocity;
         };
         
         /**
          * @inheritDoc
          */
-        Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+        Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
     private:
 };

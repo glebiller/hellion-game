@@ -49,10 +49,10 @@ Error ConnectNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error ConnectNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error ConnectNetworkObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
 
 
-    if (ChangeType & System::Changes::Input::Action) {
+    if (changes & System::Changes::Input::Action) {
         const KeyboardButtonData* keyboardButtonData = dynamic_cast<IKeyboardObject*>(pSubject)->getKeyboardButtonData();
         if (keyboardButtonData->down) {
             DownstreamMessageProto downstreamMessageProto;

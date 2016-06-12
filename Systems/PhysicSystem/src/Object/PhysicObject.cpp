@@ -42,7 +42,7 @@ PhysicObject::~PhysicObject() {
 /**
  * @inheritDoc
  */
-Error PhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error PhysicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     return Errors::Success;
 }
 

@@ -57,20 +57,20 @@ Error PlayerNetworkObject::initialize() {
 /**
  * @inheritDoc
  */
-Error PlayerNetworkObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error PlayerNetworkObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
 
     
-    if (ChangeType & System::Changes::Physic::Position) {
+    if (changes & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
-    if (ChangeType & System::Changes::Physic::Orientation) {
+    if (changes & System::Changes::Physic::Orientation) {
         m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
     }
-    if (ChangeType & System::Changes::Input::Velocity) {
+    if (changes & System::Changes::Input::Velocity) {
         m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
         m_velocityDirty = true;
     }
-    if (ChangeType & System::Changes::Input::Rotation) {
+    if (changes & System::Changes::Input::Rotation) {
         m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
         m_rotationDirty = true;
     }

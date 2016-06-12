@@ -21,7 +21,7 @@ void InputTriggerComponent::Update(float DeltaTime) {
     }
 }
 
-Error InputTriggerComponent::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error InputTriggerComponent::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     return 0;
 }
 

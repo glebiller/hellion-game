@@ -44,12 +44,12 @@ CharacterPhysicObject::~CharacterPhysicObject() {
     delete rigidBody_;
 }
 
-Error CharacterPhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::PhysicPosition) {
+Error CharacterPhysicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & Schema::EntityChange::PhysicPosition) {
         position_ = systemObject->getMutableComponent<Schema::Components::PhysicPosition>();
         rigidBody_->getWorldTransform().setOrigin(btVector3(position_->x(), position_->y(), position_->z()));
     }
-    if (ChangeType & Schema::EntityChange::InputVelocity) {
+    if (changes & Schema::EntityChange::InputVelocity) {
         auto inputSystemObject = systemObject->getEntity()->GetExtension(Schema::ComponentType::InputVelocity);
         auto scalar = inputSystemObject->getComponent<Schema::Components::InputVelocity>()->scalar();
         rigidBody_->setLinearVelocity(btVector3(scalar->x(), rigidBody_->getLinearVelocity().getY(), scalar->z()));

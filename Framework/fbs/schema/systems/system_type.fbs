@@ -1,6 +1,6 @@
 namespace Schema;
 
-enum SystemType : uint (bit_flags) {
+enum SystemType : uint {
   Audio,
   Graphic,
   Input,

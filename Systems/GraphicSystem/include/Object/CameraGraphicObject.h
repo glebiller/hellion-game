@@ -60,14 +60,14 @@ class CameraGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        virtual System::Types::BitMask GetDesiredSystemChanges() {
+        virtual IObserver::Changes GetDesiredSystemChanges() {
             return Schema::EntityChange::PhysicPosition;
         }
         
         /**
          * @inheritDoc
          */
-        virtual Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+        virtual Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
 protected:
 

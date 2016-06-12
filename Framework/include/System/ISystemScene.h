@@ -71,7 +71,7 @@ public:
     /**
      * @inheritDoc
      */
-    virtual Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+    virtual Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
     /**
      * Create the system task for this scene.

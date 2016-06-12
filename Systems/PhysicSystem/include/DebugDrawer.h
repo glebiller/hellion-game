@@ -95,7 +95,7 @@ public:
 
     virtual int getDebugMode() const override;
 
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
     void update();
 
@@ -105,7 +105,7 @@ public:
         return Schema::EntityChange::PhysicDebug;
     };
 
-    System::Types::BitMask GetDesiredSystemChanges() override {
+    IObserver::Changes GetDesiredSystemChanges() override {
         return Schema::EntityChange::InputTrigger;
     };
 

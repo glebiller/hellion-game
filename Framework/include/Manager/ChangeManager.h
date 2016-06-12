@@ -47,18 +47,17 @@ public:
     // Must be called after construction for a valid Change Manager
 
     // ChangeManager Functionality
-    Error Register(ISystemObject* pInSubject, IObserver* pInObserver,
-                   System::Types::BitMask observerIdBits = System::Types::All);
+    Error Register(ISystemObject* pInSubject, IObserver* pInObserver);
 
-    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver,
-                   System::Types::BitMask observerIdBits = System::Types::All);
+    Error Register(ISystemObject* pInSubject, System::Changes::BitMask uInIntrestBits,
+                       IObserver* pInObserver);
 
     Error Unregister(ISystemObject* systemObject, IObserver* pObserver);
 
-    Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
+    Error DistributeQueuedChanges(System::Changes::BitMask ChangesToDist);
 
     // IObserver Functionality
-    Error ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
+    Error ChangeOccurred(ISystemObject* pInChangedSubject, IObserver::Changes changes);
 
     /**
      * @inheritDoc
@@ -112,7 +111,6 @@ private:
 
     void DistributeRange(unsigned int begin, unsigned int end);
 
-    System::Types::BitMask m_systems2BeNotified;
     System::Changes::BitMask m_ChangesToDist;
 
 };

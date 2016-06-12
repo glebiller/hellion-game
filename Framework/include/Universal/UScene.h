@@ -135,7 +135,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask SystemChanges);
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
     /**
      * @inheritDoc

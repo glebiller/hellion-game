@@ -62,14 +62,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() override {
+    IObserver::Changes GetDesiredSystemChanges() override {
         return 0;
     };
 
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
     /**
      * @inheritDoc

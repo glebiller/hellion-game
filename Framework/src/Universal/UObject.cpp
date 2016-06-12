@@ -114,7 +114,7 @@ ISystemObject* const UObject::GetExtension(Schema::ComponentType componentType) 
 /**
  * @inheritDoc
  */
-Error UObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error UObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     // Objects are probably not observers,
     // Objects can be subjects through links
     // TODO : check

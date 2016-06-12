@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <Framework/include/schema/entity_change_generated.h>
 #include "System/ISystemObject.h"
 
 #include "Universal/UObject.h"
@@ -74,9 +75,9 @@ void ISystemObject::UpdateInterestBits(IObserver* pInObserver, unsigned int uInI
 
 void ISystemObject::PostChanges(System::Changes::BitMask uInChangedBits) {
     for (auto observerRequest : observers_) {
-        unsigned int changedBitsOfInterest = observerRequest.m_interestBits & uInChangedBits;
-        if (changedBitsOfInterest) {
-            observerRequest.m_pObserver->ChangeOccurred(this, changedBitsOfInterest);
+        IObserver::Changes changes = observerRequest.m_interestBits & uInChangedBits;
+        if (changes) {
+            observerRequest.m_pObserver->ChangeOccurred(this, changes);
         }
     }
 }

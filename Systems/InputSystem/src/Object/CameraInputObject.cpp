@@ -68,8 +68,8 @@ void CameraInputObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc
 ///
-Error CameraInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::PhysicPosition) {
+Error CameraInputObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & Schema::EntityChange::PhysicPosition) {
         /*if (systemObject->getEntity()->getId() == "player") {
             auto subjectPosition = systemObject->getComponent<Schema::Components::PhysicPosition>();
             auto position = getMutableComponent<Schema::Components::PhysicPosition>();

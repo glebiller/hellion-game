@@ -43,8 +43,6 @@ void SkyboxGraphicObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc.
 ///
-Error SkyboxGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-
-
+Error SkyboxGraphicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     return Errors::Success;
 }

@@ -85,7 +85,7 @@ void TerrainPhysicObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc
 ///
-Error TerrainPhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error TerrainPhysicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
 
     return Errors::Success;
 }

@@ -30,7 +30,7 @@ ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)
 ObjectChangesDebugger::~ObjectChangesDebugger() {
 }
 
-Error ObjectChangesDebugger::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error ObjectChangesDebugger::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     m_pDebugger->addUpdatedObject(pSubject);
     return Errors::Success;
 }

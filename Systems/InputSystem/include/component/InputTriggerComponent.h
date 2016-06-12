@@ -24,13 +24,13 @@ public:
         return Schema::EntityChange::InputTrigger;
     };
 
-    System::Types::BitMask GetDesiredSystemChanges() override {
+    IObserver::Changes GetDesiredSystemChanges() override {
         return 0;
     };
 
     void Update(float DeltaTime) override;
 
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
 private:
     Schema::Components::InputTrigger* trigger_;

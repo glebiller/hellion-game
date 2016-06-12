@@ -68,8 +68,8 @@ ChangeManager::~ChangeManager() {
     }
 }
 
-Error ChangeManager::Register(ISystemObject* pInSubject, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
-    return Register(pInSubject, pInObserver->GetDesiredSystemChanges(), pInObserver, observerIdBits);
+Error ChangeManager::Register(ISystemObject* pInSubject, IObserver* pInObserver) {
+    return Register(pInSubject, pInObserver->GetDesiredSystemChanges(), pInObserver);
 }
 
 /*
@@ -82,7 +82,7 @@ UObject -> ISystemObject -> ?? really useful ?
 
 ///////////////////////////////////////////////////////////////////////////////
 // Register - Register a new subject/observer relationsship
-Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits) {
+Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMask observerIntrestBits, IObserver* pInObserver) {
     BOOST_ASSERT_MSG(pInSubject != nullptr, "Subject cannot be null");
     BOOST_ASSERT_MSG(pInObserver != nullptr, "Observer cannot be null");
 
@@ -94,7 +94,7 @@ Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMas
         if (uID != ISystemObject::InvalidObserverID) {
             // Subject has already been registered. Add new observer to the list
             SubjectInfo &si = m_subjectsList[uID];
-            si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
+            si.m_observersList.push_back(ObserverRequest(pInObserver, uID, observerIntrestBits));
             observerIntrestBits &= ~si.m_interestBits;
 
             if (observerIntrestBits) {
@@ -115,7 +115,7 @@ Error ChangeManager::Register(ISystemObject* pInSubject, System::Changes::BitMas
 
             SubjectInfo &si = m_subjectsList[uID];
             si.m_pSubject = pInSubject;
-            si.m_observersList.push_back(ObserverRequest(pInObserver, observerIntrestBits, observerIdBits));
+            si.m_observersList.push_back(ObserverRequest(pInObserver, uID, observerIntrestBits));
             si.m_interestBits = observerIntrestBits;
             pInSubject->Attach(this, observerIntrestBits, uID);
         }
@@ -195,12 +195,12 @@ Error ChangeManager::RemoveSubject(ISystemObject* systemObject
 // ChangeOccurred - Process a change.  This stores all information needed to
 //                  process the change when DistributeQueuedChanges is called.
 Error
-ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes::BitMask uInChangedBits) {
+ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, IObserver::Changes changes) {
     Error curError = Errors::Undefined;
     BOOST_ASSERT(pInChangedSubject);
 
     if (pInChangedSubject) {
-        if (!uInChangedBits) {
+        if (!changes) {
             // The subject is shutting down - remove its reference
             curError = RemoveSubject(pInChangedSubject);
         } else {
@@ -212,7 +212,7 @@ ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes:
             // Frequent locking hurts incomparably more than even high percentage
             // of duplicated insertions, especially taking into account that the memory
             // is preallocated most of the time.
-            m_tlsNotifyList.get()->push_back(Notification(pInChangedSubject, uInChangedBits));
+            m_tlsNotifyList.get()->push_back(Notification(pInChangedSubject, changes));
             curError = Errors::Success;
         }
     }
@@ -223,9 +223,8 @@ ChangeManager::ChangeOccurred(ISystemObject* pInChangedSubject, System::Changes:
 
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeQueuedChanges - Distribute all queued notifications to the proper observers
-Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNotified, System::Changes::BitMask ChangesToDist) {
+Error ChangeManager::DistributeQueuedChanges(System::Changes::BitMask ChangesToDist) {
     // Store the parameters so they can be used by multiple threads later
-    m_systems2BeNotified = systems2BeNotified;
     m_ChangesToDist = ChangesToDist;
 
     // Loop through all the notifications.  We might need to loop through multiple
@@ -253,7 +252,7 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
                     if (index) {
                         // Each subject only needs to be notified once for all changes
                         // so let's combine all notifications for this subject
-                        m_cumulativeNotifyList[ index ].m_changedBits |= notif.m_changedBits;
+                        m_cumulativeNotifyList[index].m_changedBits |= notif.m_changedBits;
                     } else {
                         // Set the index for this subject
                         m_indexList[uID] = (unsigned int)m_cumulativeNotifyList.size();
@@ -320,7 +319,7 @@ ChangeManager::DistributionCallback(
 // DistributeRange - Process queued notifications for the given range
 void
 ChangeManager::DistributeRange(unsigned int begin, unsigned int end) {
-    // Loop through all the noticatiosn in the given range
+    // Loop through all the notification in the given range
     for (size_t i = begin; i < end; ++i) {
         // Get the notification and the subject
         MappedNotification& notif = m_cumulativeNotifyList[ i ];
@@ -335,14 +334,10 @@ ChangeManager::DistributeRange(unsigned int begin, unsigned int end) {
             auto& obsList = subject.m_observersList;
             for (size_t j = 0; j != obsList.size(); ++j) {
                 // Determine if this observe is interested in this notification
-                unsigned int changesToSend = obsList[j].m_interestBits & activeChanges;
-
-                if (changesToSend) {
-                    // If this observer is part of the systems to be notified then we can pass it this notification
-                    if (obsList[j].m_observerIdBits & m_systems2BeNotified) {
-                        // Have the observer process this change (notification)
-                        obsList[j].m_pObserver->ChangeOccurred(subject.m_pSubject, changesToSend);
-                    }
+                IObserver::Changes changes = obsList[j].m_interestBits & activeChanges;
+                if (changes) {
+                    // Have the observer process this change (notification)
+                    obsList[j].m_pObserver->ChangeOccurred(subject.m_pSubject, changes);
                 }
             }
         }

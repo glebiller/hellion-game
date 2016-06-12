@@ -48,14 +48,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() {
+    IObserver::Changes GetDesiredSystemChanges() {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
 protected:
     Ogre::ParticleSystem*               m_particleSystem;

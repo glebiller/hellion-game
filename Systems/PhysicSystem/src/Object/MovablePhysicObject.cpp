@@ -36,11 +36,11 @@ MovablePhysicObject::~MovablePhysicObject() {
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & System::Changes::Input::Velocity) {
+Error MovablePhysicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & System::Changes::Input::Velocity) {
         //m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
     }
-    if (ChangeType & System::Changes::Input::Rotation) {
+    if (changes & System::Changes::Input::Rotation) {
         //m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
     }
 

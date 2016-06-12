@@ -15,7 +15,6 @@
 #pragma once
 
 #include "Errors.h"
-#include "System/Changes.h"
 
 class ISystemObject;
 
@@ -32,6 +31,8 @@ class ISystemObject;
 // TODO rename EntityObserver
 class IObserver {
 public:
+    typedef unsigned int Changes;
+
     /**
      * Destructor.
      * All interfaces must have virtual destructors
@@ -44,7 +45,7 @@ public:
      *
      * @return  A System::Changes::BitMask.
      */
-    virtual inline System::Changes::BitMask GetDesiredSystemChanges() = 0;
+    virtual inline Changes GetDesiredSystemChanges() = 0;
 
     /**
      * Lets the ISystemObject notify the IObserver in changes in registered aspects of interest.
@@ -60,6 +61,6 @@ public:
      *          pInSubject was NULL. Error::OutOfMemory Not enough memory is available to resolve the
      *          change.
      */
-    virtual inline Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) = 0;
+    virtual inline Error ChangeOccurred(ISystemObject* systemObject, Changes changes) = 0;
 
 };

@@ -46,7 +46,7 @@ UScene::UScene(ChangeManager* pSceneCCM, ChangeManager* pObjectCCM, std::map<Sch
             pObj->PostChanges(pObj->GetPotentialSystemChanges());
         }
     }
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+    m_pObjectCCM->DistributeQueuedChanges(System::Changes::All);
 }
 
 /**
@@ -99,15 +99,15 @@ void UScene::init() {
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
     // The link needs to be established before any other messages come through.
     //
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+    m_pObjectCCM->DistributeQueuedChanges(System::Changes::Link | System::Changes::ParentLink);
+    m_pSceneCCM->DistributeQueuedChanges(System::Changes::Link | System::Changes::ParentLink);
 
     //
     // Distribute changes for object and scene CCMs.
     // The UObject propagates some object messages up to the scene so it needs to go first.
     //
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+    m_pObjectCCM->DistributeQueuedChanges(System::Changes::All);
+    m_pSceneCCM->DistributeQueuedChanges(System::Changes::All);
 }
 
 /**
@@ -116,13 +116,12 @@ void UScene::init() {
 void UScene::update() {
     // Process first the object creation messages alone since it will
     // generate some object messages that need to be processed by the object CCM.
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
+    m_pSceneCCM->DistributeQueuedChanges(System::Changes::Generic::CreateObject);
     //
     // Distribute changes for object and scene CCMs.  The UObject propagates some object
     // messages up to the scene CCM so it needs to go first.
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All,
-                                         System::Changes::All ^ System::Changes::Generic::CreateObject);
+    m_pObjectCCM->DistributeQueuedChanges(System::Changes::All);
+    m_pSceneCCM->DistributeQueuedChanges(System::Changes::All ^ System::Changes::Generic::CreateObject);
 }
 
 /**
@@ -131,7 +130,6 @@ void UScene::update() {
 ISystemScene* UScene::Extend(ISystem& system, const Schema::SystemScene* systemScene) {
     Schema::SystemType systemType = systemScene->systemType();
     BOOST_LOG(logger_) << "Extend Universal Scene with system " << Schema::EnumNameSystemType(systemType);
-
     BOOST_ASSERT_MSG(m_SystemScenes.find(systemType) == m_SystemScenes.end(),
                      "The new scene to create for the selected system type already exists.");
 
@@ -306,7 +304,7 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
 /**
  * @inheritDoc
  */
-Error UScene::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error UScene::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     // TODO
     /*switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {

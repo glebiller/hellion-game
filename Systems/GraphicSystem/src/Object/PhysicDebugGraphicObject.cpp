@@ -22,8 +22,8 @@ PhysicDebugGraphicObject::~PhysicDebugGraphicObject() {
 void PhysicDebugGraphicObject::Update(float DeltaTime) {
 }
 
-Error PhysicDebugGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::PhysicDebug) {
+Error PhysicDebugGraphicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & Schema::EntityChange::PhysicDebug) {
         lines_->beginUpdate(0);
         lines_->colour(Ogre::ColourValue::White);
         auto physicDebug = systemObject->getComponent<Schema::Components::PhysicDebug>();

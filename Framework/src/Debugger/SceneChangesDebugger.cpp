@@ -31,7 +31,7 @@ SceneChangesDebugger::SceneChangesDebugger(Debugger* debugger) :
 SceneChangesDebugger::~SceneChangesDebugger() {
 }
 
-Error SceneChangesDebugger::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error SceneChangesDebugger::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     if (ChangeType & System::Changes::Generic::CreateObject) {
         for (auto objectProto : *dynamic_cast<ISceneObject*>(pSubject)->getCreateObjects()) {
             m_pDebugger->addCreatedObjectIds(objectProto.name());

@@ -120,10 +120,11 @@ void DebugDrawer::flushLines() {
     PostChanges(Schema::EntityChange::PhysicDebug);
 }
 
-Error DebugDrawer::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::InputTrigger) {
+Error DebugDrawer::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & Schema::EntityChange::InputTrigger) {
         running = !running;
     }
+    return Errors::Success;
 }
 
 bool DebugDrawer::isRunning() const {

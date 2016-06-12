@@ -24,25 +24,11 @@ class IObserver;
  */
 class ObserverRequest {
 public:
-    /**
-     * Constructor.
-     *
-     * @param [in,out]  pObserver   (Optional) If non-null, (Optional) the observer.
-     * @param   Interests           (Optional) the interests.
-     * @param   idBits              (Optional) the identifier bits.
-     */
-    ObserverRequest(IObserver* pObserver = nullptr, unsigned int myID = 0, unsigned int Interests = 0,
-                    unsigned int idBits = System::Changes::All)
-            : m_pObserver(pObserver), m_myID(myID), m_interestBits(Interests), m_observerIdBits(idBits) {
+
+    ObserverRequest(IObserver* pObserver = nullptr, unsigned int myID = 0, unsigned int Interests = 0)
+            : m_pObserver(pObserver), m_myID(myID), m_interestBits(Interests) {
     }
 
-    /**
-     * Less-than comparison operator.
-     *
-     * @param   rhs The right hand side.
-     *
-     * @return  true if the first parameter is less than the second.
-     */
     bool operator<(const ObserverRequest& rhs) const {
         return m_pObserver < rhs.m_pObserver;
     }
@@ -61,5 +47,4 @@ public:
     IObserver* m_pObserver;
     unsigned int m_myID;
     unsigned int m_interestBits;
-    unsigned int m_observerIdBits;
 };

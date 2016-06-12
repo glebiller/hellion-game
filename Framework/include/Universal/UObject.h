@@ -80,7 +80,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask SystemChanges) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
     /**
      * @inheritDoc

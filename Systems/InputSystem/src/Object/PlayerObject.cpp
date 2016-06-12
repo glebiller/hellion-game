@@ -52,7 +52,7 @@ PlayerInputObject::~PlayerInputObject() {
 /**
  * @inheritDoc
  */
-Error PlayerInputObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error PlayerInputObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
 
     
     /*if (ChangeType & System::Changes::Physic::Position) {

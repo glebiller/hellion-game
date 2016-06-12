@@ -55,14 +55,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() override {
+    IObserver::Changes GetDesiredSystemChanges() override {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
     /**
      * @inheritDoc

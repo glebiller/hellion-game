@@ -82,7 +82,7 @@ void TerrainGraphicObject::Update(float DeltaTime) {
 ///
 /// @inheritDoc.
 ///
-Error TerrainGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
+Error TerrainGraphicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
     return Errors::Success;
 }
 

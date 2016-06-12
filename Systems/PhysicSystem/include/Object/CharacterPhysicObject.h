@@ -36,11 +36,11 @@ public:
         return Schema::EntityChange::PhysicPosition;
     };
 
-    System::Types::BitMask GetDesiredSystemChanges() override {
+    IObserver::Changes GetDesiredSystemChanges() override {
         return Schema::EntityChange::InputVelocity | Schema::EntityChange::PhysicPosition;
     };
 
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) override;
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) override;
 
     void Update(float DeltaTime) override;
 

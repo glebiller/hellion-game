@@ -56,7 +56,7 @@ public:
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges() {
+    IObserver::Changes GetDesiredSystemChanges() {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation
              | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
@@ -64,7 +64,7 @@ public:
     /**
      * @inheritDoc
      */
-    Error ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType);
+    Error ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes);
 
     /**
      * @inheritDoc

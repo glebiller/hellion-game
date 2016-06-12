@@ -80,8 +80,8 @@ void CameraGraphicObject::Update(float DeltaTime) {
 /**
  * @inheritDoc
  */
-Error CameraGraphicObject::ChangeOccurred(ISystemObject* systemObject, System::Changes::BitMask ChangeType) {
-    if (ChangeType & Schema::EntityChange::PhysicPosition) {
+Error CameraGraphicObject::ChangeOccurred(ISystemObject* systemObject, IObserver::Changes changes) {
+    if (changes & Schema::EntityChange::PhysicPosition) {
         if (systemObject->getEntity()->getId() == "player") {
             auto object = systemObject->getEntity()->GetExtension(Schema::ComponentType::PhysicPosition);
             auto position = object->getComponent<Schema::Components::PhysicPosition>();
