@@ -15,7 +15,7 @@
 #pragma once
 
 #include <boost/assert.hpp>
-#include "System/Types.h"
+#include <schema/system_type_generated.h>
 
 /**
 * The Instrumentation class collects and records performance stats about the various parts of
@@ -128,10 +128,9 @@ public:
      * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
      *                          during this frame.
      */
-    void CaptureJobCounterTicks(Schema::SystemType jobType, long long jobCounterTicks) {
-        unsigned int jobIndex = System::Types::GetIndex(jobType);
+    void CaptureJobCounterTicks(Schema::SystemType systemType, long long jobCounterTicks) {
 #if defined(_MSC_VER)
-        if (jobIndex < Proto::SystemType) {
+        if (systemType < Proto::SystemType) {
             //******************************
             // GDC - LAB 4 - Activity 3
             //

@@ -19,7 +19,6 @@
 #include <boost/log/sources/logger.hpp>
 #include <boost/thread/tss.hpp>
 #include <tbb/spin_mutex.h>
-#include <System/Types.h>
 
 #include "Generic/IObserver.h"
 #include "Manager/Notification.h"

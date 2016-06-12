@@ -1,6 +1,7 @@
 namespace Schema;
 
 enum SystemType : uint {
+  None,
   Audio,
   Graphic,
   Input,

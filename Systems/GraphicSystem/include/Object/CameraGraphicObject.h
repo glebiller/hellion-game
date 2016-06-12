@@ -15,7 +15,6 @@
 #pragma once
 
 #include <OgreVector3.h>
-#include <System/Types.h>
 #include <schema/entity_change_generated.h>
 
 #include "Object/Object.h"

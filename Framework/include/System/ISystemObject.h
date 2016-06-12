@@ -21,7 +21,6 @@
 #include <Manager/ObserverRequest.h>
 #include "Generic/IObserver.h"
 #include "System/Changes.h"
-#include "Types.h"
 
 class ISystemScene;
 
@@ -67,7 +66,7 @@ public:
      * @param   shiftBits       Used for components supporting multiply inherited interfaces each
      *                          with subject interfaces.
      */
-    void Attach(IObserver* pInObserver, System::Types::BitMask uInIntrestBits, unsigned int uID);
+    void Attach(IObserver* pInObserver, IObserver::Changes uInIntrestBits, unsigned int uID);
 
     /**
      * Disassociates the provided Observer with the Subject.This method is typically called from @e ChangeManager::Register()

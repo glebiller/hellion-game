@@ -22,7 +22,6 @@
 #include <boost/dll/shared_library.hpp>
 #include <schema/system_type_generated.h>
 
-#include "System/Types.h"
 #include "Manager/ChangeManager.h"
 #include "Manager/TaskManager.h"
 #include "Generic/Scheduler.h"

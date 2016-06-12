@@ -16,8 +16,7 @@
 
 #include "DataTypes.h"
 #include "System/Changes.h"
-
-class IObserver;
+#include "Generic/IObserver.h"
 
 /**
  * Observer request.
@@ -25,8 +24,8 @@ class IObserver;
 class ObserverRequest {
 public:
 
-    ObserverRequest(IObserver* pObserver = nullptr, unsigned int myID = 0, unsigned int Interests = 0)
-            : m_pObserver(pObserver), m_myID(myID), m_interestBits(Interests) {
+    ObserverRequest(IObserver* pObserver = nullptr, unsigned int myID = 0, IObserver::Changes changes = 0)
+            : m_pObserver(pObserver), m_myID(myID), m_interestBits(changes) {
     }
 
     bool operator<(const ObserverRequest& rhs) const {
@@ -46,5 +45,5 @@ public:
 
     IObserver* m_pObserver;
     unsigned int m_myID;
-    unsigned int m_interestBits;
+    IObserver::Changes m_interestBits;
 };

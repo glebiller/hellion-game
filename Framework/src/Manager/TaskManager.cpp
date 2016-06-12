@@ -286,7 +286,7 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, unsigned int uTaskCou
     // and all of their subtasks are complete.
     BOOST_ASSERT(IsPrimaryThread());
     BOOST_ASSERT(uTaskCount > 0);
-    BOOST_ASSERT(uTaskCount <= System::Types::MAX);
+    BOOST_ASSERT(uTaskCount <= static_cast<int>(Schema::SystemType::MAX));
     // if we are waiting for any of the tasks dedicated to the primary thread,
     // then execute them now
     // if we issued primary thread tasks that we're not waiting for this time,

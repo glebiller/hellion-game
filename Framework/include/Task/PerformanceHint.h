@@ -14,8 +14,6 @@
 
 #pragma once
 
-#include "System/Types.h"
-
 namespace Task {
     // PerformanceHint is used to modify the order that tasks are sent to the scheduler.
     // The order of definition is the order of scheduling.
@@ -33,43 +31,14 @@ namespace Task {
         // to match (they're created in code with System::Types::MakeCustom()).
         //
         // If you modify System::TypeIndices or System::Types, please modify this to match.
-        static PerformanceHint hints[System::Types::MAX] = {
-            Task_NoPerformanceHint, // 0:  Null
-            Task_NoPerformanceHint, // 1:  Not used
-            Task_NoPerformanceHint, // 2:  Generic
-            Task_Short,             // 3:  Geometry
-            Task_LongSerial,        // 4:  Graphics
-            Task_LongSerial,        // 5:  PhysicsCollision
-            Task_NoPerformanceHint, // 6:  Audio
-            Task_NoPerformanceHint, // 7:  Input
-            Task_LongParallel,      // 8:  AI
-            Task_NoPerformanceHint, // 9:  Animation
-            Task_Short,             // 10: Scripting
-            Task_NoPerformanceHint, // 11: Explosion - test for ideal hint
-            Task_NoPerformanceHint, // 12: Water - test for ideal hint
-            Task_NoPerformanceHint, // 13: Not used
-            Task_NoPerformanceHint, // 14: Not used
-            Task_NoPerformanceHint, // 15: Not used
-            Task_Short,             // 16: ProceduralTrees
-            Task_NoPerformanceHint, // 17: Not used
-            Task_LongParallel,      // 18: ProceduralFire
-
-            // Not used below here, initialized for safety.
-            Task_NoPerformanceHint, // 19: Not used
-            Task_NoPerformanceHint, // 20: Not used
-            Task_NoPerformanceHint, // 21: Not used
-            Task_NoPerformanceHint, // 22: Not used
-            Task_NoPerformanceHint, // 23: Not used
-            Task_NoPerformanceHint, // 24: Not used
-            Task_NoPerformanceHint, // 25: Not used
-            Task_NoPerformanceHint, // 26: Not used
-            Task_NoPerformanceHint, // 27: Not used
-            Task_NoPerformanceHint, // 28: Not used
-            Task_NoPerformanceHint, // 29: Not used
-            Task_NoPerformanceHint, // 30: Not used
-            Task_NoPerformanceHint  // 31: Not used
+        static PerformanceHint hints[static_cast<int>(Schema::SystemType::MAX) + 1] = {
+            Task_NoPerformanceHint, // 0:  None
+            Task_NoPerformanceHint, // 1:  Audio
+            Task_LongSerial,        // 2:  Graphic
+            Task_NoPerformanceHint, // 3:  Input
+            Task_LongSerial,        // 4:  Network
+            Task_LongSerial         // 5:  Physic
         };
-        unsigned int jobIndex = System::Types::GetIndex(systemType);
-        return hints[jobIndex];
+        return hints[static_cast<int>(systemType)];
     };
 }

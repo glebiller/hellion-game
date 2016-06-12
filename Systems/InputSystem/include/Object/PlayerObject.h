@@ -15,7 +15,6 @@
 #pragma once
 
 #include <OISB.h>
-#include <System/Types.h>
 #include <schema/system_type_generated.h>
 #include <schema/entity_change_generated.h>
 

@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <System/Types.h>
 #include "Object/Object.h"
 
 class GraphicSystem;

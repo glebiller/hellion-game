@@ -15,7 +15,6 @@
 #pragma once
 
 #include <OgreMesh.h>
-#include <System/Types.h>
 #include <schema/scene_generated.h>
 #include <schema/entity_change_generated.h>
 

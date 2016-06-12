@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <System/Types.h>
 #include <System/ISystemObject.h>
 #include <Object/Object.h>
 #include <OgreSceneManager.h>

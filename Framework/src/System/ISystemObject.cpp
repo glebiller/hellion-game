@@ -47,7 +47,7 @@ unsigned int ISystemObject::getObserverId(IObserver* pObserver) const {
     return InvalidObserverID;
 }
 
-void ISystemObject::Attach(IObserver* pInObserver, System::Types::BitMask uInIntrestBits, unsigned int uID) {
+void ISystemObject::Attach(IObserver* pInObserver, IObserver::Changes uInIntrestBits, unsigned int uID) {
     BOOST_ASSERT_MSG(pInObserver, "ISystemObject::Attach: Valid pointer to observer object must be specified");
     BOOST_ASSERT_MSG(std::find(observers_.begin(), observers_.end(), pInObserver) == observers_.end(),
                      "ISystemObject::Attach: Observer has already been attached. Use ISystemObject::UpdateInterestBits instead.");
